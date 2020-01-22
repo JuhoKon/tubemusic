@@ -64,7 +64,7 @@ export default class Player extends Component {
     return (
       <div className="app">
         <section className="section">
-          <h1>Player</h1>
+          <h1>Now playing: {url}</h1>
 
           <div className="player-wrapper">
             <ReactPlayer
