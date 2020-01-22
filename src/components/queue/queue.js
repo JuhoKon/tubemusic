@@ -24,9 +24,10 @@ class Queue extends Component {
     return (
       <div>
         {queue.map(
-          ({ title, publishedAt, channelTitle, videoId, thumbnail }) => (
+          ({ title, publishedAt, channelTitle, videoId, thumbnail,uniqueId }) => (
             <div key={videoId + Math.random()}>
               <Queueitem
+                uniqueId = {uniqueId}
                 title={title}
                 thumbnail={thumbnail}
                 channelTitle={channelTitle}

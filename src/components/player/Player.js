@@ -2,20 +2,25 @@ import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import "./player.css";
 export default class Player extends Component {
-  state = {
-    url: null,
-    pip: false,
-    playing: true,
-    controls: false,
-    light: false,
-    volume: 0.8,
-    muted: false,
-    played: 0,
-    loaded: 0,
-    duration: 0,
-    playbackRate: 1.0,
-    loop: false
-  };
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      url: null,
+      pip: false,
+      playing: true,
+      controls: false,
+      light: false,
+      volume: 0.8,
+      muted: false,
+      played: 0,
+      loaded: 0,
+      duration: 0,
+      playbackRate: 1.0,
+      loop: false,
+      array: this.props.array
+    };
+  }
   load = url => {
     this.setState({
       url,
@@ -24,15 +29,13 @@ export default class Player extends Component {
       pip: false
     });
   };
+
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
   };
 
   handleStop = () => {
     this.setState({ url: null, playing: false });
-  };
-  handleVolumeChange = e => {
-    this.setState({ volume: parseFloat(e.target.value) });
   };
   handlePlay = () => {
     console.log("onPlay");
@@ -45,6 +48,9 @@ export default class Player extends Component {
   handleEnded = () => {
     console.log("onEnded");
     this.setState({ playing: this.state.loop });
+    //ADD to it takes one away from queue?
+    //otetaa eka elementti jonosta toho urlii, jos loppuu ni poistetaa eka elementti
+    //laitetaa statee ni renderaa uudestaa?
   };
   renderLoadButton = (url, label) => {
     return <button onClick={() => this.load(url)}>{label}</button>;
@@ -53,7 +59,8 @@ export default class Player extends Component {
     this.player = player;
   };
   render() {
-    const { url, playing, volume } = this.state;
+    const { url, playing, volume, array } = this.state;
+    
     return (
       <div className="app">
         <section className="section">

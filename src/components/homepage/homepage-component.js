@@ -44,14 +44,22 @@ export default class Homepage extends Component {
     this.setState({
       updated: videoId
     });
-    //console.log(this.state.queue);
+    console.log(this.state.queue);
     //console.log(videoId);
   }
-  onDelete(videoId) {
-    console.log(videoId);
-    this.state.queue.splice(this.state.queue.indexOf(videoId), 1); //ei toimi oikei
+  onDelete(item) {
+    console.log(item.uniqueId);
+    console.log(this.state.queue[0].uniqueId);
+    for (let i = 0; i<this.state.queue.length; i++) {
+      if (this.state.queue[i].uniqueId === item.uniqueId) {
+        //delete se item
+        break;
+      }
+    }
+    //console.log((this.state.queue.uniqueId.indexOf(item.uniqueId)));
+    //this.state.queue.splice(this.state.queue.indexOf(videoId), 1); //ei toimi oikei
     this.setState({
-      updated: videoId
+      updated: item.videoId
     });
   }
   render() {
@@ -70,16 +78,16 @@ export default class Homepage extends Component {
     for (let i = 0; i < itemArray.length; i++) {
       itemArray[i].videoId = videoIdArray[i];
       itemArray[i].thumbnail = thumbnailArray[i];
+      itemArray[i].uniqueId = Math.random();
     }
     //console.log(itemArray);
     return (
       <div>
         <br />
-
         <div className="container-fluid">
           <Row>
             <Col xs="6" sm="4">
-              <Player />
+              <Player array = {queue}/>
               <br />
               <Queue queue={queue} onRemove={this.onDelete} />
             </Col>

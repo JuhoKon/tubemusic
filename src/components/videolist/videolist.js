@@ -16,9 +16,10 @@ class Videolist extends Component {
         <br />
         <br />
         {items.map(
-          ({ title, publishedAt, channelTitle, videoId, thumbnail }) => (
+          ({ title, publishedAt, channelTitle, videoId, thumbnail, uniqueId }) => (
             <CSSTransition key={title} timeout={500} classNames="fade">
               <Videoitem
+                id = {uniqueId}
                 title={title}
                 thumbnail={thumbnail}
                 channelTitle={channelTitle}
@@ -35,6 +36,7 @@ class Videolist extends Component {
           channelTitle="Ss"
           videoId="0plu8CGDAJk"
           addFunc={this.props.onAdd}
+          uniqueId = "45"
         />
         <Videoitem
           title="2"

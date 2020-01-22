@@ -22,7 +22,7 @@ class Queueitem extends Component {
             <span style={{ flexDirection: "column" }}>
               <Button
                 className="btn btn-primary float-right"
-                onClick={this.onRemoveClick.bind(this, this.props.videoId)}
+                onClick={this.onRemoveClick.bind(this, this.props)}
               >
                 +
               </Button>
