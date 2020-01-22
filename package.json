@@ -10,6 +10,7 @@
     "bootstrap": "^4.4.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-fast-compare": "^2.0.4",
     "react-player": "^1.14.2",
     "react-scripts": "3.3.0",
     "react-strap": "0.0.1",

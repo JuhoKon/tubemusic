@@ -67,7 +67,6 @@ export default class Player extends Component {
               url={url}
               playing={playing}
               controls={true}
-              mute={true}
               volume={volume}
               onPlay={this.handlePlay}
               onPause={this.handlePause}

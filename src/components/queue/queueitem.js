@@ -7,10 +7,11 @@ import {
   CardImg,
   Button
 } from "reactstrap";
-import "./videolist.css";
-class Videoitem extends Component {
-  onAddClick = id => {
-    this.props.addFunc(id);
+
+class Queueitem extends Component {
+  onRemoveClick = id => {
+    //console.log(id);
+    this.props.onRemove(id);
   };
 
   render() {
@@ -21,22 +22,12 @@ class Videoitem extends Component {
             <span style={{ flexDirection: "column" }}>
               <Button
                 className="btn btn-primary float-right"
-                onClick={this.onAddClick.bind(this, this.props)}
+                onClick={this.onRemoveClick.bind(this, this.props.videoId)}
               >
                 +
               </Button>
             </span>
             <CardTitle>{this.props.title}</CardTitle>
-            <CardText>{this.props.channelTitle}</CardText>
-            <CardText>
-              <small className="text-muted">Tehtysilloinjatällöin</small>
-            </CardText>
-            <CardImg
-              width="10px"
-              bottom
-              src={this.props.thumbnail}
-              alt={this.props.thumbnail}
-            />
           </CardBody>
         </Card>
         <br />
@@ -45,4 +36,4 @@ class Videoitem extends Component {
   }
 }
 //actions we want to use as second paranthesis
-export default Videoitem;
+export default Queueitem;
