@@ -1,0 +1,7 @@
+.navbar {
+  position: fixed; /* Make it stick/fixed */
+  top: 0; /* Stay on top */
+  width: 100%; /* Full width */
+  transition: top 0.5s;
+  z-index: 1; /* have navbar above everything, always */
+}

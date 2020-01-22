@@ -1,0 +1,22 @@
+.titles {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.card-img-bottom {
+  object-fit: cover;
+}
+.card-title {
+  font-size: medium;
+}
+
+.card {
+  border: 2px solid #e9ecef;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 10rem;
+  display: inline-block;
+}
