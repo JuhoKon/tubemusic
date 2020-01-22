@@ -16,7 +16,7 @@ export default class Homepage extends Component {
       .get("https://www.googleapis.com/youtube/v3/search", {
         params: {
           part: "snippet",
-          maxResults: 10,
+          maxResults: 2,
           key: key,
           q: termFromSearch
         }
