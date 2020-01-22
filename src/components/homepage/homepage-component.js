@@ -40,7 +40,7 @@ export default class Homepage extends Component {
       });
   };
   onAdd(videoId) {
-    console.log(videoId)
+    console.log(videoId);
     this.state.queue.push(videoId);
     this.setState({
       updated: videoId
@@ -49,17 +49,16 @@ export default class Homepage extends Component {
     //console.log(videoId);
   }
   onDelete(item) {
+    if (!item) return;
     console.log(item.uniqueId);
     console.log(this.state.queue[0].uniqueId);
-    for (let i = 0; i<this.state.queue.length; i++) {
+    for (let i = 0; i < this.state.queue.length; i++) {
       if (this.state.queue[i].uniqueId === item.uniqueId) {
-        //delete se item
-        this.state.queue.splice(i,1);
+        //delete item from queue
+        this.state.queue.splice(i, 1);
         break;
       }
     }
-    //console.log((this.state.queue.uniqueId.indexOf(item.uniqueId)));
-    //this.state.queue.splice(this.state.queue.indexOf(videoId), 1); //ei toimi oikei
     this.setState({
       updated: item.videoId
     });
@@ -89,7 +88,7 @@ export default class Homepage extends Component {
         <div className="container-fluid">
           <Row>
             <Col xs="6" sm="4">
-              <Player array = {queue}/>
+              <Player array={queue} onRemove={this.onDelete} />
               <br />
               <Queue queue={queue} onRemove={this.onDelete} />
             </Col>
