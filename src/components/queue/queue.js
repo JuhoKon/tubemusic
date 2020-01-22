@@ -25,7 +25,7 @@ class Queue extends Component {
       <div>
         {queue.map(
           ({ title, publishedAt, channelTitle, videoId, thumbnail,uniqueId }) => (
-            <div key={videoId + Math.random()}>
+            <div key={uniqueId}>
               <Queueitem
                 uniqueId = {uniqueId}
                 title={title}

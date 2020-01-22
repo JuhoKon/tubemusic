@@ -40,6 +40,7 @@ export default class Homepage extends Component {
       });
   };
   onAdd(videoId) {
+    console.log(videoId)
     this.state.queue.push(videoId);
     this.setState({
       updated: videoId
@@ -53,6 +54,7 @@ export default class Homepage extends Component {
     for (let i = 0; i<this.state.queue.length; i++) {
       if (this.state.queue[i].uniqueId === item.uniqueId) {
         //delete se item
+        this.state.queue.splice(i,1);
         break;
       }
     }
