@@ -26,7 +26,13 @@ export default class Homepage extends Component {
       playing: false
     };
   }
-
+  getPlaylist = async id => {
+    axios.get("localhost:8080/").then(res => {
+      this.setState({
+        playlist: res.data.items
+      });
+    });
+  };
   handleSubmit = async termFromSearch => {
     axios
       .get("https://www.googleapis.com/youtube/v3/search", {
