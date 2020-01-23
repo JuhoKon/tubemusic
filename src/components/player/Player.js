@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
+import { Container } from "reactstrap";
 import "./player.css";
 //TODO: ADD VOLUME CONTROL
 //CHANGE BUTTONS TO LOOK BETTER
-//ADD DATABASE 
+//ADD DATABASE
 // ADD PLAYLISTS!!
 export default class Player extends Component {
   constructor(props) {
@@ -102,59 +103,65 @@ export default class Player extends Component {
     console.log(url);
     console.log(array);
     return (
-      <div className="app">
-        <section className="section">
-          <p>Now playing {this.state.title}</p>
+      <Container className="container-fluid">
+        <div className="app">
+          <section className="section">
+            <p>Now playing {this.state.title}</p>
 
-          <div className="player-wrapper">
-            <ReactPlayer
-              className="react-player"
-              width="100%"
-              height="100%"
-              url={url}
-              playing={playing}
-              controls={true}
-              volume={volume}
-              onPlay={this.handlePlay}
-              onPause={this.handlePause}
-              onEnded={this.handleEnded}
-              onError={e => console.log("onError", e)}
-            />
-          </div>
-          <table>
-            <tbody>
-              <tr>
-                <th>Controls</th>
-                <td>
-                  <button onClick={this.handleStop}>Stop</button>
-                  <button onClick={this.handlePlayPause}>
-                    {playing ? "Pause" : "Play"}
-                  </button>
-                  <button onClick={this.handlePlayNext}>Play from queue</button>
-                  <button onClick={this.handleEnded}>Play next song</button>
-                </td>
-              </tr>
-              <tr>
-                <th>Custom URL</th>
-                <td>
-                  <input
-                    ref={input => {
-                      this.urlInput = input;
-                    }}
-                    type="text"
-                    placeholder="Enter URL"
-                  />
-                  <button
-                    onClick={() => this.setState({ url: this.urlInput.value })}
-                  >
-                    Load
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
+            <div className="player-wrapper">
+              <ReactPlayer
+                className="react-player"
+                width="100%"
+                height="100%"
+                url={url}
+                playing={playing}
+                controls={true}
+                volume={volume}
+                onPlay={this.handlePlay}
+                onPause={this.handlePause}
+                onEnded={this.handleEnded}
+                onError={e => console.log("onError", e)}
+              />
+            </div>
+            <table>
+              <tbody>
+                <tr>
+                  <th>Controls</th>
+                  <td>
+                    <button onClick={this.handleStop}>Stop</button>
+                    <button onClick={this.handlePlayPause}>
+                      {playing ? "Pause" : "Play"}
+                    </button>
+                    <button onClick={this.handlePlayNext}>
+                      Play from queue
+                    </button>
+                    <button onClick={this.handleEnded}>Play next song</button>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Custom URL</th>
+                  <td>
+                    <input
+                      ref={input => {
+                        this.urlInput = input;
+                      }}
+                      type="text"
+                      placeholder="Enter URL"
+                    />
+                    <button
+                      onClick={() =>
+                        this.setState({ url: this.urlInput.value })
+                      }
+                    >
+                      Load
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+      </Container>
     );
   }
 }

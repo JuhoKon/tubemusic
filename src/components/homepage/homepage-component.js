@@ -6,6 +6,7 @@ import Search from "../search/search";
 import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
+import { handleSubmit, getPlaylists } from "../functions/functions";
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c";
 
 export default class Homepage extends Component {
@@ -17,39 +18,37 @@ export default class Homepage extends Component {
     this.onAdd = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onPlay = this.onPlay.bind(this);
+    this.getPlaylist = this.getPlaylist.bind(this);
     this.state = {
       items: [],
       queue: [],
       playlist: [],
+      playlists: [],
       updated: "",
       url: null,
       playing: false
     };
   }
-  getPlaylist = async id => {
-    axios.get("localhost:8080/").then(res => {
+
+  handleSubmit = async termFromSearch => {
+    handleSubmit(termFromSearch).then(res => {
       this.setState({
-        playlist: res.data.items
+        items: res
       });
     });
   };
-  handleSubmit = async termFromSearch => {
-    axios
-      .get("https://www.googleapis.com/youtube/v3/search", {
-        params: {
-          part: "snippet",
-          maxResults: 7,
-          key: key,
-          q: termFromSearch
-        }
-      })
-      .then(res => {
-        //console.log(res.data.items);
-        this.setState({
-          items: res.data.items
-        });
-      });
-  };
+  /*getPlayList = async termFromSearch => {
+    getPlaylists().then(res => {
+      console.log(res);
+    });
+  };*/
+  async getPlaylist() {
+    const result = await getPlaylists();
+    console.log(result.data.Playlist);
+    this.setState({
+      playlists: result.data.Playlist
+    });
+  }
   onAdd(videoId) {
     console.log(videoId);
     this.state.queue.push(videoId);
@@ -91,6 +90,7 @@ export default class Homepage extends Component {
     const thumbnailArray = [];
     const queue = this.state.queue;
     const url = this.state.url;
+    const playlists = this.state.playlists;
     //console.log(queue);
     this.state.items.map(item => videoIdArray.push(item.id.videoId));
 
@@ -110,7 +110,7 @@ export default class Homepage extends Component {
         <br />
         <div className="container-fluid">
           <Row>
-            <Col xs="6" sm="4">
+            <Col sm="4">
               <Player
                 array={queue}
                 onRemove={this.onDelete}
@@ -124,9 +124,13 @@ export default class Homepage extends Component {
                 onPlay={this.onPlay}
               />
             </Col>
-            <Col xs="6" sm="4">
+            <Col sm="4">
               Playlist
-              <Playlist playlist={itemArray} />
+              <Playlist
+                playlists={playlists}
+                playlist={itemArray}
+                getPlayList={this.getPlaylist}
+              />
             </Col>
             <Col sm="4">
               <Search handleSubmit={this.handleSubmit} />
