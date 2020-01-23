@@ -11,6 +11,9 @@ class Playlist extends Component {
       playlists: this.props.playlists
     };
   }
+  //TODO: playlistiin lisääminen ja poistaminen, niiden lataaminen databasesta
+  //niiden editoiminen ja poistaminen databasesta
+  //playlistan siirtäminen queueen seuraavaksi.
   componentDidMount() {
     this.props.getPlayList();
   }
