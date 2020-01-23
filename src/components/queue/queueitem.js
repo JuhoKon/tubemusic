@@ -15,7 +15,7 @@ class Queueitem extends Component {
   };
   onPlayClick = id => {
     //console.log(id);
-    
+
     this.props.onPlay(id);
   };
 
@@ -27,12 +27,14 @@ class Queueitem extends Component {
             <span style={{ flexDirection: "column" }}>
               <Button
                 className="btn btn-primary float-right"
+                color="danger"
                 onClick={this.onRemoveClick.bind(this, this.props)}
               >
                 x
               </Button>
               <Button
-                className="btn btn-primary float-left"
+                className="btn btn-primary float-left "
+                color="primary"
                 onClick={this.onPlayClick.bind(this, this.props)}
               >
                 Play

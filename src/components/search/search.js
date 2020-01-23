@@ -21,6 +21,7 @@ class Search extends Component {
             <InputGroupAddon addonType="prepend"></InputGroupAddon>
             <Input
               type="text"
+              placeholder="Search for songs on YouTube..."
               required
               className="form-control"
               value={this.state.text}

@@ -5,6 +5,7 @@ import Videolist from "../videolist/videolist";
 import Search from "../search/search";
 import Queue from "../queue/queue";
 import Player from "../player/Player";
+import Playlist from "../playlist/playlist";
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c";
 
 export default class Homepage extends Component {
@@ -19,9 +20,10 @@ export default class Homepage extends Component {
     this.state = {
       items: [],
       queue: [],
+      playlist: [],
       updated: "",
-      url : null,
-      playing : false
+      url: null,
+      playing: false
     };
   }
 
@@ -67,16 +69,13 @@ export default class Homepage extends Component {
       updated: item.videoId
     });
   }
-  onPlay(item) { 
-    if(!item) return;
-    console.log("Moi", item.uniqueId);
-    //TODO: teet sillee et tää vaa soittaa sen biisin?
-    //eli lataa playerin URLiin ton urlin käytännössä
+  onPlay(item) {
+    if (!item) return;
     const videoId = item.videoId;
     const url = "https://www.youtube.com/watch?v=" + videoId;
     this.setState({
-      url : url,
-      playing : true
+      url: url, //url gets passed to player as props
+      playing: true
     });
     this.onDelete(item); //delete chosen item
   }
@@ -106,17 +105,31 @@ export default class Homepage extends Component {
         <div className="container-fluid">
           <Row>
             <Col xs="6" sm="4">
-              <Player array={queue} onRemove={this.onDelete} url={url} playing = {this.state.playing}/>
+              <Player
+                array={queue}
+                onRemove={this.onDelete}
+                url={url}
+                playing={this.state.playing}
+              />
               <br />
-              <Queue queue={queue} onRemove={this.onDelete} onPlay = {this.onPlay}/>
+              <Queue
+                queue={queue}
+                onRemove={this.onDelete}
+                onPlay={this.onPlay}
+              />
             </Col>
             <Col xs="6" sm="4">
-              .col-6 .col-sm-4
+              Playlist
+              <Playlist playlist={itemArray} />
             </Col>
             <Col sm="4">
               <Search handleSubmit={this.handleSubmit} />
               <br />
-              <Videolist items={itemArray} onAdd={this.onAdd} onPlay = {this.onPlay} />
+              <Videolist
+                items={itemArray}
+                onAdd={this.onAdd}
+                onPlay={this.onPlay}
+              />
             </Col>
           </Row>
         </div>

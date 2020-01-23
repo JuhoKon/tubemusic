@@ -16,7 +16,6 @@ class Videoitem extends Component {
     this.props.onPlay(id);
   };
   render() {
-    
     return (
       <div>
         <Card className="card">
@@ -24,12 +23,15 @@ class Videoitem extends Component {
             <span style={{ flexDirection: "column" }}>
               <Button
                 className="btn btn-primary float-right"
+                color="info"
                 onClick={this.onAddClick.bind(this, this.props)}
               >
-                +
+                + Queue
               </Button>
+
               <Button
                 className="btn btn-primary float-left"
+                color="primary"
                 onClick={this.onPlayClick.bind(this, this.props)}
               >
                 Play
@@ -47,6 +49,13 @@ class Videoitem extends Component {
               alt={this.props.thumbnail}
             />
           </CardBody>
+          <Button
+            className="btn btn-primary float-right"
+            color="secondary"
+            onClick={this.onAddClick.bind(this, this.props)}
+          >
+            + Playlist
+          </Button>
         </Card>
         <br />
       </div>
