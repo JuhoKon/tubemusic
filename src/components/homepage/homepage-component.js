@@ -19,6 +19,7 @@ export default class Homepage extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onPlay = this.onPlay.bind(this);
     this.getPlaylist = this.getPlaylist.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -30,39 +31,34 @@ export default class Homepage extends Component {
     };
   }
 
-  handleSubmit = async termFromSearch => {
-    handleSubmit(termFromSearch).then(res => {
-      this.setState({
-        items: res
-      });
+  async handleSubmit(termFromSearch) {
+    const result = await handleSubmit(termFromSearch);
+    // console.log(result);
+    this.setState({
+      items: result
     });
-  };
-  /*getPlayList = async termFromSearch => {
-    getPlaylists().then(res => {
-      console.log(res);
-    });
-  };*/
+  }
   async getPlaylist() {
     const result = await getPlaylists();
-    console.log(result.data.Playlist);
+    //console.log(result.data.Playlist);
     this.setState({
       playlists: result.data.Playlist
     });
   }
   onAdd(videoId) {
-    console.log(videoId);
+    //console.log(videoId);
     this.state.queue.push(videoId);
     this.setState({
       updated: videoId
     });
-    console.log(this.state.queue);
+    //console.log(this.state.queue);
     //console.log(videoId);
   }
   onDelete(item) {
     if (!item) return;
     if (typeof this.state.queue[0] === "undefined") return;
-    console.log(item.uniqueId);
-    console.log(this.state.queue[0].uniqueId);
+    //console.log(item.uniqueId);
+    //console.log(this.state.queue[0].uniqueId);
     for (let i = 0; i < this.state.queue.length; i++) {
       if (this.state.queue[i].uniqueId === item.uniqueId) {
         //delete item from queue
@@ -91,6 +87,7 @@ export default class Homepage extends Component {
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
+    // console.log(this.state.items);
     //console.log(queue);
     this.state.items.map(item => videoIdArray.push(item.id.videoId));
 
