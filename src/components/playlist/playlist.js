@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Container, Row, Col } from "reactstrap";
 import Playlistitem from "./playlistitem";
-
+import Link from "./link.js";
 import { CSSTransition } from "react-transition-group";
 import "./playlist.css";
 class Playlist extends Component {
@@ -17,7 +17,10 @@ class Playlist extends Component {
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
-    console.log(playlists);
+    const nameArray = [];
+    console.log(playlists[0]);
+    playlists.map(item => nameArray.push(item._id));
+    console.log(nameArray);
     return (
       <Row>
         <Col sm="8">
@@ -64,7 +67,16 @@ class Playlist extends Component {
             />
           </div>
         </Col>
-        <Col sm="4">Available playlists:</Col>
+        <Col sm="4">
+          Available playlists:
+          <br />
+          <br />
+          {playlists.map(({ name, _id }) => (
+            <CSSTransition key={_id} timeout={500} classNames="fade">
+              <Link name={name}></Link>
+            </CSSTransition>
+          ))}
+        </Col>
       </Row>
     );
   }
