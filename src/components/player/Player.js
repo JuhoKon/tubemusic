@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
+import isEqual from "react-fast-compare";
 import "./player.css";
+//TODO: ADD VOLUME CONTROL
+//CHANGE BUTTONS TO LOOK BETTER
+//ADD DATABASE 
+// ADD PLAYLISTS!!
 export default class Player extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      url: null,
+      url: this.props.url,
       title: "",
       pip: false,
       playing: false,
@@ -30,7 +35,16 @@ export default class Player extends Component {
       pip: false
     });
   };
-
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      //if change in props
+      this.setState({
+        url: this.props.url,
+        array: this.props.array,
+        playing: this.props.playing
+      });
+    }
+  }
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
   };
@@ -85,6 +99,7 @@ export default class Player extends Component {
   };
   render() {
     const { url, playing, volume, array } = this.state;
+    console.log(url);
     console.log(array);
     return (
       <div className="app">

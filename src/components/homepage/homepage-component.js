@@ -15,10 +15,13 @@ export default class Homepage extends Component {
     // no matter how the method/function is called.
     this.onAdd = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onPlay = this.onPlay.bind(this);
     this.state = {
       items: [],
       queue: [],
-      updated: ""
+      updated: "",
+      url : null,
+      playing : false
     };
   }
 
@@ -50,6 +53,7 @@ export default class Homepage extends Component {
   }
   onDelete(item) {
     if (!item) return;
+    if (typeof this.state.queue[0] === "undefined") return;
     console.log(item.uniqueId);
     console.log(this.state.queue[0].uniqueId);
     for (let i = 0; i < this.state.queue.length; i++) {
@@ -63,11 +67,25 @@ export default class Homepage extends Component {
       updated: item.videoId
     });
   }
+  onPlay(item) { 
+    if(!item) return;
+    console.log("Moi", item.uniqueId);
+    //TODO: teet sillee et tää vaa soittaa sen biisin?
+    //eli lataa playerin URLiin ton urlin käytännössä
+    const videoId = item.videoId;
+    const url = "https://www.youtube.com/watch?v=" + videoId;
+    this.setState({
+      url : url,
+      playing : true
+    });
+    this.onDelete(item); //delete chosen item
+  }
   render() {
     const itemArray = [];
     const videoIdArray = [];
     const thumbnailArray = [];
     const queue = this.state.queue;
+    const url = this.state.url;
     //console.log(queue);
     this.state.items.map(item => videoIdArray.push(item.id.videoId));
 
@@ -88,9 +106,9 @@ export default class Homepage extends Component {
         <div className="container-fluid">
           <Row>
             <Col xs="6" sm="4">
-              <Player array={queue} onRemove={this.onDelete} />
+              <Player array={queue} onRemove={this.onDelete} url={url} playing = {this.state.playing}/>
               <br />
-              <Queue queue={queue} onRemove={this.onDelete} />
+              <Queue queue={queue} onRemove={this.onDelete} onPlay = {this.onPlay}/>
             </Col>
             <Col xs="6" sm="4">
               .col-6 .col-sm-4
@@ -98,7 +116,7 @@ export default class Homepage extends Component {
             <Col sm="4">
               <Search handleSubmit={this.handleSubmit} />
               <br />
-              <Videolist items={itemArray} onAdd={this.onAdd} />
+              <Videolist items={itemArray} onAdd={this.onAdd} onPlay = {this.onPlay} />
             </Col>
           </Row>
         </div>

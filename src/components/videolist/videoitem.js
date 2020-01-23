@@ -12,8 +12,11 @@ class Videoitem extends Component {
   onAddClick = id => {
     this.props.addFunc(id);
   };
-
+  onPlayClick = id => {
+    this.props.onPlay(id);
+  };
   render() {
+    
     return (
       <div>
         <Card className="card">
@@ -24,6 +27,12 @@ class Videoitem extends Component {
                 onClick={this.onAddClick.bind(this, this.props)}
               >
                 +
+              </Button>
+              <Button
+                className="btn btn-primary float-left"
+                onClick={this.onPlayClick.bind(this, this.props)}
+              >
+                Play
               </Button>
             </span>
             <CardTitle>{this.props.title}</CardTitle>

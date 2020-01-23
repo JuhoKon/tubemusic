@@ -11,6 +11,7 @@ class Videolist extends Component {
 
   render() {
     const items = this.props.items;
+ 
     return (
       <div id="videolist">
         <br />
@@ -26,6 +27,7 @@ class Videolist extends Component {
                 publishedAt={publishedAt}
                 videoId={videoId}
                 addFunc={this.props.onAdd}
+                onPlay={this.props.onPlay}
               />
             </CSSTransition>
           )
@@ -36,6 +38,7 @@ class Videolist extends Component {
           channelTitle="Ss"
           videoId="0plu8CGDAJk"
           addFunc={this.props.onAdd}
+          onPlay={this.props.onPlay}
           uniqueId = "45"
         />
         <Videoitem

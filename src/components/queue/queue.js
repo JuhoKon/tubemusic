@@ -34,6 +34,7 @@ class Queue extends Component {
                 publishedAt={publishedAt}
                 videoId={videoId}
                 onRemove={this.props.onRemove}
+                onPlay = {this.props.onPlay}
               />
             </div>
           )

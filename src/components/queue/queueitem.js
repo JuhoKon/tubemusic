@@ -13,6 +13,11 @@ class Queueitem extends Component {
     //console.log(id);
     this.props.onRemove(id);
   };
+  onPlayClick = id => {
+    //console.log(id);
+    
+    this.props.onPlay(id);
+  };
 
   render() {
     return (
@@ -24,7 +29,13 @@ class Queueitem extends Component {
                 className="btn btn-primary float-right"
                 onClick={this.onRemoveClick.bind(this, this.props)}
               >
-                +
+                x
+              </Button>
+              <Button
+                className="btn btn-primary float-left"
+                onClick={this.onPlayClick.bind(this, this.props)}
+              >
+                Play
               </Button>
             </span>
             <CardTitle>{this.props.title}</CardTitle>
