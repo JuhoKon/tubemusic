@@ -190,7 +190,6 @@ export default class Homepage extends Component {
                 array={queue}
                 onRemove={this.onDelete}
                 url={url}
-                updated={this.state.updated}
                 playing={this.state.playing}
               />
               <br />

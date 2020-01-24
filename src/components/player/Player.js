@@ -20,14 +20,16 @@ export default class Player extends Component {
       light: false,
       volume: 0.8,
       muted: false,
+      duration: 0,
       played: 0,
       loaded: 0,
-      duration: 0,
       playbackRate: 1.0,
       loop: false,
       array: this.props.array
     };
   }
+  //tee se seek siitä reactplayher demosta, ja vaa sillee et set to 0, kun url on sama tai jotai
+  //tai siis set to 0, kun kutsutaan jotakin, ja sitä kutsutaan, kun vaihdetaan biisiä.?
   load = url => {
     this.setState({
       url,
@@ -65,6 +67,7 @@ export default class Player extends Component {
         url: url,
         title: this.state.array[0].title
       });
+      this.props.onRemove(this.state.array[0]); //removes from queue
     } else {
       this.setState({
         playing: false,
@@ -72,7 +75,7 @@ export default class Player extends Component {
       });
     }
 
-    this.props.onRemove(this.state.array[0]); //removes from queue
+    //this.props.onRemove(this.state.array[0]); //removes from queue
   };
   handlePause = () => {
     console.log("onPause");
@@ -80,6 +83,7 @@ export default class Player extends Component {
   };
   handleEnded = () => {
     console.log("onEnded");
+    this.setState({ playing: false });
     this.handlePlayNext();
   };
   renderLoadButton = (url, label) => {
