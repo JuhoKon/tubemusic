@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import Playlistitem from "./playlistitem";
 import LoadPlaylistModal from "./loadPlaylistModal";
+import SaveModal from "./save/saveModal";
 import { CSSTransition } from "react-transition-group";
 import isEqual from "react-fast-compare";
 import "./playlist.css";
@@ -28,18 +29,10 @@ class Playlist extends Component {
     console.log("playPlaylist");
     this.props.playPlaylist(playlist);
   }
+
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
-
-    // console.log(playlist);
-    //TODO:
-    //save current playlist juttu
-    //clear queue nappula
-    //save current playlist ja nimi juttu siihe
-    //edit playlists peri aattees vaa nimi siihe
-    //jos joskus jaksaa ni sellasen drag to change queue part
-    //fixaa bugi jos lisää playlistin kaks kertaa ni ei pysty poistaa queuesta
     return (
       <div>
         <Container>
@@ -57,9 +50,7 @@ class Playlist extends Component {
           >
             + Queue
           </Button>{" "}
-          <Button className="btn btn-primary float-right" color="primary">
-            Save
-          </Button>
+          <SaveModal />
         </Container>
         <p>Playlist</p>
         <div id="videolist">

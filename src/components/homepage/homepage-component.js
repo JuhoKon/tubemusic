@@ -63,7 +63,6 @@ export default class Homepage extends Component {
       queue: itemArray
     });
   }
-
   addPlaylistToQueue() {
     let playlist = this.state.playlist;
     let queue = this.state.queue;
