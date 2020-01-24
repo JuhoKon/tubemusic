@@ -24,11 +24,15 @@ class Playlist extends Component {
       });
     }
   }
+  playPlaylist(playlist) {
+    console.log("playPlaylist");
+    this.props.playPlaylist(playlist);
+  }
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
 
-    console.log(playlist);
+    // console.log(playlist);
     //TODO:
     //save current playlist juttu
     //clear queue nappula
@@ -40,14 +44,21 @@ class Playlist extends Component {
       <div>
         <Container>
           <Button
+            className="float-left btn-remove"
+            color="info"
+            onClick={this.playPlaylist.bind(this, playlist)}
+          >
+            Play
+          </Button>{" "}
+          <Button
             className="float-right btn-remove"
             color="info"
             onClick={this.props.addPlaylistToQueue}
           >
-            Play
+            + Queue
           </Button>{" "}
           <Button className="btn btn-primary float-right" color="primary">
-            Save current playlist
+            Save
           </Button>
         </Container>
         <p>Playlist</p>

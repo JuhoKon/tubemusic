@@ -12,7 +12,6 @@ class Queue extends Component {
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
-      //if change in props
       this.setState({
         queue: this.props.queue
       });
@@ -20,7 +19,7 @@ class Queue extends Component {
   }
   render() {
     const queue = this.state.queue;
-
+    console.log(queue);
     return (
       <div>
         {queue.map(

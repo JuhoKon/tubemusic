@@ -100,8 +100,8 @@ export default class Player extends Component {
   };
   render() {
     const { url, playing, volume, array } = this.state;
-    console.log(url);
-    console.log(array);
+    // console.log(url);
+    //console.log(array);
     return (
       <Container className="container-fluid">
         <div className="app">

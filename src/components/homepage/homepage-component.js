@@ -7,7 +7,6 @@ import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
 import { handleSubmit, getPlaylists } from "../functions/functions";
-const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c";
 
 export default class Homepage extends Component {
   constructor(props, context) {
@@ -23,6 +22,8 @@ export default class Homepage extends Component {
     this.AddToPlaylist = this.AddToPlaylist.bind(this);
     this.onDeleteFromPlaylist = this.onDeleteFromPlaylist.bind(this);
     this.addPlaylistToQueue = this.addPlaylistToQueue.bind(this);
+    this.loadPlaylist = this.loadPlaylist.bind(this);
+    this.playPlaylist = this.playPlaylist.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -33,21 +34,54 @@ export default class Homepage extends Component {
       playing: false
     };
   }
-  addPlaylistToQueue() {
-    let playlist = this.state.playlist;
-
-    for (let i = 0; i < playlist.length; i++) {
-      this.onAdd(playlist[i]);
+  isSame(array1, array2) {
+    for (let i = 0; i < array1.length; i++) {
+      if (array1[i].title !== array2[i].title) {
+        return false;
+      }
+    }
+    return true;
+  }
+  playPlaylist() {
+    if (this.state.queue.length === this.state.playlist.length) {
+      if (this.isSame(this.state.queue, this.state.playlist)) {
+        return;
+      }
+    }
+    console.log(this.state.queue, this.state.playlist);
+    var itemArray = [];
+    for (let i = 0; i < this.state.playlist.length; i++) {
+      console.log(this.state.playlist[i]);
+      let itemObject = {};
+      itemObject["title"] = this.state.playlist[i].title;
+      itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
+      itemObject["videoId"] = this.state.playlist[i].videoId;
+      itemObject["uniqueId"] = this.state.playlist[i].uniqueId;
+      itemArray.push(itemObject);
     }
     this.setState({
-      updated: true
+      queue: itemArray
     });
   }
-  loadPlaylist(playlists) {
-    console.log(playlists);
+
+  addPlaylistToQueue() {
+    let playlist = this.state.playlist;
+    let queue = this.state.queue;
+    console.log(playlist);
+    console.log("Hello?");
+    for (let i = 0; i < playlist.length; i++) {
+      queue.push(playlist[i]);
+    }
+    this.setState({
+      queue: queue
+    });
+  }
+  loadPlaylist(playlist) {
+    this.setState({
+      playlist: playlist.playlist
+    });
   }
   AddToPlaylist(item) {
-    console.log(item);
     this.state.playlist.push(item);
     this.setState({
       updated: item
@@ -85,7 +119,8 @@ export default class Homepage extends Component {
     });
   }
   onAdd(item) {
-    //console.log(item);
+    console.log(item);
+    console.log(this.state.queue);
     this.state.queue.push(item);
     this.setState({
       updated: item
@@ -97,12 +132,11 @@ export default class Homepage extends Component {
     //delete from queue
     if (!item) return;
     if (typeof this.state.queue[0] === "undefined") return;
-    console.log("Moi", item.uniqueId);
-    console.log(this.state.queue[0].uniqueId);
+
     for (let i = 0; i < this.state.queue.length; i++) {
       if (this.state.queue[i].uniqueId === item.uniqueId) {
         //delete item from queue
-        console.log("löyty");
+
         this.state.queue.splice(i, 1);
         break;
       }
@@ -174,6 +208,7 @@ export default class Homepage extends Component {
                 onPlay={this.onPlay}
                 addPlaylistToQueue={this.addPlaylistToQueue}
                 onRemove={this.onDelete}
+                playPlaylist={this.playPlaylist}
               />
             </Col>
             <Col sm="4">

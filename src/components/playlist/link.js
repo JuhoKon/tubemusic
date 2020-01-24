@@ -30,7 +30,7 @@ class Link extends Component {
               <Button
                 className="btn btn-primary float-left"
                 color="primary"
-                onClick={this.loadPlaylist.bind(this, this.props.playlist)}
+                onClick={this.loadPlaylist.bind(this, this.props)}
               >
                 Load
               </Button>
