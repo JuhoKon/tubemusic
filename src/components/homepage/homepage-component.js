@@ -146,13 +146,15 @@ export default class Homepage extends Component {
   }
   onPlay(item) {
     if (!item) return;
+    console.log(item);
     const videoId = item.videoId;
     const url = "https://www.youtube.com/watch?v=" + videoId;
     this.setState({
       url: url, //url gets passed to player as props
-      playing: true
+      playing: true,
+      updated: true
     });
-    this.onDelete(item); //delete chosen item
+    this.onDelete(item); //delete chosen item from queue
   }
   render() {
     const itemArray = [];
@@ -188,6 +190,7 @@ export default class Homepage extends Component {
                 array={queue}
                 onRemove={this.onDelete}
                 url={url}
+                updated={this.state.updated}
                 playing={this.state.playing}
               />
               <br />

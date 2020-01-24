@@ -46,12 +46,9 @@ export default class Player extends Component {
       });
     }
   }
+
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
-  };
-
-  handleStop = () => {
-    this.setState({ url: null, playing: false });
   };
   handlePlay = () => {
     console.log("onPlay");
@@ -62,7 +59,6 @@ export default class Player extends Component {
 
     if (typeof this.state.array[0] !== "undefined") {
       const videoId = this.state.array[0].videoId;
-
       const url = "https://www.youtube.com/watch?v=" + videoId;
       this.setState({
         playing: true,
@@ -85,12 +81,6 @@ export default class Player extends Component {
   handleEnded = () => {
     console.log("onEnded");
     this.handlePlayNext();
-
-    //this.setState({ playing: this.state.loop });
-
-    //ADD to it takes one away from queue?
-    //otetaa eka elementti jonosta toho urlii, jos loppuu ni poistetaa eka elementti
-    //laitetaa statee ni renderaa uudestaa?
   };
   renderLoadButton = (url, label) => {
     return <button onClick={() => this.load(url)}>{label}</button>;
@@ -100,7 +90,7 @@ export default class Player extends Component {
   };
   render() {
     const { url, playing, volume, array } = this.state;
-    // console.log(url);
+    console.log(this.state.url);
     //console.log(array);
     return (
       <Container className="container-fluid">
@@ -113,7 +103,7 @@ export default class Player extends Component {
                 className="react-player"
                 width="100%"
                 height="100%"
-                url={url}
+                url={this.state.url}
                 playing={playing}
                 controls={true}
                 volume={volume}
@@ -128,7 +118,6 @@ export default class Player extends Component {
                 <tr>
                   <th>Controls</th>
                   <td>
-                    <button onClick={this.handleStop}>Stop</button>
                     <button onClick={this.handlePlayPause}>
                       {playing ? "Pause" : "Play"}
                     </button>
