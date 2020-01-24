@@ -20,6 +20,9 @@ export default class Homepage extends Component {
     this.onPlay = this.onPlay.bind(this);
     this.getPlaylist = this.getPlaylist.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.AddToPlaylist = this.AddToPlaylist.bind(this);
+    this.onDeleteFromPlaylist = this.onDeleteFromPlaylist.bind(this);
+    this.addPlaylistToQueue = this.addPlaylistToQueue.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -30,7 +33,40 @@ export default class Homepage extends Component {
       playing: false
     };
   }
-
+  addPlaylistToQueue() {
+    let queue = this.state.queue;
+    let playlist = this.state.playlist;
+    let merged = queue.concat(playlist);
+    this.setState({
+      queue: merged
+    });
+  }
+  loadPlaylist(playlists) {
+    console.log(playlists);
+  }
+  AddToPlaylist(item) {
+    console.log(item);
+    this.state.playlist.push(item);
+    this.setState({
+      updated: item
+    });
+  }
+  onDeleteFromPlaylist(item) {
+    if (!item) return;
+    if (typeof this.state.playlist[0] === "undefined") return;
+    //console.log(item.uniqueId);
+    //console.log(this.state.queue[0].uniqueId);
+    for (let i = 0; i < this.state.playlist.length; i++) {
+      if (this.state.playlist[i].uniqueId === item.uniqueId) {
+        //delete item from playlist
+        this.state.playlist.splice(i, 1);
+        break;
+      }
+    }
+    this.setState({
+      updated: item.videoId
+    });
+  }
   async handleSubmit(termFromSearch) {
     const result = await handleSubmit(termFromSearch);
     // console.log(result);
@@ -87,6 +123,8 @@ export default class Homepage extends Component {
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
+    const playlist = this.state.playlist;
+    //console.log(playlist);
     // console.log(this.state.items);
     //console.log(queue);
     this.state.items.map(item => videoIdArray.push(item.id.videoId));
@@ -122,11 +160,14 @@ export default class Homepage extends Component {
               />
             </Col>
             <Col sm="4">
-              Playlist
               <Playlist
                 playlists={playlists}
-                playlist={itemArray}
+                playlist={playlist}
                 getPlayList={this.getPlaylist}
+                loadPlaylist={this.loadPlaylist}
+                onDeleteFromPlaylist={this.onDeleteFromPlaylist}
+                onPlay={this.onPlay}
+                addPlaylistToQueue={this.addPlaylistToQueue}
               />
             </Col>
             <Col sm="4">
@@ -136,6 +177,7 @@ export default class Homepage extends Component {
                 items={itemArray}
                 onAdd={this.onAdd}
                 onPlay={this.onPlay}
+                AddToPlaylist={this.AddToPlaylist}
               />
             </Col>
           </Row>

@@ -11,16 +11,23 @@ class Videolist extends Component {
 
   render() {
     const items = this.props.items;
- 
+
     return (
       <div id="videolist">
         <br />
         <br />
         {items.map(
-          ({ title, publishedAt, channelTitle, videoId, thumbnail, uniqueId }) => (
+          ({
+            title,
+            publishedAt,
+            channelTitle,
+            videoId,
+            thumbnail,
+            uniqueId
+          }) => (
             <CSSTransition key={uniqueId} timeout={500} classNames="fade">
               <Videoitem
-                uniqueId = {uniqueId}
+                uniqueId={uniqueId}
                 title={title}
                 thumbnail={thumbnail}
                 channelTitle={channelTitle}
@@ -28,6 +35,7 @@ class Videolist extends Component {
                 videoId={videoId}
                 addFunc={this.props.onAdd}
                 onPlay={this.props.onPlay}
+                AddToPlaylist={this.props.AddToPlaylist}
               />
             </CSSTransition>
           )
@@ -39,18 +47,20 @@ class Videolist extends Component {
           videoId="0plu8CGDAJk"
           addFunc={this.props.onAdd}
           onPlay={this.props.onPlay}
-          uniqueId = "45"
+          uniqueId="45"
+          AddToPlaylist={this.props.AddToPlaylist}
         />
         <Videoitem
-        uniqueId = "454"
+          uniqueId="454"
           title="2"
           thumbnail="youtube.com"
           channelTitle="Ss"
           videoId="121212121"
           addFunc={this.props.onAdd}
+          AddToPlaylist={this.props.AddToPlaylist}
         />
         <Videoitem
-        uniqueId = "435"
+          uniqueId="435"
           title="3"
           thumbnail="youtube.com"
           channelTitle="Ss"
@@ -58,7 +68,7 @@ class Videolist extends Component {
           addFunc={this.props.onAdd}
         />
         <Videoitem
-        uniqueId = "3345"
+          uniqueId="3345"
           title="4"
           thumbnail="youtube.com"
           channelTitle="Ss"

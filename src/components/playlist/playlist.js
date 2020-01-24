@@ -1,86 +1,72 @@
 import React, { Component, Fragment } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import Playlistitem from "./playlistitem";
-import Link from "./link.js";
+import LoadPlaylistModal from "./loadPlaylistModal";
 import { CSSTransition } from "react-transition-group";
+import isEqual from "react-fast-compare";
 import "./playlist.css";
 class Playlist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playlists: this.props.playlists
+      playlists: this.props.playlists,
+      playlist: this.props.playlist
     };
   }
-  //TODO: playlistiin lisääminen ja poistaminen, niiden lataaminen databasesta
-  //niiden editoiminen ja poistaminen databasesta
-  //playlistan siirtäminen queueen seuraavaksi.
   componentDidMount() {
     this.props.getPlayList();
+  }
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      //if change in props
+      this.setState({
+        playlist: this.props.playlist
+      });
+    }
   }
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
-    const nameArray = [];
-    console.log(playlists[0]);
-    playlists.map(item => nameArray.push(item._id));
-    console.log(nameArray);
+    console.log(playlist);
+    //TODO:
+    //save current playlist juttu
     return (
-      <Row>
-        <Col sm="8">
-          <div id="videolist">
-            <br />
-            <br />
-            {playlist.map(({ title, videoId, uniqueId }) => (
-              <CSSTransition key={uniqueId} timeout={500} classNames="fade">
-                <Playlistitem
-                  uniqueId={uniqueId}
-                  title={title}
-                  videoId={videoId}
-                  addFunc={this.props.onAdd}
-                  onPlay={this.props.onPlay}
-                />
-              </CSSTransition>
-            ))}
-            <Playlistitem
-              title="Rich Brian - Drive Safe (Disko '1980')"
-              videoId="0plu8CGDAJk"
-              addFunc={this.props.onAdd}
-              onPlay={this.props.onPlay}
-              uniqueId="45"
-            />
-            <Playlistitem
-              uniqueId="454"
-              title="2"
-              videoId="121212121"
-              addFunc={this.props.onAdd}
-            />
-            <Playlistitem
-              uniqueId="435"
-              title="3"
-              thumbnail="youtube.com"
-              channelTitle="Ss"
-              videoId="0plu8CGDAJk"
-              addFunc={this.props.onAdd}
-            />
-            <Playlistitem
-              uniqueId="3345"
-              title="4"
-              videoId="0plu8CGDAJk"
-              addFunc={this.props.onAdd}
-            />
-          </div>
-        </Col>
-        <Col sm="4">
-          Available playlists:
+      <div>
+        <Container>
+          <Button
+            className="float-right btn-remove"
+            color="info"
+            onClick={this.props.addPlaylistToQueue}
+          >
+            Play
+          </Button>{" "}
+          <Button className="btn btn-primary float-right" color="primary">
+            Save current playlist
+          </Button>
+        </Container>
+        <p>Playlist</p>
+        <div id="videolist">
           <br />
+          <LoadPlaylistModal
+            playlists={playlists}
+            loadPlaylist={this.props.loadPlaylist}
+          />
+
           <br />
-          {playlists.map(({ name, _id }) => (
-            <CSSTransition key={_id} timeout={500} classNames="fade">
-              <Link name={name}></Link>
+          {playlist.map(({ title, videoId, uniqueId }) => (
+            <CSSTransition key={uniqueId} timeout={500} classNames="fade">
+              <Playlistitem
+                uniqueId={uniqueId}
+                title={title}
+                videoId={videoId}
+                addFunc={this.props.onAdd}
+                onPlay={this.props.onPlay}
+                onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+              />
             </CSSTransition>
           ))}
-        </Col>
-      </Row>
+        </div>
+      </div>
     );
   }
 }

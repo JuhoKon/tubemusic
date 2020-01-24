@@ -15,6 +15,9 @@ class Videoitem extends Component {
   onPlayClick = id => {
     this.props.onPlay(id);
   };
+  onAddToPlaylist = id => {
+    this.props.AddToPlaylist(id);
+  };
   render() {
     return (
       <div>
@@ -52,7 +55,7 @@ class Videoitem extends Component {
           <Button
             className="btn btn-primary float-right"
             color="secondary"
-            onClick={this.onAddClick.bind(this, this.props)}
+            onClick={this.onAddToPlaylist.bind(this, this.props)}
           >
             + Playlist
           </Button>
