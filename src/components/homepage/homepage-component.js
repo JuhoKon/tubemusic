@@ -34,11 +34,14 @@ export default class Homepage extends Component {
     };
   }
   addPlaylistToQueue() {
-    let queue = this.state.queue;
     let playlist = this.state.playlist;
-    let merged = queue.concat(playlist);
+
+    for (let i = 0; i < playlist.length; i++) {
+      console.log("hello");
+      this.state.queue.push(playlist[i]);
+    }
     this.setState({
-      queue: merged
+      updated: true
     });
   }
   loadPlaylist(playlists) {
@@ -54,6 +57,7 @@ export default class Homepage extends Component {
   onDeleteFromPlaylist(item) {
     if (!item) return;
     if (typeof this.state.playlist[0] === "undefined") return;
+
     //console.log(item.uniqueId);
     //console.log(this.state.queue[0].uniqueId);
     for (let i = 0; i < this.state.playlist.length; i++) {
@@ -81,23 +85,25 @@ export default class Homepage extends Component {
       playlists: result.data.Playlist
     });
   }
-  onAdd(videoId) {
-    //console.log(videoId);
-    this.state.queue.push(videoId);
+  onAdd(item) {
+    //console.log(item);
+    this.state.queue.push(item);
     this.setState({
-      updated: videoId
+      updated: item
     });
     //console.log(this.state.queue);
     //console.log(videoId);
   }
   onDelete(item) {
+    //delete from queue
     if (!item) return;
     if (typeof this.state.queue[0] === "undefined") return;
-    //console.log(item.uniqueId);
-    //console.log(this.state.queue[0].uniqueId);
+    console.log("Moi", item.uniqueId);
+    console.log(this.state.queue[0].uniqueId);
     for (let i = 0; i < this.state.queue.length; i++) {
       if (this.state.queue[i].uniqueId === item.uniqueId) {
         //delete item from queue
+        console.log("löyty");
         this.state.queue.splice(i, 1);
         break;
       }
@@ -168,6 +174,7 @@ export default class Homepage extends Component {
                 onDeleteFromPlaylist={this.onDeleteFromPlaylist}
                 onPlay={this.onPlay}
                 addPlaylistToQueue={this.addPlaylistToQueue}
+                onRemove={this.onDelete}
               />
             </Col>
             <Col sm="4">

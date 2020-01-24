@@ -47,7 +47,9 @@ class LoadPlaylistModal extends Component {
   onSubmit = e => {
     e.preventDefault();
   };
-
+  loadPlaylist = () => {
+    this.props.loadPlaylist();
+  };
   render() {
     const playlists = this.state.playlists;
 
@@ -68,7 +70,7 @@ class LoadPlaylistModal extends Component {
               <Link
                 playlist={playlist}
                 name={name}
-                loadPlaylist={this.props.loadPlaylist}
+                loadPlaylist={this.loadPlaylist.bind(this)}
               ></Link>
             </CSSTransition>
           ))}

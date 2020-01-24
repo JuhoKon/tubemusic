@@ -30,6 +30,11 @@ class Playlist extends Component {
     console.log(playlist);
     //TODO:
     //save current playlist juttu
+    //clear queue nappula
+    //save current playlist ja nimi juttu siihe
+    //edit playlists peri aattees vaa nimi siihe
+    //jos joskus jaksaa ni sellasen drag to change queue part
+    //fixaa bugi jos lisää playlistin kaks kertaa ni ei pysty poistaa queuesta
     return (
       <div>
         <Container>
@@ -62,6 +67,7 @@ class Playlist extends Component {
                 addFunc={this.props.onAdd}
                 onPlay={this.props.onPlay}
                 onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+                onRemove={this.props.onRemove}
               />
             </CSSTransition>
           ))}
