@@ -37,8 +37,7 @@ export default class Homepage extends Component {
     let playlist = this.state.playlist;
 
     for (let i = 0; i < playlist.length; i++) {
-      console.log("hello");
-      this.state.queue.push(playlist[i]);
+      this.onAdd(playlist[i]);
     }
     this.setState({
       updated: true

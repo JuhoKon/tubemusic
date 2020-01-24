@@ -24,17 +24,24 @@ class Queue extends Component {
     return (
       <div>
         {queue.map(
-          ({ title, publishedAt, channelTitle, videoId, thumbnail,uniqueId }) => (
-            <div key={uniqueId}>
+          ({
+            title,
+            publishedAt,
+            channelTitle,
+            videoId,
+            thumbnail,
+            uniqueId
+          }) => (
+            <div key={uniqueId + Math.random()}>
               <Queueitem
-                uniqueId = {uniqueId}
+                uniqueId={uniqueId}
                 title={title}
                 thumbnail={thumbnail}
                 channelTitle={channelTitle}
                 publishedAt={publishedAt}
                 videoId={videoId}
                 onRemove={this.props.onRemove}
-                onPlay = {this.props.onPlay}
+                onPlay={this.props.onPlay}
               />
             </div>
           )

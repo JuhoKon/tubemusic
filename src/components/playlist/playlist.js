@@ -27,6 +27,7 @@ class Playlist extends Component {
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
+
     console.log(playlist);
     //TODO:
     //save current playlist juttu
