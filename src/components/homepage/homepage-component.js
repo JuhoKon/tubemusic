@@ -185,10 +185,6 @@ export default class Homepage extends Component {
     this.player = player;
   };
   onPlay(item) {
-    //TODO:
-    //laita silleen, että tää laittaa sen pyydetyn biisin queue-arrayn ensimmäiseksi
-    //ja soittaa sitten "seuraavan"
-    //-> näin se ei poista queuesta turhaan biisejä
     if (!item) return;
     console.log(item);
     const videoId = item.videoId;
@@ -203,7 +199,6 @@ export default class Homepage extends Component {
       updated: true,
       title: title
     });
-    this.onDelete(item); //attempt to delete chosen item from queue
   }
   render() {
     const itemArray = [];
