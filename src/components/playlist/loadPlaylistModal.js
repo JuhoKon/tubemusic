@@ -40,6 +40,7 @@ class LoadPlaylistModal extends Component {
           {playlists.map(({ playlist, name, _id }) => (
             <CSSTransition key={_id} timeout={500} classNames="fade">
               <Link
+                deletePlaylist = {this.props.deletePlaylist}
                 _id={_id}
                 playlist={playlist}
                 name={name}

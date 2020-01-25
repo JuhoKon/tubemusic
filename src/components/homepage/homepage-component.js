@@ -10,7 +10,8 @@ import {
   handleSubmit,
   getPlaylists,
   makePlaylist,
-  updatePlaylist
+  updatePlaylist,
+  deletePlaylist
 } from "../functions/functions";
 
 export default class Homepage extends Component {
@@ -31,6 +32,7 @@ export default class Homepage extends Component {
     this.playPlaylist = this.playPlaylist.bind(this);
     this.makePlaylist = this.makePlaylist.bind(this);
     this.Updateplaylist = this.Updateplaylist.bind(this);
+    this.deletePlaylist = this.deletePlaylist.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -149,6 +151,10 @@ export default class Homepage extends Component {
       playlistName: result.data.name
     });
   }
+  async deletePlaylist(id) {
+    const result = await deletePlaylist(id);
+    this.getPlaylist();
+  }
   onAdd(item) {
     this.state.queue.push(item);
     this.setState({
@@ -179,6 +185,10 @@ export default class Homepage extends Component {
     this.player = player;
   };
   onPlay(item) {
+    //TODO:
+    //laita silleen, että tää laittaa sen pyydetyn biisin queue-arrayn ensimmäiseksi
+    //ja soittaa sitten "seuraavan"
+    //-> näin se ei poista queuesta turhaan biisejä
     if (!item) return;
     console.log(item);
     const videoId = item.videoId;
@@ -251,6 +261,7 @@ export default class Homepage extends Component {
                 playPlaylist={this.playPlaylist}
                 makePlaylist={this.makePlaylist}
                 Updateplaylist={this.Updateplaylist}
+                deletePlaylist = {this.deletePlaylist}
               />
             </Col>
             <Col sm="4">

@@ -44,6 +44,10 @@ export const updatePlaylist = async (body, id) => {
   );
   return res;
 };
+export const deletePlaylist = async (id) => {
+  let res = await axios.delete(`http://localhost:8080/playlists/delete/${id}`);
+  return res;
+}
 //TODO: delete
 //käy edge-caset läpi, eli mitä jos statesta ei löydy playlistid:tä (ei ole tehty sitä vielä)
 //ja user haluaa savettaa?

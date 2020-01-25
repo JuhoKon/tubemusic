@@ -70,6 +70,7 @@ class Playlist extends Component {
           playlistName={this.state.playlistName}
         />
         <LoadPlaylistModal
+        deletePlaylist = {this.props.deletePlaylist}
           getPlayList={this.props.getPlayList}
           playlists={playlists}
           loadPlaylist={this.props.loadPlaylist}

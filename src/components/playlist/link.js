@@ -12,6 +12,10 @@ class Link extends Component {
   loadPlaylist(playlist) {
     this.props.loadPlaylist(playlist);
   }
+  deletePlaylist(playlist) {
+   
+    this.props.deletePlaylist(playlist._id);
+  }
   render() {
     return (
       <div>
@@ -21,6 +25,7 @@ class Link extends Component {
               <Button
                 className="btn btn-primary float-right btn-remove"
                 color="danger"
+                onClick = {this.deletePlaylist.bind(this,this.props)}
               >
                 Delete
               </Button>
