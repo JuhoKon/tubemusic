@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from "reactstrap";
 import Playlistitem from "./playlistitem";
 import LoadPlaylistModal from "./loadPlaylistModal";
 import SaveModal from "./save/saveModal";
+import CreateNew from "./createNew/createNew";
 import { CSSTransition } from "react-transition-group";
 import isEqual from "react-fast-compare";
 import "./playlist.css";
@@ -11,7 +12,9 @@ class Playlist extends Component {
     super(props);
     this.state = {
       playlists: this.props.playlists,
-      playlist: this.props.playlist
+      playlist: this.props.playlist,
+      playlistName: this.props.playlistName,
+      playlistId: this.props.playlistId
     };
   }
   componentDidMount() {
@@ -21,7 +24,9 @@ class Playlist extends Component {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        playlist: this.props.playlist
+        playlist: this.props.playlist,
+        playlists: this.props.playlists,
+        playlistName: this.props.playlistName
       });
     }
   }
@@ -33,8 +38,11 @@ class Playlist extends Component {
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
+
+    console.log(playlists);
     return (
       <div>
+        <p>Playlist {this.state.playlistName}</p>
         <Container>
           <Button
             className="float-left btn-remove"
@@ -42,25 +50,32 @@ class Playlist extends Component {
             onClick={this.playPlaylist.bind(this, playlist)}
           >
             Play
-          </Button>{" "}
+          </Button>
+
           <Button
             className="float-right btn-remove"
             color="info"
             onClick={this.props.addPlaylistToQueue}
           >
             + Queue
-          </Button>{" "}
-          <SaveModal />
+          </Button>
         </Container>
-        <p>Playlist</p>
+        <SaveModal
+          playlistId={this.props.playlistId}
+          Updateplaylist={this.props.Updateplaylist}
+          playlistName={this.state.playlistName}
+        />
+        <CreateNew
+          makePlaylist={this.props.makePlaylist}
+          playlistName={this.state.playlistName}
+        />
+        <LoadPlaylistModal
+          getPlayList={this.props.getPlayList}
+          playlists={playlists}
+          loadPlaylist={this.props.loadPlaylist}
+        />
+        <br />
         <div id="videolist">
-          <br />
-          <LoadPlaylistModal
-            playlists={playlists}
-            loadPlaylist={this.props.loadPlaylist}
-          />
-
-          <br />
           {playlist.map(({ title, videoId, uniqueId }) => (
             <CSSTransition key={uniqueId} timeout={500} classNames="fade">
               <Playlistitem

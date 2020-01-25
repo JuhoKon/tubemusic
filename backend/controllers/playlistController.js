@@ -13,8 +13,8 @@ exports.create = function(req, res, next) {
     name: req.body.name,
     playlist: req.body.playlist
   });
-  playlist.save().then(() => {
-    res.json("Playlist created successfully");
+  playlist.save().then(data => {
+    res.json(data);
   });
 };
 exports.findByID = function(req, res, next) {
@@ -37,6 +37,7 @@ exports.updatebyID = function(req, res, next) {
       .then(() => res.json(playlist))
       .catch(err => res.status(400).json({ error: err }));
   });
+  // console.log(req.params.id);
 };
 exports.deletebyID = function(req, res, next) {
   Playlist.findByIdAndDelete(req.params.id) //delete actual post from the database

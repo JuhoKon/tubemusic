@@ -12,7 +12,7 @@ import {
   Alert
 } from "reactstrap";
 
-class SaveModal extends Component {
+class CreateNew extends Component {
   state = {
     modal: false,
     name: ""
@@ -27,38 +27,36 @@ class SaveModal extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.props.playlistId);
-    this.props.Updateplaylist(this.state.name, this.props.playlistId);
+    this.props.makePlaylist(this.state.name);
     this.toggle();
   };
   render() {
     return (
       <div>
         <Button
-          className="float-right btn-remove"
+          className="float-left btn-remove"
           onClick={this.toggle}
           href="#"
           color="primary"
         >
-          Save
+          Create new
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
-            Save playlist as
+            Create a new playlist here :)
           </ModalHeader>
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
               <FormGroup>
-                <Label for="name">Name:</Label>
+                <Label for="name">Name for the playlist:</Label>
                 <Input
                   type="name"
                   name="name"
                   id="name"
-                  placeholder={this.props.playlistName}
+                  placeholder="epic-partylist"
                   className="mb-4"
                   onChange={this.onChange}
                 ></Input>
-
                 <Button className="btn btn-primary my-4 btn-block">Save</Button>
               </FormGroup>
             </ModalBody>
@@ -69,4 +67,4 @@ class SaveModal extends Component {
   }
 }
 
-export default SaveModal;
+export default CreateNew;

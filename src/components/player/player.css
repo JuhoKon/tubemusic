@@ -10,6 +10,9 @@
 }
 
 .player-wrapper {
-  max-width: 480px;
-  min-height: 270px;
+  width: 480px;
+  height: 270px;
+}
+.btn-controls {
+  margin-left: 2px !important;
 }

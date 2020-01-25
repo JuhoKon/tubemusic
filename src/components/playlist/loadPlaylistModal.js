@@ -1,40 +1,14 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  NavLink,
-  Alert
-} from "reactstrap";
+import { Button, Modal, ModalHeader } from "reactstrap";
 import { CSSTransition } from "react-transition-group";
 import Link from "./link.js";
-import isEqual from "react-fast-compare";
 
 class LoadPlaylistModal extends Component {
   state = {
-    modal: false,
-    name: "",
-    email: "",
-    password: "",
-    age: Date,
-    message: null,
-    messageTest: [],
-    playlists: this.props.playlists
+    modal: false
   };
-  componentDidUpdate(prevProps) {
-    if (!isEqual(this.props, prevProps)) {
-      //if change in props
-      this.setState({
-        playlists: this.props.playlists
-      });
-    }
-  }
   toggle = () => {
+    this.props.getPlayList();
     this.setState({
       modal: !this.state.modal
     });
@@ -49,12 +23,12 @@ class LoadPlaylistModal extends Component {
   };
 
   render() {
-    const playlists = this.state.playlists;
+    const playlists = this.props.playlists;
 
     return (
       <div>
         <Button onClick={this.toggle} href="#">
-          Available playlists:
+          Available playlists
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
@@ -66,6 +40,7 @@ class LoadPlaylistModal extends Component {
           {playlists.map(({ playlist, name, _id }) => (
             <CSSTransition key={_id} timeout={500} classNames="fade">
               <Link
+                _id={_id}
                 playlist={playlist}
                 name={name}
                 loadPlaylist={this.props.loadPlaylist}

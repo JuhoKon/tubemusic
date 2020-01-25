@@ -6,7 +6,12 @@ import Search from "../search/search";
 import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
-import { handleSubmit, getPlaylists } from "../functions/functions";
+import {
+  handleSubmit,
+  getPlaylists,
+  makePlaylist,
+  updatePlaylist
+} from "../functions/functions";
 
 export default class Homepage extends Component {
   constructor(props, context) {
@@ -24,6 +29,8 @@ export default class Homepage extends Component {
     this.addPlaylistToQueue = this.addPlaylistToQueue.bind(this);
     this.loadPlaylist = this.loadPlaylist.bind(this);
     this.playPlaylist = this.playPlaylist.bind(this);
+    this.makePlaylist = this.makePlaylist.bind(this);
+    this.Updateplaylist = this.Updateplaylist.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -31,7 +38,9 @@ export default class Homepage extends Component {
       playlists: [],
       updated: "",
       url: null,
-      playing: false
+      playing: false,
+      playlistId: "",
+      title: "" //for rendering name
     };
   }
   isSame(array1, array2) {
@@ -48,7 +57,6 @@ export default class Homepage extends Component {
         return;
       }
     }
-    console.log(this.state.queue, this.state.playlist);
     var itemArray = [];
     for (let i = 0; i < this.state.playlist.length; i++) {
       console.log(this.state.playlist[i]);
@@ -76,8 +84,11 @@ export default class Homepage extends Component {
     });
   }
   loadPlaylist(playlist) {
+    console.log(playlist);
     this.setState({
-      playlist: playlist.playlist
+      playlist: playlist.playlist,
+      playlistName: playlist.name,
+      playlistId: playlist._id
     });
   }
   AddToPlaylist(item) {
@@ -112,14 +123,33 @@ export default class Homepage extends Component {
   }
   async getPlaylist() {
     const result = await getPlaylists();
-    //console.log(result.data.Playlist);
     this.setState({
       playlists: result.data.Playlist
     });
   }
+  async makePlaylist(name) {
+    this.setState({
+      playlist: []
+    });
+    let playlist = this.state.playlist;
+    const item = JSON.stringify({ name, playlist });
+    const result = await makePlaylist(item);
+    console.log(result.data._id);
+    this.setState({
+      playlistId: result.data._id,
+      playlistName: result.data.name
+    });
+  }
+  async Updateplaylist(name, id) {
+    let playlist = this.state.playlist;
+    const item = JSON.stringify({ name, playlist });
+    const result = await updatePlaylist(item, id);
+    //console.log(result);
+    this.setState({
+      playlistName: result.data.name
+    });
+  }
   onAdd(item) {
-    console.log(item);
-    console.log(this.state.queue);
     this.state.queue.push(item);
     this.setState({
       updated: item
@@ -144,17 +174,26 @@ export default class Homepage extends Component {
       updated: item.videoId
     });
   }
+  ref = player => {
+    //reference to player Child
+    this.player = player;
+  };
   onPlay(item) {
     if (!item) return;
     console.log(item);
     const videoId = item.videoId;
+    const title = item.title;
     const url = "https://www.youtube.com/watch?v=" + videoId;
+    if (url === this.state.url) {
+      this.player.seekTo0(); //Seeks to 0 incase of having same url
+    }
     this.setState({
       url: url, //url gets passed to player as props
       playing: true,
-      updated: true
+      updated: true,
+      title: title
     });
-    this.onDelete(item); //delete chosen item from queue
+    this.onDelete(item); //attempt to delete chosen item from queue
   }
   render() {
     const itemArray = [];
@@ -164,13 +203,9 @@ export default class Homepage extends Component {
     const url = this.state.url;
     const playlists = this.state.playlists;
     const playlist = this.state.playlist;
-    //console.log(playlist);
-    // console.log(this.state.items);
-    //console.log(queue);
+    console.log(playlists);
     this.state.items.map(item => videoIdArray.push(item.id.videoId));
-
     this.state.items.map(item => itemArray.push(item.snippet));
-
     this.state.items.map(item =>
       thumbnailArray.push(item.snippet.thumbnails.medium.url)
     );
@@ -187,10 +222,12 @@ export default class Homepage extends Component {
           <Row>
             <Col sm="4">
               <Player
+                ref={this.ref}
                 array={queue}
                 onRemove={this.onDelete}
                 url={url}
                 playing={this.state.playing}
+                title={this.state.title}
               />
               <br />
               <Queue
@@ -203,6 +240,8 @@ export default class Homepage extends Component {
               <Playlist
                 playlists={playlists}
                 playlist={playlist}
+                playlistName={this.state.playlistName}
+                playlistId={this.state.playlistId}
                 getPlayList={this.getPlaylist}
                 loadPlaylist={this.loadPlaylist}
                 onDeleteFromPlaylist={this.onDeleteFromPlaylist}
@@ -210,6 +249,8 @@ export default class Homepage extends Component {
                 addPlaylistToQueue={this.addPlaylistToQueue}
                 onRemove={this.onDelete}
                 playPlaylist={this.playPlaylist}
+                makePlaylist={this.makePlaylist}
+                Updateplaylist={this.Updateplaylist}
               />
             </Col>
             <Col sm="4">
