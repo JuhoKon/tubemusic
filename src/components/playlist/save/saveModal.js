@@ -39,6 +39,7 @@ class SaveModal extends Component {
           onClick={this.toggle}
           href="#"
           color="primary"
+          disabled={this.props.playlistId ? false : true}
         >
           Save
         </Button>
