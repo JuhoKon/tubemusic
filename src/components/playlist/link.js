@@ -10,7 +10,7 @@ import {
 
 class Link extends Component {
   loadPlaylist(playlist) {
-    this.props.loadPlaylist(playlist);
+    this.props.loadPlaylist(playlist._id);
   }
   deletePlaylist(playlist) {
     this.props.deletePlaylist(playlist._id);

@@ -133,8 +133,8 @@ export default class Homepage extends Component {
       items: result
     });
   }
-  async loadPlaylist(playlist) {
-    const id = playlist._id;
+  async loadPlaylist(id) {
+    //const id = playlist._id;
     //console.log(id);
     const result = await getPlayListById(id);
     //console.log(result.data);

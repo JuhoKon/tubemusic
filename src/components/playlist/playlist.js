@@ -26,6 +26,7 @@ class Playlist extends Component {
       playlistId: this.props.playlistId,
       editMode: false
     };
+    this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
   }
   componentDidMount() {
     this.props.getPlayList();
@@ -50,12 +51,18 @@ class Playlist extends Component {
       editMode: !this.state.editMode
     });
     //console.log(this.state.playlistId); tos on id fixaa
-    //this.props.loadPlaylist({ _id: this.state.playlist });
+    setTimeout(() => this.props.loadPlaylist(this.state.playlistId), 200);
+    //this.props.loadPlaylist(this.state.playlistId);
   };
-  UpdateCurrentPlaylist = () => {
+  /*UpdateCurrentPlaylist() {
     this.props.UpdateCurrentPlaylist();
+    //this.props.loadPlaylist(this.state.playlistId);
     this.toggle();
-  };
+  }*/
+  async UpdateCurrentPlaylist() {
+    let result = await this.props.UpdateCurrentPlaylist();
+    this.toggle();
+  }
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
@@ -105,7 +112,7 @@ class Playlist extends Component {
           color={this.state.editMode ? "primary" : "secondary"}
           className="float-right btn-remove"
           onClick={this.toggle}
-          disabled={this.props.playlist[0] ? false : true}
+          /*disabled={this.props.playlist[0] ? false : true}*/
         >
           {this.state.editMode ? "Revert changes" : "Edit"}
         </Button>

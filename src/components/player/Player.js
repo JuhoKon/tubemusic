@@ -63,6 +63,9 @@ export default class Player extends Component {
           console.log(prevProps);
           itemObject["title"] = prevProps.title;
           itemObject["url"] = prevProps.url;
+          if (itemObject["url"] === null) {
+            return;
+          }
           this.addToHistory(itemObject);
         }
       }
@@ -70,10 +73,16 @@ export default class Player extends Component {
   }
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
+    if (this.state.url === null && !this.state.playing) {
+      this.handlePlayNext();
+    }
   };
   handlePlay = () => {
     console.log("onPlay");
     this.setState({ playing: true });
+    if (this.state.url === null) {
+      this.handlePlayNext();
+    }
   };
   addToHistory = item => {
     this.state.history.unshift(item);
@@ -84,7 +93,10 @@ export default class Player extends Component {
     let itemObject = {};
     itemObject["title"] = this.state.title;
     itemObject["url"] = this.state.url;
-    this.addToHistory(itemObject);
+    if (itemObject["url"] !== null) {
+      this.addToHistory(itemObject);
+    }
+
     if (typeof this.state.array[0] !== "undefined") {
       const videoId = this.state.array[0].videoId;
       const url = "https://www.youtube.com/watch?v=" + videoId;
