@@ -85,14 +85,6 @@ export default class Homepage extends Component {
       queue: queue
     });
   }
-  loadPlaylist(playlist) {
-    console.log(playlist);
-    this.setState({
-      playlist: playlist.playlist,
-      playlistName: playlist.name,
-      playlistId: playlist._id
-    });
-  }
   AddToPlaylist(item) {
     this.state.playlist.push(item);
     this.setState({
@@ -123,7 +115,17 @@ export default class Homepage extends Component {
       items: result
     });
   }
-  async getPlaylist() {
+  loadPlaylist(playlist) {
+    console.log(playlist);
+    this.setState({
+      playlist: playlist.playlist,
+      playlistName: playlist.name,
+      playlistId: playlist._id
+    });
+  }
+  //replacee ton ylemmän
+  //aynsc loadPlaylist (id) {} //TODO: hakee tietyn playlistan ja laittaa sen playlistiksi.
+  async getPlaylist() { //TODO: muuta nimi getPlayLists
     const result = await getPlaylists();
     this.setState({
       playlists: result.data.Playlist

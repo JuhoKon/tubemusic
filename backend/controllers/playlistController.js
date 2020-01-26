@@ -3,7 +3,7 @@ var Playlist = require("../models/playlist.model");
 exports.index = function(req, res, next) {
   Playlist.find()
     .then(Playlist => {
-      res.json({ Playlist: Playlist });
+      res.json({ Playlist: Playlist }); //todo: return nimi + id kaikki postaukset
     }) //return all posts
     .catch(err => res.status(400).json("Error: " + err));
 };
