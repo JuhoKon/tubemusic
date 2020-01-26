@@ -48,6 +48,7 @@ class Playlist extends Component {
             className="float-left btn-remove"
             color="info"
             onClick={this.playPlaylist.bind(this, playlist)}
+            disabled={this.props.playlist[0] ? false : true}
           >
             Play
           </Button>
@@ -56,6 +57,7 @@ class Playlist extends Component {
             className="float-right btn-remove"
             color="info"
             onClick={this.props.addPlaylistToQueue}
+            disabled={this.props.playlist[0] ? false : true}
           >
             + Queue
           </Button>
