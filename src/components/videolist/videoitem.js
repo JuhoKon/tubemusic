@@ -20,6 +20,7 @@ class Videoitem extends Component {
     this.props.AddToPlaylist(id);
   };
   render() {
+    //TODO: make it look much better
     return (
       <div>
         {this.props.videoId ? (
@@ -51,12 +52,14 @@ class Videoitem extends Component {
                   <Moment fromNow>{this.props.publishedAt}</Moment>
                 </small>
               </CardText>
+              {/* A JSX comment 
               <CardImg
                 width="10px"
                 bottom
                 src={this.props.thumbnail}
                 alt={this.props.thumbnail}
               />
+              */}
             </CardBody>
             <Button
               className="btn btn-primary float-right"

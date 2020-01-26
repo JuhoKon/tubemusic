@@ -39,7 +39,7 @@ class Playlist extends Component {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
 
-    console.log(playlists);
+    //console.log(playlists);
     return (
       <div>
         <p>Playlist {this.state.playlistName}</p>
@@ -70,7 +70,7 @@ class Playlist extends Component {
           playlistName={this.state.playlistName}
         />
         <LoadPlaylistModal
-        deletePlaylist = {this.props.deletePlaylist}
+          deletePlaylist={this.props.deletePlaylist}
           getPlayList={this.props.getPlayList}
           playlists={playlists}
           loadPlaylist={this.props.loadPlaylist}

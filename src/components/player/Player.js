@@ -102,14 +102,13 @@ export default class Player extends Component {
   }
   render() {
     const { url, playing, volume, array } = this.state;
-    console.log(this.state.url);
-    console.log(this.state.title);
+    //console.log(this.state.url);
+    //console.log(this.state.title);
     return (
       <Container className="container-fluid">
         <div className="app">
           <section className="section">
             <p>Now playing {this.state.title}</p>
-
             <div className="player-wrapper">
               <ReactPlayer
                 ref={this.ref}
@@ -137,13 +136,21 @@ export default class Player extends Component {
                       {playing ? "Pause" : "Play"}
                     </Button>
                     <Button
+                      disabled={this.props.array[0] ? false : true}
                       className="btn-controls"
                       onClick={this.handlePlayNext}
                     >
                       Play from queue
                     </Button>
-                    <Button className="btn-controls" onClick={this.handleEnded}>
+                    <Button
+                      disabled={this.props.array[0] ? false : true}
+                      className="btn-controls"
+                      onClick={this.handleEnded}
+                    >
                       Play next song
+                    </Button>
+                    <Button className="btn-controls float-right">
+                      History
                     </Button>
                   </td>
                 </tr>

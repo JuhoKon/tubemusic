@@ -19,7 +19,7 @@ class Queue extends Component {
   }
   render() {
     const queue = this.state.queue;
-    console.log(queue);
+    //console.log(queue);
     return (
       <div>
         {queue.map(

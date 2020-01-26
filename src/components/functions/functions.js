@@ -14,7 +14,6 @@ export const handleSubmit = async termFromSearch => {
 };
 export const getPlaylists = async () => {
   let res = await axios.get("http://localhost:8080/playlists");
-
   return res;
 };
 export const makePlaylist = async body => {
@@ -44,10 +43,11 @@ export const updatePlaylist = async (body, id) => {
   );
   return res;
 };
-export const deletePlaylist = async (id) => {
+export const deletePlaylist = async id => {
   let res = await axios.delete(`http://localhost:8080/playlists/delete/${id}`);
   return res;
-}
-//TODO: delete
-//käy edge-caset läpi, eli mitä jos statesta ei löydy playlistid:tä (ei ole tehty sitä vielä)
-//ja user haluaa savettaa?
+};
+export const getPlayListById = async id => {
+  let res = await axios.get(`http://localhost:8080/playlists/find/${id}`);
+  return res;
+};

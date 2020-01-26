@@ -11,7 +11,8 @@ import {
   getPlaylists,
   makePlaylist,
   updatePlaylist,
-  deletePlaylist
+  deletePlaylist,
+  getPlayListById
 } from "../functions/functions";
 
 export default class Homepage extends Component {
@@ -115,18 +116,21 @@ export default class Homepage extends Component {
       items: result
     });
   }
-  loadPlaylist(playlist) {
-    console.log(playlist);
+  async loadPlaylist(playlist) {
+    const id = playlist._id;
+    //console.log(id);
+    const result = await getPlayListById(id);
+    //console.log(result.data);
     this.setState({
-      playlist: playlist.playlist,
-      playlistName: playlist.name,
-      playlistId: playlist._id
+      playlist: result.data.playlist,
+      playlistName: result.data.name,
+      playlistId: result.data._id
     });
   }
-  //replacee ton ylemmän
-  //aynsc loadPlaylist (id) {} //TODO: hakee tietyn playlistan ja laittaa sen playlistiksi.
-  async getPlaylist() { //TODO: muuta nimi getPlayLists
+  async getPlaylist() {
+    //TODO: muuta nimi getPlayLists
     const result = await getPlaylists();
+    //console.log(result);
     this.setState({
       playlists: result.data.Playlist
     });
@@ -138,7 +142,7 @@ export default class Homepage extends Component {
     let playlist = this.state.playlist;
     const item = JSON.stringify({ name, playlist });
     const result = await makePlaylist(item);
-    console.log(result.data._id);
+    //console.log(result.data._id);
     this.setState({
       playlistId: result.data._id,
       playlistName: result.data.name
@@ -158,6 +162,7 @@ export default class Homepage extends Component {
     this.getPlaylist();
   }
   onAdd(item) {
+    //ADDS SELECTED ITEM TO QUEUE - PLAYER
     this.state.queue.push(item);
     this.setState({
       updated: item
@@ -210,7 +215,7 @@ export default class Homepage extends Component {
     const url = this.state.url;
     const playlists = this.state.playlists;
     const playlist = this.state.playlist;
-    console.log(playlists);
+    //console.log(playlists);
     this.state.items.map(item => videoIdArray.push(item.id.videoId));
     this.state.items.map(item => itemArray.push(item.snippet));
     this.state.items.map(item =>
@@ -258,7 +263,8 @@ export default class Homepage extends Component {
                 playPlaylist={this.playPlaylist}
                 makePlaylist={this.makePlaylist}
                 Updateplaylist={this.Updateplaylist}
-                deletePlaylist = {this.deletePlaylist}
+                deletePlaylist={this.deletePlaylist}
+                onAdd={this.onAdd}
               />
             </Col>
             <Col sm="4">
