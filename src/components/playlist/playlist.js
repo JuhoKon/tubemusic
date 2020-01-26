@@ -1,5 +1,14 @@
 import React, { Component, Fragment } from "react";
-import { Container, Row, Col, Button } from "reactstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  FormGroup,
+  Label,
+  Input,
+  Form
+} from "reactstrap";
 import Playlistitem from "./playlistitem";
 import LoadPlaylistModal from "./loadPlaylistModal";
 import SaveModal from "./save/saveModal";
@@ -14,7 +23,8 @@ class Playlist extends Component {
       playlists: this.props.playlists,
       playlist: this.props.playlist,
       playlistName: this.props.playlistName,
-      playlistId: this.props.playlistId
+      playlistId: this.props.playlistId,
+      editMode: false
     };
   }
   componentDidMount() {
@@ -26,7 +36,8 @@ class Playlist extends Component {
       this.setState({
         playlist: this.props.playlist,
         playlists: this.props.playlists,
-        playlistName: this.props.playlistName
+        playlistName: this.props.playlistName,
+        playlistId: this.props.playlistId
       });
     }
   }
@@ -34,7 +45,17 @@ class Playlist extends Component {
     console.log("playPlaylist");
     this.props.playPlaylist(playlist);
   }
-
+  toggle = () => {
+    this.setState({
+      editMode: !this.state.editMode
+    });
+    //console.log(this.state.playlistId); tos on id fixaa
+    //this.props.loadPlaylist({ _id: this.state.playlist });
+  };
+  UpdateCurrentPlaylist = () => {
+    this.props.UpdateCurrentPlaylist();
+    this.toggle();
+  };
   render() {
     const playlist = this.props.playlist;
     const playlists = this.props.playlists;
@@ -42,7 +63,7 @@ class Playlist extends Component {
     //console.log(playlists);
     return (
       <div>
-        <p>Playlist {this.state.playlistName}</p>
+        <p>Playlist: {this.state.playlistName}</p>
         <Container>
           <Button
             className="float-left btn-remove"
@@ -77,11 +98,33 @@ class Playlist extends Component {
           playlists={playlists}
           loadPlaylist={this.props.loadPlaylist}
         />
+
+        <br />
+
+        <Button
+          color={this.state.editMode ? "primary" : "secondary"}
+          className="float-right btn-remove"
+          onClick={this.toggle}
+          disabled={this.props.playlist[0] ? false : true}
+        >
+          {this.state.editMode ? "Revert changes" : "Edit"}
+        </Button>
+        {this.state.editMode ? (
+          <Button
+            onClick={this.UpdateCurrentPlaylist}
+            className="float-right btn-remove"
+            disabled={this.props.playlist[0] ? false : true}
+          >
+            Save
+          </Button>
+        ) : null}
+        <br />
         <br />
         <div id="videolist">
           {playlist.map(({ title, videoId, uniqueId }) => (
             <CSSTransition key={uniqueId} timeout={500} classNames="fade">
               <Playlistitem
+                editMode={this.state.editMode}
                 uniqueId={uniqueId}
                 title={title}
                 videoId={videoId}

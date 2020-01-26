@@ -7,6 +7,7 @@ class Queue extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      history: [4],
       queue: props.queue
     };
   }

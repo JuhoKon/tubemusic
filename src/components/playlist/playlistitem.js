@@ -32,17 +32,21 @@ class Playlistitem extends Component {
   }
   render() {
     // console.log(this.props);
+    console.log(this.props.editMode);
     return (
       <div>
         <Card className="card">
           <CardBody>
-            <Button
-              className="btn btn-primary btn-remove float-right"
-              color="danger"
-              onClick={this.onDeleteClick.bind(this, this.props)}
-            >
-              x
-            </Button>
+            {this.props.editMode ? (
+              <Button
+                className="btn btn-primary btn-remove float-right"
+                color="danger"
+                onClick={this.onDeleteClick.bind(this, this.props)}
+              >
+                x
+              </Button>
+            ) : null}
+
             <Button
               className="btn btn-primary float-right "
               color="info"

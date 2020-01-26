@@ -11,27 +11,47 @@ import {
   NavLink,
   Alert
 } from "reactstrap";
+import isEqual from "react-fast-compare";
 
 class SaveModal extends Component {
-  state = {
-    modal: false,
-    name: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false,
+      playlistName: this.props.playlistName
+    };
+    this.toggle = this.toggle.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      //if change in props
+      this.setState({
+        playlistName: this.props.playlistName
+      });
+    }
+  }
+
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      playlistName: this.props.playlistName
     });
   };
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   onSubmit = e => {
     e.preventDefault();
     console.log(this.props.playlistId);
-    this.props.Updateplaylist(this.state.name, this.props.playlistId);
+    this.props.Updateplaylist(this.state.playlistName, this.props.playlistId);
     this.toggle();
   };
   render() {
+    console.log(this.props);
     return (
       <div>
         <Button
@@ -41,7 +61,7 @@ class SaveModal extends Component {
           color="primary"
           disabled={this.props.playlistId ? false : true}
         >
-          Save
+          Save as
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
@@ -53,9 +73,10 @@ class SaveModal extends Component {
                 <Label for="name">Name:</Label>
                 <Input
                   type="name"
-                  name="name"
-                  id="name"
-                  placeholder={this.props.playlistName}
+                  name="playlistName"
+                  id="playlistName"
+                  placeholder={this.state.playlistName}
+                  value={this.state.playlistName || ""}
                   className="mb-4"
                   onChange={this.onChange}
                 ></Input>

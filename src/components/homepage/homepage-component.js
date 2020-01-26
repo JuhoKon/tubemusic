@@ -34,6 +34,7 @@ export default class Homepage extends Component {
     this.makePlaylist = this.makePlaylist.bind(this);
     this.Updateplaylist = this.Updateplaylist.bind(this);
     this.deletePlaylist = this.deletePlaylist.bind(this);
+    this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -43,6 +44,7 @@ export default class Homepage extends Component {
       url: null,
       playing: false,
       playlistId: "",
+      playlistName: "",
       title: "" //for rendering name
     };
   }
@@ -62,23 +64,34 @@ export default class Homepage extends Component {
     }
     var itemArray = [];
     for (let i = 0; i < this.state.playlist.length; i++) {
-      console.log(this.state.playlist[i]);
       let itemObject = {};
-      itemObject["title"] = this.state.playlist[i].title;
-      itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
-      itemObject["videoId"] = this.state.playlist[i].videoId;
-      itemObject["uniqueId"] = this.state.playlist[i].uniqueId;
-      itemArray.push(itemObject);
+      if (i === 0) {
+        //take first element and play it instantly
+        itemObject["title"] = this.state.playlist[i].title;
+        itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
+        itemObject["videoId"] = this.state.playlist[i].videoId;
+        itemObject["uniqueId"] = this.state.playlist[i].uniqueId;
+        this.onPlay(itemObject);
+      } else {
+        //other elements go to queue
+        itemObject["title"] = this.state.playlist[i].title;
+        itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
+        itemObject["videoId"] = this.state.playlist[i].videoId;
+        itemObject["uniqueId"] = this.state.playlist[i].uniqueId;
+        itemArray.push(itemObject);
+      }
+      //console.log(this.state.playlist[i]);
     }
     this.setState({
       queue: itemArray
     });
+    //this.onPlay(itemArray[0]);
   }
   addPlaylistToQueue() {
     let playlist = this.state.playlist;
     let queue = this.state.queue;
-    console.log(playlist);
-    console.log("Hello?");
+    // console.log(playlist);
+    // console.log("Hello?");
     for (let i = 0; i < playlist.length; i++) {
       queue.push(playlist[i]);
     }
@@ -91,6 +104,9 @@ export default class Homepage extends Component {
     this.setState({
       updated: item
     });
+    //console.log(item);
+    //console.log(this.state.playlistName);
+    this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
   onDeleteFromPlaylist(item) {
     if (!item) return;
@@ -108,6 +124,7 @@ export default class Homepage extends Component {
     this.setState({
       updated: item.videoId
     });
+    //this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
   async handleSubmit(termFromSearch) {
     const result = await handleSubmit(termFromSearch);
@@ -148,6 +165,9 @@ export default class Homepage extends Component {
       playlistName: result.data.name
     });
   }
+  async UpdateCurrentPlaylist() {
+    this.Updateplaylist(this.state.playlistName, this.state.playlistId);
+  }
   async Updateplaylist(name, id) {
     let playlist = this.state.playlist;
     const item = JSON.stringify({ name, playlist });
@@ -172,6 +192,7 @@ export default class Homepage extends Component {
   }
   onDelete(item) {
     //delete from queue
+    console.log(item);
     if (!item) return;
     if (typeof this.state.queue[0] === "undefined") return;
 
@@ -241,7 +262,7 @@ export default class Homepage extends Component {
                 playing={this.state.playing}
                 title={this.state.title}
               />
-              <br />
+
               <Queue
                 queue={queue}
                 onRemove={this.onDelete}
@@ -265,6 +286,7 @@ export default class Homepage extends Component {
                 Updateplaylist={this.Updateplaylist}
                 deletePlaylist={this.deletePlaylist}
                 onAdd={this.onAdd}
+                UpdateCurrentPlaylist={this.UpdateCurrentPlaylist}
               />
             </Col>
             <Col sm="4">

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
-import { Container } from "reactstrap";
+import { Container, Input, CustomInput, FormGroup, Label } from "reactstrap";
 import { Button } from "reactstrap";
+import HistoryModal from "./history/History-modal";
+
 import "./player.css";
 //TODO: ADD VOLUME CONTROL
 //CHANGE BUTTONS TO LOOK BETTER
@@ -17,16 +19,18 @@ export default class Player extends Component {
       title: this.props.title,
       pip: false,
       playing: false,
-      controls: false,
+      controls: true,
       light: false,
-      volume: 0.8,
+      volume: 0.5, //<--
       muted: false,
       duration: 0,
       played: 0,
       loaded: 0,
       playbackRate: 1.0,
       loop: false,
-      array: this.props.array
+      array: this.props.array,
+      modal: false,
+      history: []
     };
   }
   //tee se seek siitä reactplayher demosta, ja vaa sillee et set to 0, kun url on sama tai jotai
@@ -39,6 +43,11 @@ export default class Player extends Component {
       pip: false
     });
   };
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  };
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
@@ -48,9 +57,17 @@ export default class Player extends Component {
         playing: this.props.playing,
         title: this.props.title
       });
+      if (this.props.url !== prevProps.url) {
+        if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
+          let itemObject = {};
+          console.log(prevProps);
+          itemObject["title"] = prevProps.title;
+          itemObject["url"] = prevProps.url;
+          this.addToHistory(itemObject);
+        }
+      }
     }
   }
-
   handlePlayPause = () => {
     this.setState({ playing: !this.state.playing });
   };
@@ -58,12 +75,20 @@ export default class Player extends Component {
     console.log("onPlay");
     this.setState({ playing: true });
   };
+  addToHistory = item => {
+    this.state.history.unshift(item);
+    console.log(this.state.history);
+  };
   handlePlayNext = () => {
     console.log("onPlay");
-
+    let itemObject = {};
+    itemObject["title"] = this.state.title;
+    itemObject["url"] = this.state.url;
+    this.addToHistory(itemObject);
     if (typeof this.state.array[0] !== "undefined") {
       const videoId = this.state.array[0].videoId;
       const url = "https://www.youtube.com/watch?v=" + videoId;
+      console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
       }
@@ -72,6 +97,7 @@ export default class Player extends Component {
         url: url,
         title: this.state.array[0].title
       });
+
       this.props.onRemove(this.state.array[0]); //removes item from queue
     } else {
       this.setState({
@@ -81,6 +107,9 @@ export default class Player extends Component {
     }
 
     //this.props.onRemove(this.state.array[0]); //removes from queue
+  };
+  handleVolumeChange = e => {
+    this.setState({ volume: parseFloat(e.target.value) });
   };
   handlePause = () => {
     console.log("onPause");
@@ -101,64 +130,97 @@ export default class Player extends Component {
     this.player.seekTo(0); //Seeks to 0
   }
   render() {
-    const { url, playing, volume, array } = this.state;
+    const { url, playing, volume, array, history } = this.state;
+    console.log(history);
+
     //console.log(this.state.url);
     //console.log(this.state.title);
     return (
-      <Container className="container-fluid">
-        <div className="app">
-          <section className="section">
-            <p>Now playing {this.state.title}</p>
-            <div className="player-wrapper">
-              <ReactPlayer
-                ref={this.ref}
-                className="react-player"
-                width="100%"
-                height="100%"
-                url={this.state.url}
-                playing={playing}
-                controls={true}
-                volume={volume}
-                onPlay={this.handlePlay}
-                onPause={this.handlePause}
-                onEnded={this.handleEnded}
-                onError={e => console.log("onError", e)}
-              />
+      <div>
+        <section className="section">
+          <p>Now playing {this.state.title}</p>
+
+          <Container className="container-fluid">
+            <div className="app">
+              <div className="player-wrapper">
+                <ReactPlayer
+                  ref={this.ref}
+                  className="react-player"
+                  width="100%"
+                  height="100%"
+                  url={this.state.url}
+                  playing={playing}
+                  controls={this.state.controls}
+                  volume={volume}
+                  onPlay={this.handlePlay}
+                  onPause={this.handlePause}
+                  onEnded={this.handleEnded}
+                  onError={e => console.log("onError", e)}
+                />
+              </div>
+              <br />
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <FormGroup>
+                        <Button
+                          className="btn-controls"
+                          onClick={this.handlePlayPause}
+                        >
+                          {playing ? "Pause" : "Play"}
+                        </Button>
+
+                        <Button
+                          disabled={this.props.array[0] ? false : true}
+                          className="btn-controls"
+                          onClick={this.handleEnded}
+                        >
+                          Play from queue
+                        </Button>
+                        <Button
+                          disabled={this.props.array[0] ? false : true}
+                          className="btn-controls"
+                          onClick={this.handleEnded}
+                        >
+                          Play next song
+                        </Button>
+                        <Button
+                          disabled={this.state.history[0] ? false : true}
+                          className="btn-controls float-right"
+                          onClick={this.toggle}
+                        >
+                          History
+                        </Button>
+                        <HistoryModal
+                          isOpen={this.state.modal}
+                          toggle={this.toggle}
+                          history={this.state.history}
+                        />
+                      </FormGroup>
+                      <FormGroup>
+                        <Label for="exampleCustomRange">Volume control</Label>
+                        <CustomInput
+                          type="range"
+                          id="exampleCustomRange"
+                          name="customRange"
+                          min={0}
+                          max={1}
+                          step="any"
+                          value={volume}
+                          onChange={this.handleVolumeChange}
+                        />
+
+                        <p> Use this to change volume.</p>
+                      </FormGroup>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <Button
-                      className="btn-controls"
-                      onClick={this.handlePlayPause}
-                    >
-                      {playing ? "Pause" : "Play"}
-                    </Button>
-                    <Button
-                      disabled={this.props.array[0] ? false : true}
-                      className="btn-controls"
-                      onClick={this.handlePlayNext}
-                    >
-                      Play from queue
-                    </Button>
-                    <Button
-                      disabled={this.props.array[0] ? false : true}
-                      className="btn-controls"
-                      onClick={this.handleEnded}
-                    >
-                      Play next song
-                    </Button>
-                    <Button className="btn-controls float-right">
-                      History
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </div>
-      </Container>
+          </Container>
+        </section>
+      </div>
     );
   }
 }
