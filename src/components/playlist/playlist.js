@@ -54,11 +54,7 @@ class Playlist extends Component {
     setTimeout(() => this.props.loadPlaylist(this.state.playlistId), 200);
     //this.props.loadPlaylist(this.state.playlistId);
   };
-  /*UpdateCurrentPlaylist() {
-    this.props.UpdateCurrentPlaylist();
-    //this.props.loadPlaylist(this.state.playlistId);
-    this.toggle();
-  }*/
+
   async UpdateCurrentPlaylist() {
     let result = await this.props.UpdateCurrentPlaylist();
     this.toggle();

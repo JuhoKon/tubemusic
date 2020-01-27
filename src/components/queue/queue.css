@@ -1,3 +1,6 @@
 .QueueItem {
   transition: all 500ms ease;
 }
+.CardTitle {
+  text-align: center;
+}

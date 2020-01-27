@@ -37,6 +37,7 @@ export default class Homepage extends Component {
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
     this.shuffleQueue = this.shuffleQueue.bind(this);
     this.clearQueue = this.clearQueue.bind(this);
+    this.setQueue = this.setQueue.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -49,6 +50,11 @@ export default class Homepage extends Component {
       playlistName: "",
       title: "" //for rendering name
     };
+  }
+  setQueue(queue) {
+    this.setState({
+      queue: queue
+    });
   }
   isSame(array1, array2) {
     for (let i = 0; i < array1.length; i++) {
@@ -309,6 +315,7 @@ export default class Homepage extends Component {
                 onPlay={this.onPlay}
                 shuffleQueue={this.shuffleQueue}
                 clearQueue={this.clearQueue}
+                setQueue={this.setQueue}
               />
             </Col>
             <Col sm="4">
