@@ -58,8 +58,6 @@ class Playlistitem extends Component {
             <CardText>{this.props.channelTitle}</CardText>
           </CardBody>
         </Card>
-
-        <br />
       </div>
     );
   }

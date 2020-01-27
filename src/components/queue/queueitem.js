@@ -50,7 +50,6 @@ class Queueitem extends Component {
             <CardTitle>{this.props.title}</CardTitle>
           </CardBody>
         </Card>
-        <br />
       </div>
     );
   }

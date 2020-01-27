@@ -43,16 +43,7 @@ class Videoitem extends Component {
                   + Q
                 </Button>
               </span>
-
               <CardTitle>{this.props.title}</CardTitle>
-              <CardText>{this.props.channelTitle}</CardText>
-              <CardText>
-                <small className="text-muted">
-                  <Moment format="DD/MM/YYYY">{this.props.publishedAt}</Moment>
-                  <br />
-                  <Moment fromNow>{this.props.publishedAt}</Moment>
-                </small>
-              </CardText>
 
               {/* A JSX comment 
               <CardImg
@@ -65,8 +56,6 @@ class Videoitem extends Component {
             </CardBody>
           </Card>
         ) : null}
-
-        <br />
       </div>
     );
   }

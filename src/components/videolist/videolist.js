@@ -8,8 +8,6 @@ class Videolist extends Component {
 
     return (
       <div id="videolist">
-        <br />
-        <br />
         {items.map(
           ({
             title,
@@ -34,41 +32,6 @@ class Videolist extends Component {
             </CSSTransition>
           )
         )}
-        <Videoitem
-          title="1"
-          thumbnail="youtube.com"
-          channelTitle="Ss"
-          videoId="0plu8CGDAJk"
-          addFunc={this.props.onAdd}
-          onPlay={this.props.onPlay}
-          uniqueId="45"
-          AddToPlaylist={this.props.AddToPlaylist}
-        />
-        <Videoitem
-          uniqueId="454"
-          title="2"
-          thumbnail="youtube.com"
-          channelTitle="Ss"
-          videoId="121212121"
-          addFunc={this.props.onAdd}
-          AddToPlaylist={this.props.AddToPlaylist}
-        />
-        <Videoitem
-          uniqueId="435"
-          title="3"
-          thumbnail="youtube.com"
-          channelTitle="Ss"
-          videoId="0plu8CGDAJk"
-          addFunc={this.props.onAdd}
-        />
-        <Videoitem
-          uniqueId="3345"
-          title="4"
-          thumbnail="youtube.com"
-          channelTitle="Ss"
-          videoId="0plu8CGDAJk"
-          addFunc={this.props.onAdd}
-        />
       </div>
     );
   }
