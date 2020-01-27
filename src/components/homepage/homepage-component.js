@@ -16,11 +16,9 @@ import {
 } from "../functions/functions";
 
 export default class Homepage extends Component {
-  constructor(props, context) {
-    super(props, context);
-    // Binding "this" creates new function with explicitly defined "this"
-    // Now "openArticleDetailsScreen" has "ArticleListScreen" instance as "this"
-    // no matter how the method/function is called.
+  constructor(props) {
+    super(props);
+
     this.onAdd = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onPlay = this.onPlay.bind(this);
@@ -62,6 +60,7 @@ export default class Homepage extends Component {
     console.log(this.state.url);
   }
   isSame(array1, array2) {
+    //checks for two arrays if they have same items/songs
     for (let i = 0; i < array1.length; i++) {
       if (array1[i].title !== array2[i].title) {
         return false;
@@ -89,13 +88,16 @@ export default class Homepage extends Component {
     }
   }
   setPlaylist(playlistitems) {
+    //updates state to given playlist
     this.setState({
       playlist: playlistitems
     });
   }
   playPlaylist() {
+    //replaces queue with active playlist
     if (this.state.queue.length === this.state.playlist.length) {
       if (this.isSame(this.state.queue, this.state.playlist)) {
+        //if queue and playlist have same items, return
         return;
       }
     }
@@ -125,6 +127,7 @@ export default class Homepage extends Component {
     //this.onPlay(itemArray[0]);
   }
   addPlaylistToQueue() {
+    //adds active playlist to queue
     let playlist = this.state.playlist;
     let queue = this.state.queue;
     // console.log(playlist);
@@ -143,6 +146,8 @@ export default class Homepage extends Component {
     });
   }
   AddToPlaylist(item) {
+    //Adds item to active playlist and updates the state & database
+    //if no item is found, generates name for new
     if (this.state.playlistId === "" && this.state.playlistName === "") {
       //this.makePlaylist();
       alert(
@@ -169,6 +174,7 @@ export default class Homepage extends Component {
     }
   }
   onDeleteFromPlaylist(item) {
+    //deletes item from the active playlist from state
     if (!item) return;
     if (typeof this.state.playlist[0] === "undefined") return;
 
@@ -187,6 +193,7 @@ export default class Homepage extends Component {
     //this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
   async handleSubmit(termFromSearch) {
+    //handles search-query from search bar to YouTube API
     const result = await handleSubmit(termFromSearch);
     // console.log(result);
     this.setState({
@@ -194,6 +201,7 @@ export default class Homepage extends Component {
     });
   }
   async loadPlaylist(id) {
+    //loads a single database based on the id
     //const id = playlist._id;
     //console.log(id);
     const result = await getPlayListById(id);
@@ -205,7 +213,7 @@ export default class Homepage extends Component {
     });
   }
   async getPlaylist() {
-    //TODO: muuta nimi getPlayLists
+    //gets ALL playlists from database
     const result = await getPlaylists();
     //console.log(result);
     this.setState({
@@ -213,6 +221,7 @@ export default class Homepage extends Component {
     });
   }
   async makePlaylist(name, playlist) {
+    //API request to create a new playlist (database)
     this.setState({
       playlist: playlist
     });
@@ -226,9 +235,11 @@ export default class Homepage extends Component {
     });
   }
   async UpdateCurrentPlaylist() {
+    //updates current status of active playlist to database
     this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
   async Updateplaylist(name, id) {
+    //updates current state to name & id given to database
     let playlist = this.state.playlist;
     console.log(playlist);
     const item = JSON.stringify({ name, playlist });
@@ -240,6 +251,7 @@ export default class Homepage extends Component {
     });
   }
   async deletePlaylist(id) {
+    //DELETE PLAYLIST BASED ON ID
     if (this.state.playlistId === id) {
       this.setState({
         playlistId: "",
@@ -251,7 +263,7 @@ export default class Homepage extends Component {
     this.getPlaylist();
   }
   onAdd(item) {
-    //ADDS SELECTED ITEM TO QUEUE - PLAYER
+    //ADDS SELECTED ITEM TO QUEUE - -> PLAYER & QUEUE
     console.log(item);
     let object = {};
     object["title"] = item["title"];
@@ -268,7 +280,7 @@ export default class Homepage extends Component {
     //console.log(videoId);
   }
   onDelete(item) {
-    //delete from queue
+    //delete item from queue
     console.log(item);
     if (!item) return;
     if (typeof this.state.queue[0] === "undefined") return;
@@ -289,11 +301,13 @@ export default class Homepage extends Component {
     this.player = player;
   };
   setUrl(url) {
+    //updates given url to the state
     this.setState({
       url: url
     });
   }
   onPlay(item) {
+    //sets given item to be played
     if (!item) return;
     console.log(item);
     const videoId = item.videoId;
