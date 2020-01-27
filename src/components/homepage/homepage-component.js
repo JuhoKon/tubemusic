@@ -35,6 +35,8 @@ export default class Homepage extends Component {
     this.Updateplaylist = this.Updateplaylist.bind(this);
     this.deletePlaylist = this.deletePlaylist.bind(this);
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
+    this.shuffleQueue = this.shuffleQueue.bind(this);
+    this.clearQueue = this.clearQueue.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -56,6 +58,27 @@ export default class Homepage extends Component {
     }
     return true;
   }
+  shuffleQueue() {
+    //Fiter-Yates shuffle
+    //https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+    let Array = this.state.queue;
+    for (let i = Array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [Array[i], Array[j]] = [Array[j], Array[i]];
+    }
+    this.setState({
+      queue: Array
+    });
+  }
+  clearQueue() {
+    let array = [];
+    if (typeof this.state.queue[0] !== "undefined") {
+      this.setState({
+        queue: [],
+        playing: false
+      });
+    }
+  }
   playPlaylist() {
     if (this.state.queue.length === this.state.playlist.length) {
       if (this.isSame(this.state.queue, this.state.playlist)) {
@@ -70,14 +93,14 @@ export default class Homepage extends Component {
         itemObject["title"] = this.state.playlist[i].title;
         itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
         itemObject["videoId"] = this.state.playlist[i].videoId;
-        itemObject["uniqueId"] = this.state.playlist[i].uniqueId;
+        itemObject["uniqueId"] = Math.random();
         this.onPlay(itemObject);
       } else {
         //other elements go to queue
         itemObject["title"] = this.state.playlist[i].title;
         itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
         itemObject["videoId"] = this.state.playlist[i].videoId;
-        itemObject["uniqueId"] = this.state.playlist[i].uniqueId;
+        itemObject["uniqueId"] = Math.random();
         itemArray.push(itemObject);
       }
       //console.log(this.state.playlist[i]);
@@ -92,8 +115,14 @@ export default class Homepage extends Component {
     let queue = this.state.queue;
     // console.log(playlist);
     // console.log("Hello?");
+
     for (let i = 0; i < playlist.length; i++) {
-      queue.push(playlist[i]);
+      let object = {};
+      object["title"] = playlist[i]["title"];
+      object["videoId"] = playlist[i]["videoId"];
+      object["channelTitle"] = playlist[i]["channelTitle"];
+      object["uniqueId"] = Math.random();
+      queue.push(object);
     }
     this.setState({
       queue: queue
@@ -183,9 +212,17 @@ export default class Homepage extends Component {
   }
   onAdd(item) {
     //ADDS SELECTED ITEM TO QUEUE - PLAYER
-    this.state.queue.push(item);
+    console.log(item);
+    let object = {};
+    object["title"] = item["title"];
+    object["videoId"] = item["videoId"];
+    object["channelTitle"] = item["channelTitle"];
+    object["uniqueId"] = Math.random();
+    //item["uniqueId"] = Math.random();
+    this.state.queue.push(object);
     this.setState({
-      updated: item
+      //just to trigger re-render->new props to children
+      updated: object
     });
     //console.log(this.state.queue);
     //console.log(videoId);
@@ -261,12 +298,17 @@ export default class Homepage extends Component {
                 url={url}
                 playing={this.state.playing}
                 title={this.state.title}
+                onAdd={this.onAdd}
+                AddToPlaylist={this.AddToPlaylist}
+                onPlay={this.onPlay}
               />
 
               <Queue
                 queue={queue}
                 onRemove={this.onDelete}
                 onPlay={this.onPlay}
+                shuffleQueue={this.shuffleQueue}
+                clearQueue={this.clearQueue}
               />
             </Col>
             <Col sm="4">

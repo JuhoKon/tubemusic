@@ -47,16 +47,19 @@ class HistoryModal extends Component {
           </ModalHeader>
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
-              {this.state.history.map(({ title, videoId, uniqueId }) => (
-                <CSSTransition key={uniqueId} timeout={500} classNames="fade">
+              {this.state.history.map(({ title, videoId, url }) => (
+                <CSSTransition
+                  key={Math.random()}
+                  timeout={500}
+                  classNames="fade"
+                >
                   <HistoryItem
-                    uniqueId={uniqueId}
+                    url={url}
                     name={title}
                     videoId={videoId}
-                    addFunc={this.props.onAdd}
+                    addFunc={this.props.addFunc}
                     onPlay={this.props.onPlay}
-                    onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-                    onRemove={this.props.onRemove}
+                    AddToPlaylist={this.props.AddToPlaylist}
                   />
                 </CSSTransition>
               ))}

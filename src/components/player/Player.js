@@ -167,6 +167,7 @@ export default class Player extends Component {
                   onPlay={this.handlePlay}
                   onPause={this.handlePause}
                   onEnded={this.handleEnded}
+                  onPlay={this.props.onPlay}
                   onError={e => console.log("onError", e)}
                 />
               </div>
@@ -208,6 +209,9 @@ export default class Player extends Component {
                           isOpen={this.state.modal}
                           toggle={this.toggle}
                           history={this.state.history}
+                          addFunc={this.props.onAdd}
+                          onPlay={this.props.onPlay}
+                          AddToPlaylist={this.props.AddToPlaylist}
                         />
                       </FormGroup>
                       <FormGroup>
