@@ -111,6 +111,7 @@ export default class Player extends Component {
       });
 
       this.props.onRemove(this.state.array[0]); //removes item from queue
+      this.props.setUrl(url);
     } else {
       this.setState({
         playing: false,

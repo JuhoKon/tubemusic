@@ -38,6 +38,7 @@ export default class Homepage extends Component {
     this.shuffleQueue = this.shuffleQueue.bind(this);
     this.clearQueue = this.clearQueue.bind(this);
     this.setQueue = this.setQueue.bind(this);
+    this.setUrl = this.setUrl.bind(this);
     this.state = {
       items: [],
       queue: [],
@@ -45,16 +46,18 @@ export default class Homepage extends Component {
       playlists: [],
       updated: "",
       url: null,
-      playing: false,
+      playing: true,
       playlistId: "",
       playlistName: "",
       title: "" //for rendering name
     };
   }
   setQueue(queue) {
+    console.log(this.state.url);
     this.setState({
       queue: queue
     });
+    console.log(this.state.url);
   }
   isSame(array1, array2) {
     for (let i = 0; i < array1.length; i++) {
@@ -255,6 +258,11 @@ export default class Homepage extends Component {
     //reference to player Child
     this.player = player;
   };
+  setUrl(url) {
+    this.setState({
+      url: url
+    });
+  }
   onPlay(item) {
     if (!item) return;
     console.log(item);
@@ -307,6 +315,7 @@ export default class Homepage extends Component {
                 onAdd={this.onAdd}
                 AddToPlaylist={this.AddToPlaylist}
                 onPlay={this.onPlay}
+                setUrl={this.setUrl}
               />
 
               <Queue
