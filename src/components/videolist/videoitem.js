@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Button
-} from "reactstrap";
+import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
 import "./videolist.css";
 import Moment from "react-moment";
 class Videoitem extends Component {
@@ -28,11 +21,11 @@ class Videoitem extends Component {
             <CardBody>
               <span style={{ flexDirection: "column" }}>
                 <Button
-                  className="btn btn-primary float-right"
-                  color="info"
-                  onClick={this.onAddClick.bind(this, this.props)}
+                  className="btn btn-primary float-right btn-remove"
+                  color="secondary"
+                  onClick={this.onAddToPlaylist.bind(this, this.props)}
                 >
-                  + Queue
+                  + P
                 </Button>
 
                 <Button
@@ -42,7 +35,15 @@ class Videoitem extends Component {
                 >
                   Play
                 </Button>
+                <Button
+                  className="btn btn-primary float-right btn-remove"
+                  color="info"
+                  onClick={this.onAddClick.bind(this, this.props)}
+                >
+                  + Q
+                </Button>
               </span>
+
               <CardTitle>{this.props.title}</CardTitle>
               <CardText>{this.props.channelTitle}</CardText>
               <CardText>
@@ -52,6 +53,7 @@ class Videoitem extends Component {
                   <Moment fromNow>{this.props.publishedAt}</Moment>
                 </small>
               </CardText>
+
               {/* A JSX comment 
               <CardImg
                 width="10px"
@@ -61,13 +63,6 @@ class Videoitem extends Component {
               />
               */}
             </CardBody>
-            <Button
-              className="btn btn-primary float-right"
-              color="secondary"
-              onClick={this.onAddToPlaylist.bind(this, this.props)}
-            >
-              + Playlist
-            </Button>
           </Card>
         ) : null}
 

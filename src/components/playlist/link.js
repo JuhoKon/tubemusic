@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Button
-} from "reactstrap";
+import { Card, CardBody, CardTitle, Button } from "reactstrap";
 
 class Link extends Component {
   loadPlaylist(playlist) {

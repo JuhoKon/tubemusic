@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from "react";
-import { CSSTransition } from "react-transition-group";
+import React, { Component } from "react";
 import isEqual from "react-fast-compare";
 import { Button, Container } from "reactstrap";
 import Queueitem from "./queueitem";

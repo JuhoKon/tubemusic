@@ -7,9 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input,
-  NavLink,
-  Alert
+  Input
 } from "reactstrap";
 import isEqual from "react-fast-compare";
 
@@ -51,7 +49,7 @@ class SaveModal extends Component {
     this.toggle();
   };
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <div>
         <Button

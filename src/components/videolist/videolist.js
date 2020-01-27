@@ -1,14 +1,8 @@
-import React, { Component, Fragment } from "react";
-import { Jumbotron, Container } from "reactstrap";
+import React, { Component } from "react";
 import Videoitem from "./videoitem";
-
 import { CSSTransition } from "react-transition-group";
 import "./videolist.css";
 class Videolist extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const items = this.props.items;
 

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "reactstrap";
-import axios from "axios";
+import { Row, Col } from "reactstrap";
 import Videolist from "../videolist/videolist";
 import Search from "../search/search";
 import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
+import nameGenerator from "../functions/nameGenerator";
 import {
   handleSubmit,
   getPlaylists,
@@ -39,8 +39,10 @@ export default class Homepage extends Component {
     this.clearQueue = this.clearQueue.bind(this);
     this.setQueue = this.setQueue.bind(this);
     this.setUrl = this.setUrl.bind(this);
+    this.setPlaylist = this.setPlaylist.bind(this);
+    this.setTitle = this.setTitle.bind(this);
     this.state = {
-      items: [],
+      items: [], //from youtube API
       queue: [],
       playlist: [],
       playlists: [],
@@ -80,13 +82,16 @@ export default class Homepage extends Component {
     });
   }
   clearQueue() {
-    let array = [];
     if (typeof this.state.queue[0] !== "undefined") {
       this.setState({
-        queue: [],
-        playing: false
+        queue: []
       });
     }
+  }
+  setPlaylist(playlistitems) {
+    this.setState({
+      playlist: playlistitems
+    });
   }
   playPlaylist() {
     if (this.state.queue.length === this.state.playlist.length) {
@@ -138,13 +143,30 @@ export default class Homepage extends Component {
     });
   }
   AddToPlaylist(item) {
-    this.state.playlist.push(item);
-    this.setState({
-      updated: item
-    });
-    //console.log(item);
-    //console.log(this.state.playlistName);
-    this.Updateplaylist(this.state.playlistName, this.state.playlistId);
+    if (this.state.playlistId === "" && this.state.playlistName === "") {
+      //this.makePlaylist();
+      alert(
+        "No playlist selected. Creating a new playlist.\n" +
+          "Generating name..."
+      );
+      this.state.playlist.push(item);
+      this.makePlaylist(nameGenerator(), this.state.playlist);
+      this.setState({
+        updated: item
+      });
+      setTimeout(
+        () =>
+          this.Updateplaylist(this.state.playlistName, this.state.playlistId),
+        2000
+      );
+    } else {
+      this.state.playlist.push(item);
+      this.Updateplaylist(this.state.playlistName, this.state.playlistId);
+
+      this.setState({
+        updated: item
+      });
+    }
   }
   onDeleteFromPlaylist(item) {
     if (!item) return;
@@ -190,11 +212,11 @@ export default class Homepage extends Component {
       playlists: result.data.Playlist
     });
   }
-  async makePlaylist(name) {
+  async makePlaylist(name, playlist) {
     this.setState({
-      playlist: []
+      playlist: playlist
     });
-    let playlist = this.state.playlist;
+    //let playlist = this.state.playlist;
     const item = JSON.stringify({ name, playlist });
     const result = await makePlaylist(item);
     //console.log(result.data._id);
@@ -208,15 +230,24 @@ export default class Homepage extends Component {
   }
   async Updateplaylist(name, id) {
     let playlist = this.state.playlist;
+    console.log(playlist);
     const item = JSON.stringify({ name, playlist });
     const result = await updatePlaylist(item, id);
     //console.log(result);
     this.setState({
-      playlistName: result.data.name
+      playlistName: result.data.name,
+      playlist: playlist
     });
   }
   async deletePlaylist(id) {
-    const result = await deletePlaylist(id);
+    if (this.state.playlistId === id) {
+      this.setState({
+        playlistId: "",
+        playlistName: "",
+        playlist: []
+      });
+    }
+    await deletePlaylist(id);
     this.getPlaylist();
   }
   onAdd(item) {
@@ -245,7 +276,6 @@ export default class Homepage extends Component {
     for (let i = 0; i < this.state.queue.length; i++) {
       if (this.state.queue[i].uniqueId === item.uniqueId) {
         //delete item from queue
-
         this.state.queue.splice(i, 1);
         break;
       }
@@ -276,6 +306,11 @@ export default class Homepage extends Component {
       url: url, //url gets passed to player as props
       playing: true,
       updated: true,
+      title: title
+    });
+  }
+  setTitle(title) {
+    this.setState({
       title: title
     });
   }
@@ -316,6 +351,7 @@ export default class Homepage extends Component {
                 AddToPlaylist={this.AddToPlaylist}
                 onPlay={this.onPlay}
                 setUrl={this.setUrl}
+                setTitle={this.setTitle}
               />
 
               <Queue
@@ -345,6 +381,7 @@ export default class Homepage extends Component {
                 deletePlaylist={this.deletePlaylist}
                 onAdd={this.onAdd}
                 UpdateCurrentPlaylist={this.UpdateCurrentPlaylist}
+                setPlaylist={this.setPlaylist}
               />
             </Col>
             <Col sm="4">

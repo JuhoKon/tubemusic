@@ -1,20 +1,14 @@
-import React, { Component, Fragment } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  FormGroup,
-  Label,
-  Input,
-  Form
-} from "reactstrap";
+import React, { Component } from "react";
+import { Container, Button } from "reactstrap";
 import Playlistitem from "./playlistitem";
 import LoadPlaylistModal from "./loadPlaylistModal";
 import SaveModal from "./save/saveModal";
 import CreateNew from "./createNew/createNew";
-import { CSSTransition } from "react-transition-group";
+
 import isEqual from "react-fast-compare";
+import FlipMove from "react-flip-move";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import arrayMove from "array-move";
 import "./playlist.css";
 class Playlist extends Component {
   constructor(props) {
@@ -27,6 +21,7 @@ class Playlist extends Component {
       editMode: false
     };
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
   componentDidMount() {
     this.props.getPlayList();
@@ -50,23 +45,67 @@ class Playlist extends Component {
     this.setState({
       editMode: !this.state.editMode
     });
-    //console.log(this.state.playlistId); tos on id fixaa
     setTimeout(() => this.props.loadPlaylist(this.state.playlistId), 200);
-    //this.props.loadPlaylist(this.state.playlistId);
   };
 
   async UpdateCurrentPlaylist() {
-    let result = await this.props.UpdateCurrentPlaylist();
+    this.props.setPlaylist(this.state.playlist);
+    await this.props.UpdateCurrentPlaylist();
+
     this.toggle();
   }
-  render() {
-    const playlist = this.props.playlist;
-    const playlists = this.props.playlists;
 
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    //console.log(oldIndex, newIndex);
+    this.setState(({ playlist }) => ({
+      playlist: arrayMove(playlist, oldIndex, newIndex)
+    }));
+    this.props.setPlaylist(this.state.playlist);
+  };
+  render() {
+    //console.log(this.props.playlist);
+    const playlist = this.props.playlist;
+
+    const playlists = this.props.playlists;
+    const SortableList = SortableContainer(({ playlist }) => {
+      return (
+        <div>
+          {playlist.map(({ title, videoId, uniqueId }, index) => (
+            <SortableItem
+              className="QueueItem"
+              key={uniqueId}
+              index={index}
+              editMode={this.state.editMode}
+              uniqueId={uniqueId}
+              title={title}
+              videoId={videoId}
+              addFunc={this.props.onAdd}
+              onPlay={this.props.onPlay}
+              onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+              onRemove={this.props.onRemove}
+            />
+          ))}
+        </div>
+      );
+    });
+    const SortableItem = SortableElement(({ uniqueId, title, videoId }) => (
+      <Playlistitem
+        key={uniqueId}
+        editMode={this.state.editMode}
+        uniqueId={uniqueId}
+        title={title}
+        videoId={videoId}
+        addFunc={this.props.onAdd}
+        onPlay={this.props.onPlay}
+        onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+        onRemove={this.props.onRemove}
+      />
+    ));
     //console.log(playlists);
     return (
       <div>
         <p>Playlist: {this.state.playlistName}</p>
+
         <Container>
           <Button
             className="float-left btn-remove"
@@ -116,7 +155,6 @@ class Playlist extends Component {
           <Button
             onClick={this.UpdateCurrentPlaylist}
             className="float-right btn-remove"
-            disabled={this.props.playlist[0] ? false : true}
           >
             Save
           </Button>
@@ -124,20 +162,25 @@ class Playlist extends Component {
         <br />
         <br />
         <div id="videolist">
-          {playlist.map(({ title, videoId, uniqueId }) => (
-            <CSSTransition key={uniqueId} timeout={500} classNames="fade">
-              <Playlistitem
-                editMode={this.state.editMode}
-                uniqueId={uniqueId}
-                title={title}
-                videoId={videoId}
-                addFunc={this.props.onAdd}
-                onPlay={this.props.onPlay}
-                onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-                onRemove={this.props.onRemove}
-              />
-            </CSSTransition>
-          ))}
+          {this.state.editMode ? (
+            <SortableList playlist={playlist} onSortEnd={this.onSortEnd} />
+          ) : (
+            <FlipMove>
+              {this.props.playlist.map(({ title, videoId, uniqueId }) => (
+                <Playlistitem
+                  key={uniqueId}
+                  editMode={this.state.editMode}
+                  uniqueId={uniqueId}
+                  title={title}
+                  videoId={videoId}
+                  addFunc={this.props.onAdd}
+                  onPlay={this.props.onPlay}
+                  onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+                  onRemove={this.props.onRemove}
+                />
+              ))}
+            </FlipMove>
+          )}
         </div>
       </div>
     );

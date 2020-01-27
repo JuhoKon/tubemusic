@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
-import { Container, Input, CustomInput, FormGroup, Label } from "reactstrap";
+import { Container, CustomInput, FormGroup, Label } from "reactstrap";
 import { Button } from "reactstrap";
 import HistoryModal from "./history/History-modal";
 
@@ -16,7 +16,7 @@ export default class Player extends Component {
 
     this.state = {
       url: this.props.url,
-      title: this.props.title,
+      title: "",
       pip: false,
       playing: false,
       controls: true,
@@ -57,7 +57,10 @@ export default class Player extends Component {
         playing: this.props.playing,
         title: this.props.title
       });
-      if (this.props.url !== prevProps.url) {
+      if (
+        this.props.url !== prevProps.url &&
+        this.props.title !== prevProps.title
+      ) {
         if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
           let itemObject = {};
           console.log(prevProps);
@@ -86,21 +89,16 @@ export default class Player extends Component {
   };
   addToHistory = item => {
     this.state.history.unshift(item);
-    console.log(this.state.history);
+    //console.log(this.state.history);
   };
   handlePlayNext = () => {
     console.log("onPlay");
     let itemObject = {};
-    itemObject["title"] = this.state.title;
-    itemObject["url"] = this.state.url;
-    if (itemObject["url"] !== null) {
-      this.addToHistory(itemObject);
-    }
-
+    this.props.setTitle(this.state.array[0].title);
     if (typeof this.state.array[0] !== "undefined") {
       const videoId = this.state.array[0].videoId;
       const url = "https://www.youtube.com/watch?v=" + videoId;
-      console.log(url);
+      //console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
       }
@@ -143,8 +141,8 @@ export default class Player extends Component {
     this.player.seekTo(0); //Seeks to 0
   }
   render() {
-    const { url, playing, volume, array, history } = this.state;
-    console.log(history);
+    const { playing, volume, history } = this.state;
+    console.log(this.state.array);
 
     //console.log(this.state.url);
     //console.log(this.state.title);
@@ -168,7 +166,6 @@ export default class Player extends Component {
                   onPlay={this.handlePlay}
                   onPause={this.handlePause}
                   onEnded={this.handleEnded}
-                  onPlay={this.props.onPlay}
                   onError={e => console.log("onError", e)}
                 />
               </div>

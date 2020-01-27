@@ -7,9 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input,
-  NavLink,
-  Alert
+  Input
 } from "reactstrap";
 
 class CreateNew extends Component {
@@ -27,7 +25,7 @@ class CreateNew extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    this.props.makePlaylist(this.state.name);
+    this.props.makePlaylist(this.state.name, []);
     this.toggle();
   };
   render() {

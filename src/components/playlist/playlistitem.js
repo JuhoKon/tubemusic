@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Button
-} from "reactstrap";
+import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
 import "./playlist.css";
 import isEqual from "react-fast-compare";
 class Playlistitem extends Component {

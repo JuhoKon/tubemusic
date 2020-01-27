@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Button
-} from "reactstrap";
-import isEqual from "react-fast-compare";
+import { Card, CardBody, CardTitle, Button } from "reactstrap";
+
 class HistoryItem extends Component {
   constructor(props) {
     super(props);
@@ -46,21 +39,21 @@ class HistoryItem extends Component {
           <CardBody>
             <span style={{ flexDirection: "column" }}>
               <Button
-                className="btn btn-primary float-right "
+                className="btn btn-primary float-right btn-remove"
                 color="info"
                 onClick={this.onAddClick.bind(this, this.state)}
               >
                 + Queue
               </Button>
               <Button
-                className="btn btn-primary float-left"
+                className="btn btn-primary float-left btn-remove"
                 onClick={this.onPlayClick.bind(this, this.state)}
                 color="primary"
               >
                 Play
               </Button>
               <Button
-                className="btn btn-primary float-right"
+                className="btn btn-primary float-right btn-remove"
                 color="secondary"
                 onClick={this.onAddToPlaylist.bind(this, this.state)}
               >

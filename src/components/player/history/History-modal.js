@@ -1,16 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  NavLink,
-  Alert
-} from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Form, Button } from "reactstrap";
 import { CSSTransition } from "react-transition-group";
 import HistoryItem from "./history-item";
 import isEqual from "react-fast-compare";
@@ -38,33 +27,32 @@ class HistoryModal extends Component {
     }
   }
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <div>
         <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
           <ModalHeader className="mb-4" toggle={this.props.toggle}>
             Recently played songs:
           </ModalHeader>
-          <Form onSubmit={this.onSubmit}>
-            <ModalBody>
-              {this.state.history.map(({ title, videoId, url }) => (
-                <CSSTransition
-                  key={Math.random()}
-                  timeout={500}
-                  classNames="fade"
-                >
-                  <HistoryItem
-                    url={url}
-                    name={title}
-                    videoId={videoId}
-                    addFunc={this.props.addFunc}
-                    onPlay={this.props.onPlay}
-                    AddToPlaylist={this.props.AddToPlaylist}
-                  />
-                </CSSTransition>
-              ))}
-            </ModalBody>
-          </Form>
+          <Button className="float-right">Clear All</Button>
+          <ModalBody>
+            {this.state.history.map(({ title, videoId, url }) => (
+              <CSSTransition
+                key={Math.random()}
+                timeout={500}
+                classNames="fade"
+              >
+                <HistoryItem
+                  url={url}
+                  name={title}
+                  videoId={videoId}
+                  addFunc={this.props.addFunc}
+                  onPlay={this.props.onPlay}
+                  AddToPlaylist={this.props.AddToPlaylist}
+                />
+              </CSSTransition>
+            ))}
+          </ModalBody>
         </Modal>
       </div>
     );

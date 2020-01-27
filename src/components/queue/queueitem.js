@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
-  Button
-} from "reactstrap";
+import { Card, CardBody, CardTitle, Button } from "reactstrap";
 import isEqual from "react-fast-compare";
 
 class Queueitem extends Component {
@@ -30,7 +23,7 @@ class Queueitem extends Component {
     }
   }
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <div>
         <Card className="card">
