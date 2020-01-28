@@ -60,7 +60,7 @@ export const getPlaylistTracks = async () => {};
 /* -------------------------------------------------------------------------------*/
 export const getPlaylists = async () => {
   let res = await axios.get("http://localhost:8080/playlists");
-  return res.data;
+  return res;
 };
 export const makePlaylist = async body => {
   //console.log(body);
