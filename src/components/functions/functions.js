@@ -21,14 +21,46 @@ export const getContentDetails = async ListOfIds => {
       key: key
     }
   });
-
   return res.data.items;
 };
-export const getSpotifyUserId = async () => {};
-export const getSpotifyUsersPlaylists = async () => {};
+export const getSpotifyUserId = async token => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  };
+  let res = await axios.get("https://api.spotify.com/v1/me", config);
+
+  return res;
+};
+export const getSpotifyUsersPlaylists = async token => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  };
+  let res = await axios.get("https://api.spotify.com/v1/me/playlists", config);
+  return res.data;
+};
+export const getRequestWithToken = async (token, address) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  };
+  let res = await axios.get(address, config);
+  return res.data;
+};
+export const getPlaylistTracks = async () => {};
+
+/* -------------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------------*/
+//////////////          SPOTIFY & YOUTUBE API ABOVE ////////////////////////
+/* -------------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------------*/
 export const getPlaylists = async () => {
   let res = await axios.get("http://localhost:8080/playlists");
-  return res;
+  return res.data;
 };
 export const makePlaylist = async body => {
   //console.log(body);

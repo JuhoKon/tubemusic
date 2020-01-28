@@ -139,7 +139,7 @@ export default class Player extends Component {
     this.player.seekTo(0); //Seeks to 0
   }
   render() {
-    const { playing, volume, history } = this.state;
+    const { playing, volume } = this.state;
     //console.log(this.state.array);
 
     //console.log(this.state.url);
