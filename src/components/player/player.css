@@ -10,7 +10,7 @@
 }
 
 .player-wrapper {
-  width: 480px;
+  max-width: 480px;
   height: 270px;
 }
 .btn-controls {
