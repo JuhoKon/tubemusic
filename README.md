@@ -12,6 +12,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
+### `npm run devstart`
+
+In the backend folder you can run devstart to run the backend in development mode.<br />
+Note that you need to have MongoDB running on port 27017 as well. MongoURL is set in the .env file of backend folder.
+
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
