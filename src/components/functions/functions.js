@@ -1,6 +1,6 @@
 import axios from "axios";
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c";
-
+const clientId = "dc20085012814f3d8cab4b36a4144393";
 export const handleSubmit = async termFromSearch => {
   let res = await axios.get("https://www.googleapis.com/youtube/v3/search", {
     params: {
@@ -24,6 +24,8 @@ export const getContentDetails = async ListOfIds => {
 
   return res.data.items;
 };
+export const getSpotifyUserId = async () => {};
+export const getSpotifyUsersPlaylists = async () => {};
 export const getPlaylists = async () => {
   let res = await axios.get("http://localhost:8080/playlists");
   return res;
