@@ -55,10 +55,7 @@ export default class Player extends Component {
         playing: this.props.playing,
         title: this.props.title
       });
-      if (
-        this.props.url !== prevProps.url &&
-        this.props.title !== prevProps.title
-      ) {
+      if (this.props.url !== prevProps.url) {
         if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
           let itemObject = {};
           console.log(prevProps);

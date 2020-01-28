@@ -313,8 +313,7 @@ export default class Homepage extends Component {
   setUrl(url) {
     //updates given url to the state
     this.setState({
-      url: url,
-      playing: true
+      url: url
     });
   }
   onPlay(item) {
