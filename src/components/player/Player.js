@@ -64,6 +64,7 @@ export default class Player extends Component {
           console.log(prevProps);
           itemObject["title"] = prevProps.title;
           itemObject["url"] = prevProps.url;
+          //TODO add length and millon tehty
           if (itemObject["url"] === null) {
             return;
           }
@@ -92,8 +93,8 @@ export default class Player extends Component {
   };
   handlePlayNext = () => {
     console.log("onPlay");
-    this.props.setTitle(this.state.array[0].title);
     if (typeof this.state.array[0] !== "undefined") {
+      this.props.setTitle(this.state.array[0].title);
       const videoId = this.state.array[0].videoId;
       const url = "https://www.youtube.com/watch?v=" + videoId;
       //console.log(url);
@@ -126,7 +127,7 @@ export default class Player extends Component {
   };
   handleEnded = () => {
     console.log("onEnded");
-    this.setState({ playing: false });
+    //this.setState({ playing: false });
     this.handlePlayNext();
   };
   renderLoadButton = (url, label) => {
