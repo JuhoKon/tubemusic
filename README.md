@@ -1,4 +1,4 @@
-## Available Scripts
+## Available Scripts for TubeMusic
 
 In the project directory, you can run:
 
