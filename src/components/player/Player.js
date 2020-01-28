@@ -30,7 +30,7 @@ export default class Player extends Component {
       loop: false,
       array: this.props.array,
       modal: false,
-      history: []
+      history: [] //TODO: joku raja tälle
     };
   }
   load = url => {
