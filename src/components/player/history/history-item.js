@@ -32,7 +32,7 @@ class HistoryItem extends Component {
     this.props.AddToPlaylist(item);
   };
   render() {
-    console.log(this.state);
+    //console.log(this.state);
     return (
       <div>
         <Card className="card">
@@ -40,10 +40,10 @@ class HistoryItem extends Component {
             <span style={{ flexDirection: "column" }}>
               <Button
                 className="btn btn-primary float-right btn-remove"
-                color="info"
-                onClick={this.onAddClick.bind(this, this.state)}
+                color="secondary"
+                onClick={this.onAddToPlaylist.bind(this, this.state)}
               >
-                + Queue
+                + P
               </Button>
               <Button
                 className="btn btn-primary float-left btn-remove"
@@ -52,12 +52,13 @@ class HistoryItem extends Component {
               >
                 Play
               </Button>
+
               <Button
                 className="btn btn-primary float-right btn-remove"
-                color="secondary"
-                onClick={this.onAddToPlaylist.bind(this, this.state)}
+                color="info"
+                onClick={this.onAddClick.bind(this, this.state)}
               >
-                + Playlist
+                + Q
               </Button>
             </span>
             <CardTitle style={{ textAlign: "center" }}>

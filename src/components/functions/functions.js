@@ -5,11 +5,23 @@ export const handleSubmit = async termFromSearch => {
   let res = await axios.get("https://www.googleapis.com/youtube/v3/search", {
     params: {
       part: "snippet",
-      maxResults: 7,
+      maxResults: 30,
       key: key,
       q: termFromSearch
     }
   });
+
+  return res.data.items;
+};
+export const getContentDetails = async ListOfIds => {
+  let res = await axios.get("https://www.googleapis.com/youtube/v3/videos", {
+    params: {
+      part: "contentDetails",
+      id: ListOfIds,
+      key: key
+    }
+  });
+
   return res.data.items;
 };
 export const getPlaylists = async () => {
@@ -17,7 +29,7 @@ export const getPlaylists = async () => {
   return res;
 };
 export const makePlaylist = async body => {
-  console.log(body);
+  //console.log(body);
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -28,6 +40,7 @@ export const makePlaylist = async body => {
     body,
     config
   );
+
   return res;
 };
 export const updatePlaylist = async (body, id) => {

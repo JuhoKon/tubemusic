@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardTitle, Button } from "reactstrap";
 import isEqual from "react-fast-compare";
+import moment from "moment";
+import "moment-duration-format";
 
 class Queueitem extends Component {
   state = {
@@ -48,6 +50,11 @@ class Queueitem extends Component {
               </Button>
             </span>
             <CardTitle>{this.props.title}</CardTitle>
+
+            <small className="float-left">
+              Length&nbsp;
+              {moment.duration(this.props.duration).format("h:mm:ss")}
+            </small>
           </CardBody>
         </Card>
       </div>

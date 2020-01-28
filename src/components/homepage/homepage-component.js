@@ -12,7 +12,8 @@ import {
   makePlaylist,
   updatePlaylist,
   deletePlaylist,
-  getPlayListById
+  getPlayListById,
+  getContentDetails
 } from "../functions/functions";
 
 export default class Homepage extends Component {
@@ -43,6 +44,7 @@ export default class Homepage extends Component {
       items: [], //from youtube API
       queue: [],
       playlist: [],
+      contentDetails: [],
       playlists: [],
       updated: "",
       url: null,
@@ -138,6 +140,7 @@ export default class Homepage extends Component {
       object["title"] = playlist[i]["title"];
       object["videoId"] = playlist[i]["videoId"];
       object["channelTitle"] = playlist[i]["channelTitle"];
+      object["duration"] = playlist[i]["duration"];
       object["uniqueId"] = Math.random();
       queue.push(object);
     }
@@ -195,9 +198,15 @@ export default class Homepage extends Component {
   async handleSubmit(termFromSearch) {
     //handles search-query from search bar to YouTube API
     const result = await handleSubmit(termFromSearch);
-    // console.log(result);
+    console.log(result);
+    var listOfIds = [];
+    result.map(item => listOfIds.push(item.id.videoId));
+    listOfIds = listOfIds.join(",");
+    const contentDetails = await getContentDetails(listOfIds);
+    console.log(contentDetails);
     this.setState({
-      items: result
+      items: result,
+      contentDetails: contentDetails
     });
   }
   async loadPlaylist(id) {
@@ -269,6 +278,7 @@ export default class Homepage extends Component {
     object["title"] = item["title"];
     object["videoId"] = item["videoId"];
     object["channelTitle"] = item["channelTitle"];
+    object["duration"] = item["duration"];
     object["uniqueId"] = Math.random();
     //item["uniqueId"] = Math.random();
     this.state.queue.push(object);
@@ -281,7 +291,7 @@ export default class Homepage extends Component {
   }
   onDelete(item) {
     //delete item from queue
-    console.log(item);
+    //console.log(item);
     if (!item) return;
     if (typeof this.state.queue[0] === "undefined") return;
 
@@ -329,25 +339,34 @@ export default class Homepage extends Component {
     });
   }
   render() {
-    const itemArray = [];
+    let itemArray = [];
     const videoIdArray = [];
     const thumbnailArray = [];
+    const durationArray = [];
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
     const playlist = this.state.playlist;
     //console.log(playlists);
-    this.state.items.map(item => videoIdArray.push(item.id.videoId));
-    this.state.items.map(item => itemArray.push(item.snippet));
-    this.state.items.map(item =>
-      thumbnailArray.push(item.snippet.thumbnails.medium.url)
+    this.state.contentDetails.map(item =>
+      durationArray.push(item.contentDetails.duration)
+    );
+    this.state.items.map(item => videoIdArray.push(item.id.videoId)); //push videoIds
+    this.state.items.map(item => itemArray.push(item.snippet)); //push titles,descriptions and other data
+    this.state.items.map(
+      item => thumbnailArray.push(item.snippet.thumbnails.medium.url) //push thumbnail urls
     );
     for (let i = 0; i < itemArray.length; i++) {
+      //make an united array
       itemArray[i].videoId = videoIdArray[i];
       itemArray[i].thumbnail = thumbnailArray[i];
       itemArray[i].uniqueId = Math.random();
     }
-    //console.log(itemArray);
+    itemArray = itemArray.filter(item => typeof item.videoId !== "undefined"); //remove channels from itemArray
+    for (let i = 0; i < itemArray.length; i++) {
+      //add durations to the sliced array
+      itemArray[i].duration = durationArray[i];
+    }
     return (
       <div>
         <br />

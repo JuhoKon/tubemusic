@@ -1,7 +1,19 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardText,
+  Button,
+  Row,
+  Col
+} from "reactstrap";
 import "./playlist.css";
 import isEqual from "react-fast-compare";
+import Moment from "react-moment";
+import moment from "moment";
+import "moment-duration-format";
+
 class Playlistitem extends Component {
   state = {
     playlist: this.props.playlist
@@ -25,40 +37,51 @@ class Playlistitem extends Component {
   }
   render() {
     // console.log(this.props);
-    console.log(this.props.editMode);
+    //console.log(this.props.editMode);
     return (
-      <div>
-        <Card className="card">
-          <CardBody>
-            {this.props.editMode ? (
-              <Button
-                className="btn btn-primary btn-remove float-right"
-                color="danger"
-                onClick={this.onDeleteClick.bind(this, this.props)}
-              >
-                x
-              </Button>
-            ) : null}
+      <Card className="card">
+        <CardBody>
+          {this.props.editMode ? (
+            <Button
+              className="btn btn-primary btn-remove float-right"
+              color="danger"
+              onClick={this.onDeleteClick.bind(this, this.props)}
+            >
+              x
+            </Button>
+          ) : null}
 
-            <Button
-              className="btn btn-primary float-right "
-              color="info"
-              onClick={this.onAddClick.bind(this, this.props)}
-            >
-              + Queue
-            </Button>
-            <Button
-              className="btn btn-primary float-left"
-              onClick={this.onPlayClick.bind(this, this.props)}
-              color="primary"
-            >
-              Play
-            </Button>
-            <CardTitle>{this.props.title}</CardTitle>
-            <CardText>{this.props.channelTitle}</CardText>
-          </CardBody>
-        </Card>
-      </div>
+          <Button
+            className="btn btn-primary float-right "
+            color="info"
+            onClick={this.onAddClick.bind(this, this.props)}
+          >
+            + Queue
+          </Button>
+          <Button
+            className="btn btn-primary float-left"
+            onClick={this.onPlayClick.bind(this, this.props)}
+            color="primary"
+          >
+            Play
+          </Button>
+          <CardTitle>{this.props.title}</CardTitle>
+          <CardText>{this.props.channelTitle}</CardText>
+          <Row>
+            <Col xs="6" sm="4">
+              <small className="float-left">
+                Length&nbsp;
+                {moment.duration(this.props.duration).format("h:mm:ss")}
+              </small>
+            </Col>
+            <Col xs="6" sm="4">
+              <small className="published">
+                <Moment fromNow>{this.props.publishedAt}</Moment>
+              </small>
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
     );
   }
 }

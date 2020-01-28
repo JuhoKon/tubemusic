@@ -15,7 +15,8 @@ class Videolist extends Component {
             channelTitle,
             videoId,
             thumbnail,
-            uniqueId
+            uniqueId,
+            duration
           }) => (
             <CSSTransition key={uniqueId} timeout={500} classNames="fade">
               <Videoitem
@@ -28,6 +29,7 @@ class Videolist extends Component {
                 addFunc={this.props.onAdd}
                 onPlay={this.props.onPlay}
                 AddToPlaylist={this.props.AddToPlaylist}
+                duration={duration}
               />
             </CSSTransition>
           )

@@ -1,7 +1,18 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardText,
+  Button,
+  Row,
+  Col
+} from "reactstrap";
 import "./videolist.css";
 import Moment from "react-moment";
+import moment from "moment";
+import "moment-duration-format";
+
 class Videoitem extends Component {
   onAddClick = id => {
     this.props.addFunc(id);
@@ -16,36 +27,34 @@ class Videoitem extends Component {
     //TODO: make it look much better
     return (
       <div>
-        {this.props.videoId ? (
-          <Card className="card">
-            <CardBody>
-              <span style={{ flexDirection: "column" }}>
-                <Button
-                  className="btn btn-primary float-right btn-remove"
-                  color="secondary"
-                  onClick={this.onAddToPlaylist.bind(this, this.props)}
-                >
-                  + P
-                </Button>
+        <Card className="card">
+          <CardBody>
+            <span style={{ flexDirection: "column" }}>
+              <Button
+                className="btn btn-primary float-right btn-remove"
+                color="secondary"
+                onClick={this.onAddToPlaylist.bind(this, this.props)}
+              >
+                + P
+              </Button>
 
-                <Button
-                  className="btn btn-primary float-left"
-                  color="primary"
-                  onClick={this.onPlayClick.bind(this, this.props)}
-                >
-                  Play
-                </Button>
-                <Button
-                  className="btn btn-primary float-right btn-remove"
-                  color="info"
-                  onClick={this.onAddClick.bind(this, this.props)}
-                >
-                  + Q
-                </Button>
-              </span>
-              <CardTitle>{this.props.title}</CardTitle>
-
-              {/* A JSX comment 
+              <Button
+                className="btn btn-primary float-left"
+                color="primary"
+                onClick={this.onPlayClick.bind(this, this.props)}
+              >
+                Play
+              </Button>
+              <Button
+                className="btn btn-primary float-right btn-remove"
+                color="info"
+                onClick={this.onAddClick.bind(this, this.props)}
+              >
+                + Q
+              </Button>
+            </span>
+            <CardTitle>{this.props.title}</CardTitle>
+            {/* A JSX comment 
               <CardImg
                 width="10px"
                 bottom
@@ -53,9 +62,17 @@ class Videoitem extends Component {
                 alt={this.props.thumbnail}
               />
               */}
-            </CardBody>
-          </Card>
-        ) : null}
+
+            <small>
+              Length&nbsp;
+              {moment.duration(this.props.duration).format("h:mm:ss")}
+            </small>
+
+            <small>
+              <Moment fromNow>{this.props.publishedAt}</Moment>
+            </small>
+          </CardBody>
+        </Card>
       </div>
     );
   }

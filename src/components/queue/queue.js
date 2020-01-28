@@ -56,7 +56,8 @@ class Queue extends Component {
                 channelTitle,
                 videoId,
                 thumbnail,
-                uniqueId
+                uniqueId,
+                duration
               },
               index
             ) => (
@@ -72,6 +73,7 @@ class Queue extends Component {
                 thumbnail={thumbnail}
                 onRemove={this.props.onRemove}
                 onPlay={this.props.onPlay}
+                duration={duration}
               />
             )
           )}
@@ -80,14 +82,14 @@ class Queue extends Component {
     });
     const SortableItem = SortableElement(
       ({
-        key,
         uniqueId,
         title,
         thumbnail,
         channelTitle,
         publishedAt,
         videoId,
-        editMode
+
+        duration
       }) => (
         <Queueitem
           key={uniqueId}
@@ -100,6 +102,7 @@ class Queue extends Component {
           onRemove={this.props.onRemove}
           onPlay={this.props.onPlay}
           editMode={this.state.editMode}
+          duration={duration}
         />
       )
     );
@@ -140,7 +143,8 @@ class Queue extends Component {
                   channelTitle,
                   videoId,
                   thumbnail,
-                  uniqueId
+                  uniqueId,
+                  duration
                 }) => (
                   <Queueitem
                     key={uniqueId}
@@ -153,6 +157,7 @@ class Queue extends Component {
                     onRemove={this.props.onRemove}
                     onPlay={this.props.onPlay}
                     editMode={this.state.editMode}
+                    duration={duration}
                   />
                 )
               )}

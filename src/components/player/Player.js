@@ -33,8 +33,6 @@ export default class Player extends Component {
       history: []
     };
   }
-  //tee se seek siitä reactplayher demosta, ja vaa sillee et set to 0, kun url on sama tai jotai
-  //tai siis set to 0, kun kutsutaan jotakin, ja sitä kutsutaan, kun vaihdetaan biisiä.?
   load = url => {
     this.setState({
       url,
@@ -88,12 +86,12 @@ export default class Player extends Component {
     }
   };
   addToHistory = item => {
+    //Adds item to history array
     this.state.history.unshift(item);
     //console.log(this.state.history);
   };
   handlePlayNext = () => {
     console.log("onPlay");
-    let itemObject = {};
     this.props.setTitle(this.state.array[0].title);
     if (typeof this.state.array[0] !== "undefined") {
       const videoId = this.state.array[0].videoId;
@@ -142,7 +140,7 @@ export default class Player extends Component {
   }
   render() {
     const { playing, volume, history } = this.state;
-    console.log(this.state.array);
+    //console.log(this.state.array);
 
     //console.log(this.state.url);
     //console.log(this.state.title);

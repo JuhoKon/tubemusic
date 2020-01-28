@@ -63,44 +63,52 @@ class Playlist extends Component {
     this.props.setPlaylist(this.state.playlist);
   };
   render() {
-    //console.log(this.props.playlist);
+    console.log(this.props.playlist);
     const playlist = this.props.playlist;
 
     const playlists = this.props.playlists;
     const SortableList = SortableContainer(({ playlist }) => {
       return (
         <div>
-          {playlist.map(({ title, videoId, uniqueId }, index) => (
-            <SortableItem
-              className="QueueItem"
-              key={uniqueId}
-              index={index}
-              editMode={this.state.editMode}
-              uniqueId={uniqueId}
-              title={title}
-              videoId={videoId}
-              addFunc={this.props.onAdd}
-              onPlay={this.props.onPlay}
-              onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-              onRemove={this.props.onRemove}
-            />
-          ))}
+          {playlist.map(
+            ({ title, videoId, uniqueId, duration, publishedAt }, index) => (
+              <SortableItem
+                className="QueueItem"
+                key={uniqueId}
+                index={index}
+                editMode={this.state.editMode}
+                uniqueId={uniqueId}
+                title={title}
+                videoId={videoId}
+                addFunc={this.props.onAdd}
+                onPlay={this.props.onPlay}
+                onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+                onRemove={this.props.onRemove}
+                duration={duration}
+                publishedAt={publishedAt}
+              />
+            )
+          )}
         </div>
       );
     });
-    const SortableItem = SortableElement(({ uniqueId, title, videoId }) => (
-      <Playlistitem
-        key={uniqueId}
-        editMode={this.state.editMode}
-        uniqueId={uniqueId}
-        title={title}
-        videoId={videoId}
-        addFunc={this.props.onAdd}
-        onPlay={this.props.onPlay}
-        onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-        onRemove={this.props.onRemove}
-      />
-    ));
+    const SortableItem = SortableElement(
+      ({ uniqueId, title, videoId, duration, publishedAt }) => (
+        <Playlistitem
+          key={uniqueId}
+          editMode={this.state.editMode}
+          uniqueId={uniqueId}
+          title={title}
+          videoId={videoId}
+          addFunc={this.props.onAdd}
+          onPlay={this.props.onPlay}
+          onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+          onRemove={this.props.onRemove}
+          duration={duration}
+          publishedAt={publishedAt}
+        />
+      )
+    );
     //console.log(playlists);
     return (
       <div>
@@ -166,19 +174,23 @@ class Playlist extends Component {
             <SortableList playlist={playlist} onSortEnd={this.onSortEnd} />
           ) : (
             <FlipMove>
-              {this.props.playlist.map(({ title, videoId, uniqueId }) => (
-                <Playlistitem
-                  key={uniqueId}
-                  editMode={this.state.editMode}
-                  uniqueId={uniqueId}
-                  title={title}
-                  videoId={videoId}
-                  addFunc={this.props.onAdd}
-                  onPlay={this.props.onPlay}
-                  onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-                  onRemove={this.props.onRemove}
-                />
-              ))}
+              {this.props.playlist.map(
+                ({ title, videoId, uniqueId, duration, publishedAt }) => (
+                  <Playlistitem
+                    key={uniqueId}
+                    editMode={this.state.editMode}
+                    uniqueId={uniqueId}
+                    title={title}
+                    videoId={videoId}
+                    addFunc={this.props.onAdd}
+                    onPlay={this.props.onPlay}
+                    onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+                    onRemove={this.props.onRemove}
+                    duration={duration}
+                    publishedAt={publishedAt}
+                  />
+                )
+              )}
             </FlipMove>
           )}
         </div>
