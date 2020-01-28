@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardTitle, Button } from "reactstrap";
+import { Card, CardBody, CardTitle, Button, Row, Col } from "reactstrap";
 import "./videolist.css";
 import Moment from "react-moment";
 import moment from "moment";
@@ -55,12 +55,12 @@ class Videoitem extends Component {
               />
               */}
 
-            <small>
+            <small className="float-left">
               Length&nbsp;
               {moment.duration(this.props.duration).format("h:mm:ss")}
             </small>
 
-            <small>
+            <small className="published">
               <Moment fromNow>{this.props.publishedAt}</Moment>
             </small>
           </CardBody>
