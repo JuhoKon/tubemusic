@@ -77,7 +77,7 @@ class PlaylistModal extends Component {
     for (let i = 0; i < tracks.length; i++) {
       let artistName = tracks[i].artistName;
       let title = tracks[i].title;
-      let term = title + " " + artistName;
+      let term = title + " " + artistName + "lyrics";
       let result = await handleSpotifySearchFromYoutube(term);
       let trackObject = {};
       trackObject["videoId"] = result[0].id.videoId;
