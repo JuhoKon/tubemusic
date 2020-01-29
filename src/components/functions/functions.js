@@ -51,7 +51,19 @@ export const getRequestWithToken = async (token, address) => {
   let res = await axios.get(address, config);
   return res.data;
 };
-export const getPlaylistTracks = async () => {};
+export const getPlaylistTracks = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  };
+  let res = await axios.get(
+    `https://api.spotify.com/v1/playlists/${id}/tracks`,
+    config
+  );
+  //console.log(res.data.items);
+  return res.data;
+};
 
 /* -------------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------------*/

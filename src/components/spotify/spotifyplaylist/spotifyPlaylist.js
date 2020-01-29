@@ -23,16 +23,8 @@ class SpotifyPlaylist extends Component {
   }
 
   render() {
-    //console.log(this.state);
-    /*  <div>
-            {userPlaylists.map(({ id }) => (
-              <CSSTransition key={id} timeout={500} classNames="fade">
-                <SpotifyItem id={id} />
-              </CSSTransition>
-            ))}
-          </div>*/
     const userPlaylists = this.state.userPlaylists;
-    console.log(userPlaylists);
+    //console.log(userPlaylists);
     return (
       <div>
         <p>
@@ -45,9 +37,29 @@ class SpotifyPlaylist extends Component {
             </div>
           ) : (
             <div>
-              {userPlaylists.map(({ id, name }) => (
-                <SpotifyItem name={name} key={id} />
-              ))}
+              {userPlaylists.map(
+                ({
+                  id,
+                  name,
+                  description,
+                  imageUrl,
+                  trackRef,
+                  totalTracks,
+                  ownerName
+                }) => (
+                  <SpotifyItem
+                    description={description}
+                    imageUrl={imageUrl}
+                    name={name}
+                    id={id}
+                    key={id}
+                    trackRef={trackRef}
+                    totalTracks={totalTracks}
+                    ownerName={ownerName}
+                    token={this.props.token}
+                  />
+                )
+              )}
             </div>
           )}
         </div>

@@ -64,7 +64,8 @@ export default class Spotify extends Component {
     let imageArray = [];
     let trackRefArray = [];
     let ownerArray = [];
-
+    let trackTotalArray = [];
+    console.log(dataArray);
     let userPlaylists = [];
     dataArray.map(item =>
       item.images[0]
@@ -72,6 +73,7 @@ export default class Spotify extends Component {
         : imageArray.push(null)
     );
     dataArray.map(item => trackRefArray.push(item.tracks.href));
+    dataArray.map(item => trackTotalArray.push(item.tracks.total));
     dataArray.map(item => ownerArray.push(item.owner.display_name));
 
     for (let i = 0; i < dataArray.length; i++) {
@@ -82,6 +84,7 @@ export default class Spotify extends Component {
       dataObject["imageUrl"] = imageArray[i];
       dataObject["trackRef"] = trackRefArray[i];
       dataObject["ownerName"] = ownerArray[i];
+      dataObject["totalTracks"] = trackTotalArray[i];
       userPlaylists.push(dataObject);
     }
 
@@ -136,6 +139,7 @@ export default class Spotify extends Component {
                 <SpotifyPlaylist
                   Userplaylists={this.state.userPlaylists}
                   loading={this.state.loading}
+                  token={this.state.token}
                 />
               ) : (
                 ""
