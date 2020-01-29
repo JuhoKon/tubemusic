@@ -4,3 +4,16 @@
 .published {
   display: inline;
 }
+.btn-item {
+  font-size: small !important;
+  display: inline-block !important;
+  top: 50% !important;
+}
+.placeforbutton {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

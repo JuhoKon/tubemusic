@@ -41,43 +41,46 @@ class Playlistitem extends Component {
     return (
       <Card className="card">
         <CardBody>
-          {this.props.editMode ? (
-            <Button
-              className="btn btn-primary btn-remove float-right"
-              color="danger"
-              onClick={this.onDeleteClick.bind(this, this.props)}
-            >
-              x
-            </Button>
-          ) : null}
-
-          <Button
-            className="btn btn-primary float-right "
-            color="info"
-            onClick={this.onAddClick.bind(this, this.props)}
-          >
-            + Queue
-          </Button>
-          <Button
-            className="btn btn-primary float-left"
-            onClick={this.onPlayClick.bind(this, this.props)}
-            color="primary"
-          >
-            Play
-          </Button>
-          <CardTitle>{this.props.title}</CardTitle>
-          <CardText>{this.props.channelTitle}</CardText>
           <Row>
-            <Col xs="6" sm="4">
+            <Col xs="2" sm="2">
+              <div className="placeforbutton">
+                <Button
+                  className="btn btn-primary btn-item"
+                  onClick={this.onPlayClick.bind(this, this.props)}
+                  color="primary"
+                >
+                  Play
+                </Button>
+              </div>
+            </Col>
+            <Col xs="7" sm="7">
+              <CardText>{this.props.title}</CardText>
+            </Col>
+            <Col xs="1" sm="1">
               <small className="float-left">
-                Length&nbsp;
                 {moment.duration(this.props.duration).format("h:mm:ss")}
               </small>
             </Col>
-            <Col xs="6" sm="4">
-              <small className="published">
-                <Moment fromNow>{this.props.publishedAt}</Moment>
-              </small>
+            <Col xs="2" sm="2">
+              <div className="placeforbutton">
+                {this.props.editMode ? (
+                  <Button
+                    className="btn btn-primary btn-remove float-right btn-item"
+                    color="danger"
+                    onClick={this.onDeleteClick.bind(this, this.props)}
+                  >
+                    x
+                  </Button>
+                ) : (
+                  <Button
+                    className="btn btn-primary float-right btn-item"
+                    color="info"
+                    onClick={this.onAddClick.bind(this, this.props)}
+                  >
+                    +Q
+                  </Button>
+                )}
+              </div>
             </Col>
           </Row>
         </CardBody>

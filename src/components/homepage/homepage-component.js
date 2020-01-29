@@ -46,6 +46,7 @@ export default class Homepage extends Component {
       playlist: [],
       contentDetails: [],
       playlists: [],
+      loading: false,
       updated: "",
       url: null,
       playing: true,
@@ -197,6 +198,10 @@ export default class Homepage extends Component {
   }
   async handleSubmit(termFromSearch) {
     //handles search-query from search bar to YouTube API
+    this.setState({
+      //set loading to true
+      loading: true
+    });
     const result = await handleSubmit(termFromSearch);
     console.log(result);
     var listOfIds = [];
@@ -206,19 +211,19 @@ export default class Homepage extends Component {
     console.log(contentDetails);
     this.setState({
       items: result,
-      contentDetails: contentDetails
+      contentDetails: contentDetails,
+      loading: false
     });
   }
   async loadPlaylist(id) {
     //loads a single database based on the id
-    //const id = playlist._id;
-    //console.log(id);
     const result = await getPlayListById(id);
     //console.log(result.data);
     this.setState({
       playlist: result.data.playlist,
       playlistName: result.data.name,
-      playlistId: result.data._id
+      playlistId: result.data._id,
+      loading: false
     });
   }
   async getPlaylist() {
@@ -421,6 +426,7 @@ export default class Homepage extends Component {
               <Search handleSubmit={this.handleSubmit} />
               <br />
               <Videolist
+                loading={this.state.loading}
                 items={itemArray}
                 onAdd={this.onAdd}
                 onPlay={this.onPlay}

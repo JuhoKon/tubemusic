@@ -21,6 +21,7 @@
     "react-scripts": "3.3.0",
     "react-shuffle": "^2.1.0",
     "react-sortable-hoc": "^1.11.0",
+    "react-spinners": "^0.8.0",
     "react-spring": "^8.0.27",
     "react-strap": "0.0.1",
     "reactstrap": "^8.4.0"

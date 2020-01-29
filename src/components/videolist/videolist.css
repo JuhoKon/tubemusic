@@ -4,17 +4,48 @@
   font-size: x-large;
 }
 
-.card-img-bottom {
-  object-fit: cover;
-}
 .card-title {
-  font-size: medium;
+  font-size: 0.9em;
+}
+.card-text {
+  font-size: 0.9em;
 }
 .card {
   margin-bottom: 0.5rem;
+  min-height: 60px;
+}
+.card-body {
+  padding: 1rem !important;
 }
 #videolist {
   background-color: #f8f9fa !important;
   height: 700px;
   overflow-y: scroll;
+}
+.btn-item {
+  font-size: small !important;
+  display: inline-block !important;
+  top: 50% !important;
+}
+.placeforbutton {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.loadingPlace {
+  background-color: #f8f9fa;
+  padding: 20px;
+  padding-right: 50px;
+  border-radius: 2rem;
+  z-index: 1;
+  margin: 0;
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardTitle, Button, CardText } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Button,
+  CardText,
+  Row,
+  Col
+} from "reactstrap";
 import isEqual from "react-fast-compare";
 import moment from "moment";
 import "moment-duration-format";
@@ -30,32 +38,40 @@ class Queueitem extends Component {
       <div>
         <Card className="card">
           <CardBody>
-            <span style={{ flexDirection: "column" }}>
-              {this.state.editMode ? (
-                <Button
-                  className="btn btn-primary float-right"
-                  color="danger"
-                  onClick={this.onRemoveClick.bind(this, this.props)}
-                >
-                  x
-                </Button>
-              ) : null}
-
-              <Button
-                className="btn btn-primary float-left "
-                color="primary"
-                onClick={this.onPlayClick.bind(this, this.props)}
-              >
-                Play
-              </Button>
-            </span>
-            <CardTitle>{this.props.title}</CardTitle>
-            <CardText>
-              <small className="float-right">
-                Length&nbsp;
-                {moment.duration(this.props.duration).format("h:mm:ss")}
-              </small>
-            </CardText>
+            <Row>
+              <Col xs="2" sm="2">
+                <div className="placeforbutton">
+                  <Button
+                    className="btn btn-primary btn-item"
+                    onClick={this.onPlayClick.bind(this, this.props)}
+                    color="primary"
+                  >
+                    Play
+                  </Button>
+                </div>
+              </Col>
+              <Col xs="7" sm="7">
+                <CardText>{this.props.title}</CardText>
+              </Col>
+              <Col xs="1" sm="1">
+                <small className="float-left">
+                  {moment.duration(this.props.duration).format("h:mm:ss")}
+                </small>
+              </Col>
+              <Col xs="2" sm="2">
+                <div className="placeforbutton">
+                  {this.props.editMode ? (
+                    <Button
+                      className="btn btn-primary float-right"
+                      color="danger"
+                      onClick={this.onRemoveClick.bind(this, this.props)}
+                    >
+                      x
+                    </Button>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
           </CardBody>
         </Card>
       </div>

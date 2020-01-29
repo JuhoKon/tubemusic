@@ -88,7 +88,6 @@ class Queue extends Component {
         channelTitle,
         publishedAt,
         videoId,
-
         duration
       }) => (
         <Queueitem

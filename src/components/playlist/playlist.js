@@ -4,7 +4,6 @@ import Playlistitem from "./playlistitem";
 import LoadPlaylistModal from "./loadPlaylistModal";
 import SaveModal from "./save/saveModal";
 import CreateNew from "./createNew/createNew";
-
 import isEqual from "react-fast-compare";
 import FlipMove from "react-flip-move";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
@@ -112,8 +111,6 @@ class Playlist extends Component {
     //console.log(playlists);
     return (
       <div>
-        <p>Playlist: {this.state.playlistName}</p>
-
         <Container>
           <Button
             className="float-left btn-remove"
@@ -123,7 +120,6 @@ class Playlist extends Component {
           >
             Play
           </Button>
-
           <Button
             className="float-right btn-remove"
             color="info"
@@ -148,9 +144,7 @@ class Playlist extends Component {
           playlists={playlists}
           loadPlaylist={this.props.loadPlaylist}
         />
-
         <br />
-
         <Button
           color={this.state.editMode ? "primary" : "secondary"}
           className="float-right btn-remove"
@@ -167,8 +161,10 @@ class Playlist extends Component {
             Save
           </Button>
         ) : null}
+        <p className="float-left">Playlist: {this.state.playlistName}</p>
         <br />
         <br />
+
         <div id="videolist">
           {this.state.editMode ? (
             <SortableList playlist={playlist} onSortEnd={this.onSortEnd} />
