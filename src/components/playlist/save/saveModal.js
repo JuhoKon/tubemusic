@@ -53,7 +53,7 @@ class SaveModal extends Component {
     return (
       <div>
         <Button
-          className="float-right btn-remove"
+          className="float-right btn-margin"
           onClick={this.toggle}
           href="#"
           color="primary"

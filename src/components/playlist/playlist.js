@@ -62,7 +62,7 @@ class Playlist extends Component {
     this.props.setPlaylist(this.state.playlist);
   };
   render() {
-    console.log(this.props.playlist);
+    //console.log(this.props.playlist);
     const playlist = this.props.playlist;
 
     const playlists = this.props.playlists;
@@ -111,39 +111,40 @@ class Playlist extends Component {
     //console.log(playlists);
     return (
       <div>
-        <Container>
+        <div className="btn-group">
           <Button
-            className="float-left btn-remove"
+            className="float-left btn-margin"
             color="info"
             onClick={this.playPlaylist.bind(this, playlist)}
             disabled={this.props.playlist[0] ? false : true}
           >
             Play
           </Button>
+          <CreateNew
+            makePlaylist={this.props.makePlaylist}
+            playlistName={this.state.playlistName}
+          />
+          <LoadPlaylistModal
+            deletePlaylist={this.props.deletePlaylist}
+            getPlayList={this.props.getPlayList}
+            playlists={playlists}
+            loadPlaylist={this.props.loadPlaylist}
+          />
+          <SaveModal
+            playlistId={this.props.playlistId}
+            Updateplaylist={this.props.Updateplaylist}
+            playlistName={this.state.playlistName}
+          />
           <Button
-            className="float-right btn-remove"
+            className="float-right btn-margin "
             color="info"
             onClick={this.props.addPlaylistToQueue}
             disabled={this.props.playlist[0] ? false : true}
           >
             + Queue
           </Button>
-        </Container>
-        <SaveModal
-          playlistId={this.props.playlistId}
-          Updateplaylist={this.props.Updateplaylist}
-          playlistName={this.state.playlistName}
-        />
-        <CreateNew
-          makePlaylist={this.props.makePlaylist}
-          playlistName={this.state.playlistName}
-        />
-        <LoadPlaylistModal
-          deletePlaylist={this.props.deletePlaylist}
-          getPlayList={this.props.getPlayList}
-          playlists={playlists}
-          loadPlaylist={this.props.loadPlaylist}
-        />
+        </div>
+        <br />
         <br />
         <Button
           color={this.state.editMode ? "primary" : "secondary"}

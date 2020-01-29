@@ -61,7 +61,8 @@ export default class Player extends Component {
           console.log(prevProps);
           itemObject["title"] = prevProps.title;
           itemObject["url"] = prevProps.url;
-          //TODO add length and millon tehty
+          itemObject["duration"] = prevProps.duration;
+          //TODO millon tehty
           if (itemObject["url"] === null) {
             return;
           }

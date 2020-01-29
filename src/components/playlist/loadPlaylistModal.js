@@ -27,7 +27,7 @@ class LoadPlaylistModal extends Component {
 
     return (
       <div>
-        <Button onClick={this.toggle} href="#">
+        <Button className="btn-margin" onClick={this.toggle} href="#">
           Available playlists
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>

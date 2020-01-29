@@ -67,6 +67,22 @@ class Videoitem extends Component {
                 </div>
               </Col>
             </Row>
+            <Row>
+              <Col xs="4" sm="4">
+                <small className="float-left">
+                  Length&nbsp;
+                  {moment.duration(this.props.duration).format("h:mm:ss")}
+                </small>
+              </Col>
+              <Col xs="4" sm="4">
+                <small className="">
+                  <Moment fromNow>{this.props.publishedAt}</Moment>
+                </small>
+              </Col>
+              <Col xs="4" sm="4">
+                <small className="">By: {this.props.channelTitle}</small>
+              </Col>
+            </Row>
           </CardBody>
         </Card>
       </div>

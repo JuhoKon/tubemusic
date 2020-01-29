@@ -32,7 +32,7 @@ class CreateNew extends Component {
     return (
       <div>
         <Button
-          className="float-left btn-remove"
+          className="float-left btn-margin"
           onClick={this.toggle}
           href="#"
           color="primary"

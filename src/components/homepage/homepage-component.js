@@ -113,6 +113,7 @@ export default class Homepage extends Component {
         itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
         itemObject["videoId"] = this.state.playlist[i].videoId;
         itemObject["uniqueId"] = Math.random();
+        itemObject["duration"] = this.state.playlist[i].duration;
         this.onPlay(itemObject);
       } else {
         //other elements go to queue
@@ -120,6 +121,7 @@ export default class Homepage extends Component {
         itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
         itemObject["videoId"] = this.state.playlist[i].videoId;
         itemObject["uniqueId"] = Math.random();
+        itemObject["duration"] = this.state.playlist[i].duration;
         itemArray.push(itemObject);
       }
       //console.log(this.state.playlist[i]);

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col, Button } from "reactstrap";
-
+import SpotifyPlaylist from "./spotifyplaylist/spotifyPlaylist";
 import {
   getSpotifyUserId,
   getSpotifyUsersPlaylists,
@@ -8,42 +8,89 @@ import {
 } from "../functions/functions";
 
 export default class Spotify extends Component {
-  state = {
-    auth: false,
-    token: null,
-    userPlaylists: [],
-    display_name: "",
-    user_id: "",
-    nextPlaylists: null,
-    chosenPlaylist: [] //chosen playlist
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      auth: false,
+      token: null,
+      userPlaylists: [],
+      display_name: "",
+      user_id: "",
+      nextPlaylists: null,
+      loading: false,
+      chosenPlaylist: [] //chosen playlist
+    };
+    this.getUserId = this.getUserId.bind(this);
+    this.getPlayListData = this.getPlayListData.bind(this);
+  }
+
   async getUserId(token) {
+    this.setState({
+      loading: true
+    });
     let data = await getSpotifyUserId(token);
-    this.getPlayListData(token);
-    console.log(data.data);
+    setTimeout(
+      function() {
+        this.getPlayListData(token);
+      }.bind(this),
+      2000
+    );
+    //console.log(data.data);
     this.setState({
       display_name: data.data.display_name,
       user_id: data.data.id
     });
   }
   async getPlayListData(token) {
-    let data = await getSpotifyUsersPlaylists(token);
-    let nextData = null;
     this.setState({
-      userPlaylists: data.items
+      loading: true
     });
+    let data = await getSpotifyUsersPlaylists(token);
+    let dataArray = [];
+    let nextData = null;
+    dataArray = data.items;
+
     while (data.next !== null || typeof data.next !== "undefined") {
       nextData = await getRequestWithToken(token, data.next);
       console.log(nextData);
-      this.setState({
-        userPlaylists: this.state.userPlaylists.concat(nextData.items)
-      });
+      dataArray = dataArray.concat(nextData.items);
+
       if (nextData.next === null) {
         break;
       }
       data.next = nextData.next;
     }
+    //editing data array
+    let imageArray = [];
+    let trackRefArray = [];
+    let ownerArray = [];
+
+    let userPlaylists = [];
+    dataArray.map(item =>
+      item.images[0]
+        ? imageArray.push(item.images[0].url)
+        : imageArray.push(null)
+    );
+    dataArray.map(item => trackRefArray.push(item.tracks.href));
+    dataArray.map(item => ownerArray.push(item.owner.display_name));
+
+    for (let i = 0; i < dataArray.length; i++) {
+      let dataObject = {};
+      dataObject["id"] = dataArray[i].id;
+      dataObject["name"] = dataArray[i].name;
+      dataObject["description"] = dataArray[i].description;
+      dataObject["imageUrl"] = imageArray[i];
+      dataObject["trackRef"] = trackRefArray[i];
+      dataObject["ownerName"] = ownerArray[i];
+      userPlaylists.push(dataObject);
+    }
+
+    this.setState({
+      loading: false,
+      userPlaylists
+    });
   }
+
   componentDidMount() {
     let url = window.location.href;
     url = url.split("_token=")[1]; //extract token from the url
@@ -65,6 +112,7 @@ export default class Spotify extends Component {
 
   render() {
     console.log(this.state);
+
     return (
       <div>
         <h3>Import your spotify playlists into the app!</h3>
@@ -84,7 +132,14 @@ export default class Spotify extends Component {
               </Button>
             </Col>
             <Col sm="4">
-              <Button></Button>
+              {this.state.auth ? (
+                <SpotifyPlaylist
+                  Userplaylists={this.state.userPlaylists}
+                  loading={this.state.loading}
+                />
+              ) : (
+                ""
+              )}
             </Col>
           </Row>
         </div>
