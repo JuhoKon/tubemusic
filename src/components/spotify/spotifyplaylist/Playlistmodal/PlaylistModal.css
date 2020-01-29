@@ -13,3 +13,10 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+.sortableHelper {
+  z-index: 10000 !important;
+}
+#importedPlayListTitle {
+  position: absolute;
+  left: 25%;
+}

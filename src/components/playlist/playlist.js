@@ -108,7 +108,7 @@ class Playlist extends Component {
         />
       )
     );
-    //console.log(playlists);
+    console.log(this.state.playlist);
     return (
       <div>
         <div className="btn-group">

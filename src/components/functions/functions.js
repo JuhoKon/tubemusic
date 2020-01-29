@@ -13,6 +13,18 @@ export const handleSubmit = async termFromSearch => {
 
   return res.data.items;
 };
+export const handleSpotifySearchFromYoutube = async termFromSearch => {
+  let res = await axios.get("https://www.googleapis.com/youtube/v3/search", {
+    params: {
+      part: "snippet",
+      maxResults: 1,
+      key: key,
+      q: termFromSearch
+    }
+  });
+
+  return res.data.items;
+};
 export const getContentDetails = async ListOfIds => {
   let res = await axios.get("https://www.googleapis.com/youtube/v3/videos", {
     params: {
