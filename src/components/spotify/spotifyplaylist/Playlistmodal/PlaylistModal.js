@@ -222,7 +222,7 @@ class PlaylistModal extends Component {
               <Col xs="4" sm="4">
                 <div className="placeforbutton">
                   <Button onClick={this.importPlaylistToApp}>
-                    Make playlist to the app
+                    Import playlist to the app
                   </Button>
                 </div>
               </Col>
@@ -231,10 +231,9 @@ class PlaylistModal extends Component {
                   <Button>Get all songs</Button>
                 </div>
               </Col>
-
               <Col xs="4" sm="4">
                 <div className="placeforbutton">
-                  <Button>=</Button>
+                  <Button>use webScraping</Button>
                 </div>
               </Col>
             </Row>

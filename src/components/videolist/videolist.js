@@ -57,18 +57,6 @@ class Videolist extends Component {
             </CSSTransition>
           )
         )}
-        <Videoitem
-          uniqueId={"uniqueId"}
-          title={"Eminem - Never Love Again (Music To Be Murska)"}
-          thumbnail={"humbnail"}
-          channelTitle={"Visionary"}
-          publishedAt={"2020-01-17T06:14:47.000Z"}
-          videoId={"6lWb5nSjt-4"}
-          addFunc={this.props.onAdd}
-          onPlay={this.props.onPlay}
-          AddToPlaylist={this.props.AddToPlaylist}
-          duration={"PT2M58S"}
-        />
       </div>
     );
   }
