@@ -21,9 +21,9 @@ class PlaylistModalItem extends Component {
     imported: this.props.imported
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  /*shouldComponentUpdate(nextProps, nextState) {
     return false;
-  }
+  }*/
   addToImport(props) {
     //console.log(props);
     this.props.addToImport(props);

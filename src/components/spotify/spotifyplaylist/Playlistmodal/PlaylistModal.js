@@ -40,6 +40,17 @@ class PlaylistModal extends Component {
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
     this.addToImport = this.addToImport.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.moveAllToImport = this.moveAllToImport.bind(this);
+    this.clearList = this.clearList.bind(this);
+  }
+  clearList() {
+    this.setState({
+      toBeImportedPlaylist: []
+    });
+  }
+  moveAllToImport() {
+    const chosenListsTracks = this.state.chosenListsTracks;
+    chosenListsTracks.map(track => this.addToImport(track)); //need to generate uniqueIDs
   }
   toggle() {
     this.setState({
@@ -86,7 +97,7 @@ class PlaylistModal extends Component {
     for (let i = 0; i < tracks.length; i++) {
       let artistName = tracks[i].artistName;
       let title = tracks[i].title;
-      let term = title + " " + artistName + "lyrics"; //need to think about how to improve
+      let term = title + " " + artistName; //need to think about how to improve
       let result = await handleSpotifySearchFromYoutube(term);
       let trackObject = {};
       trackObject["videoId"] = result[0].id.videoId;
@@ -159,45 +170,42 @@ class PlaylistModal extends Component {
           <ModalBody>
             <Row>
               <Col xs="6" sm="6">
-                <Row>
-                  <Col xs="6" sm="6">
-                    {" "}
-                    <p id="importedPlayListTitle">Title</p>
-                  </Col>
-                  <Col xs="6" sm="6">
-                    <p>Artist</p>
-                  </Col>
-                </Row>
-
-                <div id="videolist">
+                <div id="lists">
                   <ImportList
                     importPlaylistToApp={this.importPlaylistToApp}
                     removeFromPlaylist={this.removeFromPlaylist}
-                    toBeImportedPlaylist={toBeImportedPlaylist}
+                    toBeImportedPlaylist={this.state.toBeImportedPlaylist}
                   />
                 </div>
               </Col>
               <Col xs="6" sm="6">
                 SEARCHBAR
-                <LoadedList
-                  ownerName={this.state.ownerName}
-                  totalTracks={this.state.totalTracks}
-                  tracks={tracks}
-                  addToImport={this.addToImport}
-                />
+                <div id="lists">
+                  <LoadedList
+                    ownerName={this.state.ownerName}
+                    totalTracks={this.state.totalTracks}
+                    tracks={tracks}
+                    addToImport={this.addToImport}
+                  />
+                </div>
               </Col>
             </Row>
             <Row id="lowerRow">
-              <Col xs="4" sm="4">
+              <Col xs="2" sm="2">
                 <div className="placeforbutton">
                   <Button onClick={this.importPlaylistToApp}>
-                    Import playlist to the app
+                    Import playlist
                   </Button>
+                </div>
+              </Col>
+              <Col xs="2" sm="2">
+                <div className="placeforbutton">
+                  <Button onClick={this.clearList}>Clear list</Button>
                 </div>
               </Col>
               <Col xs="4" sm="4">
                 <div className="placeforbutton">
-                  <Button>Get all songs</Button>
+                  <Button onClick={this.moveAllToImport}>Get all songs</Button>
                 </div>
               </Col>
               <Col xs="4" sm="4">
