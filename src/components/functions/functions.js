@@ -11,19 +11,28 @@ export const handleSubmit = async termFromSearch => {
     }
   });
 
-  return res.data.items;
+  if (typeof res.data !== "undefined") {
+    return res.data.items;
+  }
+  return null;
 };
 export const handleSpotifySearchFromYoutube = async termFromSearch => {
-  let res = await axios.get("https://www.googleapis.com/youtube/v3/search", {
-    params: {
-      part: "snippet",
-      maxResults: 1,
-      key: key,
-      q: termFromSearch
-    }
-  });
+  let res = await axios
+    .get("https://www.googleapis.com/youtube/v3/search", {
+      params: {
+        part: "snippet",
+        maxResults: 1,
+        key: key,
+        q: termFromSearch
+      }
+    })
+    .catch(err => console.log(err));
 
-  return res.data.items;
+  if (res) {
+    return res.data.items;
+  } else {
+    return null;
+  }
 };
 export const getContentDetails = async ListOfIds => {
   let res = await axios.get("https://www.googleapis.com/youtube/v3/videos", {

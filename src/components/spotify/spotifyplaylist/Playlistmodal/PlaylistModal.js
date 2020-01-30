@@ -6,7 +6,8 @@ import {
   Form,
   Button,
   Row,
-  Col
+  Col,
+  Progress
 } from "reactstrap";
 import isEqual from "react-fast-compare";
 import PlaylistModalItem from "./PlaylistModalItem";
@@ -14,6 +15,7 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import LoadedList from "./loadedList";
 import ImportList from "./importList";
 import arrayMove from "array-move";
+import LoadingSpinner from "../../../spinner/spinner";
 import {
   handleSpotifySearchFromYoutube,
   getContentDetails,
@@ -34,7 +36,9 @@ class PlaylistModal extends Component {
       totalTracks: this.props.totalTracks,
       ownerName: this.props.ownerName,
       chosenListsTracks: this.props.chosenListsTracks,
-      toBeImportedPlaylist: []
+      toBeImportedPlaylist: [],
+      loading: false,
+      imported: false
     };
     this.importPlaylistToApp = this.importPlaylistToApp.bind(this);
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
@@ -71,7 +75,9 @@ class PlaylistModal extends Component {
         trackRef: this.props.trackRef,
         totalTracks: this.props.totalTracks,
         ownerName: this.props.ownerName,
-        chosenListsTracks: this.props.chosenListsTracks
+        chosenListsTracks: this.props.chosenListsTracks,
+        imported: false,
+        progressValue: 0
       });
     }
   }
@@ -91,6 +97,12 @@ class PlaylistModal extends Component {
     });
   }
   async importPlaylistToApp() {
+    this.setState({
+      loading: true
+    });
+    let numberOfTracks = this.state.toBeImportedPlaylist.length;
+    let step = (1 / numberOfTracks) * 100;
+
     const tracksFromYoutube = [];
     const tracks = this.state.toBeImportedPlaylist;
     console.log(tracks);
@@ -99,6 +111,13 @@ class PlaylistModal extends Component {
       let title = tracks[i].title;
       let term = title + " " + artistName; //need to think about how to improve
       let result = await handleSpotifySearchFromYoutube(term);
+      if (result === null) {
+        this.setState({
+          loading: false,
+          error: true
+        });
+        return;
+      }
       let trackObject = {};
       trackObject["videoId"] = result[0].id.videoId;
       trackObject["title"] = result[0].snippet.title;
@@ -110,13 +129,30 @@ class PlaylistModal extends Component {
       trackObject["uniqueId"] = Math.random();
       console.log(trackObject);
       tracksFromYoutube.push(trackObject);
+      this.setState({
+        progressValue: step
+      });
     }
     console.log(tracksFromYoutube);
     const name = this.state.name;
     const body = JSON.stringify({ name, playlist: tracksFromYoutube });
     const res = await makePlaylist(body);
+    this.setState({
+      loading: false
+    });
+    if (res.status === 200) {
+      this.setState({
+        imported: true
+      });
+    } else {
+      this.setState({
+        imported: false
+      });
+      alert("Error");
+    }
+    console.log(res);
 
-    //tracksFromYoutube <- our playlist
+    //tracksFromYoutube <- our playlist*/
   }
   removeFromPlaylist(item) {
     if (!item) return;
@@ -168,6 +204,42 @@ class PlaylistModal extends Component {
             <span className="inthemiddle">Playlist importer</span>
           </ModalHeader>
           <ModalBody>
+            <span>
+              I recommend using webScraping for retrieving songs from YouTube.
+            </span>
+            {this.state.error ? (
+              <span id="errorImport">
+                Daily limit exdeeded. Try again tomorrow.
+              </span>
+            ) : (
+              ""
+            )}
+            {this.state.imported ? (
+              <span id="successImport">Succesfully created the playlist!</span>
+            ) : (
+              ""
+            )}
+            {this.state.loading ? (
+              <div id="LoadingSpot">
+                <h2 className="loadingTitle">Importing songs</h2>
+                <div id="spinner">
+                  <LoadingSpinner size={35} />
+                </div>
+                <div id="progressbar">
+                  <Progress
+                    animated
+                    color="info"
+                    value={this.state.progressValue}
+                  />
+                </div>
+                <span className="loadingInfo">
+                  Fetching songs from YouTube and adding them to our database...
+                  This might take awhile.
+                </span>
+              </div>
+            ) : (
+              ""
+            )}
             <Row>
               <Col xs="6" sm="6">
                 <div id="lists">

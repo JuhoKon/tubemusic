@@ -213,6 +213,9 @@ export default class Homepage extends Component {
     });
     const result = await handleSubmit(termFromSearch);
     //console.log(result);
+    if (result === null) {
+      return;
+    }
     var listOfIds = [];
     result.map(item => listOfIds.push(item.id.videoId));
     listOfIds = listOfIds.join(",");

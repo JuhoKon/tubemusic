@@ -15,9 +15,12 @@ exports.create = function(req, res, next) {
     name: req.body.name,
     playlist: req.body.playlist
   });
-  playlist.save().then(data => {
-    res.json(data);
-  });
+  playlist
+    .save()
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => res.status(400).json(err));
 };
 exports.findByID = function(req, res, next) {
   console.log(req.params.id);
