@@ -6,9 +6,13 @@ import SaveModal from "./save/saveModal";
 import CreateNew from "./createNew/createNew";
 import isEqual from "react-fast-compare";
 import FlipMove from "react-flip-move";
+import PlaylistItemsList from "./playlistItemsList";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
 import "./playlist.css";
+
+const SortableVirtualList = SortableContainer(PlaylistItemsList);
+
 class Playlist extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +25,7 @@ class Playlist extends Component {
     };
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.onDeleteFromPlaylist = this.onDeleteFromPlaylist.bind(this);
   }
   componentDidMount() {
     this.props.getPlayList();
@@ -36,6 +41,18 @@ class Playlist extends Component {
       });
     }
   }
+  onDeleteFromPlaylist(item) {
+    console.log(item);
+
+    for (let i = 0; i < this.state.playlist.length; i++) {
+      if (this.state.playlist[i].uniqueId === item.uniqueId) {
+        //delete item from playlist
+        this.state.playlist.splice(i, 1);
+        break;
+      }
+    }
+    this.props.onDeleteFromPlaylist(item);
+  }
   playPlaylist(playlist) {
     console.log("playPlaylist");
     this.props.playPlaylist(playlist);
@@ -44,70 +61,51 @@ class Playlist extends Component {
     this.setState({
       editMode: !this.state.editMode
     });
+
     setTimeout(() => this.props.loadPlaylist(this.state.playlistId), 200);
+    this.List.recomputeRowHeights();
+    this.List.forceUpdate();
   };
 
   async UpdateCurrentPlaylist() {
     this.props.setPlaylist(this.state.playlist);
     await this.props.UpdateCurrentPlaylist();
-
     this.toggle();
   }
 
-  onSortEnd = ({ oldIndex, newIndex }) => {
-    //console.log(oldIndex, newIndex);
-    this.setState(({ playlist }) => ({
-      playlist: arrayMove(playlist, oldIndex, newIndex)
-    }));
-    this.props.setPlaylist(this.state.playlist);
+  registerListRef = listInstance => {
+    this.List = listInstance;
   };
+
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    if (oldIndex === newIndex) {
+      return;
+    }
+
+    const { playlist } = this.state;
+
+    this.setState({
+      playlist: arrayMove(playlist, oldIndex, newIndex)
+    }); //tässä ongelma
+    //katso m,yös auuto scroller
+    //sekä vähä styling?
+
+    // We need to inform React Virtualized that the items have changed heights
+    // This can either be done by imperatively calling the recomputeRowHeights and
+    // forceUpdate instance methods on the `List` ref, or by passing an additional prop
+    // to List that changes whenever the order changes to force it to re-render
+    this.props.setPlaylist(this.state.playlist);
+    this.props.UpdateCurrentPlaylist();
+    this.List.recomputeRowHeights();
+    this.List.forceUpdate();
+  };
+
   render() {
     //console.log(this.props.playlist);
     const playlist = this.props.playlist;
 
     const playlists = this.props.playlists;
-    const SortableList = SortableContainer(({ playlist }) => {
-      return (
-        <div>
-          {playlist.map(
-            ({ title, videoId, uniqueId, duration, publishedAt }, index) => (
-              <SortableItem
-                className="QueueItem"
-                key={uniqueId}
-                index={index}
-                editMode={this.state.editMode}
-                uniqueId={uniqueId}
-                title={title}
-                videoId={videoId}
-                addFunc={this.props.onAdd}
-                onPlay={this.props.onPlay}
-                onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-                onRemove={this.props.onRemove}
-                duration={duration}
-                publishedAt={publishedAt}
-              />
-            )
-          )}
-        </div>
-      );
-    });
-    const SortableItem = SortableElement(
-      ({ uniqueId, title, videoId, duration, publishedAt }) => (
-        <Playlistitem
-          key={uniqueId}
-          editMode={this.state.editMode}
-          uniqueId={uniqueId}
-          title={title}
-          videoId={videoId}
-          addFunc={this.props.onAdd}
-          onPlay={this.props.onPlay}
-          onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-          onRemove={this.props.onRemove}
-          duration={duration}
-          publishedAt={publishedAt}
-        />
-      )
-    );
+
     return (
       <div>
         <div className="btn-group">
@@ -165,31 +163,16 @@ class Playlist extends Component {
         <br />
         <br />
         <br />
-        <div id="videolist">
-          {this.state.editMode ? (
-            <SortableList playlist={playlist} onSortEnd={this.onSortEnd} />
-          ) : (
-            <FlipMove>
-              {this.props.playlist.map(
-                ({ title, videoId, uniqueId, duration, publishedAt }) => (
-                  <Playlistitem
-                    key={uniqueId}
-                    editMode={this.state.editMode}
-                    uniqueId={uniqueId}
-                    title={title}
-                    videoId={videoId}
-                    addFunc={this.props.onAdd}
-                    onPlay={this.props.onPlay}
-                    onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
-                    onRemove={this.props.onRemove}
-                    duration={duration}
-                    publishedAt={publishedAt}
-                  />
-                )
-              )}
-            </FlipMove>
-          )}
-        </div>
+        <p className="float-left">Total songs: {this.state.playlist.length}</p>
+        <SortableVirtualList
+          editMode={this.state.editMode}
+          getRef={this.registerListRef}
+          playlist={this.state.playlist}
+          onSortEnd={this.onSortEnd}
+          onAdd={this.props.onAdd}
+          onPlay={this.props.onPlay}
+          onDeleteFromPlaylist={this.onDeleteFromPlaylist}
+        />
       </div>
     );
   }

@@ -1,66 +1,57 @@
 import React, { Component } from "react";
 import { sortableElement } from "react-sortable-hoc";
-import Queueitem from "./queueitem";
-import { List } from "react-virtualized";
-import FlipMove from "react-flip-move";
+import Playlistitem from "./playlistitem";
+import { List, AutoSizer } from "react-virtualized";
+
 //example from https://github.com/clauderic/react-sortable-hoc/blob/master/examples/react-virtualized.js#L12
 
 const SortableItem = sortableElement(
   ({
     uniqueId,
     title,
-    thumbnail,
-    channelTitle,
     publishedAt,
     videoId,
+    onAdd,
+    onPlay,
+    onDeleteFromPlaylist,
     duration,
     onRemove,
-    onPlay,
     editMode
   }) => (
-    <Queueitem
+    <Playlistitem
       key={uniqueId}
       uniqueId={uniqueId}
       title={title}
-      thumbnail={thumbnail}
-      channelTitle={channelTitle}
-      publishedAt={publishedAt}
       videoId={videoId}
-      onRemove={onRemove}
+      addFunc={onAdd}
       onPlay={onPlay}
+      onDeleteFromPlaylist={onDeleteFromPlaylist}
+      onRemove={onRemove}
       duration={duration}
+      publishedAt={publishedAt}
       editMode={editMode}
     />
   )
 );
-export default class QueueList extends Component {
+export default class PlaylistItemsList extends Component {
   renderRow = ({ index, key, isScrolling, isVisible, style }) => {
-    const queue = this.props.queue;
-    const {
-      title,
-      publishedAt,
-      channelTitle,
-      videoId,
-      thumbnail,
-      uniqueId,
-      duration
-    } = queue[index];
+    const playlist = this.props.playlist;
+    const { title, publishedAt, videoId, uniqueId, duration } = playlist[index];
     //const { value } = items[index];
     return (
       <div key={uniqueId} style={style}>
         <SortableItem
-          className="QueueItem"
+          index={index}
           key={uniqueId}
           uniqueId={uniqueId}
-          index={index}
           title={title}
           videoId={videoId}
-          publishedAt={publishedAt}
-          channelTitle={channelTitle}
-          thumbnail={thumbnail}
-          onRemove={this.props.onRemove}
+          onAdd={this.props.onAdd}
           onPlay={this.props.onPlay}
+          onDeleteFromPlaylist={this.props.onDeleteFromPlaylist}
+          onRemove={this.props.onRemove}
           duration={duration}
+          publishedAt={publishedAt}
           editMode={this.props.editMode}
         />
       </div>
@@ -68,16 +59,17 @@ export default class QueueList extends Component {
   };
 
   render() {
+    console.log(this.props);
     const { getRef } = this.props;
-    const queue = this.props.queue;
+    const playlist = this.props.playlist;
     return (
       <List
         ref={getRef}
         rowHeight={82}
         rowRenderer={this.renderRow}
-        rowCount={queue.length}
-        width={550}
-        height={300}
+        rowCount={playlist.length}
+        width={600}
+        height={800}
       />
     );
   }

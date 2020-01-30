@@ -16,7 +16,8 @@ import "moment-duration-format";
 
 class Playlistitem extends Component {
   state = {
-    playlist: this.props.playlist
+    playlist: this.props.playlist,
+    editMode: this.props.editMode
   };
   onAddClick = id => {
     this.props.addFunc(id);
@@ -31,13 +32,12 @@ class Playlistitem extends Component {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        playlist: this.props.playlist
+        playlist: this.props.playlist,
+        editMode: this.props.editMode
       });
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
-  }
+
   render() {
     console.log("playlistitem");
     // console.log(this.props);

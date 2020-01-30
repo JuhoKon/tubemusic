@@ -101,6 +101,7 @@ export default class Homepage extends Component {
     this.setState({
       playlist: playlistitems
     });
+    console.log(playlistitems);
   }
   playPlaylist() {
     //replaces queue with active playlist
@@ -211,12 +212,12 @@ export default class Homepage extends Component {
       loading: true
     });
     const result = await handleSubmit(termFromSearch);
-    console.log(result);
+    //console.log(result);
     var listOfIds = [];
     result.map(item => listOfIds.push(item.id.videoId));
     listOfIds = listOfIds.join(",");
     const contentDetails = await getContentDetails(listOfIds);
-    console.log(contentDetails);
+    //console.log(contentDetails);
     this.setState({
       items: result,
       contentDetails: contentDetails,
@@ -263,7 +264,7 @@ export default class Homepage extends Component {
   async Updateplaylist(name, id) {
     //updates current state to name & id given to database
     let playlist = this.state.playlist;
-    console.log(playlist);
+    //console.log(playlist);
     const item = JSON.stringify({ name, playlist });
     const result = await updatePlaylist(item, id);
     //console.log(result);

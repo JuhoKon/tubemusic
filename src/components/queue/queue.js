@@ -41,9 +41,9 @@ class Queue extends Component {
     // This can either be done by imperatively calling the recomputeRowHeights and
     // forceUpdate instance methods on the `List` ref, or by passing an additional prop
     // to List that changes whenever the order changes to force it to re-render
+    this.props.setQueue(this.state.queue);
     this.List.recomputeRowHeights();
     this.List.forceUpdate();
-    this.props.setQueue(this.state.queue);
   };
 
   componentDidUpdate(prevProps) {
