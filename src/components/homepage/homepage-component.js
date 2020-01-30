@@ -40,6 +40,7 @@ export default class Homepage extends Component {
     this.setUrl = this.setUrl.bind(this);
     this.setPlaylist = this.setPlaylist.bind(this);
     this.setTitle = this.setTitle.bind(this);
+    this.setPlaying = this.setPlaying.bind(this);
     this.state = {
       items: [], //from youtube API
       queue: [],
@@ -54,6 +55,11 @@ export default class Homepage extends Component {
       playlistName: "",
       title: "" //for rendering name
     };
+  }
+  setPlaying(playing) {
+    this.setState({
+      playing: playing
+    });
   }
   setQueue(queue) {
     console.log(this.state.url);
@@ -320,7 +326,8 @@ export default class Homepage extends Component {
   setUrl(url) {
     //updates given url to the state
     this.setState({
-      url: url
+      url: url,
+      playing: true
     });
   }
   onPlay(item) {
@@ -392,8 +399,8 @@ export default class Homepage extends Component {
                 onPlay={this.onPlay}
                 setUrl={this.setUrl}
                 setTitle={this.setTitle}
+                setPlaying={this.setPlaying}
               />
-
               <Queue
                 queue={queue}
                 onRemove={this.onDelete}

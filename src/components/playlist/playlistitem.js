@@ -35,7 +35,11 @@ class Playlistitem extends Component {
       });
     }
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
   render() {
+    console.log("playlistitem");
     // console.log(this.props);
     //console.log(this.props.editMode);
     return (

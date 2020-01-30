@@ -52,8 +52,8 @@ export default class Player extends Component {
       this.setState({
         url: this.props.url,
         array: this.props.array,
-        playing: this.props.playing,
-        title: this.props.title
+        title: this.props.title,
+        playing: this.props.playing
       });
       if (this.props.url !== prevProps.url) {
         if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
@@ -72,7 +72,10 @@ export default class Player extends Component {
     }
   }
   handlePlayPause = () => {
+    const playing = this.state.playing;
     this.setState({ playing: !this.state.playing });
+    this.props.setPlaying(!playing);
+
     if (this.state.url === null && !this.state.playing) {
       this.handlePlayNext();
     }
@@ -138,6 +141,7 @@ export default class Player extends Component {
     this.player.seekTo(0); //Seeks to 0
   }
   render() {
+    console.log("player");
     const { playing, volume } = this.state;
     //console.log(this.state.array);
 

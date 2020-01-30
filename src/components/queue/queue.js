@@ -2,10 +2,14 @@ import React, { Component } from "react";
 import isEqual from "react-fast-compare";
 import { Button, Container } from "reactstrap";
 import Queueitem from "./queueitem";
+import QueueList from "./queueList";
 import FlipMove from "react-flip-move";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import arrayMove from "array-move";
 import "./queue.css";
+
+const SortableVirtualList = SortableContainer(QueueList);
+
 class Queue extends Component {
   constructor(props) {
     super(props);
@@ -16,13 +20,32 @@ class Queue extends Component {
     this.shuffleQueue = this.shuffleQueue.bind(this);
     this.clearQueue = this.clearQueue.bind(this);
   }
+  registerListRef = listInstance => {
+    this.List = listInstance;
+  };
+
   onSortEnd = ({ oldIndex, newIndex }) => {
-    console.log(oldIndex, newIndex);
-    this.setState(({ queue }) => ({
+    if (oldIndex === newIndex) {
+      return;
+    }
+
+    const { queue } = this.state;
+
+    this.setState({
       queue: arrayMove(queue, oldIndex, newIndex)
-    }));
+    }); //tässä ongelma
+    //katso m,yös auuto scroller
+    //sekä vähä styling?
+
+    // We need to inform React Virtualized that the items have changed heights
+    // This can either be done by imperatively calling the recomputeRowHeights and
+    // forceUpdate instance methods on the `List` ref, or by passing an additional prop
+    // to List that changes whenever the order changes to force it to re-render
+    this.List.recomputeRowHeights();
+    this.List.forceUpdate();
     this.props.setQueue(this.state.queue);
   };
+
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       this.setState({
@@ -32,6 +55,8 @@ class Queue extends Component {
   }
   shuffleQueue() {
     this.props.shuffleQueue();
+    this.List.recomputeRowHeights();
+    this.List.forceUpdate(); //force list to update
   }
   clearQueue() {
     this.props.clearQueue();
@@ -41,70 +66,13 @@ class Queue extends Component {
     this.setState({
       editMode: !this.state.editMode
     });
+    this.List.recomputeRowHeights();
+    this.List.forceUpdate(); //force list to update
   };
 
   render() {
-    const queue = this.state.queue;
-    const SortableList = SortableContainer(({ queue }) => {
-      return (
-        <div>
-          {queue.map(
-            (
-              {
-                title,
-                publishedAt,
-                channelTitle,
-                videoId,
-                thumbnail,
-                uniqueId,
-                duration
-              },
-              index
-            ) => (
-              <SortableItem
-                className="QueueItem"
-                key={uniqueId}
-                uniqueId={uniqueId}
-                index={index}
-                title={title}
-                videoId={videoId}
-                publishedAt={publishedAt}
-                channelTitle={channelTitle}
-                thumbnail={thumbnail}
-                onRemove={this.props.onRemove}
-                onPlay={this.props.onPlay}
-                duration={duration}
-              />
-            )
-          )}
-        </div>
-      );
-    });
-    const SortableItem = SortableElement(
-      ({
-        uniqueId,
-        title,
-        thumbnail,
-        channelTitle,
-        publishedAt,
-        videoId,
-        duration
-      }) => (
-        <Queueitem
-          key={uniqueId}
-          uniqueId={uniqueId}
-          title={title}
-          thumbnail={thumbnail}
-          channelTitle={channelTitle}
-          publishedAt={publishedAt}
-          videoId={videoId}
-          onRemove={this.props.onRemove}
-          onPlay={this.props.onPlay}
-          editMode={this.state.editMode}
-          duration={duration}
-        />
-      )
-    );
+    console.log("queue");
+    console.log(this.state.editMode);
     return (
       <div>
         <Container>
@@ -131,8 +99,25 @@ class Queue extends Component {
           </Button>
           <br />
           <br />
-          {this.state.editMode ? (
-            <SortableList queue={this.state.queue} onSortEnd={this.onSortEnd} />
+          <SortableVirtualList
+            getRef={this.registerListRef}
+            queue={this.state.queue}
+            onSortEnd={this.onSortEnd}
+            onRemove={this.props.onRemove}
+            onPlay={this.props.onPlay}
+            editMode={this.state.editMode}
+          />
+        </Container>
+      </div>
+    );
+  }
+}
+/*  {this.state.editMode ? (
+            <SortableList
+              key={"ssss"}
+              queue={this.state.queue}
+              onSortEnd={this.onSortEnd}
+            />
           ) : (
             <FlipMove>
               {queue.map(
@@ -161,10 +146,5 @@ class Queue extends Component {
                 )
               )}
             </FlipMove>
-          )}
-        </Container>
-      </div>
-    );
-  }
-}
+          )}*/
 export default Queue;

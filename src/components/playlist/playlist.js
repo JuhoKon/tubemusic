@@ -108,7 +108,6 @@ class Playlist extends Component {
         />
       )
     );
-    console.log(this.state.playlist);
     return (
       <div>
         <div className="btn-group">
@@ -165,7 +164,7 @@ class Playlist extends Component {
         <p className="float-left">Playlist: {this.state.playlistName}</p>
         <br />
         <br />
-
+        <br />
         <div id="videolist">
           {this.state.editMode ? (
             <SortableList playlist={playlist} onSortEnd={this.onSortEnd} />

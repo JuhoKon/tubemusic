@@ -16,6 +16,7 @@ class Queueitem extends Component {
   state = {
     editMode: this.props.editMode
   };
+
   onRemoveClick = id => {
     //console.log(id);
     this.props.onRemove(id);
@@ -33,7 +34,7 @@ class Queueitem extends Component {
     }
   }
   render() {
-    //console.log(this.props);
+    console.log("queue item");
     return (
       <div>
         <Card className="card">
