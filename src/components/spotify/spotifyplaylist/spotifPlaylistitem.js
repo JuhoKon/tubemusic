@@ -96,7 +96,7 @@ class PlaylistItem extends Component {
     });
   };
   render() {
-    //console.log(this.state.token);
+    //console.log(this.state.name);
     return (
       <div>
         <div>{this.state.loading ? <LoadingSpinner /> : ""}</div>

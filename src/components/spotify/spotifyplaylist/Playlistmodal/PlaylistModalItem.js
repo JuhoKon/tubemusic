@@ -15,23 +15,24 @@ import "moment-duration-format";
 import isEqual from "react-fast-compare";
 
 class PlaylistModalItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      artistName: this.props.artistName,
-      title: this.props.title,
-      imported: this.props.imported
-    };
-  }
+  state = {
+    artistName: this.props.artistName,
+    title: this.props.title,
+    imported: this.props.imported
+  };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
   addToImport(props) {
-    console.log(props);
+    //console.log(props);
     this.props.addToImport(props);
   }
   removeFromPlaylist(props) {
     this.props.removeFromPlaylist(props);
   }
   render() {
+    console.log("item");
     return (
       <div>
         <Card className="card">
