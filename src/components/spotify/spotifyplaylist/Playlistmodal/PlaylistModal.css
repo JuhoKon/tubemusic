@@ -82,3 +82,16 @@ span.loadingInfo {
   left: 10%;
   top: 90%;
 }
+#notFoundArray {
+  z-index: 10000;
+  left: 20%;
+  top: 5%;
+  position: absolute;
+  background-color: #ffffff;
+  padding: 40px;
+  border-style: groove;
+  border-color: #0d050d3d;
+  -webkit-box-shadow: 4px 5px 15px 5px rgba(0, 0, 0, 0.49);
+  box-shadow: 4px 5px 15px 5px rgba(0, 0, 0, 0.49);
+  font-size: 18px;
+}

@@ -69,7 +69,7 @@ export default class PlaylistItemsList extends Component {
         rowRenderer={this.renderRow}
         rowCount={playlist.length}
         width={600}
-        height={800}
+        height={550}
       />
     );
   }

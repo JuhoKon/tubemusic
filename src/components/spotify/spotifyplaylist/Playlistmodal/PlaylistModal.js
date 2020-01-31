@@ -39,7 +39,8 @@ class PlaylistModal extends Component {
       chosenListsTracks: this.props.chosenListsTracks,
       toBeImportedPlaylist: [],
       loading: false,
-      imported: false
+      imported: false,
+      notFoundArray: []
     };
     this.importPlaylistToApp = this.importPlaylistToApp.bind(this);
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
@@ -53,6 +54,7 @@ class PlaylistModal extends Component {
     this.setState({
       loading: true
     });
+    let notFoundArray = [];
     let numberOfTracks = this.state.toBeImportedPlaylist.length;
     let step = (1 / numberOfTracks) * 100;
     const tracksFromYoutube = [];
@@ -63,33 +65,32 @@ class PlaylistModal extends Component {
       let term = title + " " + artistName; //need to think about how to improve
       term = term.split(" ").join("+");
       term = unescape(term);
+      console.log(term);
       let result = await handleScrape(term);
-      if (result === null) {
-        this.setState({
-          loading: false,
-          error: true
-        });
-        return;
+      if (result) {
+        let trackObject = {};
+        trackObject["videoId"] = result.videoId;
+        trackObject["title"] = result.title;
+        trackObject["duration"] = result.duration;
+        trackObject["scraped"] = result.scraped;
+        trackObject["uniqueId"] = Math.random();
+        //console.log(trackObject);
+        tracksFromYoutube.push(trackObject);
+      } else {
+        notFoundArray.push({ artistName: artistName, title: title });
       }
-      console.log(result);
-      let trackObject = {};
-      trackObject["videoId"] = result.videoId;
-      trackObject["title"] = result.title;
-      trackObject["duration"] = result.duration;
-      trackObject["scraped"] = result.scraped;
-      trackObject["uniqueId"] = Math.random();
-      //console.log(trackObject);
-      tracksFromYoutube.push(trackObject);
       this.setState({
         progressValue: this.state.progressValue + step
       });
     }
+    console.log(notFoundArray);
     //console.log(tracksFromYoutube);
     const name = this.state.name;
     const body = JSON.stringify({ name, playlist: tracksFromYoutube });
     const res = await makePlaylist(body);
     this.setState({
-      loading: false
+      loading: false,
+      notFoundArray: notFoundArray
     });
     if (res.status === 200) {
       this.setState({
@@ -163,7 +164,6 @@ class PlaylistModal extends Component {
 
     const tracksFromYoutube = [];
     const tracks = this.state.toBeImportedPlaylist;
-    console.log(tracks);
     for (let i = 0; i < tracks.length; i++) {
       let artistName = tracks[i].artistName;
       let title = tracks[i].title;
@@ -264,10 +264,29 @@ class PlaylistModal extends Component {
             <span>
               I recommend using webScraping for retrieving songs from YouTube.
             </span>
+            {this.state.notFoundArray.length > 1 ? (
+              <div id="notFoundArray">
+                <h3>
+                  Following songs were not found:
+                  <br />
+                  <br />
+                </h3>
+                {this.state.notFoundArray.map(({ title, artistName }) => (
+                  <span id="notFoundItem" key={title}>
+                    <i>{title}</i> by <i>{artistName} </i>
+                    <br />
+                  </span>
+                ))}
+              </div>
+            ) : (
+              ""
+            )}
             {this.state.error ? (
-              <span id="errorImport">
-                Daily limit exdeeded. Try again tomorrow.
-              </span>
+              <div>
+                <span id="errorImport">
+                  Daily limit exdeeded. Try again tomorrow.
+                </span>
+              </div>
             ) : (
               ""
             )}

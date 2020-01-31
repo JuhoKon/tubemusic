@@ -7,11 +7,17 @@ export const handleScrape = async term => {
   let string = "https://www.youtube.com/results?search_query=";
   term = string.concat(term);
   //console.log(term);
+  let res = await axios
+    .post("http://localhost:8080/scrape/scrape", {
+      term: term
+    })
+    .catch(err => console.log(err));
 
-  let res = await axios.post("http://localhost:8080/scrape/scrape", {
-    term: term
-  });
-  return res.data;
+  if (res) {
+    return res.data;
+  } else {
+    return null;
+  }
 };
 //////////////////////////////////////////////////////////
 export const handleSubmit = async termFromSearch => {

@@ -37,17 +37,19 @@ class LoadPlaylistModal extends Component {
           <p className="formText text-center">
             Select a playlist and load it :)
           </p>
-          {playlists.map(({ playlist, name, _id }) => (
-            <CSSTransition key={_id} timeout={500} classNames="fade">
-              <Link
-                deletePlaylist={this.props.deletePlaylist}
-                _id={_id}
-                playlist={playlist}
-                name={name}
-                loadPlaylist={this.props.loadPlaylist}
-              ></Link>
-            </CSSTransition>
-          ))}
+          <div id="videolist">
+            {playlists.map(({ playlist, name, _id }) => (
+              <CSSTransition key={_id} timeout={500} classNames="fade">
+                <Link
+                  deletePlaylist={this.props.deletePlaylist}
+                  _id={_id}
+                  playlist={playlist}
+                  name={name}
+                  loadPlaylist={this.props.loadPlaylist}
+                ></Link>
+              </CSSTransition>
+            ))}
+          </div>
         </Modal>
       </div>
     );
