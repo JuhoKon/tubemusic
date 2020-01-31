@@ -19,7 +19,8 @@ import LoadingSpinner from "../../../spinner/spinner";
 import {
   handleSpotifySearchFromYoutube,
   getContentDetails,
-  makePlaylist
+  makePlaylist,
+  handleScrape
 } from "../../../functions/functions";
 import "./PlaylistModal.css";
 class PlaylistModal extends Component {
@@ -46,6 +47,63 @@ class PlaylistModal extends Component {
     this.toggle = this.toggle.bind(this);
     this.moveAllToImport = this.moveAllToImport.bind(this);
     this.clearList = this.clearList.bind(this);
+    this.webScrape = this.webScrape.bind(this);
+  }
+  async webScrape() {
+    this.setState({
+      loading: true
+    });
+    let numberOfTracks = this.state.toBeImportedPlaylist.length;
+    let step = (1 / numberOfTracks) * 100;
+    const tracksFromYoutube = [];
+    const tracks = this.state.toBeImportedPlaylist;
+    for (let i = 0; i < tracks.length; i++) {
+      let artistName = tracks[i].artistName;
+      let title = tracks[i].title;
+      let term = title + " " + artistName; //need to think about how to improve
+      term = term.split(" ").join("+");
+      term = unescape(term);
+      let result = await handleScrape(term);
+      if (result === null) {
+        this.setState({
+          loading: false,
+          error: true
+        });
+        return;
+      }
+      console.log(result);
+      let trackObject = {};
+      trackObject["videoId"] = result.videoId;
+      trackObject["title"] = result.title;
+      trackObject["duration"] = result.duration;
+      trackObject["scraped"] = result.scraped;
+      trackObject["uniqueId"] = Math.random();
+      //console.log(trackObject);
+      tracksFromYoutube.push(trackObject);
+      this.setState({
+        progressValue: this.state.progressValue + step
+      });
+    }
+    //console.log(tracksFromYoutube);
+    const name = this.state.name;
+    const body = JSON.stringify({ name, playlist: tracksFromYoutube });
+    const res = await makePlaylist(body);
+    this.setState({
+      loading: false
+    });
+    if (res.status === 200) {
+      this.setState({
+        imported: true
+      });
+    } else {
+      this.setState({
+        imported: false
+      });
+      alert("Error");
+    }
+    console.log(res);
+
+    //tracksFromYoutube <- our playlist*/
   }
   clearList() {
     this.setState({
@@ -130,10 +188,10 @@ class PlaylistModal extends Component {
       console.log(trackObject);
       tracksFromYoutube.push(trackObject);
       this.setState({
-        progressValue: step
+        progressValue: this.state.progressValue + step
       });
     }
-    console.log(tracksFromYoutube);
+    //console.log(tracksFromYoutube);
     const name = this.state.name;
     const body = JSON.stringify({ name, playlist: tracksFromYoutube });
     const res = await makePlaylist(body);
@@ -185,7 +243,6 @@ class PlaylistModal extends Component {
   }
 
   render() {
-    //console.log(this.state.name);
     const tracks = this.state.chosenListsTracks;
     const toBeImportedPlaylist = this.state.toBeImportedPlaylist;
     return (
@@ -282,7 +339,7 @@ class PlaylistModal extends Component {
               </Col>
               <Col xs="4" sm="4">
                 <div className="placeforbutton">
-                  <Button>use webScraping</Button>
+                  <Button onClick={this.webScrape}>use webScraping</Button>
                 </div>
               </Col>
             </Row>

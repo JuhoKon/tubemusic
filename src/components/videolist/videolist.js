@@ -9,20 +9,22 @@ class Videolist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: this.props.loading
+      loading: this.props.loading,
+      error: this.props.error
     };
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        loading: this.props.loading
+        loading: this.props.loading,
+        error: this.props.error
       });
     }
   }
   render() {
     const items = this.props.items;
-    console.log(this.state.loading);
+    console.log(this.state.error);
 
     return (
       <div id="videolist">
@@ -31,6 +33,14 @@ class Videolist extends Component {
             <LoadingSpinner />
           </div>
         ) : null}
+        {this.state.error ? (
+          <span>
+            Error has occured. Most likely quote limit has been exceeded for the
+            day.
+          </span>
+        ) : (
+          "sdfsdf"
+        )}
         {items.map(
           ({
             title,

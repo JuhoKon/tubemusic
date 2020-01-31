@@ -1,20 +1,36 @@
 import axios from "axios";
+
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c";
 const clientId = "dc20085012814f3d8cab4b36a4144393";
-export const handleSubmit = async termFromSearch => {
-  let res = await axios.get("https://www.googleapis.com/youtube/v3/search", {
-    params: {
-      part: "snippet",
-      maxResults: 30,
-      key: key,
-      q: termFromSearch
-    }
-  });
 
-  if (typeof res.data !== "undefined") {
+export const handleScrape = async term => {
+  let string = "https://www.youtube.com/results?search_query=";
+  term = string.concat(term);
+  //console.log(term);
+
+  let res = await axios.post("http://localhost:8080/scrape/scrape", {
+    term: term
+  });
+  return res.data;
+};
+//////////////////////////////////////////////////////////
+export const handleSubmit = async termFromSearch => {
+  let res = await axios
+    .get("https://www.googleapis.com/youtube/v3/search", {
+      params: {
+        part: "snippet",
+        maxResults: 30,
+        key: key,
+        q: termFromSearch
+      }
+    })
+    .catch(err => console.log(err));
+
+  if (res) {
     return res.data.items;
+  } else {
+    return null;
   }
-  return null;
 };
 export const handleSpotifySearchFromYoutube = async termFromSearch => {
   let res = await axios

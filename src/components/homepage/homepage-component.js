@@ -53,6 +53,7 @@ export default class Homepage extends Component {
       playing: true,
       playlistId: "",
       playlistName: "",
+      error: false,
       title: "" //for rendering name
     };
   }
@@ -214,6 +215,9 @@ export default class Homepage extends Component {
     const result = await handleSubmit(termFromSearch);
     //console.log(result);
     if (result === null) {
+      this.setState({
+        error: true
+      });
       return;
     }
     var listOfIds = [];
@@ -357,6 +361,7 @@ export default class Homepage extends Component {
     });
   }
   render() {
+    console.log(this.state.error);
     let itemArray = [];
     const videoIdArray = [];
     const thumbnailArray = [];
@@ -444,6 +449,7 @@ export default class Homepage extends Component {
                 onAdd={this.onAdd}
                 onPlay={this.onPlay}
                 AddToPlaylist={this.AddToPlaylist}
+                error={this.state.error}
               />
             </Col>
           </Row>

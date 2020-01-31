@@ -49,7 +49,7 @@ class ImportList extends Component {
   render() {
     //console.log("Importlist");
     //const toBeImportedPlaylist = this.state.toBeImportedPlaylist;
-    console.log(this.state.toBeImportedPlaylist);
+    //console.log(this.state.toBeImportedPlaylist);
     return (
       <div>
         <br />
