@@ -50,6 +50,8 @@ class PlaylistModal extends Component {
     this.clearList = this.clearList.bind(this);
     this.webScrape = this.webScrape.bind(this);
   }
+  //https://stackoverflow.com/questions/31426740/how-to-return-many-promises-in-a-loop-and-wait-for-them-all-to-do-other-stuff
+  //katso tuo
   async webScrape() {
     this.setState({
       loading: true
