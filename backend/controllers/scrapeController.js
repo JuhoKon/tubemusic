@@ -47,7 +47,9 @@ exports.scrape = async function(req, res, next) {
     await timeout(60); //Delay so we won't get problems with too many requests to the page
     //jotain logiikkaa riippuen siitä kuinka paljon meillä on itemeita, kuitenkin max 500 tässä ->
     //function.js sitten logiikkaa jos on yli 500 niin tehdään monessa eri erässä -> ei saada hang up erroria
-    //tai esim funciton.js logiikkaa, että 50 erissä, sitten saadaan lähetettyä siinä välissä aina front-endiin tietoa!!
+    //tai esim funciton.js logiikkaa, että 50 tai 25 tai jopa 10 erissä, sitten saadaan lähetettyä siinä välissä aina front-endiin tietoa!!
+    //use webvscraping buttonii disabled, jos loading niin ei vahingoskaa paina kaks kertaa :) ja checkki siihe funktioo
+    //jos loading === true return
     promises.push(handleScrape(term));
   }
 
