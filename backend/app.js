@@ -9,6 +9,7 @@ var playlistsRouter = require("./routes/playlists");
 var scrapeRouter = require("./routes/scrape");
 var cors = require("cors");
 var bodyParser = require("body-parser");
+var Promise = require("bluebird");
 require("dotenv").config();
 var app = express();
 

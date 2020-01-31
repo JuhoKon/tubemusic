@@ -49,10 +49,97 @@ class PlaylistModal extends Component {
     this.moveAllToImport = this.moveAllToImport.bind(this);
     this.clearList = this.clearList.bind(this);
     this.webScrape = this.webScrape.bind(this);
+    this.webScrape2 = this.webScrape2.bind(this);
   }
   //https://stackoverflow.com/questions/31426740/how-to-return-many-promises-in-a-loop-and-wait-for-them-all-to-do-other-stuff
   //katso tuo
+  async webScrape3() {
+    this.setState({
+      loading: true
+    });
+    let notFoundArray = [];
+    let numberOfTracks = this.state.toBeImportedPlaylist.length;
+    let step = (1 / numberOfTracks) * 100;
+    var tracksFromYoutube = [];
+    const tracks = this.state.toBeImportedPlaylist;
+    let promises = [];
+
+    for (let i = 0; i < tracks.length; i++) {
+      let artistName = tracks[i].artistName;
+      let title = tracks[i].title;
+      let term = title + " " + artistName; //need to think about how to improve
+      term = term.split(" ").join("+");
+      term = unescape(term);
+      //console.log(term);
+      promises.push(handleScrape(term));
+    }
+    const name = this.state.name;
+    Promise.all(promises)
+      .then(results => {
+        tracksFromYoutube = results;
+        const body = JSON.stringify({ name, playlist: tracksFromYoutube });
+        makePlaylist(body);
+        this.setState({
+          loading: false
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    //const body = JSON.stringify({ name, playlist: tracksFromYoutube });
+    //const res = await makePlaylist(body);
+
+    /*if (res.status === 200) {
+      this.setState({
+        imported: true
+      });
+    } else {
+      this.setState({
+        imported: false
+      });
+      alert("Error");
+    }
+    console.log(res);*/
+
+    //tracksFromYoutube <- our playlist*/
+    //tracksFromYoutube <- our playlist*/
+  }
   async webScrape() {
+    this.setState({
+      loading: true
+    });
+    let tracks = this.state.toBeImportedPlaylist;
+    let res = await handleScrape(tracks);
+    if (res) {
+      this.setState({
+        loading: false
+      });
+      const name = this.state.name;
+      console.log(res);
+      const playlist = res.filter(track => track !== null);
+      const body = JSON.stringify({ name, playlist: playlist });
+      if (playlist.length > 0) {
+        console.log(playlist.length);
+        const respond = await makePlaylist(body);
+        if (respond.status === 200) {
+          this.setState({
+            imported: true
+          });
+        } else {
+          this.setState({
+            imported: false
+          });
+          alert("Error making creating the playlist.");
+        }
+      } else {
+        this.setState({
+          imported: false
+        });
+        alert("No songs were found.");
+      }
+    }
+  }
+  async webScrape2() {
     this.setState({
       loading: true
     });

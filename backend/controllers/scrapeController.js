@@ -1,29 +1,61 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
-
+var allSettled = require("promise.allsettled");
+const handleScrape = async term => {
+  try {
+    let url = encodeURI(term);
+    let response = await request(url).catch(e => {
+      console.log(e);
+      return;
+    }); //mby add catch here? .catch(err => console.log(err));
+    let $ = cheerio.load(response);
+    let videoTime = null;
+    if (typeof $('[class="yt-lockup-title "]')[0] !== "undefined") {
+      let data = $('[class="yt-lockup-title "]')[0].children[0].attribs;
+      if (typeof $('[class="video-time"]')[0] !== "undefined") {
+        videoTime = $('[class="video-time"]')[0].children[0].data;
+      }
+      //console.log(data.href, data.title, videoTime);
+      //add retry when connection is lost
+      return {
+        videoId: data.href.split("v=")[1],
+        title: data.title,
+        duration: videoTime,
+        scraped: true,
+        uniqueId: Math.random()
+      };
+    } else {
+      return null;
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 exports.scrape = async function(req, res, next) {
   //console.log(req.body.term);
-  let url = encodeURI(req.body.term);
-  let response = await request(url);
-  let $ = cheerio.load(response);
-  let videoTime = null;
-  if (
-    typeof $('[class="yt-lockup-title "]')[0] !== "undefined"
-  ) {
-    let data = $('[class="yt-lockup-title "]')[0].children[0].attribs;
-    if (typeof 
-    $('[class="video-time"]')[0] !== "undefined") {
-      videoTime = $('[class="video-time"]')[0].children[0].data;
-    }
-    
-    //console.log(data.href, data.title, videoTime);
-    res.json({
-      videoId: data.href.split("v=")[1],
-      title: data.title,
-      duration: videoTime,
-      scraped: true
-    });
-  } else {
-    res.status(404).json({ error: "Not found" });
+  let tracks = req.body.items;
+  let promises = [];
+  let string = "https://www.youtube.com/results?search_query=";
+  for (let i = 0; i < tracks.length; i++) {
+    let artistName = tracks[i].artistName;
+    let title = tracks[i].title;
+    let term = title + " " + artistName; //need to think about how to improve
+    term = term.split(" ").join("+");
+    term = string.concat(term);
+
+    await timeout(60); //Delay so we won't get problems with too many requests to the page
+    //jotain logiikkaa riippuen siitä kuinka paljon meillä on itemeita, kuitenkin max 500 tässä ->
+    //function.js sitten logiikkaa jos on yli 500 niin tehdään monessa eri erässä -> ei saada hang up erroria
+    //tai esim funciton.js logiikkaa, että 50 erissä, sitten saadaan lähetettyä siinä välissä aina front-endiin tietoa!!
+    promises.push(handleScrape(term));
   }
+
+  Promise.all(promises)
+    .then(results => {
+      res.json(results);
+    })
+    .catch(e => {
+      res.json(e);
+    });
 };

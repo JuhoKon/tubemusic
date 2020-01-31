@@ -2,8 +2,22 @@ import axios from "axios";
 
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c";
 const clientId = "dc20085012814f3d8cab4b36a4144393";
-
-export const handleScrape = async term => {
+export const handleScrape = async items => {
+  let res = await axios
+    .post("http://localhost:8080/scrape/scrape", {
+      items: items
+    })
+    .catch(err => console.log(err));
+  console.log(res);
+  //add limit of 500songs, if over that, then we have to implement some logic
+  if (res) {
+    console.log(res);
+    return res.data;
+  } else {
+    return null;
+  }
+};
+export const handleScrape2 = async term => {
   let string = "https://www.youtube.com/results?search_query=";
   term = string.concat(term);
   //console.log(term);
