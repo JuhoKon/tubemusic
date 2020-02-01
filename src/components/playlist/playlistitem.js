@@ -61,9 +61,7 @@ class Playlistitem extends Component {
               <CardText>{this.props.title}</CardText>
             </Col>
             <Col xs="1" sm="1">
-              <small className="float-left">
-                {moment.duration(this.props.duration).format("h:mm:ss")}
-              </small>
+              <small className="float-left">{this.props.duration}</small>
             </Col>
             <Col xs="2" sm="2">
               <div className="placeforbutton">

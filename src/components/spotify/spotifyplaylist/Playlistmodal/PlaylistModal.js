@@ -52,15 +52,20 @@ class PlaylistModal extends Component {
     this.moveAllToImport = this.moveAllToImport.bind(this);
     this.clearList = this.clearList.bind(this);
     this.webScrape = this.webScrape.bind(this);
-    this.webScrape2 = this.webScrape2.bind(this);
   }
   async webScrape() {
+    if (this.state.toBeImportedPlaylist.length < 1) {
+      return;
+    }
     this.setState({
-      loading: true
+      loading: true,
+      progressValue: 0,
+      importCount: 0
     });
     let tracksFromYoutube = [];
     let tracks = this.state.toBeImportedPlaylist;
     let numberOfTracks = this.state.toBeImportedPlaylist.length;
+
     let step = (1 / numberOfTracks) * 100;
     let batchSize = 50; //MAX 500
     let left = 0;
@@ -102,63 +107,6 @@ class PlaylistModal extends Component {
         alert("No songs were found.");
       }
     }
-  }
-
-  async webScrape2() {
-    this.setState({
-      loading: true
-    });
-    let notFoundArray = [];
-    let numberOfTracks = this.state.toBeImportedPlaylist.length;
-    let step = (1 / numberOfTracks) * 100;
-    const tracksFromYoutube = [];
-    const tracks = this.state.toBeImportedPlaylist;
-    for (let i = 0; i < tracks.length; i++) {
-      let artistName = tracks[i].artistName;
-      let title = tracks[i].title;
-      let term = title + " " + artistName; //need to think about how to improve
-      term = term.split(" ").join("+");
-      term = unescape(term);
-      console.log(term);
-      let result = await handleScrape(term);
-      if (result) {
-        let trackObject = {};
-        trackObject["videoId"] = result.videoId;
-        trackObject["title"] = result.title;
-        trackObject["duration"] = result.duration;
-        trackObject["scraped"] = result.scraped;
-        trackObject["uniqueId"] = Math.random();
-        //console.log(trackObject);
-        tracksFromYoutube.push(trackObject);
-      } else {
-        notFoundArray.push({ artistName: artistName, title: title });
-      }
-      this.setState({
-        progressValue: this.state.progressValue + step
-      });
-    }
-    console.log(notFoundArray);
-    //console.log(tracksFromYoutube);
-    const name = this.state.name;
-    const body = JSON.stringify({ name, playlist: tracksFromYoutube });
-    const res = await makePlaylist(body);
-    this.setState({
-      loading: false,
-      notFoundArray: notFoundArray
-    });
-    if (res.status === 200) {
-      this.setState({
-        imported: true
-      });
-    } else {
-      this.setState({
-        imported: false
-      });
-      alert("Error");
-    }
-    console.log(res);
-
-    //tracksFromYoutube <- our playlist*/
   }
   clearList() {
     this.setState({
@@ -208,7 +156,9 @@ class PlaylistModal extends Component {
   }
   async importPlaylistToApp() {
     this.setState({
-      loading: true
+      loading: true,
+      progressValue: 0,
+      importCount: 0
     });
     let numberOfTracks = this.state.toBeImportedPlaylist.length;
     let step = (1 / numberOfTracks) * 100;
@@ -247,7 +197,9 @@ class PlaylistModal extends Component {
     const body = JSON.stringify({ name, playlist: tracksFromYoutube });
     const res = await makePlaylist(body);
     this.setState({
-      loading: false
+      loading: false,
+      progressValue: 0,
+      importCount: 0
     });
     if (res.status === 200) {
       this.setState({
@@ -260,8 +212,6 @@ class PlaylistModal extends Component {
       alert("Error");
     }
     console.log(res);
-
-    //tracksFromYoutube <- our playlist*/
   }
   removeFromPlaylist(item) {
     if (!item) return;
@@ -409,24 +359,42 @@ class PlaylistModal extends Component {
             <Row id="lowerRow">
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
-                  <Button onClick={this.importPlaylistToApp}>
+                  <Button
+                    disabled={this.state.loading}
+                    onClick={this.importPlaylistToApp}
+                  >
                     Import playlist
                   </Button>
                 </div>
               </Col>
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
-                  <Button onClick={this.clearList}>Clear list</Button>
+                  <Button
+                    disabled={this.state.loading}
+                    onClick={this.clearList}
+                  >
+                    Clear list
+                  </Button>
                 </div>
               </Col>
               <Col xs="4" sm="4">
                 <div className="placeforbutton">
-                  <Button onClick={this.moveAllToImport}>Get all songs</Button>
+                  <Button
+                    disabled={this.state.loading}
+                    onClick={this.moveAllToImport}
+                  >
+                    Get all songs
+                  </Button>
                 </div>
               </Col>
               <Col xs="4" sm="4">
                 <div className="placeforbutton">
-                  <Button onClick={this.webScrape}>use webScraping</Button>
+                  <Button
+                    disabled={this.state.loading}
+                    onClick={this.webScrape}
+                  >
+                    use webScraping
+                  </Button>
                 </div>
               </Col>
             </Row>

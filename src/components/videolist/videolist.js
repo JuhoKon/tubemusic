@@ -39,7 +39,7 @@ class Videolist extends Component {
             day.
           </span>
         ) : (
-          "sdfsdf"
+          ""
         )}
         {items.map(
           ({

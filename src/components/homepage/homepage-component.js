@@ -6,6 +6,7 @@ import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
 import nameGenerator from "../functions/nameGenerator";
+import moment from "moment";
 import {
   handleSubmit,
   getPlaylists,
@@ -231,6 +232,31 @@ export default class Homepage extends Component {
       loading: false
     });
   }
+  async handleSubmit2(termFromSearch) {
+    //handles search-query from search bar to YouTube API
+    this.setState({
+      //set loading to true
+      loading: true
+    });
+    const result = await handleSubmit(termFromSearch);
+    //console.log(result);
+    if (result === null) {
+      this.setState({
+        error: true
+      });
+      return;
+    }
+    var listOfIds = [];
+    result.map(item => listOfIds.push(item.id.videoId));
+    listOfIds = listOfIds.join(",");
+    const contentDetails = await getContentDetails(listOfIds);
+    //console.log(contentDetails);
+    this.setState({
+      items: result,
+      contentDetails: contentDetails,
+      loading: false
+    });
+  }
   async loadPlaylist(id) {
     //loads a single database based on the id
     const result = await getPlayListById(id);
@@ -361,7 +387,7 @@ export default class Homepage extends Component {
     });
   }
   render() {
-    console.log(this.state.error);
+    //console.log(this.state.error); /* ----TO CLEAN UP --- and switch to webscraping instead of youtube API (it sucks)*/
     let itemArray = [];
     const videoIdArray = [];
     const thumbnailArray = [];
@@ -388,7 +414,9 @@ export default class Homepage extends Component {
     itemArray = itemArray.filter(item => typeof item.videoId !== "undefined"); //remove channels from itemArray
     for (let i = 0; i < itemArray.length; i++) {
       //add durations to the sliced array
-      itemArray[i].duration = durationArray[i];
+      itemArray[i].duration = moment
+        .duration(durationArray[i])
+        .format("h:mm:ss");
     }
     return (
       <div>

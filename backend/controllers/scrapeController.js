@@ -1,6 +1,6 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
-var allSettled = require("promise.allsettled");
+
 const handleScrape = async (term, counter) => {
   try {
     let url = encodeURI(term);
