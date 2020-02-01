@@ -95,3 +95,15 @@ span.loadingInfo {
   box-shadow: 4px 5px 15px 5px rgba(0, 0, 0, 0.49);
   font-size: 18px;
 }
+span.importedNumbers {
+  position: absolute;
+  left: 40%;
+  top: 75%;
+}
+#creatingInfo {
+  left: 15%;
+}
+#creatingInfo2 {
+  left: 65%;
+  top: 72%;
+}

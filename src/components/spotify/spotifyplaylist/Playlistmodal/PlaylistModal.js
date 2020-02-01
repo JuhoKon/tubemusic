@@ -23,6 +23,7 @@ import {
   handleScrape
 } from "../../../functions/functions";
 import "./PlaylistModal.css";
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 class PlaylistModal extends Component {
   constructor(props) {
     super(props);
@@ -38,8 +39,10 @@ class PlaylistModal extends Component {
       ownerName: this.props.ownerName,
       chosenListsTracks: this.props.chosenListsTracks,
       toBeImportedPlaylist: [],
+      importCount: 0,
       loading: false,
       imported: false,
+      progressValue: 0,
       notFoundArray: []
     };
     this.importPlaylistToApp = this.importPlaylistToApp.bind(this);
@@ -51,79 +54,40 @@ class PlaylistModal extends Component {
     this.webScrape = this.webScrape.bind(this);
     this.webScrape2 = this.webScrape2.bind(this);
   }
-  //https://stackoverflow.com/questions/31426740/how-to-return-many-promises-in-a-loop-and-wait-for-them-all-to-do-other-stuff
-  //katso tuo
-  async webScrape3() {
-    this.setState({
-      loading: true
-    });
-    let notFoundArray = [];
-    let numberOfTracks = this.state.toBeImportedPlaylist.length;
-    let step = (1 / numberOfTracks) * 100;
-    var tracksFromYoutube = [];
-    const tracks = this.state.toBeImportedPlaylist;
-    let promises = [];
-
-    for (let i = 0; i < tracks.length; i++) {
-      let artistName = tracks[i].artistName;
-      let title = tracks[i].title;
-      let term = title + " " + artistName; //need to think about how to improve
-      term = term.split(" ").join("+");
-      term = unescape(term);
-      //console.log(term);
-      promises.push(handleScrape(term));
-    }
-    const name = this.state.name;
-    Promise.all(promises)
-      .then(results => {
-        tracksFromYoutube = results;
-        const body = JSON.stringify({ name, playlist: tracksFromYoutube });
-        makePlaylist(body);
-        this.setState({
-          loading: false
-        });
-      })
-      .catch(e => {
-        console.log(e);
-      });
-    //const body = JSON.stringify({ name, playlist: tracksFromYoutube });
-    //const res = await makePlaylist(body);
-
-    /*if (res.status === 200) {
-      this.setState({
-        imported: true
-      });
-    } else {
-      this.setState({
-        imported: false
-      });
-      alert("Error");
-    }
-    console.log(res);*/
-
-    //tracksFromYoutube <- our playlist*/
-    //tracksFromYoutube <- our playlist*/
-  }
   async webScrape() {
     this.setState({
       loading: true
     });
+    let tracksFromYoutube = [];
     let tracks = this.state.toBeImportedPlaylist;
-    let res = await handleScrape(tracks);
-    if (res) {
-      this.setState({
-        loading: false
+    let numberOfTracks = this.state.toBeImportedPlaylist.length;
+    let step = (1 / numberOfTracks) * 100;
+    let batchSize = 50;
+    let left = 0;
+    while (numberOfTracks > left) {
+      let res = await handleScrape(tracks.slice(left, left + batchSize));
+      res.map(track => {
+        tracksFromYoutube.push(track);
       });
+      this.setState({
+        progressValue: step * tracksFromYoutube.length,
+        importCount: tracksFromYoutube.filter(track => track !== null).length
+      });
+      left += batchSize;
+    }
+    await timeout(6500);
+    if (tracksFromYoutube.length > 0) {
       const name = this.state.name;
-      console.log(res);
-      const playlist = res.filter(track => track !== null);
+      //console.log(res);
+      const playlist = tracksFromYoutube.filter(track => track !== null);
       const body = JSON.stringify({ name, playlist: playlist });
       if (playlist.length > 0) {
-        console.log(playlist.length);
+        console.log(tracksFromYoutube.length - playlist.length);
         const respond = await makePlaylist(body);
         if (respond.status === 200) {
           this.setState({
-            imported: true
+            imported: true,
+            loading: false
           });
         } else {
           this.setState({
@@ -139,6 +103,7 @@ class PlaylistModal extends Component {
       }
     }
   }
+
   async webScrape2() {
     this.setState({
       loading: true
@@ -225,16 +190,13 @@ class PlaylistModal extends Component {
         ownerName: this.props.ownerName,
         chosenListsTracks: this.props.chosenListsTracks,
         imported: false,
-        progressValue: 0
+        progressValue: 0,
+        importCount: 0
       });
     }
   }
   async makePlaylist(name, playlist) {
     //API request to create a new playlist (database)
-    /*this.setState({
-      playlist: playlist
-    });*/
-    //let playlist = this.state.playlist;
     const item = JSON.stringify({ name, playlist });
     const result = await makePlaylist(item);
     //console.log(result.data._id);
@@ -318,6 +280,7 @@ class PlaylistModal extends Component {
       updated: item.videoId
     });
   }
+
   addToImport(item) {
     //console.log(item);
     let song = {};
@@ -390,6 +353,22 @@ class PlaylistModal extends Component {
                 <div id="spinner">
                   <LoadingSpinner size={35} />
                 </div>
+                <span className="importedNumbers" id="creatingInfo">
+                  {this.state.progressValue < 100
+                    ? "Importing songs..."
+                    : "Creating playlist..."}
+                </span>
+                <span className="importedNumbers">
+                  {this.state.importCount} /{" "}
+                  {this.state.toBeImportedPlaylist.length} songs imported.
+                </span>
+                <span className="importedNumbers" id="creatingInfo2">
+                  {(this.state.progressValue > 99) &
+                  (this.state.toBeImportedPlaylist.length !==
+                    this.state.importCount)
+                    ? "Unfortunately we were unable to import all of the songs"
+                    : ""}
+                </span>
                 <div id="progressbar">
                   <Progress
                     animated

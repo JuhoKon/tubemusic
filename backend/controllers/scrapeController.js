@@ -1,7 +1,7 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
 var allSettled = require("promise.allsettled");
-const handleScrape = async term => {
+const handleScrape = async (term, counter) => {
   try {
     let url = encodeURI(term);
     let response = await request(url).catch(e => {
@@ -22,10 +22,18 @@ const handleScrape = async term => {
         title: data.title,
         duration: videoTime,
         scraped: true,
-        uniqueId: Math.random()
+        uniqueId: Math.random(),
+        date: Date.now()
       };
     } else {
-      return null;
+      if (counter < 5) {
+        //try again
+        console.log("Trying again..");
+        await timeout(60);
+        return handleScrape(term, counter++);
+      } else {
+        return null;
+      }
     }
   } catch (err) {
     throw err;
@@ -50,7 +58,7 @@ exports.scrape = async function(req, res, next) {
     //tai esim funciton.js logiikkaa, että 50 tai 25 tai jopa 10 erissä, sitten saadaan lähetettyä siinä välissä aina front-endiin tietoa!!
     //use webvscraping buttonii disabled, jos loading niin ei vahingoskaa paina kaks kertaa :) ja checkki siihe funktioo
     //jos loading === true return
-    promises.push(handleScrape(term));
+    promises.push(handleScrape(term, 0));
   }
 
   Promise.all(promises)
