@@ -78,6 +78,8 @@ class Videoitem extends Component {
                 </div>
               </Col>
               <Col xs="2" sm="2">
+                <br />
+                <br />
                 <div className="placeforbutton">
                   <Button
                     className="btn btn-primary btn-item"
