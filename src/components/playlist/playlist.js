@@ -86,9 +86,7 @@ class Playlist extends Component {
 
     this.setState({
       playlist: arrayMove(playlist, oldIndex, newIndex)
-    }); //tässä ongelma
-    //katso m,yös auuto scroller
-    //sekä vähä styling?
+    });
 
     // We need to inform React Virtualized that the items have changed heights
     // This can either be done by imperatively calling the recomputeRowHeights and
@@ -101,7 +99,7 @@ class Playlist extends Component {
   };
 
   render() {
-    //console.log(this.props.playlist);
+    console.log(this.props.playlist);
     const playlist = this.props.playlist;
 
     const playlists = this.props.playlists;

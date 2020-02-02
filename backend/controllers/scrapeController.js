@@ -40,6 +40,43 @@ const handleScrape = async (term, counter) => {
   }
 };
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+exports.searchScrape = async function(req, res, next) {
+  //console.log(req.query.term);
+  let string = "https://www.youtube.com/results?search_query=";
+  let term = req.query.term;
+  term = term.split(" ").join("+");
+  term = string.concat(term);
+  let url = encodeURI(term);
+  let response = await request(url);
+  let $ = cheerio.load(response);
+  let timeArray = [];
+  let dataArray = [];
+  let data = $('[class="yt-lockup-title "]');
+  let videoTime = $('[class="video-time"]');
+  for (let i = 0; i < data.length - 3; i++) {
+    let href = data[i].children[0].attribs.href;
+    let title = data[i].children[0].attribs.title;
+    if (typeof $('[class="video-time"]')[0] !== "undefined") {
+      const videoTime2 = videoTime[i].children[0].data;
+      timeArray.push(videoTime2);
+    }
+    if (href[1] === "w") {
+      dataArray.push({
+        videoId: href.split("v=")[1],
+        title: title,
+        uniqueId: Math.random()
+      });
+    }
+  }
+  let array = dataArray.map((track, index) => ({
+    title: track.title,
+    uniqueId: track.uniqueId,
+    videoId: track.videoId,
+    duration: timeArray[index]
+  }));
+  res.json({ array });
+};
 exports.scrape = async function(req, res, next) {
   //console.log(req.body.term);
   let tracks = req.body.items;
@@ -53,14 +90,9 @@ exports.scrape = async function(req, res, next) {
     term = string.concat(term);
 
     await timeout(60); //Delay so we won't get problems with too many requests to the page
-    //jotain logiikkaa riippuen siitä kuinka paljon meillä on itemeita, kuitenkin max 500 tässä ->
-    //function.js sitten logiikkaa jos on yli 500 niin tehdään monessa eri erässä -> ei saada hang up erroria
-    //tai esim funciton.js logiikkaa, että 50 tai 25 tai jopa 10 erissä, sitten saadaan lähetettyä siinä välissä aina front-endiin tietoa!!
-    //use webvscraping buttonii disabled, jos loading niin ei vahingoskaa paina kaks kertaa :) ja checkki siihe funktioo
-    //jos loading === true return
+
     promises.push(handleScrape(term, 0));
   }
-
   Promise.all(promises)
     .then(results => {
       res.json(results);

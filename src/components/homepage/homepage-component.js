@@ -161,6 +161,7 @@ export default class Homepage extends Component {
     });
   }
   AddToPlaylist(item) {
+    console.log(item);
     //Adds item to active playlist and updates the state & database
     //if no item is found, generates name for new
     if (this.state.playlistId === "" && this.state.playlistName === "") {
@@ -208,12 +209,13 @@ export default class Homepage extends Component {
     //this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
   async handleSubmit(termFromSearch) {
-    //handles search-query from search bar to YouTube API
+    //handles search-query from search bar webscraping
     this.setState({
       //set loading to true
       loading: true
     });
     const result = await handleSubmit(termFromSearch);
+    console.log(result);
     //console.log(result);
     if (result === null) {
       this.setState({
@@ -221,14 +223,8 @@ export default class Homepage extends Component {
       });
       return;
     }
-    var listOfIds = [];
-    result.map(item => listOfIds.push(item.id.videoId));
-    listOfIds = listOfIds.join(",");
-    const contentDetails = await getContentDetails(listOfIds);
-    //console.log(contentDetails);
     this.setState({
       items: result,
-      contentDetails: contentDetails,
       loading: false
     });
   }
@@ -388,36 +384,11 @@ export default class Homepage extends Component {
   }
   render() {
     //console.log(this.state.error); /* ----TO CLEAN UP --- and switch to webscraping instead of youtube API (it sucks)*/
-    let itemArray = [];
-    const videoIdArray = [];
-    const thumbnailArray = [];
-    const durationArray = [];
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
     const playlist = this.state.playlist;
-    //console.log(playlists);
-    this.state.contentDetails.map(item =>
-      durationArray.push(item.contentDetails.duration)
-    );
-    this.state.items.map(item => videoIdArray.push(item.id.videoId)); //push videoIds
-    this.state.items.map(item => itemArray.push(item.snippet)); //push titles,descriptions and other data
-    this.state.items.map(
-      item => thumbnailArray.push(item.snippet.thumbnails.medium.url) //push thumbnail urls
-    );
-    for (let i = 0; i < itemArray.length; i++) {
-      //make an united array
-      itemArray[i].videoId = videoIdArray[i];
-      itemArray[i].thumbnail = thumbnailArray[i];
-      itemArray[i].uniqueId = Math.random();
-    }
-    itemArray = itemArray.filter(item => typeof item.videoId !== "undefined"); //remove channels from itemArray
-    for (let i = 0; i < itemArray.length; i++) {
-      //add durations to the sliced array
-      itemArray[i].duration = moment
-        .duration(durationArray[i])
-        .format("h:mm:ss");
-    }
+
     return (
       <div>
         <br />
@@ -473,7 +444,7 @@ export default class Homepage extends Component {
               <br />
               <Videolist
                 loading={this.state.loading}
-                items={itemArray}
+                items={this.state.items}
                 onAdd={this.onAdd}
                 onPlay={this.onPlay}
                 AddToPlaylist={this.AddToPlaylist}

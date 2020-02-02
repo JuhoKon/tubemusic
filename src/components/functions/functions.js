@@ -17,24 +17,24 @@ export const handleScrape = async items => {
     return null;
   }
 };
-export const handleScrape2 = async term => {
-  let string = "https://www.youtube.com/results?search_query=";
-  term = string.concat(term);
-  //console.log(term);
+
+//////////////////////////////////////////////////////////
+export const handleSubmit = async termFromSearch => {
   let res = await axios
-    .post("http://localhost:8080/scrape/scrape", {
-      term: term
+    .get("http://localhost:8080/scrape/search", {
+      params: {
+        term: termFromSearch
+      }
     })
     .catch(err => console.log(err));
-
+  console.log(res.data);
   if (res) {
-    return res.data;
+    return res.data.array;
   } else {
     return null;
   }
 };
-//////////////////////////////////////////////////////////
-export const handleSubmit = async termFromSearch => {
+export const handleSubmit2 = async termFromSearch => {
   let res = await axios
     .get("https://www.googleapis.com/youtube/v3/search", {
       params: {
@@ -45,7 +45,7 @@ export const handleSubmit = async termFromSearch => {
       }
     })
     .catch(err => console.log(err));
-
+  console.log(res.data.items);
   if (res) {
     return res.data.items;
   } else {

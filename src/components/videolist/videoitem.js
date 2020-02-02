@@ -15,19 +15,41 @@ import "moment-duration-format";
 
 class Videoitem extends Component {
   onAddClick = id => {
-    this.props.addFunc(id);
+    this.props.addFunc({
+      uniqueId: Math.random(),
+      title: id.title,
+      videoId: id.videoId,
+      duration: id.duration,
+      publishedAt: id.publishedAt,
+      channelTitle: id.channelTitle
+    });
   };
   onPlayClick = id => {
-    this.props.onPlay(id);
+    this.props.onPlay({
+      uniqueId: Math.random(),
+      title: id.title,
+      videoId: id.videoId,
+      duration: id.duration,
+      publishedAt: id.publishedAt,
+      channelTitle: id.channelTitle
+    });
   };
   onAddToPlaylist = id => {
-    this.props.AddToPlaylist(id);
+    console.log(id);
+    this.props.AddToPlaylist({
+      uniqueId: Math.random(),
+      title: id.title,
+      videoId: id.videoId,
+      duration: id.duration,
+      publishedAt: id.publishedAt,
+      channelTitle: id.channelTitle
+    });
   };
   render() {
     //TODO: make it look much better
     return (
       <div>
-        <Card className="card">
+        <Card className="card-2" id="videoitem">
           <CardBody>
             <Row>
               <Col xs="2" sm="2">
@@ -71,16 +93,8 @@ class Videoitem extends Component {
               <Col xs="4" sm="4">
                 <small className="float-left">
                   Length&nbsp;
-                  {moment.duration(this.props.duration).format("h:mm:ss")}
+                  {this.props.duration}
                 </small>
-              </Col>
-              <Col xs="4" sm="4">
-                <small className="">
-                  <Moment fromNow>{this.props.publishedAt}</Moment>
-                </small>
-              </Col>
-              <Col xs="4" sm="4">
-                <small className="">By: {this.props.channelTitle}</small>
               </Col>
             </Row>
           </CardBody>
