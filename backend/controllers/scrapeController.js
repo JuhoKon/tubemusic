@@ -54,20 +54,25 @@ exports.searchScrape = async function(req, res, next) {
   let dataArray = [];
   let data = $('[class="yt-lockup-title "]');
   let videoTime = $('[class="video-time"]');
+  let href = {};
+  let title = {};
   for (let i = 0; i < data.length - 3; i++) {
-    let href = data[i].children[0].attribs.href;
-    let title = data[i].children[0].attribs.title;
-    if (typeof $('[class="video-time"]')[0] !== "undefined") {
+    if (typeof data[i] !== "undefined") {
+    href = data[i].children[0].attribs.href;
+    title = data[i].children[0].attribs.title;
+      if (href[1] === "w") {
+        dataArray.push({
+          videoId: href.split("v=")[1],
+          title: title,
+          uniqueId: Math.random()
+        });
+      }
+    }
+    if (typeof videoTime[i] !== "undefined") {
       const videoTime2 = videoTime[i].children[0].data;
       timeArray.push(videoTime2);
     }
-    if (href[1] === "w") {
-      dataArray.push({
-        videoId: href.split("v=")[1],
-        title: title,
-        uniqueId: Math.random()
-      });
-    }
+  
   }
   let array = dataArray.map((track, index) => ({
     title: track.title,
