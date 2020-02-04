@@ -5,8 +5,8 @@ exports.index = function(req, res, next) {
     .select("-playlist")
     .then(Playlist => {
       //console.log(Playlist);
-      res.json({ Playlist: Playlist }); //todo: return nimi + id kaikki postaukset
-    }) //return all posts
+      res.json({ Playlist: Playlist }); 
+    }) //return playlists name + id
     .catch(err => res.status(400).json("Error: " + err));
 };
 
