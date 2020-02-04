@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PlaylistModalItem from "./PlaylistModalItem";
 import { List, AutoSizer } from "react-virtualized";
+import isEqual from "react-fast-compare";
 
 class ImportList extends Component {
   constructor(props) {
@@ -10,6 +11,14 @@ class ImportList extends Component {
       updated: ""
     };
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
+  }
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      //if change in props
+      this.setState({
+        toBeImportedPlaylist: this.props.toBeImportedPlaylist
+      });
+    }
   }
   renderRow = ({ index, key, isScrolling, isVisible, style }) => {
     const toBeImportedPlaylist = this.props.toBeImportedPlaylist;

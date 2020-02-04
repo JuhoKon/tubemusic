@@ -111,7 +111,7 @@ class PlaylistModal extends Component {
   }
   moveAllToImport() {
     const chosenListsTracks = this.state.chosenListsTracks;
-    chosenListsTracks.map(track => this.addToImport(track)); //need to generate uniqueIDs
+    chosenListsTracks.forEach(track => this.addToImport(track)); //need to generate uniqueIDs
   }
   toggle() {
     this.setState({
@@ -365,7 +365,11 @@ class PlaylistModal extends Component {
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
                   <Button
-                    disabled={this.state.loading}
+                    disabled={
+                      this.state.loading || !this.state.toBeImportedPlaylist[0]
+                        ? true
+                        : false
+                    }
                     onClick={this.clearList}
                   >
                     Clear list
