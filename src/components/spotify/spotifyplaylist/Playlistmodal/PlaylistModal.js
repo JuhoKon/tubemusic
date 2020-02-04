@@ -355,7 +355,8 @@ class PlaylistModal extends Component {
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
                   <Button
-                    disabled={this.state.loading}
+                    disabled={true} //Not in use
+                    //  disabled={this.state.loading}
                     onClick={this.importPlaylistToApp}
                   >
                     Import playlist
@@ -389,7 +390,11 @@ class PlaylistModal extends Component {
               <Col xs="4" sm="4">
                 <div className="placeforbutton">
                   <Button
-                    disabled={this.state.loading}
+                    disabled={
+                      this.state.loading || !this.state.toBeImportedPlaylist[0]
+                        ? true
+                        : false
+                    }
                     onClick={this.webScrape}
                   >
                     use webScraping
