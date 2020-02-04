@@ -92,7 +92,7 @@ class PlaylistItem extends Component {
       <div>
         <div>{this.state.loading ? <LoadingSpinner /> : ""}</div>
         <a
-          href="# "
+          //href="# "
           style={{ cursor: "pointer" }}
           onClick={this.clickOnPlayList.bind(this, this.state)}
         >
