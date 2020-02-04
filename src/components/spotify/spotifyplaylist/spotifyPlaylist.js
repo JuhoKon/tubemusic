@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SpotifyItem from "./spotifPlaylistitem";
-import { CSSTransition } from "react-transition-group";
 import isEqual from "react-fast-compare";
 import LoadingSpinner from "../../spinner/spinner";
 

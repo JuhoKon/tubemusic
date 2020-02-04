@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c";
-const clientId = "dc20085012814f3d8cab4b36a4144393";
+const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
+//const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
   let res = await axios
     .post("http://localhost:8080/scrape/scrape", {

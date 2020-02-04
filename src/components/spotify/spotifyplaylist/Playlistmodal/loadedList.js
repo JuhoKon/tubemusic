@@ -1,8 +1,7 @@
 //näissä chekkaa onko muttunu tms.
 import React, { Component } from "react";
 import PlaylistModalItem from "./PlaylistModalItem";
-import { CSSTransition } from "react-transition-group";
-import isEqual from "react-fast-compare";
+
 import { List, AutoSizer } from "react-virtualized";
 
 class LoadedList extends Component {

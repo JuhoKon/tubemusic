@@ -6,7 +6,7 @@ import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
 import nameGenerator from "../functions/nameGenerator";
-import moment from "moment";
+
 import {
   handleSubmit,
   getPlaylists,

@@ -1,15 +1,6 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Button,
-  CardText,
-  Row,
-  Col
-} from "reactstrap";
-import isEqual from "react-fast-compare";
-import moment from "moment";
+import { Card, CardBody, CardText, Row, Col } from "reactstrap";
+
 import "moment-duration-format";
 import PlaylistModal from "./Playlistmodal/PlaylistModal";
 import LoadingSpinner from "../../spinner/spinner";
@@ -101,6 +92,7 @@ class PlaylistItem extends Component {
       <div>
         <div>{this.state.loading ? <LoadingSpinner /> : ""}</div>
         <a
+          href="# "
           style={{ cursor: "pointer" }}
           onClick={this.clickOnPlayList.bind(this, this.state)}
         >

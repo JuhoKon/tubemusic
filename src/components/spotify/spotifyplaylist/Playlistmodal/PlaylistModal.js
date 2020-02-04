@@ -3,18 +3,14 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Form,
   Button,
   Row,
   Col,
   Progress
 } from "reactstrap";
 import isEqual from "react-fast-compare";
-import PlaylistModalItem from "./PlaylistModalItem";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import LoadedList from "./loadedList";
 import ImportList from "./importList";
-import arrayMove from "array-move";
 import LoadingSpinner from "../../../spinner/spinner";
 import {
   handleSpotifySearchFromYoutube,
@@ -71,7 +67,7 @@ class PlaylistModal extends Component {
     let left = 0;
     while (numberOfTracks > left) {
       let res = await handleScrape(tracks.slice(left, left + batchSize));
-      res.map(track => {
+      res.forEach(track => {
         tracksFromYoutube.push(track);
       });
       this.setState({

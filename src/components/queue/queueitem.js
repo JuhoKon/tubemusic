@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Button,
-  CardText,
-  Row,
-  Col
-} from "reactstrap";
+import { Card, CardBody, Button, CardText, Row, Col } from "reactstrap";
 import isEqual from "react-fast-compare";
-import moment from "moment";
+
 import "moment-duration-format";
 
 class Queueitem extends Component {

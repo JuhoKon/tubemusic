@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { sortableElement } from "react-sortable-hoc";
 import Playlistitem from "./playlistitem";
-import { List, AutoSizer } from "react-virtualized";
+import { List } from "react-virtualized";
 
 //example from https://github.com/clauderic/react-sortable-hoc/blob/master/examples/react-virtualized.js#L12
 

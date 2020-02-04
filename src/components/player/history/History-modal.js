@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, ModalHeader, ModalBody, Form, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
 import { CSSTransition } from "react-transition-group";
 import HistoryItem from "./history-item";
 import isEqual from "react-fast-compare";

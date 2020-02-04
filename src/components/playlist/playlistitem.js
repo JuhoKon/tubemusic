@@ -1,17 +1,8 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  Button,
-  Row,
-  Col
-} from "reactstrap";
+import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./playlist.css";
 import isEqual from "react-fast-compare";
-import Moment from "react-moment";
-import moment from "moment";
+
 import "moment-duration-format";
 
 class Playlistitem extends Component {

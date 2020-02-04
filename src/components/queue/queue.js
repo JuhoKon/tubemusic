@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import isEqual from "react-fast-compare";
 import { Button, Container } from "reactstrap";
-import Queueitem from "./queueitem";
+
 import QueueList from "./queueList";
-import FlipMove from "react-flip-move";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+
+import { SortableContainer } from "react-sortable-hoc";
 import { AutoSizer } from "react-virtualized";
 import arrayMove from "array-move";
 import "./queue.css";
