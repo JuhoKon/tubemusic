@@ -322,7 +322,7 @@ export default class Homepage extends Component {
     object["videoId"] = item["videoId"];
     object["channelTitle"] = item["channelTitle"];
     object["duration"] = item["duration"];
-    object["uniqueId"] = Math.random();
+    object["uniqueId"] = Math.random(); //to ensure every track has an unique id.
     //item["uniqueId"] = Math.random();
     this.state.queue.push(object);
     this.setState({
