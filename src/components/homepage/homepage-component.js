@@ -6,7 +6,9 @@ import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
 import nameGenerator from "../functions/nameGenerator";
-
+import toaster from "toasted-notes";
+import "toasted-notes/src/styles.css"; // optional styles
+import "./homepage.css";
 import {
   handleSubmit,
   getPlaylists,
@@ -138,6 +140,9 @@ export default class Homepage extends Component {
     this.setState({
       queue: itemArray
     });
+    toaster.notify(<span>Now playing: {this.state.playlistName}</span>, {
+      duration: 1200
+    });
     //this.onPlay(itemArray[0]);
   }
   addPlaylistToQueue() {
@@ -158,6 +163,9 @@ export default class Homepage extends Component {
     }
     this.setState({
       queue: queue
+    });
+    toaster.notify(<span>{this.state.playlistName} added to the queue!</span>, {
+      duration: 1200
     });
   }
   AddToPlaylist(item) {
@@ -180,12 +188,18 @@ export default class Homepage extends Component {
           this.Updateplaylist(this.state.playlistName, this.state.playlistId),
         2000
       );
+      toaster.notify(<span>{item.title} added to the playlist.</span>, {
+        duration: 750
+      });
     } else {
       this.state.playlist.push(item);
       this.Updateplaylist(this.state.playlistName, this.state.playlistId);
 
       this.setState({
         updated: item
+      });
+      toaster.notify(<span>{item.title} added to the playlist.</span>, {
+        duration: 750
       });
     }
   }
@@ -331,6 +345,9 @@ export default class Homepage extends Component {
     });
     //console.log(this.state.queue);
     //console.log(videoId);
+    toaster.notify(<span>{item.title} added to the queue.</span>, {
+      duration: 1100
+    });
   }
   onDelete(item) {
     //delete item from queue
