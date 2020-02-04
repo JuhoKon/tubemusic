@@ -6,7 +6,8 @@ import {
   Button,
   Row,
   Col,
-  Progress
+  Progress,
+  Input
 } from "reactstrap";
 import isEqual from "react-fast-compare";
 import LoadedList from "./loadedList";
@@ -39,7 +40,8 @@ class PlaylistModal extends Component {
       loading: false,
       imported: false,
       progressValue: 0,
-      notFoundArray: []
+      notFoundArray: [],
+      filter: ""
     };
     this.importPlaylistToApp = this.importPlaylistToApp.bind(this);
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
@@ -109,9 +111,9 @@ class PlaylistModal extends Component {
       toBeImportedPlaylist: []
     });
   }
-  moveAllToImport() {
-    const chosenListsTracks = this.state.chosenListsTracks;
-    chosenListsTracks.forEach(track => this.addToImport(track)); //need to generate uniqueIDs
+  moveAllToImport(filteredData) {
+    //const chosenListsTracks = this.state.chosenListsTracks;
+    filteredData.forEach(track => this.addToImport(track)); //need to generate uniqueIDs
   }
   toggle() {
     this.setState({
@@ -239,9 +241,20 @@ class PlaylistModal extends Component {
       updated: true
     });
   }
-
+  handleChange = event => {
+    this.setState({ filter: event.target.value });
+  };
   render() {
     const tracks = this.state.chosenListsTracks;
+    const { filter } = this.state;
+    const lowercasedFilter = filter.toLowerCase();
+    const filteredData = tracks.filter(item => {
+      return Object.keys(item).some(
+        key =>
+          typeof item[key] === "string" &&
+          item[key].toLowerCase().includes(lowercasedFilter)
+      );
+    });
     return (
       <div>
         <Modal
@@ -340,12 +353,20 @@ class PlaylistModal extends Component {
                 </div>
               </Col>
               <Col xs="6" sm="6">
-                SEARCHBAR
                 <div id="lists">
+                  {filteredData.length} songs
+                  <span className="float-right">By {this.props.ownerName}</span>
+                  <br />
+                  <Input
+                    value={filter}
+                    onChange={this.handleChange}
+                    placeholder="Filter songs..."
+                  />
+                  <br />
                   <LoadedList
                     ownerName={this.state.ownerName}
                     totalTracks={this.state.totalTracks}
-                    tracks={tracks}
+                    tracks={filteredData}
                     addToImport={this.addToImport}
                   />
                 </div>
@@ -381,7 +402,7 @@ class PlaylistModal extends Component {
                 <div className="placeforbutton">
                   <Button
                     disabled={this.state.loading}
-                    onClick={this.moveAllToImport}
+                    onClick={this.moveAllToImport.bind(this, filteredData)}
                   >
                     Get all songs
                   </Button>

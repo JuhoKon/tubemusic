@@ -23,11 +23,6 @@ class LoadedList extends Component {
     );
   };
 
-  shouldComponentUpdate() {
-    //component doesn't need to be updated
-    return false;
-  }
-
   render() {
     //console.log("loadedList");
     const tracks = this.props.tracks;
@@ -36,10 +31,6 @@ class LoadedList extends Component {
 
     return (
       <div>
-        {this.props.totalTracks} songs
-        <span className="float-right">By {this.props.ownerName}</span>
-        <br />
-        <br />
         <AutoSizer>
           {({ width }) => (
             <List
