@@ -52,7 +52,7 @@ class NavbarComponent extends Component {
                 <NavLink href="/spotify/">Spotify</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">
+                <NavLink href="https://github.com/JuhoKon/tubemusic">
                   GitHub
                 </NavLink>
               </NavItem>
