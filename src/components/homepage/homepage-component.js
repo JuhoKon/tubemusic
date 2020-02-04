@@ -107,35 +107,35 @@ export default class Homepage extends Component {
     });
     console.log(playlistitems);
   }
-  playPlaylist() {
+  playPlaylist(playlist) {
     //replaces queue with active playlist
-    if (this.state.queue.length === this.state.playlist.length) {
-      if (this.isSame(this.state.queue, this.state.playlist)) {
+    if (this.state.queue.length === playlist.length) {
+      if (this.isSame(this.state.queue, playlist)) {
         //if queue and playlist have same items, return
         return;
       }
     }
     var itemArray = [];
-    for (let i = 0; i < this.state.playlist.length; i++) {
+    for (let i = 0; i < playlist.length; i++) {
       let itemObject = {};
       if (i === 0) {
         //take first element and play it instantly
-        itemObject["title"] = this.state.playlist[i].title;
-        itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
-        itemObject["videoId"] = this.state.playlist[i].videoId;
+        itemObject["title"] = playlist[i].title;
+        itemObject["channelTitle"] = playlist[i].channelTitle;
+        itemObject["videoId"] = playlist[i].videoId;
         itemObject["uniqueId"] = Math.random();
-        itemObject["duration"] = this.state.playlist[i].duration;
+        itemObject["duration"] = playlist[i].duration;
         this.onPlay(itemObject);
       } else {
         //other elements go to queue
-        itemObject["title"] = this.state.playlist[i].title;
-        itemObject["channelTitle"] = this.state.playlist[i].channelTitle;
-        itemObject["videoId"] = this.state.playlist[i].videoId;
+        itemObject["title"] = playlist[i].title;
+        itemObject["channelTitle"] = playlist[i].channelTitle;
+        itemObject["videoId"] = playlist[i].videoId;
         itemObject["uniqueId"] = Math.random();
-        itemObject["duration"] = this.state.playlist[i].duration;
+        itemObject["duration"] = playlist[i].duration;
         itemArray.push(itemObject);
       }
-      //console.log(this.state.playlist[i]);
+      //console.log(playlist[i]);
     }
     this.setState({
       queue: itemArray
@@ -145,9 +145,9 @@ export default class Homepage extends Component {
     });
     //this.onPlay(itemArray[0]);
   }
-  addPlaylistToQueue() {
+  addPlaylistToQueue(playlist) {
     //adds active playlist to queue
-    let playlist = this.state.playlist;
+    //let playlist = this.state.playlist;
     let queue = this.state.queue;
     // console.log(playlist);
     // console.log("Hello?");

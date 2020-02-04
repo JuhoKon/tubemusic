@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "reactstrap";
+import { Button, Input } from "reactstrap";
 
 import LoadPlaylistModal from "./loadPlaylistModal";
 import SaveModal from "./save/saveModal";
@@ -22,12 +22,21 @@ class Playlist extends Component {
       playlist: this.props.playlist,
       playlistName: this.props.playlistName,
       playlistId: this.props.playlistId,
-      editMode: false
+      editMode: false,
+      filter: ""
     };
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
     this.toggle = this.toggle.bind(this);
     this.onDeleteFromPlaylist = this.onDeleteFromPlaylist.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.addPlaylistToQueue = this.addPlaylistToQueue.bind(this);
   }
+  addPlaylistToQueue(filteredData) {
+    this.props.addPlaylistToQueue(filteredData);
+  }
+  handleChange = event => {
+    this.setState({ filter: event.target.value });
+  };
   componentDidMount() {
     this.props.getPlayList();
   }
@@ -101,9 +110,16 @@ class Playlist extends Component {
 
   render() {
     console.log(this.props.playlist);
-    const playlist = this.props.playlist;
-
-    const playlists = this.props.playlists;
+    const { filter } = this.state;
+    const { playlists, playlist } = this.props;
+    const lowercasedFilter = filter.toLowerCase();
+    const filteredData = playlist.filter(item => {
+      return Object.keys(item).some(
+        key =>
+          typeof item[key] === "string" &&
+          item[key].toLowerCase().includes(lowercasedFilter)
+      );
+    });
 
     return (
       <div>
@@ -111,7 +127,7 @@ class Playlist extends Component {
           <Button
             className="float-left btn-margin"
             color="info"
-            onClick={this.playPlaylist.bind(this, playlist)}
+            onClick={this.playPlaylist.bind(this, filteredData)}
             disabled={this.props.playlist[0] ? false : true}
           >
             Play
@@ -134,13 +150,24 @@ class Playlist extends Component {
           <Button
             className="float-right btn-margin "
             color="info"
-            onClick={this.props.addPlaylistToQueue}
+            onClick={this.addPlaylistToQueue.bind(this, filteredData)}
             disabled={this.props.playlist[0] ? false : true}
           >
             + Queue
           </Button>
         </div>
         <br />
+        <br />
+        <p className="float-left">
+          Current playlist: {this.state.playlistName}
+        </p>
+        <br />
+        <Input
+          value={filter}
+          onChange={this.handleChange}
+          placeholder="Filter songs..."
+        />
+
         <br />
         <Button
           color={this.state.editMode ? "primary" : "secondary"}
@@ -158,19 +185,13 @@ class Playlist extends Component {
             Save
           </Button>
         ) : null}
-        <p className="float-left">
-          Current playlist: {this.state.playlistName}
-        </p>
-        <br />
-        <br />
-        <br />
-        <p className="float-left">Total songs: {this.state.playlist.length}</p>
+        <p className="float-left">Total songs: {filteredData.length}</p>
         <AutoSizer disableHeight>
           {({ width }) => (
             <SortableVirtualList
               editMode={this.state.editMode}
               getRef={this.registerListRef}
-              playlist={this.state.playlist}
+              playlist={filteredData}
               onSortEnd={this.onSortEnd}
               onAdd={this.props.onAdd}
               onPlay={this.props.onPlay}
