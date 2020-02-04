@@ -122,8 +122,14 @@ export default class Spotify extends Component {
         <div className="container-fluid">
           <Row>
             <Col sm="4">
-              Hello, you are logged in as <br />
-              {this.state.display_name}
+              {this.state.auth ? (
+                <span>
+                  Hello, you are logged in as <br />
+                  {this.state.display_name} !
+                </span>
+              ) : (
+                "Please login to use the playlist importer!"
+              )}
             </Col>
             <Col sm="4">
               <Button

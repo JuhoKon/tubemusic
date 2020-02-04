@@ -5,6 +5,7 @@ import Queueitem from "./queueitem";
 import QueueList from "./queueList";
 import FlipMove from "react-flip-move";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import { AutoSizer } from "react-virtualized";
 import arrayMove from "array-move";
 import "./queue.css";
 
@@ -71,8 +72,8 @@ class Queue extends Component {
   };
 
   render() {
-    console.log("queue");
-    console.log(this.state.editMode);
+    //console.log("queue");
+    //console.log(this.state.editMode);
     return (
       <div>
         <Container>
@@ -99,52 +100,23 @@ class Queue extends Component {
           </Button>
           <br />
           <br />
-          <SortableVirtualList
-            getRef={this.registerListRef}
-            queue={this.state.queue}
-            onSortEnd={this.onSortEnd}
-            onRemove={this.props.onRemove}
-            onPlay={this.props.onPlay}
-            editMode={this.state.editMode}
-          />
+          <AutoSizer disableHeight>
+            {({ width }) => (
+              <SortableVirtualList
+                getRef={this.registerListRef}
+                queue={this.state.queue}
+                onSortEnd={this.onSortEnd}
+                onRemove={this.props.onRemove}
+                onPlay={this.props.onPlay}
+                editMode={this.state.editMode}
+                width={width}
+              />
+            )}
+          </AutoSizer>
         </Container>
       </div>
     );
   }
 }
-/*  {this.state.editMode ? (
-            <SortableList
-              key={"ssss"}
-              queue={this.state.queue}
-              onSortEnd={this.onSortEnd}
-            />
-          ) : (
-            <FlipMove>
-              {queue.map(
-                ({
-                  title,
-                  publishedAt,
-                  channelTitle,
-                  videoId,
-                  thumbnail,
-                  uniqueId,
-                  duration
-                }) => (
-                  <Queueitem
-                    key={uniqueId}
-                    uniqueId={uniqueId}
-                    title={title}
-                    thumbnail={thumbnail}
-                    channelTitle={channelTitle}
-                    publishedAt={publishedAt}
-                    videoId={videoId}
-                    onRemove={this.props.onRemove}
-                    onPlay={this.props.onPlay}
-                    editMode={this.state.editMode}
-                    duration={duration}
-                  />
-                )
-              )}
-            </FlipMove>
-          )}*/
+
 export default Queue;

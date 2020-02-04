@@ -77,5 +77,5 @@ class Queueitem extends Component {
     );
   }
 }
-//actions we want to use as second paranthesis
+
 export default Queueitem;

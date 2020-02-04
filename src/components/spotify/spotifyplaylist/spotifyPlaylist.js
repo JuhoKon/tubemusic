@@ -28,7 +28,8 @@ class SpotifyPlaylist extends Component {
     return (
       <div>
         <p>
-          Click on a playlist to see what songs there are, and to import it :)
+          Click on a playlist to see what songs there are, and to choose which
+          songs will be imported.
         </p>
         <div id="videolist">
           {this.state.loading ? (

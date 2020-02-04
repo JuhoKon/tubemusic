@@ -36,22 +36,24 @@ class HistoryModal extends Component {
           </ModalHeader>
           <Button className="float-right">Clear All</Button>
           <ModalBody>
-            {this.state.history.map(({ title, videoId, url }) => (
-              <CSSTransition
-                key={Math.random()}
-                timeout={500}
-                classNames="fade"
-              >
-                <HistoryItem
-                  url={url}
-                  name={title}
-                  videoId={videoId}
-                  addFunc={this.props.addFunc}
-                  onPlay={this.props.onPlay}
-                  AddToPlaylist={this.props.AddToPlaylist}
-                />
-              </CSSTransition>
-            ))}
+            <div id="videolist">
+              {this.state.history.map(({ title, videoId, url }) => (
+                <CSSTransition
+                  key={Math.random()}
+                  timeout={500}
+                  classNames="fade"
+                >
+                  <HistoryItem
+                    url={url}
+                    name={title}
+                    videoId={videoId}
+                    addFunc={this.props.addFunc}
+                    onPlay={this.props.onPlay}
+                    AddToPlaylist={this.props.AddToPlaylist}
+                  />
+                </CSSTransition>
+              ))}
+            </div>
           </ModalBody>
         </Modal>
       </div>

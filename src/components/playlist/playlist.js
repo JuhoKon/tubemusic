@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import { Container, Button } from "reactstrap";
-import Playlistitem from "./playlistitem";
+import { Button } from "reactstrap";
+
 import LoadPlaylistModal from "./loadPlaylistModal";
 import SaveModal from "./save/saveModal";
 import CreateNew from "./createNew/createNew";
 import isEqual from "react-fast-compare";
-import FlipMove from "react-flip-move";
+
 import PlaylistItemsList from "./playlistItemsList";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import { SortableContainer } from "react-sortable-hoc";
+import { AutoSizer } from "react-virtualized";
 import arrayMove from "array-move";
 import "./playlist.css";
 
@@ -157,20 +158,27 @@ class Playlist extends Component {
             Save
           </Button>
         ) : null}
-        <p className="float-left">Playlist: {this.state.playlistName}</p>
+        <p className="float-left">
+          Current playlist: {this.state.playlistName}
+        </p>
         <br />
         <br />
         <br />
         <p className="float-left">Total songs: {this.state.playlist.length}</p>
-        <SortableVirtualList
-          editMode={this.state.editMode}
-          getRef={this.registerListRef}
-          playlist={this.state.playlist}
-          onSortEnd={this.onSortEnd}
-          onAdd={this.props.onAdd}
-          onPlay={this.props.onPlay}
-          onDeleteFromPlaylist={this.onDeleteFromPlaylist}
-        />
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <SortableVirtualList
+              editMode={this.state.editMode}
+              getRef={this.registerListRef}
+              playlist={this.state.playlist}
+              onSortEnd={this.onSortEnd}
+              onAdd={this.props.onAdd}
+              onPlay={this.props.onPlay}
+              onDeleteFromPlaylist={this.onDeleteFromPlaylist}
+              width={width}
+            />
+          )}
+        </AutoSizer>
       </div>
     );
   }

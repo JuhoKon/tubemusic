@@ -150,7 +150,7 @@ export default class Player extends Component {
     return (
       <div>
         <section className="section">
-          <p>Now playing {this.state.title}</p>
+          <p>Now playing: {this.state.title}</p>
 
           <Container className="container-fluid">
             <div className="app">

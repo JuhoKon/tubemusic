@@ -246,7 +246,6 @@ class PlaylistModal extends Component {
 
   render() {
     const tracks = this.state.chosenListsTracks;
-    const toBeImportedPlaylist = this.state.toBeImportedPlaylist;
     return (
       <div>
         <Modal

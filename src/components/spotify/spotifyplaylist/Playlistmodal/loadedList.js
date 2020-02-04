@@ -45,7 +45,7 @@ class LoadedList extends Component {
           {({ width }) => (
             <List
               width={width}
-              height={650}
+              height={550}
               rowCount={this.props.tracks.length}
               rowHeight={80}
               rowRenderer={this.renderRow}

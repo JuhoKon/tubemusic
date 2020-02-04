@@ -418,6 +418,7 @@ export default class Homepage extends Component {
                 setQueue={this.setQueue}
               />
             </Col>
+
             <Col sm="4">
               <Playlist
                 playlists={playlists}

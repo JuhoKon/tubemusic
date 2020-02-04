@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { sortableElement } from "react-sortable-hoc";
 import Queueitem from "./queueitem";
-import { List } from "react-virtualized";
+import { List, AutoSizer } from "react-virtualized";
 import FlipMove from "react-flip-move";
 //example from https://github.com/clauderic/react-sortable-hoc/blob/master/examples/react-virtualized.js#L12
 
@@ -76,7 +76,7 @@ export default class QueueList extends Component {
         rowHeight={82}
         rowRenderer={this.renderRow}
         rowCount={queue.length}
-        width={550}
+        width={this.props.width}
         height={300}
       />
     );

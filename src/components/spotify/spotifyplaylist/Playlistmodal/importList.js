@@ -62,7 +62,7 @@ class ImportList extends Component {
           {({ width }) => (
             <List
               width={width}
-              height={650}
+              height={550}
               rowCount={this.props.toBeImportedPlaylist.length}
               rowHeight={82}
               rowRenderer={this.renderRow}
