@@ -10,9 +10,9 @@ class LoadedList extends Component {
     const { title, artistName, id } = tracks[index];
     //const { value } = items[index];
     return (
-      <div key={id} style={style}>
+      <div key={Math.random()} style={style}>
         <PlaylistModalItem
-          id={id}
+          id={Math.random()} //random to ensure unique id as there can be duplicates of each track
           key={Math.random()}
           artistName={artistName}
           addToImport={this.props.addToImport}
