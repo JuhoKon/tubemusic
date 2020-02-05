@@ -13,11 +13,12 @@ class LoadedList extends Component {
       <div key={Math.random()} style={style}>
         <PlaylistModalItem
           id={Math.random()} //random to ensure unique id as there can be duplicates of each track
-          key={Math.random()}
+          key={id}
           artistName={artistName}
           addToImport={this.props.addToImport}
           imported={false}
-          title={title}></PlaylistModalItem>
+          title={title}
+        ></PlaylistModalItem>
       </div>
     );
   };
@@ -37,7 +38,8 @@ class LoadedList extends Component {
               height={550}
               rowCount={this.props.tracks.length}
               rowHeight={80}
-              rowRenderer={this.renderRow}></List>
+              rowRenderer={this.renderRow}
+            ></List>
           )}
         </AutoSizer>
       </div>

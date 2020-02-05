@@ -1,0 +1,5 @@
+#spotifyPlaylist {
+  background-color: #f8f9fa !important;
+  height: 700px;
+  overflow-y: scroll;
+}

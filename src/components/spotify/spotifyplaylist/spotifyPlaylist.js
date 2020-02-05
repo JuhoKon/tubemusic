@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SpotifyItem from "./spotifPlaylistitem";
 import isEqual from "react-fast-compare";
 import LoadingSpinner from "../../spinner/spinner";
-
+import "./spotifyPlaylist.css";
 class SpotifyPlaylist extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +30,7 @@ class SpotifyPlaylist extends Component {
           Click on a playlist to see what songs there are, and to choose which
           songs will be imported.
         </p>
-        <div id="videolist">
+        <div id="spotifyPlaylist">
           {this.state.loading ? (
             <div className="loadingPlace">
               <LoadingSpinner />

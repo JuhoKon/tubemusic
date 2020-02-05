@@ -6,7 +6,7 @@ import HomePage from "./components/homepage/homepage-component";
 import Spotify from "./components/spotify/spotify-component";
 function App() {
   return (
-    <div className="App">
+    <div className="App wrapper">
       <Router>
         <Navbar />
         <Switch>

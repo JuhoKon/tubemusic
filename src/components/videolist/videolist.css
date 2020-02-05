@@ -3,7 +3,6 @@
   font-weight: bold;
   font-size: x-large;
 }
-
 .card-title {
   font-size: 0.9em;
 }
@@ -19,7 +18,7 @@
 }
 #videolist {
   background-color: #f8f9fa !important;
-  height: 700px;
+  max-height: 700px;
   overflow-y: scroll;
 }
 .btn-item {

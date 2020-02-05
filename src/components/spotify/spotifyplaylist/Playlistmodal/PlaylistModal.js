@@ -153,6 +153,7 @@ class PlaylistModal extends Component {
     });
   }
   async importPlaylistToApp() {
+    //DEPRECATED
     this.setState({
       loading: true,
       progressValue: 0,
@@ -237,7 +238,7 @@ class PlaylistModal extends Component {
     song["id"] = Math.random();
     this.state.toBeImportedPlaylist.push(song);
     this.setState({
-      //just to trigger re-rendering
+      //just to trigger re-rendering -> new props to children
       updated: true
     });
   }
@@ -262,7 +263,8 @@ class PlaylistModal extends Component {
           isOpen={this.props.isOpen}
           toggle={this.props.toggle}
           size="lg"
-          style={{ maxWidth: "1600px", width: "100%", margin: "10px auto" }}>
+          style={{ maxWidth: "1600px", width: "100%", margin: "10px auto" }}
+        >
           <ModalHeader className="mb-4" toggle={this.props.toggle}>
             <span>
               Songs in the playlist <br />
@@ -378,7 +380,8 @@ class PlaylistModal extends Component {
                   <Button
                     disabled={true} //Not in use
                     //  disabled={this.state.loading}
-                    onClick={this.importPlaylistToApp}>
+                    onClick={this.importPlaylistToApp}
+                  >
                     Import playlist
                   </Button>
                 </div>
@@ -391,7 +394,8 @@ class PlaylistModal extends Component {
                         ? true
                         : false
                     }
-                    onClick={this.clearList}>
+                    onClick={this.clearList}
+                  >
                     Clear list
                   </Button>
                 </div>
@@ -400,7 +404,8 @@ class PlaylistModal extends Component {
                 <div className="placeforbutton">
                   <Button
                     disabled={this.state.loading}
-                    onClick={this.moveAllToImport.bind(this, filteredData)}>
+                    onClick={this.moveAllToImport.bind(this, filteredData)}
+                  >
                     Get all songs
                   </Button>
                 </div>
@@ -413,7 +418,8 @@ class PlaylistModal extends Component {
                         ? true
                         : false
                     }
-                    onClick={this.webScrape}>
+                    onClick={this.webScrape}
+                  >
                     use webScraping
                   </Button>
                 </div>
