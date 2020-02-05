@@ -21,6 +21,8 @@ import {
 } from "../../../functions/functions";
 import "./PlaylistModal.css";
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+//TODO: add option to "create" own songs just by entering title and artist. These songs
+//can be added  then to the importList which will be further on webscraped
 class PlaylistModal extends Component {
   constructor(props) {
     super(props);
@@ -360,7 +362,7 @@ class PlaylistModal extends Component {
                   <Input
                     value={filter}
                     onChange={this.handleChange}
-                    placeholder="Filter songs..."
+                    placeholder="Filter songs based on artist, album or title..."
                   />
                   <br />
                   <LoadedList
