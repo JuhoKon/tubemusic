@@ -38,7 +38,7 @@ class PlaylistItem extends Component {
     let dataArray = [];
     let nextData = null;
     dataArray = data.items;
-
+    console.log(dataArray);
     while (data.next !== null && typeof data.next !== "undefined") {
       nextData = await getRequestWithToken(token, data.next);
       // console.log(nextData);
@@ -52,9 +52,12 @@ class PlaylistItem extends Component {
     let tempArtistArray = [];
     let itemArray = [];
     let idArray = [];
-    dataArray.map(item => nameArray.push(item.track.name));
-    dataArray.map(item => tempArtistArray.push(item.track.artists));
-    dataArray.map(item => idArray.push(item.track.id));
+    let albumArray = [];
+    dataArray.forEach(item => nameArray.push(item.track.name));
+    dataArray.forEach(item => tempArtistArray.push(item.track.artists));
+    dataArray.forEach(item => idArray.push(item.track.id));
+    dataArray.forEach(item => albumArray.push(item.track.album.name));
+    //TODO: use map to do this better
     //console.log(dataArray);
     for (let i = 0; i < tempArtistArray.length; i++) {
       //take only max two artist names
@@ -67,6 +70,7 @@ class PlaylistItem extends Component {
       }
       itemObject["title"] = nameArray[i];
       itemObject["id"] = idArray[i];
+      itemObject["album"] = albumArray[i];
       itemArray.push(itemObject);
       //console.log(artistObject);
     }
@@ -94,8 +98,7 @@ class PlaylistItem extends Component {
         <a
           //href="# "
           style={{ cursor: "pointer" }}
-          onClick={this.clickOnPlayList.bind(this, this.state)}
-        >
+          onClick={this.clickOnPlayList.bind(this, this.state)}>
           <Card className="card">
             <CardBody>
               <Row>
