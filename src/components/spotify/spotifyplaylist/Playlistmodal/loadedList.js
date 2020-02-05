@@ -17,8 +17,7 @@ class LoadedList extends Component {
           artistName={artistName}
           addToImport={this.props.addToImport}
           imported={false}
-          title={title}
-        ></PlaylistModalItem>
+          title={title}></PlaylistModalItem>
       </div>
     );
   };
@@ -26,7 +25,7 @@ class LoadedList extends Component {
   render() {
     //console.log("loadedList");
     const tracks = this.props.tracks;
-    console.log(tracks);
+    //console.log(tracks);
     //console.log(this.state.loading);
 
     return (
@@ -38,8 +37,7 @@ class LoadedList extends Component {
               height={550}
               rowCount={this.props.tracks.length}
               rowHeight={80}
-              rowRenderer={this.renderRow}
-            ></List>
+              rowRenderer={this.renderRow}></List>
           )}
         </AutoSizer>
       </div>

@@ -214,11 +214,11 @@ class PlaylistModal extends Component {
   removeFromPlaylist(item) {
     if (!item) return;
     if (typeof this.state.toBeImportedPlaylist[0] === "undefined") return;
-    console.log(this.state.toBeImportedPlaylist[0]);
-    console.log(item);
+    //console.log(this.state.toBeImportedPlaylist[0]);
+    //console.log(item);
     for (let i = 0; i < this.state.toBeImportedPlaylist.length; i++) {
       if (this.state.toBeImportedPlaylist[i].id === item.id) {
-        console.log(this.state.toBeImportedPlaylist[i]);
+        //console.log(this.state.toBeImportedPlaylist[i]);
         //delete item from toBeImportedPlaylist
         this.state.toBeImportedPlaylist.splice(i, 1);
         break;
@@ -252,6 +252,7 @@ class PlaylistModal extends Component {
       return Object.keys(item).some(
         key =>
           typeof item[key] === "string" &&
+          key !== "id" && //don't compare id
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
@@ -261,8 +262,7 @@ class PlaylistModal extends Component {
           isOpen={this.props.isOpen}
           toggle={this.props.toggle}
           size="lg"
-          style={{ maxWidth: "1600px", width: "100%", margin: "10px auto" }}
-        >
+          style={{ maxWidth: "1600px", width: "100%", margin: "10px auto" }}>
           <ModalHeader className="mb-4" toggle={this.props.toggle}>
             <span>
               Songs in the playlist <br />
@@ -378,8 +378,7 @@ class PlaylistModal extends Component {
                   <Button
                     disabled={true} //Not in use
                     //  disabled={this.state.loading}
-                    onClick={this.importPlaylistToApp}
-                  >
+                    onClick={this.importPlaylistToApp}>
                     Import playlist
                   </Button>
                 </div>
@@ -392,8 +391,7 @@ class PlaylistModal extends Component {
                         ? true
                         : false
                     }
-                    onClick={this.clearList}
-                  >
+                    onClick={this.clearList}>
                     Clear list
                   </Button>
                 </div>
@@ -402,8 +400,7 @@ class PlaylistModal extends Component {
                 <div className="placeforbutton">
                   <Button
                     disabled={this.state.loading}
-                    onClick={this.moveAllToImport.bind(this, filteredData)}
-                  >
+                    onClick={this.moveAllToImport.bind(this, filteredData)}>
                     Get all songs
                   </Button>
                 </div>
@@ -416,8 +413,7 @@ class PlaylistModal extends Component {
                         ? true
                         : false
                     }
-                    onClick={this.webScrape}
-                  >
+                    onClick={this.webScrape}>
                     use webScraping
                   </Button>
                 </div>
