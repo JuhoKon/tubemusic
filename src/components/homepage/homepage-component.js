@@ -109,12 +109,7 @@ export default class Homepage extends Component {
   }
   playPlaylist(playlist) {
     //replaces queue with active playlist
-    if (this.state.queue.length === playlist.length) {
-      if (this.isSame(this.state.queue, playlist)) {
-        //if queue and playlist have same items, return
-        return;
-      }
-    }
+
     var itemArray = [];
     for (let i = 0; i < playlist.length; i++) {
       let itemObject = {};
