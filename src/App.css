@@ -3,6 +3,7 @@
 }
 body > #root > div {
   height: 100vh;
+  overflow-y: hidden !important;
 }
 .App-logo {
   height: 40vmin;

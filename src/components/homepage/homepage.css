@@ -5,7 +5,7 @@
   height: 10%;
   opacity: 0.2;
   animation-name: move;
-  animation-duration: 180s;
+  animation-duration: 10s;
   animation-fill-mode: both;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -23,17 +23,17 @@
   height: 10%;
   opacity: 0.1;
   animation-name: move;
-  animation-duration: 180s;
+  animation-duration: 10s;
   animation-fill-mode: both;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 @keyframes move {
   from {
-    transform: translateX(-300px);
+    transform: translateX(-10em); /* MAKE RESPONSIVEEEEEEE */
   }
   to {
-    transform: translateX(2900px);
+    transform: translateX(1800px); /*MAKE RESPONSIVE */
   }
 }
 .footerName {
