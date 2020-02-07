@@ -391,7 +391,7 @@ export default class Homepage extends Component {
       title: title
     });
     toaster.notify(<span>Now playing: {title}</span>, {
-      duration: 1800,
+      duration: 1200,
       position: "bottom-left"
     });
   }
