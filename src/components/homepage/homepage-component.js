@@ -57,6 +57,7 @@ export default class Homepage extends Component {
       playlistId: "",
       playlistName: "",
       error: false,
+
       title: "" //for rendering name
     };
   }
@@ -325,7 +326,7 @@ export default class Homepage extends Component {
   }
   onAdd(item) {
     //ADDS SELECTED ITEM TO QUEUE - -> PLAYER & QUEUE
-    console.log(item);
+    //console.log(item);
     let object = {};
     object["title"] = item["title"];
     object["videoId"] = item["videoId"];
@@ -341,7 +342,7 @@ export default class Homepage extends Component {
     //console.log(this.state.queue);
     //console.log(videoId);
     toaster.notify(<span>{item.title} added to the queue.</span>, {
-      duration: 1100
+      duration: 400
     });
   }
   onDelete(item) {
@@ -367,6 +368,7 @@ export default class Homepage extends Component {
   };
   setUrl(url) {
     //updates given url to the state
+
     this.setState({
       url: url,
       playing: true
@@ -388,6 +390,10 @@ export default class Homepage extends Component {
       updated: true,
       title: title
     });
+    toaster.notify(<span>Now playing: {title}</span>, {
+      duration: 1800,
+      position: "bottom-left"
+    });
   }
   setTitle(title) {
     this.setState({
@@ -405,6 +411,14 @@ export default class Homepage extends Component {
       <div>
         <br />
         <div className="container-fluid">
+          <div className="sky">
+            <div className="cloud">
+              <footer className="footerName">@Juho Kontiainen 2020</footer>
+            </div>
+            <div className="cloud"></div>
+            <div className="cloudJK"></div>
+          </div>
+
           <Row>
             <Col sm="4">
               <Player

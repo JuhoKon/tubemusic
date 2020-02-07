@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Card, CardBody, Button, CardText, Row, Col } from "reactstrap";
 import isEqual from "react-fast-compare";
-
-import "moment-duration-format";
+import "./queue.css";
 
 class Queueitem extends Component {
   state = {
     editMode: this.props.editMode
   };
 
-  onRemoveClick = id => {
+  async onRemoveClick(id) {
     //console.log(id);
+
     this.props.onRemove(id);
-  };
+  }
   onPlayClick = id => {
     //console.log(id);
     this.props.onPlay(id);
@@ -26,7 +26,8 @@ class Queueitem extends Component {
     }
   }
   render() {
-    console.log("queue item");
+    const fade = this.state.fade;
+    //console.log("queue item");
     return (
       <div>
         <Card className="card">

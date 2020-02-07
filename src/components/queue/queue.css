@@ -5,3 +5,36 @@
   margin-bottom: 0.5rem;
   height: 82px;
 }
+.animation {
+  animation: fade-in-queue 0.2s;
+}
+@keyframes fade-in-queue {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.queue {
+  animation: fade-out-queue 0.2s;
+}
+@keyframes fade-out-queue {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeRemove {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.remove {
+  animation: fadeRemove 0.3s;
+}

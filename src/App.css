@@ -4,7 +4,6 @@
 body > #root > div {
   height: 100vh;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -15,7 +14,6 @@ body > #root > div {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -26,11 +24,9 @@ body > #root > div {
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

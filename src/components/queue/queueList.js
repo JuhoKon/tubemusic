@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { sortableElement } from "react-sortable-hoc";
 import Queueitem from "./queueitem";
 import { List } from "react-virtualized";
-
+import CSSTransitionGroup from "react-transition-group";
+import "./queue.css";
 //example from https://github.com/clauderic/react-sortable-hoc/blob/master/examples/react-virtualized.js#L12
 
 const SortableItem = sortableElement(

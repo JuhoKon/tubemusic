@@ -128,7 +128,8 @@ class Playlist extends Component {
             className="float-left btn-margin"
             color="info"
             onClick={this.playPlaylist.bind(this, filteredData)}
-            disabled={this.props.playlist[0] ? false : true}>
+            disabled={this.props.playlist[0] ? false : true}
+          >
             Play
           </Button>
           <CreateNew
@@ -150,7 +151,8 @@ class Playlist extends Component {
             className="float-right btn-margin "
             color="info"
             onClick={this.addPlaylistToQueue.bind(this, filteredData)}
-            disabled={this.props.playlist[0] ? false : true}>
+            disabled={this.props.playlist[0] ? false : true}
+          >
             + Queue
           </Button>
         </div>
@@ -178,11 +180,13 @@ class Playlist extends Component {
         {this.state.editMode ? (
           <Button
             onClick={this.UpdateCurrentPlaylist}
-            className="float-right btn-remove">
+            className="float-right btn-remove"
+          >
             Save
           </Button>
         ) : null}
         <p className="float-left">Total songs: {filteredData.length}</p>
+
         <AutoSizer disableHeight>
           {({ width }) => (
             <SortableVirtualList

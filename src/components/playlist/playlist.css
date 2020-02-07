@@ -21,3 +21,27 @@
   border: honeydew;
   border-style: groove;
 }
+.cardFade {
+  animation: fade-in 0.5s;
+}
+@keyframes fade-in {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.fade2 {
+  /*animation: fade-in-keyframes 0.3s;*/
+}
+@keyframes fade-in-keyframes {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}

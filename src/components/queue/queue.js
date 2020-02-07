@@ -10,13 +10,14 @@ import arrayMove from "array-move";
 import "./queue.css";
 
 const SortableVirtualList = SortableContainer(QueueList);
-
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Queue extends Component {
   constructor(props) {
     super(props);
     this.state = {
       queue: this.props.queue,
-      editMode: false
+      editMode: false,
+      animation: false
     };
     this.shuffleQueue = this.shuffleQueue.bind(this);
     this.clearQueue = this.clearQueue.bind(this);
@@ -54,7 +55,11 @@ class Queue extends Component {
       });
     }
   }
-  shuffleQueue() {
+  async shuffleQueue() {
+    this.setState({
+      animation: true
+    });
+    await timeout(200);
     this.props.shuffleQueue();
     this.List.recomputeRowHeights();
     this.List.forceUpdate(); //force list to update
@@ -72,6 +77,7 @@ class Queue extends Component {
   };
 
   render() {
+    const animation = this.state.animation;
     //console.log("queue");
     //console.log(this.state.editMode);
     return (
@@ -100,19 +106,24 @@ class Queue extends Component {
           </Button>
           <br />
           <br />
-          <AutoSizer disableHeight>
-            {({ width }) => (
-              <SortableVirtualList
-                getRef={this.registerListRef}
-                queue={this.state.queue}
-                onSortEnd={this.onSortEnd}
-                onRemove={this.props.onRemove}
-                onPlay={this.props.onPlay}
-                editMode={this.state.editMode}
-                width={width}
-              />
-            )}
-          </AutoSizer>
+          <div
+            onAnimationEnd={() => this.setState({ animation: false })}
+            className={animation ? "animation" : "queue"}
+          >
+            <AutoSizer disableHeight>
+              {({ width }) => (
+                <SortableVirtualList
+                  getRef={this.registerListRef}
+                  queue={this.state.queue}
+                  onSortEnd={this.onSortEnd}
+                  onRemove={this.props.onRemove}
+                  onPlay={this.props.onPlay}
+                  editMode={this.state.editMode}
+                  width={width}
+                />
+              )}
+            </AutoSizer>
+          </div>
         </Container>
       </div>
     );

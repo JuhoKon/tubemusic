@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
+import toaster from "toasted-notes";
 import { Container, CustomInput, FormGroup, Label } from "reactstrap";
 import { Button } from "reactstrap";
 import HistoryModal from "./history/History-modal";
@@ -107,7 +108,6 @@ export default class Player extends Component {
         url: url,
         title: this.state.array[0].title
       });
-
       this.props.onRemove(this.state.array[0]); //removes item from queue
       this.props.setUrl(url);
     } else {

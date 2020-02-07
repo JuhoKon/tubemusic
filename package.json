@@ -26,6 +26,7 @@
     "react-strap": "0.0.1",
     "react-virtualized": "^9.21.2",
     "reactstrap": "^8.4.0",
+    "simplebar-react": "^2.1.0",
     "toasted-notes": "^3.2.0"
   },
   "scripts": {

@@ -8,9 +8,13 @@ import "moment-duration-format";
 class Playlistitem extends Component {
   state = {
     playlist: this.props.playlist,
-    editMode: this.props.editMode
+    editMode: this.props.editMode,
+    fade: false
   };
   onAddClick = id => {
+    this.setState({
+      fade: true
+    });
     this.props.addFunc(id);
   };
   onPlayClick = id => {
@@ -30,11 +34,15 @@ class Playlistitem extends Component {
   }
 
   render() {
+    const fade = this.state.fade;
     console.log("playlistitem");
     // console.log(this.props);
     //console.log(this.props.editMode);
     return (
-      <Card className="card">
+      <Card
+        onAnimationEnd={() => this.setState({ fade: false })}
+        className={fade ? "card fade2" : "card"}
+      >
         <CardBody>
           <Row>
             <Col xs="2" sm="2">
