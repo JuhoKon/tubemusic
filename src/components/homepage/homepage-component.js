@@ -411,13 +411,13 @@ export default class Homepage extends Component {
       <div>
         <br />
         <div className="container-fluid">
-          <div className="sky">
+          {/*<div className="sky">
             <div className="cloud">
               <footer className="footerName">@Juho Kontiainen 2020</footer>
             </div>
             <div className="cloud"></div>
-            <div className="cloudJK"></div>
-          </div>
+    <div className="cloudJK"></div>
+          </div>*/}
 
           <Row>
             <Col sm="4">
@@ -466,9 +466,10 @@ export default class Homepage extends Component {
                 setPlaylist={this.setPlaylist}
               />
             </Col>
+
             <Col sm="4">
               <Search handleSubmit={this.handleSubmit} />
-              <br />
+              <hr />
               <Videolist
                 loading={this.state.loading}
                 items={this.state.items}

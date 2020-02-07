@@ -4,6 +4,8 @@
 body > #root > div {
   height: 100vh;
   overflow-y: hidden !important;
+  background-color: #ffffff;
+  background-image: linear-gradient(315deg, #d7e1ec 0%, #ffffff 74%);
 }
 .App-logo {
   height: 40vmin;

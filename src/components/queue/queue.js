@@ -82,49 +82,57 @@ class Queue extends Component {
     //console.log(this.state.editMode);
     return (
       <div>
-        <Container>
-          <Button
-            disabled={this.props.queue[0] ? false : true}
-            className="float-right btn-remove"
-            onClick={this.clearQueue}
-          >
-            CLEAR
-          </Button>
-          <Button
-            disabled={this.props.queue[0] ? false : true}
-            className="float-right"
-            onClick={this.shuffleQueue}
-          >
-            SHUFFLE
-          </Button>
-          <Button
-            disabled={this.props.queue[0] ? false : true}
-            className="float-left btn-edit"
-            onClick={this.toggle}
-          >
-            {this.state.editMode ? "Save" : "Edit"}
-          </Button>
-          <br />
-          <br />
-          <div
-            onAnimationEnd={() => this.setState({ animation: false })}
-            className={animation ? "animation" : "queue"}
-          >
-            <AutoSizer disableHeight>
-              {({ width }) => (
-                <SortableVirtualList
-                  getRef={this.registerListRef}
-                  queue={this.state.queue}
-                  onSortEnd={this.onSortEnd}
-                  onRemove={this.props.onRemove}
-                  onPlay={this.props.onPlay}
-                  editMode={this.state.editMode}
-                  width={width}
-                />
-              )}
-            </AutoSizer>
-          </div>
-        </Container>
+        {this.props.queue[0] ? (
+          <Container>
+            <Button
+              disabled={this.props.queue[0] ? false : true}
+              className="float-right btn-remove"
+              onClick={this.clearQueue}
+            >
+              CLEAR
+            </Button>
+            <Button
+              disabled={this.props.queue[0] ? false : true}
+              className="float-right"
+              onClick={this.shuffleQueue}
+            >
+              SHUFFLE
+            </Button>
+            <Button
+              disabled={this.props.queue[0] ? false : true}
+              className="float-left btn-edit"
+              onClick={this.toggle}
+            >
+              {this.state.editMode ? "Save" : "Edit"}
+            </Button>
+            <span>
+              {" "}
+              <h8>Queue</h8>
+            </span>
+            <br />
+            <br />
+            <div
+              onAnimationEnd={() => this.setState({ animation: false })}
+              className={animation ? "animation" : "queue"}
+            >
+              <AutoSizer disableHeight>
+                {({ width }) => (
+                  <SortableVirtualList
+                    getRef={this.registerListRef}
+                    queue={this.state.queue}
+                    onSortEnd={this.onSortEnd}
+                    onRemove={this.props.onRemove}
+                    onPlay={this.props.onPlay}
+                    editMode={this.state.editMode}
+                    width={width}
+                  />
+                )}
+              </AutoSizer>
+            </div>
+          </Container>
+        ) : (
+          ""
+        )}
       </div>
     );
   }

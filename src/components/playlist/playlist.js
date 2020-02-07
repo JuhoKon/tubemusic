@@ -168,7 +168,7 @@ class Playlist extends Component {
           placeholder="Filter songs..."
         />
 
-        <br />
+        <hr />
         <Button
           color={this.state.editMode ? "primary" : "secondary"}
           className="float-right btn-remove"
