@@ -52,6 +52,3 @@
   position: relative;
   transform: translateY(100px);
 }
-hr.diagonal {
-  transform: rotate(90deg) translateY(266px);
-}
