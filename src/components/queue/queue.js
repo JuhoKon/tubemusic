@@ -107,7 +107,7 @@ class Queue extends Component {
             </Button>
             <span>
               {" "}
-              <h8>Queue</h8>
+              <span>Queue</span>
             </span>
             <br />
             <br />

@@ -4,9 +4,13 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+
 var indexRouter = require("./routes/index");
 var playlistsRouter = require("./routes/playlists");
 var scrapeRouter = require("./routes/scrape");
+var usersRouter = require("./routes/users");
+var authRouter = require("./routes/auth");
+
 var cors = require("cors");
 var bodyParser = require("body-parser");
 var Promise = require("bluebird");
@@ -44,6 +48,8 @@ db.on(
 app.use("/", indexRouter);
 app.use("/playlists", playlistsRouter);
 app.use("/scrape", scrapeRouter);
+app.use("/users", usersRouter);
+app.use("/auth", authRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
