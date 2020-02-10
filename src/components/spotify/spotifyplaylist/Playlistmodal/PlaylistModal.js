@@ -99,7 +99,8 @@ class PlaylistModal extends Component {
       const body = JSON.stringify({
         name,
         playlist: playlist,
-        isPrivate: true
+        isPrivate: true,
+        owner: this.state.ownerName
       });
       if (playlist.length > 0) {
         //console.log(tracksFromYoutube.length - playlist.length);
