@@ -53,7 +53,7 @@ class SaveModal extends Component {
     this.props.Updateplaylist(
       this.state.playlistName,
       this.props.playlistId,
-      this.state.checked //isPrivate
+      this.state.checked
     );
     this.toggle();
   };

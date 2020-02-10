@@ -13,7 +13,8 @@ exports.create = function(req, res, next) {
   var playlist = new Playlist({
     name: req.body.name,
     playlist: req.body.playlist,
-    private: req.body.isPrivate
+    private: req.body.isPrivate,
+    owner: req.body.owner
   });
   playlist
     .save()
@@ -23,7 +24,7 @@ exports.create = function(req, res, next) {
     .catch(err => res.status(400).json(err));
 };
 exports.findByID = function(req, res, next) {
-  console.log(req.params.id);
+  //console.log(req.params.id);
   if (!req.params.id) {
     return res.status(400).json({ error: "Id not submitted" });
   }
@@ -35,10 +36,12 @@ exports.updatebyID = function(req, res, next) {
   if (!req.body.name || !req.body.playlist) {
     return res.status(400).json({ error: "Please enter all fields" });
   }
+  //console.log(req.body);
   Playlist.findById(req.params.id).then(playlist => {
     (playlist.name = req.body.name),
       (playlist.playlist = req.body.playlist),
-      (playlist.private = req.body.private);
+      (playlist.private = req.body.private),
+      (playlist.owner = playlist.owner);
     playlist
       .save()
       .then(() => res.json(playlist))

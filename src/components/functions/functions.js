@@ -138,6 +138,7 @@ export const getPlaylists = async () => {
 };*/
 export const makePlaylist = async body => {
   //console.log(body);
+
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -152,7 +153,7 @@ export const makePlaylist = async body => {
   return res;
 };
 export const updatePlaylist = async (body, id) => {
-  console.log(body.private);
+  console.log(body);
   const config = {
     headers: {
       "Content-Type": "application/json"

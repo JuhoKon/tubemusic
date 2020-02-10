@@ -204,7 +204,11 @@ export default class Homepage extends Component {
       });
       setTimeout(
         () =>
-          this.Updateplaylist(this.state.playlistName, this.state.playlistId),
+          this.Updateplaylist(
+            this.state.playlistName,
+            this.state.playlistId,
+            this.state.private
+          ),
         2000
       );
       toaster.notify(<span>{item.title} added to the playlist.</span>, {
@@ -212,7 +216,11 @@ export default class Homepage extends Component {
       });
     } else {
       this.state.playlist.push(item);
-      this.Updateplaylist(this.state.playlistName, this.state.playlistId);
+      this.Updateplaylist(
+        this.state.playlistName,
+        this.state.playlistId,
+        this.state.private
+      );
 
       this.setState({
         updated: item
@@ -309,29 +317,41 @@ export default class Homepage extends Component {
   }
   async makePlaylist(name, playlist, isPrivate) {
     //API request to create a new playlist (database)
+    console.log(this.state.user.name);
     this.setState({
       playlist: playlist
     });
     //let playlist = this.state.playlist;
-    const item = JSON.stringify({ name, playlist, isPrivate });
+    console.log(isPrivate);
+    const item = JSON.stringify({
+      name,
+      playlist,
+      isPrivate,
+      owner: this.state.user.name
+    });
     const result = await makePlaylist(item);
     addUserPlaylist(result.data._id, result.data.name, this.state.token);
     //updateUsersPlaylistarray
     //console.log(result.data._id);
     this.setState({
       playlistId: result.data._id,
-      playlistName: result.data.name
+      playlistName: result.data.name,
+      private: isPrivate
     });
   }
   async UpdateCurrentPlaylist() {
     //updates current status of active playlist to database
-    this.Updateplaylist(this.state.playlistName, this.state.playlistId);
+    this.Updateplaylist(
+      this.state.playlistName,
+      this.state.playlistId,
+      this.state.private
+    );
   }
   async Updateplaylist(name, id, isPrivate) {
     //updates current state to name & id given to database
     let playlist = this.state.playlist;
     //console.log(playlist);
-
+    console.log(isPrivate);
     const item = JSON.stringify({ name, playlist, private: isPrivate });
     const result = await updatePlaylist(item, id);
     updateUserPlaylist(id, name, this.state.token);
