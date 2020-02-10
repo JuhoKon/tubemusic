@@ -14,6 +14,7 @@ import {
   DropdownItem,
   NavbarText
 } from "reactstrap";
+import { authenticationService } from "../functions/authenthication";
 
 class NavbarComponent extends Component {
   constructor(props) {
@@ -37,6 +38,8 @@ class NavbarComponent extends Component {
   };
 
   render() {
+    const currentUser = authenticationService.currentUserValue;
+    //console.log(currentUser.user.role);
     const toggle = () =>
       this.setState({
         isOpen: !this.state.isOpen
@@ -51,11 +54,14 @@ class NavbarComponent extends Component {
               <NavItem>
                 <NavLink href="/spotify/">Spotify</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/JuhoKon/tubemusic">
-                  GitHub
-                </NavLink>
-              </NavItem>
+
+              {currentUser.user.role === "Admin" ? (
+                <NavItem>
+                  <NavLink href="/admin">Admin</NavLink>
+                </NavItem>
+              ) : (
+                ""
+              )}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Options
@@ -68,7 +74,7 @@ class NavbarComponent extends Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
-            <NavbarText>Simple Text</NavbarText>
+            <NavbarText>Hello, {currentUser.user.name}</NavbarText>
           </Collapse>
         </Navbar>
       </div>

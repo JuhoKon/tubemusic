@@ -1,21 +1,19 @@
 import React, { Component } from "react";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "./components/navbar/navbar-component";
 import "./App.css";
 import HomePage from "./components/homepage/homepage-component";
 import Login from "./components/login/login-component";
 import Spotify from "./components/spotify/spotify-component";
-import {
-  login,
-  logout,
-  loadUser
-} from "./components/functions/authenthication";
+import { authenticationService } from "./components/functions/authenthication";
+import { PrivateRoute } from "./components/functions/PrivateRoute";
+import { history } from "./components/History";
+import Admin from "./components/admin/Admin";
+
+const NoMatchPage = () => {
+  return <h3>404 - Not found</h3>;
+};
 
 class App extends Component {
   constructor(props) {
@@ -24,9 +22,10 @@ class App extends Component {
       currentUserInfo: null,
       isAuth: false
     };
+    this.loadUser = this.loadUser.bind(this);
   }
-  async loadUser() {
-    let res2 = await loadUser();
+  async loadUser(token) {
+    let res2 = await authenticationService.loadUser(token);
     if (res2 !== null) {
       this.setState({
         currentUserInfo: res2,
@@ -41,28 +40,55 @@ class App extends Component {
   }
   componentDidMount() {
     //login(email, password);
-    //logout();
-    login("juhdo.kontiainen@hotmail.fi", "kidasasdadsdasdask");
-    this.loadUser();
+    //authenticationService.logout();
+    authenticationService.login(
+      "juh3do.ko3sdntdiainen@hotmail.fi",
+      "kidasa3sdadsdasdask"
+    );
+    authenticationService.currentUser.subscribe(x => {
+      if (x) {
+        this.setState({
+          token: x.token
+        });
+        this.loadUser(x.token);
+      }
+    });
+  }
+  logout() {
+    authenticationService.logout();
+    history.push("/login");
   }
   render() {
-    const { currentUserInfo, isAuth } = this.state;
+    const { currentUserInfo, token } = this.state;
+    console.log(currentUserInfo);
 
     return (
       <div className="App wrapper">
-        {isAuth ? (
-          <Router>
-            {isAuth && <Navbar />}
-            <Switch>
-              <Route path="/" exact component={HomePage} />
-              <Route path="/spotify" exact component={Spotify} />
-            </Switch>
-          </Router>
-        ) : (
-          <Router>
-            <Route path="/login" exact component={Login} />
-          </Router>
-        )}
+        <Router history={history}>
+          {token && <Navbar />}
+          <Switch>
+            <Route path="/login" component={Login} />
+            <PrivateRoute
+              path="/"
+              data={currentUserInfo}
+              loadUser={this.loadUser}
+              exact
+              component={HomePage}
+            />
+            <PrivateRoute
+              path="/spotify"
+              data={currentUserInfo}
+              component={Spotify}
+            />
+            <PrivateRoute
+              path="/admin"
+              data={currentUserInfo}
+              roles={["Admin"]}
+              component={Admin}
+            />
+            <Route component={NoMatchPage} />
+          </Switch>
+        </Router>
       </div>
     );
   }

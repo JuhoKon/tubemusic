@@ -13,7 +13,8 @@ import {
 class CreateNew extends Component {
   state = {
     modal: false,
-    name: ""
+    name: "",
+    checked: false
   };
   toggle = () => {
     this.setState({
@@ -25,10 +26,15 @@ class CreateNew extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    this.props.makePlaylist(this.state.name, []);
+    console.log(e);
+    this.props.makePlaylist(this.state.name, [], this.state.checked); //if true, we have a private playlist
     this.toggle();
   };
+  boxChange = evt => {
+    this.setState({ checked: evt.target.checked });
+  };
   render() {
+    console.log(this.state.checked);
     return (
       <div>
         <Button
@@ -55,6 +61,18 @@ class CreateNew extends Component {
                   className="mb-4"
                   onChange={this.onChange}
                 ></Input>
+                <div className="check">
+                  <Label check className="float-right">
+                    <Input
+                      name="checked"
+                      onChange={this.boxChange}
+                      checked={this.state.checked}
+                      type="checkbox"
+                    />
+                    Make the playlist private?
+                  </Label>
+                </div>
+                <br />
                 <Button className="btn btn-primary my-4 btn-block">Save</Button>
               </FormGroup>
             </ModalBody>

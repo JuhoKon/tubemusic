@@ -24,11 +24,16 @@ class LoadPlaylistModal extends Component {
 
   render() {
     const playlists = this.props.playlists;
-
+    console.log(playlists);
     return (
       <div>
-        <Button className="btn-margin" onClick={this.toggle} href="#">
-          Available playlists
+        <Button
+          disabled={playlists ? false : true}
+          className="btn-margin"
+          onClick={this.toggle}
+          href="#"
+        >
+          {this.props.name}
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
@@ -46,6 +51,7 @@ class LoadPlaylistModal extends Component {
                   playlist={playlist}
                   name={name}
                   loadPlaylist={this.props.loadPlaylist}
+                  disabled={this.props.disabled}
                 ></Link>
               </CSSTransition>
             ))}

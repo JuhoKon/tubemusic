@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var playlistSchema = new Schema(
   {
     name: { type: String, required: true },
-    playlist: { type: Array }
+    playlist: { type: Array },
+    private: { type: Boolean, required: true }
   },
   {
     timestamps: true

@@ -59,7 +59,7 @@ export default class PlaylistItemsList extends Component {
   };
 
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     const { getRef } = this.props;
     const playlist = this.props.playlist;
     return (

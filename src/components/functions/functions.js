@@ -129,8 +129,13 @@ export const getPlaylistTracks = async (id, token) => {
 /* -------------------------------------------------------------------------------*/
 export const getPlaylists = async () => {
   let res = await axios.get("http://localhost:8080/playlists");
+  console.log(res);
   return res;
 };
+/*export const getPlaylists = async () => {
+  let res = await axios.get("http://localhost:8080/playlists");
+  return res;
+};*/
 export const makePlaylist = async body => {
   //console.log(body);
   const config = {
@@ -147,6 +152,7 @@ export const makePlaylist = async body => {
   return res;
 };
 export const updatePlaylist = async (body, id) => {
+  console.log(body.private);
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -166,4 +172,47 @@ export const deletePlaylist = async id => {
 export const getPlayListById = async id => {
   let res = await axios.get(`http://localhost:8080/playlists/find/${id}`);
   return res;
+};
+
+export const addUserPlaylist = async (playlistid, name, token) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  config.headers["x-auth-token"] = token;
+  const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
+  let res = await axios.put(
+    "http://localhost:8080/users/addPlaylist",
+    body,
+    config
+  );
+};
+export const deleteUserPlaylist = async (playlistid, token) => {
+  console.log(playlistid);
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  config.headers["x-auth-token"] = token;
+  let res = await axios.delete(
+    `http://localhost:8080/users/deletePlaylist${playlistid}`,
+    config
+  );
+  return res;
+};
+export const updateUserPlaylist = async (playlistid, name, token) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  config.headers["x-auth-token"] = token;
+  const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
+  let res = await axios.put(
+    `http://localhost:8080/users/editPlaylist${playlistid}`,
+    body,
+    config
+  );
 };

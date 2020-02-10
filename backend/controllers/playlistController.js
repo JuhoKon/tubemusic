@@ -5,15 +5,15 @@ exports.index = function(req, res, next) {
     .select("-playlist")
     .then(Playlist => {
       //console.log(Playlist);
-      res.json({ Playlist: Playlist }); 
+      res.json({ Playlist: Playlist });
     }) //return playlists name + id
     .catch(err => res.status(400).json("Error: " + err));
 };
-
 exports.create = function(req, res, next) {
   var playlist = new Playlist({
     name: req.body.name,
-    playlist: req.body.playlist
+    playlist: req.body.playlist,
+    private: req.body.isPrivate
   });
   playlist
     .save()
@@ -36,7 +36,9 @@ exports.updatebyID = function(req, res, next) {
     return res.status(400).json({ error: "Please enter all fields" });
   }
   Playlist.findById(req.params.id).then(playlist => {
-    (playlist.name = req.body.name), (playlist.playlist = req.body.playlist);
+    (playlist.name = req.body.name),
+      (playlist.playlist = req.body.playlist),
+      (playlist.private = req.body.private);
     playlist
       .save()
       .then(() => res.json(playlist))

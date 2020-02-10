@@ -17,9 +17,11 @@ import {
   handleSpotifySearchFromYoutube,
   getContentDetails,
   makePlaylist,
-  handleScrape
+  handleScrape,
+  addUserPlaylist
 } from "../../../functions/functions";
 import "./PlaylistModal.css";
+import { authenticationService } from "../../../functions/authenthication";
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 //TODO: add option to "create" own songs just by entering title and artist. These songs
 //can be added  then to the importList which will be further on webscraped
@@ -53,6 +55,15 @@ class PlaylistModal extends Component {
     this.clearList = this.clearList.bind(this);
     this.webScrape = this.webScrape.bind(this);
   }
+  componentDidMount() {
+    authenticationService.currentUser.subscribe(x => {
+      if (x) {
+        this.setState({
+          token: x.token
+        });
+      }
+    });
+  }
   async webScrape() {
     if (this.state.toBeImportedPlaylist.length < 1) {
       return;
@@ -85,10 +96,15 @@ class PlaylistModal extends Component {
       const name = this.state.name;
       //console.log(res);
       const playlist = tracksFromYoutube.filter(track => track !== null);
-      const body = JSON.stringify({ name, playlist: playlist });
+      const body = JSON.stringify({
+        name,
+        playlist: playlist,
+        isPrivate: true
+      });
       if (playlist.length > 0) {
-        console.log(tracksFromYoutube.length - playlist.length);
+        //console.log(tracksFromYoutube.length - playlist.length);
         const respond = await makePlaylist(body);
+        addUserPlaylist(respond.data._id, respond.data.name, this.state.token);
         if (respond.status === 200) {
           this.setState({
             imported: true,

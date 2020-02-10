@@ -6,6 +6,7 @@ import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
 import nameGenerator from "../functions/nameGenerator";
+import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css"; // optional styles
 import "./homepage.css";
@@ -16,9 +17,12 @@ import {
   updatePlaylist,
   deletePlaylist,
   getPlayListById,
-  getContentDetails
+  getContentDetails,
+  addUserPlaylist,
+  deleteUserPlaylist,
+  updateUserPlaylist
 } from "../functions/functions";
-
+import { authenticationService } from "../functions/authenthication";
 export default class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +53,9 @@ export default class Homepage extends Component {
       queue: [],
       playlist: [],
       contentDetails: [],
-      playlists: [],
+      Allplaylists: [], //all of the playlists, maybe render seperately somewhere
+      //could add public/private playlists etc.
+      playlists: [], //users playlists
       loading: false,
       updated: "",
       url: null,
@@ -57,9 +63,17 @@ export default class Homepage extends Component {
       playlistId: "",
       playlistName: "",
       error: false,
-
-      title: "" //for rendering name
+      title: ""
     };
+  }
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      //if change in props
+      this.setState({
+        user: this.props.data.data,
+        playlists: this.props.data.data.playlists
+      });
+    }
   }
   setPlaying(playing) {
     this.setState({
@@ -107,6 +121,15 @@ export default class Homepage extends Component {
       playlist: playlistitems
     });
     console.log(playlistitems);
+  }
+  componentDidMount() {
+    authenticationService.currentUser.subscribe(x => {
+      if (x) {
+        this.setState({
+          token: x.token
+        });
+      }
+    });
   }
   playPlaylist(playlist) {
     //replaces queue with active playlist
@@ -271,25 +294,29 @@ export default class Homepage extends Component {
       playlist: result.data.playlist,
       playlistName: result.data.name,
       playlistId: result.data._id,
-      loading: false
+      loading: false,
+      isPrivate: result.data.private
     });
   }
   async getPlaylist() {
+    this.props.loadUser(this.state.token);
     //gets ALL playlists from database
     const result = await getPlaylists();
     //console.log(result);
     this.setState({
-      playlists: result.data.Playlist
+      Allplaylists: result.data.Playlist
     });
   }
-  async makePlaylist(name, playlist) {
+  async makePlaylist(name, playlist, isPrivate) {
     //API request to create a new playlist (database)
     this.setState({
       playlist: playlist
     });
     //let playlist = this.state.playlist;
-    const item = JSON.stringify({ name, playlist });
+    const item = JSON.stringify({ name, playlist, isPrivate });
     const result = await makePlaylist(item);
+    addUserPlaylist(result.data._id, result.data.name, this.state.token);
+    //updateUsersPlaylistarray
     //console.log(result.data._id);
     this.setState({
       playlistId: result.data._id,
@@ -300,12 +327,14 @@ export default class Homepage extends Component {
     //updates current status of active playlist to database
     this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
-  async Updateplaylist(name, id) {
+  async Updateplaylist(name, id, isPrivate) {
     //updates current state to name & id given to database
     let playlist = this.state.playlist;
     //console.log(playlist);
-    const item = JSON.stringify({ name, playlist });
+
+    const item = JSON.stringify({ name, playlist, private: isPrivate });
     const result = await updatePlaylist(item, id);
+    updateUserPlaylist(id, name, this.state.token);
     //console.log(result);
     this.setState({
       playlistName: result.data.name,
@@ -321,7 +350,9 @@ export default class Homepage extends Component {
         playlist: []
       });
     }
-    await deletePlaylist(id);
+    //await deletePlaylist(id); this is for deleting whole together a playlist from db
+    await deleteUserPlaylist(id, this.state.token); //deletes playlist from the user
+    //delete users playlist
     this.getPlaylist();
   }
   onAdd(item) {
@@ -405,20 +436,14 @@ export default class Homepage extends Component {
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
+    console.log(playlists);
     const playlist = this.state.playlist;
+    console.log(this.state.token);
 
     return (
       <div>
         <br />
         <div className="container-fluid">
-          {/*<div className="sky">
-            <div className="cloud">
-              <footer className="footerName">@Juho Kontiainen 2020</footer>
-            </div>
-            <div className="cloud"></div>
-    <div className="cloudJK"></div>
-          </div>*/}
-
           <Row>
             <Col sm="4">
               <Player
@@ -444,10 +469,10 @@ export default class Homepage extends Component {
                 setQueue={this.setQueue}
               />
             </Col>
-
             <Col sm="4">
               <Playlist
                 playlists={playlists}
+                isPrivate={this.state.isPrivate}
                 playlist={playlist}
                 playlistName={this.state.playlistName}
                 playlistId={this.state.playlistId}

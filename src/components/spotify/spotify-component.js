@@ -67,14 +67,14 @@ export default class Spotify extends Component {
     let trackTotalArray = [];
     console.log(dataArray);
     let userPlaylists = [];
-    dataArray.map(item =>
+    dataArray.forEach(item =>
       item.images[0]
         ? imageArray.push(item.images[0].url)
         : imageArray.push(null)
     );
-    dataArray.map(item => trackRefArray.push(item.tracks.href));
-    dataArray.map(item => trackTotalArray.push(item.tracks.total));
-    dataArray.map(item => ownerArray.push(item.owner.display_name));
+    dataArray.forEach(item => trackRefArray.push(item.tracks.href));
+    dataArray.forEach(item => trackTotalArray.push(item.tracks.total));
+    dataArray.forEach(item => ownerArray.push(item.owner.display_name));
 
     for (let i = 0; i < dataArray.length; i++) {
       let dataObject = {};

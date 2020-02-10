@@ -22,7 +22,7 @@ exports.auth = function(req, res, next) {
         return res.status(400).json({ msg: "Invalid credentials" });
       //signing jwt
       jwt.sign(
-        { id: user.id },
+        { id: user.id, role: user.role },
         jwtSecret,
         //get secret from config-file
         { expiresIn: "1h" }, //set to expire in hour
@@ -35,7 +35,8 @@ exports.auth = function(req, res, next) {
               _id: user.id,
               name: user.name,
               email: user.email,
-              age: user.age
+              age: user.age,
+              role: user.role
             }
           });
         }
@@ -45,6 +46,7 @@ exports.auth = function(req, res, next) {
 };
 
 exports.findUser = function(req, res, next) {
+  //console.log(req.user);
   User.findById(req.user.id)
     .select("-password") //return everything but password
     .then(user => res.json(user));

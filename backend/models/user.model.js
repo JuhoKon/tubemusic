@@ -21,7 +21,10 @@ var userSchema = new Schema(
       required: true,
       minlength: 8
     },
-
+    role: {
+      type: String,
+      required: true
+    },
     playlists: {
       type: Array
     }

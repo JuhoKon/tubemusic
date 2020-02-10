@@ -37,9 +37,7 @@ class Playlist extends Component {
   handleChange = event => {
     this.setState({ filter: event.target.value });
   };
-  componentDidMount() {
-    this.props.getPlayList();
-  }
+
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
@@ -110,7 +108,8 @@ class Playlist extends Component {
 
   render() {
     const { filter } = this.state;
-    const { playlists, playlist } = this.props;
+    const { playlists, playlist, Allplaylists } = this.props;
+
     const lowercasedFilter = filter.toLowerCase();
     const filteredData = playlist.filter(item => {
       return Object.keys(item).some(
@@ -120,7 +119,7 @@ class Playlist extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    console.log(filteredData);
+    //console.log(filteredData);
     return (
       <div>
         <div className="btn-group">
@@ -137,6 +136,7 @@ class Playlist extends Component {
             playlistName={this.state.playlistName}
           />
           <LoadPlaylistModal
+            name="Available playlists"
             deletePlaylist={this.props.deletePlaylist}
             getPlayList={this.props.getPlayList}
             playlists={playlists}
@@ -144,6 +144,7 @@ class Playlist extends Component {
           />
           <SaveModal
             playlistId={this.props.playlistId}
+            isPrivate={this.props.isPrivate}
             Updateplaylist={this.props.Updateplaylist}
             playlistName={this.state.playlistName}
           />

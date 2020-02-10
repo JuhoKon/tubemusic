@@ -16,18 +16,23 @@ class SaveModal extends Component {
     super(props);
     this.state = {
       modal: false,
-      playlistName: this.props.playlistName
+      playlistName: this.props.playlistName,
+      checked: this.props.isPrivate
     };
     this.toggle = this.toggle.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.boxChange = this.boxChange.bind(this);
   }
-
+  boxChange = evt => {
+    this.setState({ checked: evt.target.checked });
+  };
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        playlistName: this.props.playlistName
+        playlistName: this.props.playlistName,
+        checked: this.props.isPrivate
       });
     }
   }
@@ -45,7 +50,11 @@ class SaveModal extends Component {
   onSubmit = e => {
     e.preventDefault();
     console.log(this.props.playlistId);
-    this.props.Updateplaylist(this.state.playlistName, this.props.playlistId);
+    this.props.Updateplaylist(
+      this.state.playlistName,
+      this.props.playlistId,
+      this.state.checked //isPrivate
+    );
     this.toggle();
   };
   render() {
@@ -78,7 +87,17 @@ class SaveModal extends Component {
                   className="mb-4"
                   onChange={this.onChange}
                 ></Input>
-
+                <div className="check">
+                  <Label check className="float-right">
+                    <Input
+                      name="checked"
+                      onChange={this.boxChange}
+                      checked={this.state.checked}
+                      type="checkbox"
+                    />
+                    Make the playlist private?
+                  </Label>
+                </div>
                 <Button className="btn btn-primary my-4 btn-block">Save</Button>
               </FormGroup>
             </ModalBody>

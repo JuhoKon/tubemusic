@@ -59,7 +59,8 @@ exports.create = function(req, res, next) {
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
-          age: req.body.age
+          age: req.body.age,
+          role: req.body.role
         });
 
         // Create salt & hash
@@ -82,7 +83,8 @@ exports.create = function(req, res, next) {
                       _id: user.id,
                       name: user.name,
                       email: user.email,
-                      age: user.age
+                      age: user.age,
+                      role: user.role
                     }
                   });
                 }
@@ -94,21 +96,61 @@ exports.create = function(req, res, next) {
     })
     .catch(err => res.status(400).json("Error: " + err));
 };
-
 exports.addPlaylist = function(req, res, next) {
   if (!req.body.playlistId) {
     return res.status(400).json({
       error: "No playlistid provided."
     });
   }
+  if (!req.body.playlistName) {
+    return res.status(400).json({
+      error: "No playlist name provided."
+    });
+  }
   User.findById(req.user.id)
     .then(user => {
       //console.log(user);
-      user.playlists.push(req.body.playlistId);
+      user.playlists.push({
+        _id: req.body.playlistId,
+        name: req.body.playlistName
+      });
       user
         .save() //attempt to save the user
         .then(() => res.json(user.playlists))
         .catch(err => res.status(400).json("Error: " + err));
     })
     .catch(err => res.status(400).json("Error: " + err));
+};
+exports.removePlaylist = function(req, res, next) {
+  /* User.findById(req.user.id).then(user => {
+    user.playlists.pull({ _id: "uniiekki" }).exec();
+    user
+      .save() //attempt to save the user
+      .then(() => res.json(user.playlists))
+      .catch(err => res.status(400).json("Error: " + err));
+  });*/
+  User.findOneAndUpdate(
+    { _id: req.user.id },
+    { $pull: { playlists: { _id: req.params.id } } },
+    function(err, data) {
+      res.json(data);
+    }
+  );
+};
+exports.editPlaylist = function(req, res, next) {
+  //console.log(req.body.playlistName);
+  if (!req.body.playlistName) {
+    return res.status(400).json({
+      error: "No playlist name provided."
+    });
+  }
+  User.findById(req.user.id).then(user => {
+    for (let i = 0; i < user.playlists.length; i++) {
+      if (user.playlists[i]._id === req.params.id) {
+        user.playlists[i].name = req.body.playlistName;
+      }
+    }
+    user.markModified("playlists"); //very important.....
+    user.save().then(playlists => res.json(playlists));
+  });
 };

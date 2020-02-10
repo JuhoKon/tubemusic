@@ -12,7 +12,8 @@ const userValidationRules = () => {
     // password must be at least 5 chars long
     body("password", "Password needs to be 8 characters long.").isLength({
       min: 8
-    })
+    }),
+    body("role").isLength({ min: 2 })
   ];
 };
 

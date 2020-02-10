@@ -1,6 +1,27 @@
 import axios from "axios";
+import { BehaviorSubject } from "rxjs";
 
-export const login = (email, password) => {
+try {
+  //in case that the token item is invalid, we delete it
+  JSON.parse(localStorage.getItem("token"));
+} catch {
+  localStorage.removeItem("token");
+}
+const currentUserSubject = new BehaviorSubject(
+  JSON.parse(localStorage.getItem("token"))
+);
+
+export const authenticationService = {
+  login,
+  logout,
+  signup,
+  loadUser,
+  currentUser: currentUserSubject.asObservable(),
+  get currentUserValue() {
+    return currentUserSubject.value;
+  }
+};
+function login(email, password) {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -10,28 +31,29 @@ export const login = (email, password) => {
   console.log("Hello");
   axios
     .post("http://localhost:8080/auth", body, config)
-    .then(res => localStorage.setItem("token", res.data.token));
-};
-export const logout = () => {
+    .then(res => localStorage.setItem("token", JSON.stringify(res.data)));
+}
+function logout() {
   localStorage.removeItem("token");
-};
-export const signup = () => {};
+  currentUserSubject.next(null);
+}
+function signup() {}
 
-export const loadUser = async () => {
+async function loadUser(token) {
   //Load user
-
   const config = {
     headers: {
       "Content-type": "application/json"
     }
   };
-  const token = localStorage.getItem("token");
   if (token) {
     config.headers["x-auth-token"] = token;
     let res = await axios.get("http://localhost:8080/auth/user", config);
 
     return res;
   } else {
+    logout();
+
     return null;
   }
-};
+}
