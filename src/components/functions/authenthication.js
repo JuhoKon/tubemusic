@@ -21,17 +21,17 @@ export const authenticationService = {
     return currentUserSubject.value;
   }
 };
-function login(email, password) {
+async function login(email, password) {
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
   const body = JSON.stringify({ email, password });
-  console.log("Hello");
-  axios
-    .post("http://localhost:8080/auth", body, config)
-    .then(res => localStorage.setItem("token", JSON.stringify(res.data)));
+  let res = await axios.post("http://localhost:8080/auth", body, config);
+  currentUserSubject.next(res.data);
+  localStorage.setItem("token", JSON.stringify(res.data));
+  return res.data.user;
 }
 function logout() {
   localStorage.removeItem("token");

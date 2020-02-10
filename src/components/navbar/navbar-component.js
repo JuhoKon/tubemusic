@@ -75,6 +75,13 @@ class NavbarComponent extends Component {
               </UncontrolledDropdown>
             </Nav>
             <NavbarText>Hello, {currentUser.user.name}</NavbarText>
+            <Nav className="navbar-nav" navbar>
+              <NavItem>
+                <NavLink href="#" onClick={this.props.logout}>
+                  Sign out
+                </NavLink>
+              </NavItem>
+            </Nav>
           </Collapse>
         </Navbar>
       </div>

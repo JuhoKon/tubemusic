@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "./components/navbar/navbar-component";
 import "./App.css";
@@ -23,6 +22,7 @@ class App extends Component {
       isAuth: false
     };
     this.loadUser = this.loadUser.bind(this);
+    this.logout = this.logout.bind(this);
   }
   async loadUser(token) {
     let res2 = await authenticationService.loadUser(token);
@@ -38,13 +38,8 @@ class App extends Component {
       });
     }
   }
+
   componentDidMount() {
-    //login(email, password);
-    //authenticationService.logout();
-    authenticationService.login(
-      "juh3do.ko3sdntdiainen@hotmail.fi",
-      "kidasa3sdadsdasdask"
-    );
     authenticationService.currentUser.subscribe(x => {
       if (x) {
         this.setState({
@@ -57,6 +52,9 @@ class App extends Component {
   logout() {
     authenticationService.logout();
     history.push("/login");
+    this.setState({
+      token: null
+    });
   }
   render() {
     const { currentUserInfo, token } = this.state;
@@ -65,7 +63,7 @@ class App extends Component {
     return (
       <div className="App wrapper">
         <Router history={history}>
-          {token && <Navbar />}
+          {token && <Navbar logout={this.logout} />}
           <Switch>
             <Route path="/login" component={Login} />
             <PrivateRoute

@@ -123,13 +123,17 @@ export default class Homepage extends Component {
     console.log(playlistitems);
   }
   componentDidMount() {
-    authenticationService.currentUser.subscribe(x => {
+    const sub = authenticationService.currentUser.subscribe(x => {
       if (x) {
         this.setState({
           token: x.token
         });
       }
     });
+    sub.unsubscribe();
+  }
+  componentWillUnmount() {
+    //authenticationService.currentUser.unsubscribe();
   }
   playPlaylist(playlist) {
     //replaces queue with active playlist
