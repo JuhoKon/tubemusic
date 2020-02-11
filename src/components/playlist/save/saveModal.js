@@ -30,6 +30,7 @@ class SaveModal extends Component {
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
+      console.log(this.props.isPrivate);
       this.setState({
         playlistName: this.props.playlistName,
         checked: this.props.isPrivate
@@ -49,7 +50,7 @@ class SaveModal extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.props.playlistId);
+
     this.props.Updateplaylist(
       this.state.playlistName,
       this.props.playlistId,

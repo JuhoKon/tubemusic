@@ -46,14 +46,20 @@ async function loadUser(token) {
       "Content-type": "application/json"
     }
   };
+  console.log("LOAD USER");
   if (token) {
+    console.log("LOAD USER");
     config.headers["x-auth-token"] = token;
-    let res = await axios.get("http://localhost:8080/auth/user", config);
-
-    return res;
+    return axios
+      .get("http://localhost:8080/auth/user", config)
+      .then(res => {
+        return res.data;
+      })
+      .catch(err => {
+        logout();
+        return null;
+      });
   } else {
-    logout();
-
     return null;
   }
 }

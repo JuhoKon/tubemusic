@@ -34,7 +34,8 @@ class App extends Component {
     } else {
       this.setState({
         currentUserInfo: null,
-        isAuth: false
+        isAuth: false,
+        token: null
       });
     }
   }

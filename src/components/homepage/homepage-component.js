@@ -70,9 +70,13 @@ export default class Homepage extends Component {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        user: this.props.data.data,
-        playlists: this.props.data.data.playlists
+        user: this.props.data
       });
+      if (this.props.data) {
+        this.setState({
+          playlists: this.props.data.playlists
+        });
+      }
     }
   }
   setPlaying(playing) {
@@ -123,14 +127,14 @@ export default class Homepage extends Component {
     console.log(playlistitems);
   }
   componentDidMount() {
-    const sub = authenticationService.currentUser.subscribe(x => {
-      if (x) {
-        this.setState({
-          token: x.token
-        });
-      }
-    });
-    sub.unsubscribe();
+    const currentUser = authenticationService.currentUserValue;
+    console.log(currentUser);
+
+    if (currentUser && currentUser.token) {
+      this.setState({
+        token: currentUser.token
+      });
+    }
   }
   componentWillUnmount() {
     //authenticationService.currentUser.unsubscribe();
@@ -321,12 +325,12 @@ export default class Homepage extends Component {
   }
   async makePlaylist(name, playlist, isPrivate) {
     //API request to create a new playlist (database)
-    console.log(this.state.user.name);
+    //console.log(this.state.user.name);
     this.setState({
       playlist: playlist
     });
     //let playlist = this.state.playlist;
-    console.log(isPrivate);
+    //console.log(isPrivate);
     const item = JSON.stringify({
       name,
       playlist,
@@ -460,10 +464,9 @@ export default class Homepage extends Component {
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
-    console.log(playlists);
+    // console.log(this.props);
     const playlist = this.state.playlist;
-    console.log(this.state.token);
-
+    console.log(this.state.isPrivate);
     return (
       <div>
         <br />
@@ -496,7 +499,7 @@ export default class Homepage extends Component {
             <Col sm="4">
               <Playlist
                 playlists={playlists}
-                isPrivate={this.state.isPrivate}
+                isPrivate={this.state.private}
                 playlist={playlist}
                 playlistName={this.state.playlistName}
                 playlistId={this.state.playlistId}

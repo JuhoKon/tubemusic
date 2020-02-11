@@ -55,7 +55,7 @@ class NavbarComponent extends Component {
                 <NavLink href="/spotify/">Spotify</NavLink>
               </NavItem>
 
-              {currentUser.user.role === "Admin" ? (
+              {currentUser && currentUser.user.role === "Admin" ? (
                 <NavItem>
                   <NavLink href="/admin">Admin</NavLink>
                 </NavItem>
@@ -74,7 +74,9 @@ class NavbarComponent extends Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
-            <NavbarText>Hello, {currentUser.user.name}</NavbarText>
+            <NavbarText>
+              Hello, {currentUser && currentUser.user.name}
+            </NavbarText>
             <Nav className="navbar-nav" navbar>
               <NavItem>
                 <NavLink href="#" onClick={this.props.logout}>
