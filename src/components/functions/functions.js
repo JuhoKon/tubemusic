@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authenticationService } from "./authenthication";
+import { scrape } from "./webScraper";
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
@@ -8,10 +9,10 @@ export const handleScrape = async items => {
       items: items
     })
     .catch(err => console.log(err));
-  console.log(res);
+  //console.log(res);
   //add limit of 500songs, if over that, then we have to implement some logic
   if (res) {
-    console.log(res);
+    //console.log(res);
     return res.data;
   } else {
     return null;
@@ -53,6 +54,7 @@ export const handleSubmit2 = async termFromSearch => {
   }
 };
 export const handleSpotifySearchFromYoutube = async termFromSearch => {
+  //OLD
   let res = await axios
     .get("https://www.googleapis.com/youtube/v3/search", {
       params: {
