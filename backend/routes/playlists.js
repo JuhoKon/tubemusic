@@ -5,7 +5,12 @@ var playlist_controller = require("../controllers/playlistController");
 var auth = require("../middleware/auth");
 /* GET users listing. */
 router.get("/", auth, playlist_controller.index); //ADMIN
-router.delete("/delete/:id", auth, playlist_controller.deletebyID); //ADMIN
+router.delete(
+  "/delete/:id",
+  auth,
+  playlist_controller.deletebyID,
+  playlist_controller.deletebyIDHelper
+); //ADMIN
 
 router.post("/create", auth, playlist_controller.create);
 

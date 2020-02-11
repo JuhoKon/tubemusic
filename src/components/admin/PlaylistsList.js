@@ -24,11 +24,17 @@ class PlaylistsList extends Component {
   }
   renderRow = ({ index, key, isScrolling, isVisible, style }) => {
     const playlists = this.props.playlists;
-    const { name, _id } = playlists[index];
+    const { name, _id, createdAt } = playlists[index];
     //const { value } = items[index];
     return (
       <div key={_id} style={style}>
-        <AdminPlaylistItem id={_id} name={name}></AdminPlaylistItem>
+        <AdminPlaylistItem
+          loadPlaylists={this.props.loadPlaylists}
+          token={this.props.token}
+          createdAt={createdAt}
+          id={_id}
+          name={name}
+        ></AdminPlaylistItem>
       </div>
     );
   };
@@ -44,7 +50,7 @@ class PlaylistsList extends Component {
           {({ width }) => (
             <List
               width={width}
-              height={550}
+              height={700}
               rowCount={playlists.length}
               rowHeight={82}
               rowRenderer={this.renderRow}

@@ -134,7 +134,7 @@ exports.removePlaylist = function(req, res, next) {
       .then(() => res.json(user.playlists))
       .catch(err => res.status(400).json("Error: " + err));
   });*/
-  User.findOneAndUpdate(
+  User.updateMany(
     { _id: req.user.id },
     { $pull: { playlists: { _id: req.params.id } } },
     function(err, data) {

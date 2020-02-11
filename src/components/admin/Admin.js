@@ -14,8 +14,8 @@ class AdminPage extends Component {
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
   }
-  async loadPlaylists(token) {
-    let res = await getPlaylists(token);
+  async loadPlaylists() {
+    let res = await getPlaylists();
     this.setState({
       playlists: res.data.Playlist
     });
@@ -26,9 +26,10 @@ class AdminPage extends Component {
       this.setState({
         token: currentUser.token
       });
-      this.loadPlaylists(currentUser.token);
+      this.loadPlaylists();
     }
   }
+
   render() {
     console.log(this.state);
     const { token, playlists } = this.state;
@@ -37,13 +38,17 @@ class AdminPage extends Component {
       <div>
         <div className="container-fluid">
           <Row>
-            <Col xs="4" sm="4">
+            <Col xs="2" sm="2">
               ds
             </Col>
-            <Col xs="4" sm="4">
-              <PlaylistsList playlists={playlists} />
+            <Col xs="6" sm="6">
+              <PlaylistsList
+                loadPlaylists={this.loadPlaylists}
+                token={token}
+                playlists={playlists}
+              />
             </Col>
-            <Col xs="4" sm="4">
+            <Col xs="2" sm="2">
               d
             </Col>
           </Row>

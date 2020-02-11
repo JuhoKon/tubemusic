@@ -1,5 +1,5 @@
 var Playlist = require("../models/playlist.model");
-
+var User = require("../models/user.model");
 exports.index = function(req, res, next) {
   if (req.user.role !== "Admin") {
     return res
@@ -62,7 +62,17 @@ exports.deletebyID = function(req, res, next) {
   }
   Playlist.findByIdAndDelete(req.params.id) //delete actual post from the database
     .then(() => {
-      res.json("Playlist deleted.");
+      next();
     })
     .catch(err => res.status(400).json({ error: err }));
+};
+exports.deletebyIDHelper = function(req, res, next) {
+  User.updateMany(
+    {},
+    { $pull: { playlists: { _id: req.params.id } } },
+    function(err, data) {
+      if (err) return res.status(400).json({ error: err });
+      res.json("Playlist deleted.");
+    }
+  );
 };
