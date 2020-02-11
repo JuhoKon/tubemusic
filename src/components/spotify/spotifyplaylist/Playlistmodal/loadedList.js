@@ -25,7 +25,7 @@ class LoadedList extends Component {
 
   render() {
     //console.log("loadedList");
-    const tracks = this.props.tracks;
+    //const tracks = this.props.tracks;
     //console.log(tracks);
     //console.log(this.state.loading);
 

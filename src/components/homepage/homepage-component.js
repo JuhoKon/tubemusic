@@ -206,7 +206,7 @@ export default class Homepage extends Component {
           "Generating name..."
       );
       this.state.playlist.push(item);
-      this.makePlaylist(nameGenerator(), this.state.playlist);
+      this.makePlaylist(nameGenerator(), this.state.playlist, true);
       this.setState({
         updated: item
       });
@@ -311,7 +311,7 @@ export default class Homepage extends Component {
       playlistName: result.data.name,
       playlistId: result.data._id,
       loading: false,
-      isPrivate: result.data.private
+      private: result.data.private
     });
   }
   async getPlaylist() {
@@ -466,7 +466,7 @@ export default class Homepage extends Component {
     const playlists = this.state.playlists;
     // console.log(this.props);
     const playlist = this.state.playlist;
-    console.log(this.state.isPrivate);
+    //console.log(this.state.private);
     return (
       <div>
         <br />

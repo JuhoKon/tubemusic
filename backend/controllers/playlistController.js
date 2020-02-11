@@ -1,6 +1,11 @@
 var Playlist = require("../models/playlist.model");
 
 exports.index = function(req, res, next) {
+  if (req.user.role !== "Admin") {
+    return res
+      .status(401)
+      .json({ msg: "Authorization denied. Insufficient role" });
+  }
   Playlist.find()
     .select("-playlist")
     .then(Playlist => {
@@ -50,6 +55,11 @@ exports.updatebyID = function(req, res, next) {
   // console.log(req.params.id);
 };
 exports.deletebyID = function(req, res, next) {
+  if (req.user.role !== "Admin") {
+    return res
+      .status(401)
+      .json({ msg: "Authorization denied. Insufficient role" });
+  }
   Playlist.findByIdAndDelete(req.params.id) //delete actual post from the database
     .then(() => {
       res.json("Playlist deleted.");

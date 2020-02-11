@@ -7,11 +7,10 @@ var {
 } = require("../middleware/uservalidator.js");
 var auth = require("../middleware/auth");
 
-router.get("/", auth, userController.index);
-
+router.get("/", auth, userController.index); //ADMIN
+//TODO: ADD DELETE USER
 router.post(
   "/create",
-  auth,
   userValidationRules(),
   uservalidate,
   userController.create

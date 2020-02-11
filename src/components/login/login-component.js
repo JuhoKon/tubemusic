@@ -17,6 +17,10 @@ export default class Homepage extends Component {
     this.setState({
       loading: true
     });
+    /*await authenticationService.login(
+      "juh3do.ko3sdntdiainen@hotmail.fi",
+      "kidasa3sdadsdasdask"
+    );*/
     await authenticationService.login(
       "juh3do.ko3sdntdiainen@hotmail.fi",
       "kidasa3sdadsdasdask"

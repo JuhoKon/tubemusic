@@ -1,11 +1,55 @@
 import React, { Component } from "react";
 import { authenticationService } from "../functions/authenthication";
+import { getPlaylists } from "../functions/functions";
+import { AutoSizer } from "react-virtualized";
+import PlaylistsList from "./PlaylistsList";
+import { Row, Col, Container } from "reactstrap";
 
-export default class Homepage extends Component {
+class AdminPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      playlists: [],
+      token: ""
+    };
+    this.loadPlaylists = this.loadPlaylists.bind(this);
+  }
+  async loadPlaylists(token) {
+    let res = await getPlaylists(token);
+    this.setState({
+      playlists: res.data.Playlist
+    });
+  }
+  componentDidMount() {
+    const currentUser = authenticationService.currentUserValue;
+    if (currentUser && currentUser.token) {
+      this.setState({
+        token: currentUser.token
+      });
+      this.loadPlaylists(currentUser.token);
+    }
   }
   render() {
-    return <div>I am the admin</div>;
+    console.log(this.state);
+    const { token, playlists } = this.state;
+    //console.log(filteredData);
+    return (
+      <div>
+        <div className="container-fluid">
+          <Row>
+            <Col xs="4" sm="4">
+              ds
+            </Col>
+            <Col xs="4" sm="4">
+              <PlaylistsList playlists={playlists} />
+            </Col>
+            <Col xs="4" sm="4">
+              d
+            </Col>
+          </Row>
+        </div>
+      </div>
+    );
   }
 }
+export default AdminPage;

@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { authenticationService } from "./authenthication";
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
@@ -128,8 +128,8 @@ export const getPlaylistTracks = async (id, token) => {
 /* -------------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------------*/
 export const getPlaylists = async () => {
-  let res = await axios.get("http://localhost:8080/playlists");
-  console.log(res);
+  let res = await axios.get("http://localhost:8080/playlists", tokenConfig());
+  //console.log(res);
   return res;
 };
 /*export const getPlaylists = async () => {
@@ -139,81 +139,69 @@ export const getPlaylists = async () => {
 export const makePlaylist = async body => {
   //console.log(body);
 
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
   let res = await axios.post(
     "http://localhost:8080/playlists/create",
     body,
-    config
+    tokenConfig()
   );
 
   return res;
 };
 export const updatePlaylist = async (body, id) => {
-  console.log(body);
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
   let res = await axios.put(
     `http://localhost:8080/playlists/update/${id}`,
     body,
-    config
+    tokenConfig()
   );
   return res;
 };
 export const deletePlaylist = async id => {
-  let res = await axios.delete(`http://localhost:8080/playlists/delete/${id}`);
+  let res = await axios.delete(
+    `http://localhost:8080/playlists/delete/${id}`,
+    tokenConfig()
+  );
   return res;
 };
 export const getPlayListById = async id => {
-  let res = await axios.get(`http://localhost:8080/playlists/find/${id}`);
+  let res = await axios.get(
+    `http://localhost:8080/playlists/find/${id}`,
+    tokenConfig()
+  );
   return res;
 };
 
 export const addUserPlaylist = async (playlistid, name, token) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-  config.headers["x-auth-token"] = token;
   const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
   let res = await axios.put(
     "http://localhost:8080/users/addPlaylist",
     body,
-    config
+    tokenConfig()
   );
 };
 export const deleteUserPlaylist = async (playlistid, token) => {
-  console.log(playlistid);
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
-  config.headers["x-auth-token"] = token;
   let res = await axios.delete(
     `http://localhost:8080/users/deletePlaylist${playlistid}`,
-    config
+    tokenConfig()
   );
   return res;
 };
 export const updateUserPlaylist = async (playlistid, name, token) => {
+  const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
+  let res = await axios.put(
+    `http://localhost:8080/users/editPlaylist${playlistid}`,
+    body,
+    tokenConfig()
+  );
+};
+const tokenConfig = () => {
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
-  config.headers["x-auth-token"] = token;
-  const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
-  let res = await axios.put(
-    `http://localhost:8080/users/editPlaylist${playlistid}`,
-    body,
-    config
-  );
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  return config;
 };

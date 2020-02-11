@@ -174,7 +174,7 @@ class Playlist extends Component {
           color={this.state.editMode ? "primary" : "secondary"}
           className="float-right btn-remove"
           onClick={this.toggle}
-          /*disabled={this.props.playlist[0] ? false : true}*/
+          disabled={this.state.playlistName ? false : true}
         >
           {this.state.editMode ? "Revert changes" : "Edit"}
         </Button>

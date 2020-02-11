@@ -5,6 +5,11 @@ require("dotenv").config();
 const jwtSecret = process.env.JWTSECRET;
 
 exports.index = function(req, res, next) {
+  if (req.user.role !== "Admin") {
+    return res
+      .status(401)
+      .json({ msg: "Authorization denied. Insufficient role" });
+  }
   User.find()
     .select("name")
     .then(users => res.json(users))
