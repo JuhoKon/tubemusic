@@ -4,11 +4,13 @@ const cheerio = require("cheerio");
 const handleScrape = async (term, counter) => {
   try {
     let url = encodeURI(term);
-    let response = await request(url).catch(e => {
+    let response = await request(url).catch(async e => {
       console.log(e);
-      return;
+      await timeout(2500);
+      return handleScrape(term, counter);
     }); //mby add catch here? .catch(err => console.log(err));
-    let $ = cheerio.load(response);
+
+    let $ = await cheerio.load(response);
     let videoTime = null;
     if (typeof $('[class="yt-lockup-title "]')[0] !== "undefined") {
       let data = $('[class="yt-lockup-title "]')[0].children[0].attribs;
@@ -17,6 +19,7 @@ const handleScrape = async (term, counter) => {
       }
       //console.log(data.href, data.title, videoTime);
       //add retry when connection is lost
+
       return {
         videoId: data.href.split("v=")[1],
         title: data.title,
@@ -29,7 +32,7 @@ const handleScrape = async (term, counter) => {
       if (counter < 5) {
         //try again
         console.log("Trying again..");
-        await timeout(60);
+        await timeout(100);
         return handleScrape(term, counter++);
       } else {
         return null;
@@ -58,8 +61,8 @@ exports.searchScrape = async function(req, res, next) {
   let title = {};
   for (let i = 0; i < data.length - 3; i++) {
     if (typeof data[i] !== "undefined") {
-    href = data[i].children[0].attribs.href;
-    title = data[i].children[0].attribs.title;
+      href = data[i].children[0].attribs.href;
+      title = data[i].children[0].attribs.title;
       if (href[1] === "w") {
         dataArray.push({
           videoId: href.split("v=")[1],
@@ -72,7 +75,6 @@ exports.searchScrape = async function(req, res, next) {
       const videoTime2 = videoTime[i].children[0].data;
       timeArray.push(videoTime2);
     }
-  
   }
   let array = dataArray.map((track, index) => ({
     title: track.title,
