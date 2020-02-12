@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BehaviorSubject } from "rxjs";
+import { handleError } from "./handleError";
 try {
   //in case that the token item is invalid, we delete it
   JSON.parse(localStorage.getItem("token"));
@@ -45,9 +46,8 @@ async function loadUser(token) {
       "Content-type": "application/json"
     }
   };
-  console.log("LOAD USER");
+
   if (token) {
-    console.log("LOAD USER");
     config.headers["x-auth-token"] = token;
     return axios
       .get("http://localhost:8080/auth/user", config)
@@ -55,11 +55,9 @@ async function loadUser(token) {
         return res.data;
       })
       .catch(err => {
-        console.log(err.response.status);
-        if (err.response.status === 400 || err.response.status === 401) {
-          logout();
-          return null;
-        }
+        handleError(err).then(res => {
+          return res;
+        });
       });
   } else {
     return null;

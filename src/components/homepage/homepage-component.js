@@ -315,7 +315,7 @@ export default class Homepage extends Component {
     });
   }
   async getPlaylist() {
-    this.props.loadUser(this.state.token);
+    //this.props.loadUser(this.state.token);
     //gets ALL playlists from database
     const result = await getPlaylists();
     //console.log(result);

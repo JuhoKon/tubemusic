@@ -14,26 +14,16 @@ export const handleScrape = async items => {
       tokenConfig()
     )
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
-  //console.log(res);
-  //add limit of 500songs, if over that, then we have to implement some logic
   if (res) {
-    //console.log(res);
     return res.data;
   } else {
     return null;
   }
 };
-
 //////////////////////////////////////////////////////////
 export const handleSubmit = async termFromSearch => {
   //SETUPPING HEADERS ETC.
@@ -53,15 +43,9 @@ export const handleSubmit = async termFromSearch => {
   let res = await axios
     .get("http://localhost:8080/scrape/search", config)
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
   if (res) {
     return res.data.array;
@@ -167,16 +151,11 @@ export const getPlaylists = async () => {
   let res = await axios
     .get("http://localhost:8080/playlists", tokenConfig())
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
+
   //console.log(res);
   return res;
 };
@@ -190,15 +169,9 @@ export const makePlaylist = async body => {
   let res = await axios
     .post("http://localhost:8080/playlists/create", body, tokenConfig())
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
 
   return res;
@@ -216,15 +189,9 @@ export const deletePlaylist = async id => {
   let res = await axios
     .delete(`http://localhost:8080/playlists/delete/${id}`, tokenConfig())
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
   return res;
 };
@@ -232,15 +199,9 @@ export const getPlayListById = async id => {
   let res = await axios
     .get(`http://localhost:8080/playlists/find/${id}`, tokenConfig())
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
   return res;
 };
@@ -250,15 +211,9 @@ export const addUserPlaylist = async (playlistid, name, token) => {
   let res = await axios
     .put("http://localhost:8080/users/addPlaylist", body, tokenConfig())
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
 };
 export const deleteUserPlaylist = async (playlistid, token) => {
@@ -268,15 +223,9 @@ export const deleteUserPlaylist = async (playlistid, token) => {
       tokenConfig()
     )
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
   return res;
 };
@@ -289,15 +238,9 @@ export const updateUserPlaylist = async (playlistid, name, token) => {
       tokenConfig()
     )
     .catch(err => {
-      if (err.response.status === 400 || err.response.status === 401) {
-        alert(
-          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
-        );
-        authenticationService.logout();
-        window.location.reload(true);
-        return null;
-      }
-      return err.response;
+      handleError(err).then(res => {
+        return res;
+      });
     });
 };
 const tokenConfig = () => {
