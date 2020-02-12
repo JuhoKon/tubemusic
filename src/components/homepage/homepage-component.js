@@ -136,9 +136,7 @@ export default class Homepage extends Component {
       });
     }
   }
-  componentWillUnmount() {
-    //authenticationService.currentUser.unsubscribe();
-  }
+  componentWillUnmount() {}
   playPlaylist(playlist) {
     //replaces queue with active playlist
 

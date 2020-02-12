@@ -24,7 +24,7 @@ exports.auth = function(req, res, next) {
         { id: user.id, role: user.role },
         jwtSecret,
         //get secret from config-file
-        { expiresIn: "1800000" }, //set to expire in half hour
+        { expiresIn: "600000" }, //set to expire in half hour
         (err, token) => {
           if (err) throw err;
           res.json({
@@ -43,7 +43,6 @@ exports.auth = function(req, res, next) {
     });
   });
 };
-
 exports.findUser = function(req, res, next) {
   //console.log(req.user);
   User.findById(req.user.id)

@@ -16,9 +16,7 @@ export const handleScrape = async items => {
       tokenConfig()
     )
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
 
   if (res) {
@@ -47,9 +45,7 @@ export const handleSubmit = async termFromSearch => {
     .get("http://localhost:8080/scrape/search", config)
     .then(handleResponse)
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
 
   if (res) {
@@ -156,9 +152,7 @@ export const getPlaylists = async () => {
   let res = await axios
     .get("http://localhost:8080/playlists", tokenConfig())
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
 
   //console.log(res);
@@ -174,9 +168,7 @@ export const makePlaylist = async body => {
   let res = await axios
     .post("http://localhost:8080/playlists/create", body, tokenConfig())
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
 
   return res;
@@ -194,9 +186,7 @@ export const deletePlaylist = async id => {
   let res = await axios
     .delete(`http://localhost:8080/playlists/delete/${id}`, tokenConfig())
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
   return res;
 };
@@ -204,9 +194,7 @@ export const getPlayListById = async id => {
   let res = await axios
     .get(`http://localhost:8080/playlists/find/${id}`, tokenConfig())
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
   return res;
 };
@@ -216,9 +204,7 @@ export const addUserPlaylist = async (playlistid, name, token) => {
   let res = await axios
     .put("http://localhost:8080/users/addPlaylist", body, tokenConfig())
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
 };
 export const deleteUserPlaylist = async (playlistid, token) => {
@@ -228,9 +214,7 @@ export const deleteUserPlaylist = async (playlistid, token) => {
       tokenConfig()
     )
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
   return res;
 };
@@ -243,12 +227,10 @@ export const updateUserPlaylist = async (playlistid, name, token) => {
       tokenConfig()
     )
     .catch(err => {
-      handleError(err).then(res => {
-        return res;
-      });
+      handleError(err);
     });
 };
-const tokenConfig = () => {
+export const tokenConfig = () => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -263,9 +245,9 @@ const tokenConfig = () => {
     }
     const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
 
-    if (diff > -60 * 10 && diff < -30) {
+    if ((diff > -60 * 5) & (diff < -30)) {
       config.headers["x-auth-token"] = currentUser.token;
-      //if token will expire in 10mins && will not expire in 30seconds
+      //if token will expire in 5mins && will not expire in 30seconds
       //issue new Token
       axios.get("http://localhost:8080/auth/renew", config).then(res => {
         authenticationService.newToken(res.data);

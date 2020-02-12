@@ -39,17 +39,23 @@ class App extends Component {
       });
     }
   }
-
   componentDidMount() {
     authenticationService.currentUser.subscribe(x => {
       if (x) {
         this.setState({
           token: x.token
         });
-        this.loadUser(x.token);
+        this.loadUser();
+        this.interval = setInterval(() => {
+          this.loadUser();
+        }, 300000); //load user every 5 minutes
       }
     });
   }
+  componentWillUnmount() {
+    clearInterval(this.interval); //clear the made interval
+  }
+
   logout() {
     authenticationService.logout();
     history.push("/login");
