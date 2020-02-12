@@ -2,7 +2,8 @@ import axios from "axios";
 import { authenticationService } from "./authenthication";
 import { handleError } from "./handleError";
 import { handleResponse } from "./handleResponse";
-import { scrape } from "./webScraper";
+import jwt from "jsonwebtoken";
+
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
@@ -255,7 +256,25 @@ const tokenConfig = () => {
   };
   const currentUser = authenticationService.currentUserValue;
   if (currentUser.token) {
-    config.headers["x-auth-token"] = currentUser.token;
+    const decode = jwt.decode(currentUser.token);
+    if (!decode) {
+      authenticationService.logout();
+      window.location.reload(true);
+    }
+    const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
+
+    if (diff > -60 * 10 && diff < -30) {
+      config.headers["x-auth-token"] = currentUser.token;
+      //if token will expire in 10mins && will not expire in 30seconds
+      //issue new Token
+      axios.get("http://localhost:8080/auth/renew", config).then(res => {
+        authenticationService.newToken(res.data);
+      });
+    } else {
+      //either it's okay or too late to renew
+      //error handler will handle once the token goes invalid finally
+      config.headers["x-auth-token"] = currentUser.token;
+    }
   }
   return config;
 };

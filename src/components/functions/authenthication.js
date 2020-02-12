@@ -16,6 +16,7 @@ export const authenticationService = {
   logout,
   signup,
   loadUser,
+  newToken,
   currentUser: currentUserSubject.asObservable(),
   get currentUserValue() {
     return currentUserSubject.value;
@@ -51,7 +52,6 @@ async function loadUser(token) {
       "Content-type": "application/json"
     }
   };
-
   if (token) {
     config.headers["x-auth-token"] = token;
     return axios

@@ -4,7 +4,6 @@ var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 require("dotenv").config();
 const jwtSecret = process.env.JWTSECRET;
-
 exports.auth = function(req, res, next) {
   const { email, password } = req.body;
 
@@ -25,7 +24,7 @@ exports.auth = function(req, res, next) {
         { id: user.id, role: user.role },
         jwtSecret,
         //get secret from config-file
-        { expiresIn: "500000" }, //set to expire in hour
+        { expiresIn: "1800000" }, //set to expire in half hour
         (err, token) => {
           if (err) throw err;
           res.json({
@@ -50,4 +49,30 @@ exports.findUser = function(req, res, next) {
   User.findById(req.user.id)
     .select("-password") //return everything but password
     .then(user => res.json(user));
+};
+exports.renew = function(req, res, next) {
+  User.findById(req.user.id)
+    .select("-password") //return everything but password
+    .then(user => {
+      jwt.sign(
+        { id: user.id, role: user.role },
+        jwtSecret,
+        //get secret from config-file
+        { expiresIn: "1800000" }, //set to expire in half hour
+        (err, token) => {
+          if (err) throw err;
+          res.json({
+            //respond with token and and user info
+            token,
+            user: {
+              _id: user.id,
+              name: user.name,
+              email: user.email,
+              age: user.age,
+              role: user.role
+            }
+          });
+        }
+      );
+    });
 };
