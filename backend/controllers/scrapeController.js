@@ -46,8 +46,9 @@ const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 exports.searchScrape = async function(req, res, next) {
   //console.log(req.query.term);
+
   let string = "https://www.youtube.com/results?search_query=";
-  let term = req.query.term;
+  let term = req.query.item;
   term = term.split(" ").join("+");
   term = string.concat(term);
   let url = encodeURI(term);

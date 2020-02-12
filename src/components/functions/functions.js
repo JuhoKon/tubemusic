@@ -6,10 +6,24 @@ const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
   let res = await axios
-    .post("http://localhost:8080/scrape/scrape", {
-      items: items
-    })
-    .catch(err => console.log(err));
+    .post(
+      "http://localhost:8080/scrape/scrape",
+      {
+        items: items
+      },
+      tokenConfig()
+    )
+    .catch(err => {
+      if (err.response.status === 400 || err.response.status === 401) {
+        alert(
+          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
+        );
+        authenticationService.logout();
+        window.location.reload(true);
+        return null;
+      }
+      return err.response;
+    });
   //console.log(res);
   //add limit of 500songs, if over that, then we have to implement some logic
   if (res) {
@@ -22,14 +36,33 @@ export const handleScrape = async items => {
 
 //////////////////////////////////////////////////////////
 export const handleSubmit = async termFromSearch => {
+  //SETUPPING HEADERS ETC.
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    params: {
+      item: termFromSearch
+    }
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  /////////
   let res = await axios
-    .get("http://localhost:8080/scrape/search", {
-      params: {
-        term: termFromSearch
+    .get("http://localhost:8080/scrape/search", config)
+    .catch(err => {
+      if (err.response.status === 400 || err.response.status === 401) {
+        alert(
+          "You are unauthorized, please login again. If this issue persists, please be in contact with the administrators."
+        );
+        authenticationService.logout();
+        window.location.reload(true);
+        return null;
       }
-    })
-    .catch(err => console.log(err));
-  console.log(res.data);
+      return err.response;
+    });
   if (res) {
     return res.data.array;
   } else {
