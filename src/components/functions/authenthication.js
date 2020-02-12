@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BehaviorSubject } from "rxjs";
-
 try {
   //in case that the token item is invalid, we delete it
   JSON.parse(localStorage.getItem("token"));
@@ -56,8 +55,11 @@ async function loadUser(token) {
         return res.data;
       })
       .catch(err => {
-        logout();
-        return null;
+        console.log(err.response.status);
+        if (err.response.status === 400 || err.response.status === 401) {
+          logout();
+          return null;
+        }
       });
   } else {
     return null;
