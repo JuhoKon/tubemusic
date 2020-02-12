@@ -21,6 +21,10 @@ export const authenticationService = {
     return currentUserSubject.value;
   }
 };
+function newToken(token) {
+  currentUserSubject.next(token);
+  localStorage.setItem("token", JSON.stringify(token));
+}
 async function login(email, password) {
   const config = {
     headers: {
@@ -29,6 +33,7 @@ async function login(email, password) {
   };
   const body = JSON.stringify({ email, password });
   let res = await axios.post("http://localhost:8080/auth", body, config);
+  //error handling?
   currentUserSubject.next(res.data);
   localStorage.setItem("token", JSON.stringify(res.data));
   return res.data.user;

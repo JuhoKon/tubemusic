@@ -25,7 +25,7 @@ exports.auth = function(req, res, next) {
         { id: user.id, role: user.role },
         jwtSecret,
         //get secret from config-file
-        { expiresIn: "2000" }, //set to expire in hour
+        { expiresIn: "500000" }, //set to expire in hour
         (err, token) => {
           if (err) throw err;
           res.json({

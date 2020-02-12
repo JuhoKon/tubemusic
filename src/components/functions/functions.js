@@ -1,6 +1,7 @@
 import axios from "axios";
 import { authenticationService } from "./authenthication";
 import { handleError } from "./handleError";
+import { handleResponse } from "./handleResponse";
 import { scrape } from "./webScraper";
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
@@ -18,6 +19,7 @@ export const handleScrape = async items => {
         return res;
       });
     });
+
   if (res) {
     return res.data;
   } else {
@@ -42,11 +44,13 @@ export const handleSubmit = async termFromSearch => {
   /////////
   let res = await axios
     .get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
     .catch(err => {
       handleError(err).then(res => {
         return res;
       });
     });
+
   if (res) {
     return res.data.array;
   } else {

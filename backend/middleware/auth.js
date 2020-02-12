@@ -4,7 +4,18 @@ const jwtSecret = process.env.JWTSECRET;
 
 function auth(req, res, next) {
   //get token from header
+
   const token = req.header("x-auth-token");
+  const decode = jwt.decode(token, jwtSecret);
+  if (!decode) {
+    return res.status(400).json({ msg: "Token is not valid." }); //if not valid token
+  }
+  const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
+
+  if (diff > -60 * 10 && diff < 0) {
+    //if token will expire in 10mins && hasn't expired yet
+    //issue new Token
+  }
 
   //checking for token
   if (!token) {
