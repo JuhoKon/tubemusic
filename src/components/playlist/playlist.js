@@ -23,7 +23,9 @@ class Playlist extends Component {
       playlistName: this.props.playlistName,
       playlistId: this.props.playlistId,
       editMode: false,
-      filter: ""
+      filter: "",
+      playlistOwner: this.props.playlistOwner,
+      userName: this.props.userName
     };
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -45,7 +47,9 @@ class Playlist extends Component {
         playlist: this.props.playlist,
         playlists: this.props.playlists,
         playlistName: this.props.playlistName,
-        playlistId: this.props.playlistId
+        playlistId: this.props.playlistId,
+        playlistOwner: this.props.playlistOwner,
+        userName: this.props.userName
       });
     }
   }
@@ -107,7 +111,7 @@ class Playlist extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, playlistOwner } = this.state;
     const { playlists, playlist, Allplaylists } = this.props;
 
     const lowercasedFilter = filter.toLowerCase();
@@ -143,10 +147,12 @@ class Playlist extends Component {
             loadPlaylist={this.props.loadPlaylist}
           />
           <SaveModal
+            userName={this.state.userName}
             playlistId={this.props.playlistId}
             isPrivate={this.props.isPrivate}
             Updateplaylist={this.props.Updateplaylist}
             playlistName={this.state.playlistName}
+            playlistOwner={this.state.playlistOwner}
           />
           <Button
             className="float-right btn-margin "

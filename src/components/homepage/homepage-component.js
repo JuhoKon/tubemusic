@@ -128,15 +128,17 @@ export default class Homepage extends Component {
   }
   componentDidMount() {
     const currentUser = authenticationService.currentUserValue;
-    console.log(currentUser);
 
     if (currentUser && currentUser.token) {
       this.setState({
-        token: currentUser.token
+        token: currentUser.token,
+        userName: currentUser.user.name
       });
     }
   }
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    //authenticationService.currentUser.unsubscribe();
+  }
   playPlaylist(playlist) {
     //replaces queue with active playlist
 
@@ -303,17 +305,20 @@ export default class Homepage extends Component {
   async loadPlaylist(id) {
     //loads a single database based on the id
     const result = await getPlayListById(id);
-    //console.log(result.data);
+    console.log(result.data);
+
     this.setState({
       playlist: result.data.playlist,
       playlistName: result.data.name,
       playlistId: result.data._id,
       loading: false,
-      private: result.data.private
+      private: result.data.private,
+      playlistOwner: result.data.owner
     });
   }
   async getPlaylist() {
-    //this.props.loadUser(this.state.token);
+    //called when making changes to the playlists, don't remove
+    this.props.loadUser();
     //gets ALL playlists from database
     const result = await getPlaylists();
     //console.log(result);
@@ -496,7 +501,9 @@ export default class Homepage extends Component {
             </Col>
             <Col sm="4">
               <Playlist
+                userName={this.state.userName}
                 playlists={playlists}
+                playlistOwner={this.state.playlistOwner}
                 isPrivate={this.state.private}
                 playlist={playlist}
                 playlistName={this.state.playlistName}

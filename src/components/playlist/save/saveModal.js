@@ -17,7 +17,9 @@ class SaveModal extends Component {
     this.state = {
       modal: false,
       playlistName: this.props.playlistName,
-      checked: this.props.isPrivate
+      checked: this.props.isPrivate,
+      playlistOwner: this.props.playlistOwner,
+      userName: this.props.userName
     };
     this.toggle = this.toggle.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -33,7 +35,9 @@ class SaveModal extends Component {
       console.log(this.props.isPrivate);
       this.setState({
         playlistName: this.props.playlistName,
-        checked: this.props.isPrivate
+        checked: this.props.isPrivate,
+        playlistOwner: this.props.playlistOwner,
+        userName: this.props.userName
       });
     }
   }
@@ -67,7 +71,12 @@ class SaveModal extends Component {
           onClick={this.toggle}
           href="#"
           color="primary"
-          disabled={this.props.playlistId ? false : true}
+          disabled={
+            this.props.playlistId &&
+            this.state.playlistOwner === this.state.userName
+              ? false
+              : true
+          }
         >
           Save as
         </Button>

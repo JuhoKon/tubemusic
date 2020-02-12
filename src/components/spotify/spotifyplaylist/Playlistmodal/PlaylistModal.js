@@ -56,13 +56,14 @@ class PlaylistModal extends Component {
     this.webScrape = this.webScrape.bind(this);
   }
   componentDidMount() {
-    authenticationService.currentUser.subscribe(x => {
-      if (x) {
-        this.setState({
-          token: x.token
-        });
-      }
-    });
+    const currentUser = authenticationService.currentUserValue;
+
+    if (currentUser) {
+      this.setState({
+        token: currentUser.token,
+        userName: currentUser.user.name
+      });
+    }
   }
   async webScrape() {
     if (this.state.toBeImportedPlaylist.length < 1) {
@@ -100,7 +101,7 @@ class PlaylistModal extends Component {
         name,
         playlist: playlist,
         isPrivate: true,
-        owner: this.state.ownerName
+        owner: this.state.userName
       });
       if (playlist.length > 0) {
         //console.log(tracksFromYoutube.length - playlist.length);
