@@ -57,7 +57,7 @@ exports.renew = function(req, res, next) {
         { id: user.id, role: user.role },
         jwtSecret,
         //get secret from config-file
-        { expiresIn: "1800000" }, //set to expire in half hour
+        { expiresIn: "36000000" }, //set to expire in half hour
         (err, token) => {
           if (err) throw err;
           res.json({

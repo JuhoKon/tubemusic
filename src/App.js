@@ -40,20 +40,21 @@ class App extends Component {
     }
   }
   componentDidMount() {
+    console.log("I mount");
     authenticationService.currentUser.subscribe(x => {
       if (x) {
         this.setState({
           token: x.token
         });
         this.loadUser();
-        this.interval = setInterval(() => {
-          this.loadUser();
-        }, 300000); //load user every 5 minutes
+        /*this.interval = setInterval(() => {
+          authenticationService.loadUser();
+        }, 300000); //load user every 5 minutes*/ //needs tweaking
       }
     });
   }
   componentWillUnmount() {
-    clearInterval(this.interval); //clear the made interval
+    // clearInterval(this.interval); //clear the made interval
   }
 
   logout() {

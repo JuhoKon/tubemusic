@@ -329,6 +329,7 @@ export default class Homepage extends Component {
   async makePlaylist(name, playlist, isPrivate) {
     //API request to create a new playlist (database)
     //console.log(this.state.user.name);
+
     this.setState({
       playlist: playlist
     });
@@ -338,7 +339,7 @@ export default class Homepage extends Component {
       name,
       playlist,
       isPrivate,
-      owner: this.state.user.name
+      owner: this.state.userName
     });
     const result = await makePlaylist(item);
     addUserPlaylist(result.data._id, result.data.name, this.state.token);

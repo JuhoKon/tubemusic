@@ -8,6 +8,7 @@ try {
 } catch {
   localStorage.removeItem("token");
 }
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 const currentUserSubject = new BehaviorSubject(
   JSON.parse(localStorage.getItem("token"))
 );

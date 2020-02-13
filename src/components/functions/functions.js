@@ -3,7 +3,7 @@ import { authenticationService } from "./authenthication";
 import { handleError } from "./handleError";
 import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
-
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
@@ -175,6 +175,7 @@ export const makePlaylist = async body => {
 };
 
 export const updatePlaylist = async (body, id) => {
+  await timeout(100);
   let res = await axios.put(
     `http://localhost:8080/playlists/update/${id}`,
     body,
@@ -231,13 +232,17 @@ export const updateUserPlaylist = async (playlistid, name, token) => {
     });
 };
 export const tokenConfig = () => {
+  //gets called to each action needing auth
+  //retrieves token
+  //checks token if it's going to expire soon, if so, renew that token
+  //returns token as config header to the calls
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
   const currentUser = authenticationService.currentUserValue;
-  if (currentUser.token) {
+  if (currentUser) {
     const decode = jwt.decode(currentUser.token);
     if (!decode) {
       authenticationService.logout();
@@ -245,9 +250,9 @@ export const tokenConfig = () => {
     }
     const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
     console.log(diff);
-    if ((diff > -60 * 15) & (diff < -30)) {
+    if ((diff > -(60 * 10) + 5) & (diff < -30)) {
       config.headers["x-auth-token"] = currentUser.token;
-      //if token will expire in 5mins && will not expire in 30seconds
+      //if token will expire in 10mins && will not expire in 30seconds
       //issue new Token
       axios.get("http://localhost:8080/auth/renew", config).then(res => {
         authenticationService.newToken(res.data);
