@@ -217,7 +217,7 @@ export default class Homepage extends Component {
             this.state.playlistId,
             this.state.private
           ),
-        2000
+        100
       );
       toaster.notify(<span>{item.title} added to the playlist.</span>, {
         duration: 750
@@ -243,7 +243,6 @@ export default class Homepage extends Component {
     if (!item) return;
     if (typeof this.state.playlist[0] === "undefined") return;
 
-    //console.log(item.uniqueId);
     //console.log(this.state.queue[0].uniqueId);
     for (let i = 0; i < this.state.playlist.length; i++) {
       if (this.state.playlist[i].uniqueId === item.uniqueId) {
@@ -252,9 +251,11 @@ export default class Homepage extends Component {
         break;
       }
     }
+
     this.setState({
       updated: item.videoId
     });
+
     //this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
   async handleSubmit(termFromSearch) {

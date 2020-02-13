@@ -94,12 +94,13 @@ class Playlist extends Component {
       return;
     }
 
-    const { playlist } = this.state;
+    const { playlist } = this.props;
 
     this.setState({
       playlist: arrayMove(playlist, oldIndex, newIndex)
     });
-
+    //console.log(playlist);
+    //console.log(arrayMove(playlist, oldIndex, newIndex));
     // We need to inform React Virtualized that the items have changed heights
     // This can either be done by imperatively calling the recomputeRowHeights and
     // forceUpdate instance methods on the `List` ref, or by passing an additional prop
@@ -115,7 +116,9 @@ class Playlist extends Component {
     const { playlists, playlist, Allplaylists } = this.props;
 
     const lowercasedFilter = filter.toLowerCase();
+    console.log(playlist);
     const filteredData = playlist.filter(item => {
+      if (item === null || typeof item === "undefined") return playlist; //problems
       return Object.keys(item).some(
         key =>
           typeof item[key] === "string" &&
