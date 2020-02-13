@@ -48,7 +48,7 @@ function signup() {}
 
 async function loadUser() {
   return axios
-    .get("http://localhost:8080/auth/user", await tokenConfig())
+    .get("http://localhost:8080/auth/user", tokenConfig())
     .then(res => {
       return res.data;
     })

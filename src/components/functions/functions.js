@@ -244,8 +244,8 @@ export const tokenConfig = () => {
       window.location.reload(true);
     }
     const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
-
-    if ((diff > -60 * 5) & (diff < -30)) {
+    console.log(diff);
+    if ((diff > -60 * 15) & (diff < -30)) {
       config.headers["x-auth-token"] = currentUser.token;
       //if token will expire in 5mins && will not expire in 30seconds
       //issue new Token
