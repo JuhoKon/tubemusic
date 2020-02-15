@@ -250,17 +250,13 @@ export const tokenConfig = () => {
     }
     const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
     console.log(diff);
-    if ((diff > -(60 * 10) + 5) & (diff < -30)) {
-      config.headers["x-auth-token"] = currentUser.token;
-      //if token will expire in 10mins && will not expire in 30seconds
+    config.headers["x-auth-token"] = currentUser.token;
+    if ((diff > -(60 * 60 * 5) + 5) & (diff < -10)) {
+      //if token will expire in 5 hrs 5 seconds && will not expire in 10seconds
       //issue new Token
       axios.get("http://localhost:8080/auth/renew", config).then(res => {
         authenticationService.newToken(res.data);
       });
-    } else {
-      //either it's okay or too late to renew
-      //error handler will handle once the token goes invalid finally
-      config.headers["x-auth-token"] = currentUser.token;
     }
   }
   return config;

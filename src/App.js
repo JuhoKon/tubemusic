@@ -49,12 +49,12 @@ class App extends Component {
         this.loadUser();
         /*this.interval = setInterval(() => {
           authenticationService.loadUser();
-        }, 300000); //load user every 5 minutes*/ //needs tweaking
+        }, 300000); //load user  */ //needs tweaking
       }
     });
   }
   componentWillUnmount() {
-    // clearInterval(this.interval); //clear the made interval
+    //clearInterval(this.interval); //clear the made interval
   }
 
   logout() {
