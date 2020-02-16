@@ -6,6 +6,7 @@ import HomePage from "./components/homepage/homepage-component";
 import Login from "./components/login/login-component";
 import Spotify from "./components/spotify/spotify-component";
 import { authenticationService } from "./components/functions/authenthication";
+import { tokenConfig } from "./components/functions/functions";
 import { PrivateRoute } from "./components/functions/PrivateRoute";
 import { history } from "./components/History";
 import Admin from "./components/admin/Admin";
@@ -41,20 +42,24 @@ class App extends Component {
   }
   componentDidMount() {
     console.log("I mount");
+
     authenticationService.currentUser.subscribe(x => {
+      //when change happens, this gets called
       if (x) {
         this.setState({
           token: x.token
         });
         this.loadUser();
-        /*this.interval = setInterval(() => {
-          authenticationService.loadUser();
-        }, 300000); //load user  */ //needs tweaking
       }
     });
+    //for checking if we need to renew token
+    tokenConfig();
+    this.interval = setInterval(() => {
+      tokenConfig(); //check token
+    }, 900000); //check token every 15 mins //needs tweaking
   }
   componentWillUnmount() {
-    //clearInterval(this.interval); //clear the made interval
+    clearInterval(this.interval); //clear the made interval
   }
 
   logout() {

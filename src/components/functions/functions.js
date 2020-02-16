@@ -232,6 +232,7 @@ export const updateUserPlaylist = async (playlistid, name, token) => {
     });
 };
 export const tokenConfig = () => {
+  console.log("TokenCONFIG CONFIG OFIONG OFING");
   //gets called to each action needing auth
   //retrieves token
   //checks token if it's going to expire soon, if so, renew that token
@@ -251,8 +252,8 @@ export const tokenConfig = () => {
     const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
     console.log(diff);
     config.headers["x-auth-token"] = currentUser.token;
-    if ((diff > -(60 * 60 * 5) + 5) & (diff < -10)) {
-      //if token will expire in 5 hrs 5 seconds && will not expire in 10seconds
+    if ((diff > -(60 * 65 * 1) + 30) & (diff < -10)) {
+      //if token will expire in 1 hr 5mins 30 seconds && will not expire in 10seconds
       //issue new Token
       axios.get("http://localhost:8080/auth/renew", config).then(res => {
         authenticationService.newToken(res.data);
