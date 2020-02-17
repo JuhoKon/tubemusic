@@ -10,7 +10,7 @@ import {
   Container
 } from "reactstrap";
 import "./login.css";
-
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 //https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
 export default class Homepage extends Component {
   constructor(props) {
@@ -41,7 +41,12 @@ export default class Homepage extends Component {
       "juh3do.ko3sdntdiainen@hotmail.fi",
       "kidasa3sdadsdasdask"
     );*/
+    await timeout(1500);
     let res = await authenticationService.login(username, password);
+
+    this.setState({
+      loading: false
+    });
     if (!res) {
       this.props.history.push("/");
     }
@@ -93,7 +98,9 @@ export default class Homepage extends Component {
                   onChange={this.onChange}
                 />
               </FormGroup>
-              <button>Sign Up</button>
+              <button className={this.state.loading ? "loading" : ""}>
+                Sign Up
+              </button>
             </Form>
           </Container>
           <Container className="form-container sign-in-container">
@@ -124,7 +131,12 @@ export default class Homepage extends Component {
                 />
               </FormGroup>
               <a href="#">Forgot your password?</a>
-              <button>Sign In</button>
+              <div>
+                <button className={this.state.loading ? "loading" : ""}>
+                  Sign In
+                </button>
+                {this.state.loading ? <div class="spin"></div> : ""}
+              </div>
             </Form>
           </Container>
           <div className="overlay-container">

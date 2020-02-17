@@ -60,6 +60,8 @@
 }
 
 .ss button {
+  display: flex;
+  flex-direction: column;
   border-radius: 20px !important;
   border: 1px solid #ff4b2b;
   background-color: #ff4b2b;
@@ -179,4 +181,43 @@ h1.position {
   padding-right: 4em;
   border-radius: 10px;
   color: #fff;
+}
+button.loading {
+  animation: load-animate infinite linear 1.5s;
+}
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+.spin {
+  position: relative !important;
+  top: -37%;
+  left: 17%;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #ff4b2b;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  content: "";
+  height: 20px;
+  width: 20px;
+  transform: translate3d(-50%, -50%, 0);
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  will-change: transform;
+}
+@keyframes load-animate {
+  0% {
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+
+  100% {
+  }
 }

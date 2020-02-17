@@ -93,6 +93,11 @@ class App extends Component {
               component={Spotify}
             />
             <PrivateRoute
+              path="/playlists"
+              data={currentUserInfo}
+              component={Spotify}
+            />
+            <PrivateRoute
               path="/admin"
               data={currentUserInfo}
               roles={["Admin"]}
