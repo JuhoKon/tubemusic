@@ -17,6 +17,7 @@
     "react-dom": "^16.12.0",
     "react-fast-compare": "^2.0.4",
     "react-flip-move": "^3.0.4",
+    "react-helmet": "^5.2.1",
     "react-moment": "^0.9.7",
     "react-player": "^1.14.2",
     "react-router-dom": "^5.1.2",

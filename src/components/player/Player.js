@@ -4,8 +4,9 @@ import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
 import { Container, CustomInput, FormGroup, Label } from "reactstrap";
 import { Button } from "reactstrap";
-import HistoryModal from "./history/History-modal";
 
+import HistoryModal from "./history/History-modal";
+import { setTitle } from "../functions/functions";
 import "./player.css";
 //TODO: ADD VOLUME CONTROL
 //CHANGE BUTTONS TO LOOK BETTER
@@ -56,6 +57,7 @@ export default class Player extends Component {
         title: this.props.title,
         playing: this.props.playing
       });
+      setTitle(this.props.title); //setting document title
       if (this.props.url !== prevProps.url) {
         if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
           let itemObject = {};
@@ -72,6 +74,11 @@ export default class Player extends Component {
       }
     }
   }
+  clearHistory = () => {
+    this.setState({
+      history: []
+    });
+  };
   handlePlayPause = () => {
     const playing = this.state.playing;
     this.setState({ playing: !this.state.playing });
@@ -212,6 +219,7 @@ export default class Player extends Component {
                           isOpen={this.state.modal}
                           toggle={this.toggle}
                           history={this.state.history}
+                          clearList={this.clearHistory}
                           addFunc={this.props.onAdd}
                           onPlay={this.props.onPlay}
                           AddToPlaylist={this.props.AddToPlaylist}

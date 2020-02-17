@@ -1,3 +1,9 @@
 .btn-controls {
   margin-left: 2px !important;
 }
+.clearButton {
+  position: relative;
+  left: 70%;
+  padding-bottom: 0em;
+  z-index: 10;
+}

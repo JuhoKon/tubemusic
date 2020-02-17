@@ -1,35 +1,154 @@
 import React, { Component } from "react";
 import { authenticationService } from "../functions/authenthication";
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText,
+  Container
+} from "reactstrap";
 import "./login.css";
-import { Button } from "reactstrap";
+
+//https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
 export default class Homepage extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      active: false
+    };
     // redirect to home if already logged in
     if (authenticationService.currentUserValue) {
       this.props.history.push("/");
     }
     this.login = this.login.bind(this);
   }
-
-  async login() {
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  togglePanel = () => {
+    this.setState({
+      active: !this.state.active
+    });
+  };
+  async login(username, password) {
     this.setState({
       loading: true
     });
-    /*await authenticationService.login(
-      "juh3do.ko3sdntdiainen@hotmail.fi",
-      "kidasa3sdadsdasdask"
-    );*/
     await authenticationService.login(
       "juh3do.ko3sdntdiainen@hotmail.fi",
       "kidasa3sdadsdasdask"
     );
+    //await authenticationService.login(username, password);
     this.props.history.push("/");
   }
+  signUpSubmit = e => {
+    e.preventDefault();
+  };
+  signInSubmit = e => {
+    e.preventDefault();
+    this.login(this.state.email, this.state.password);
+  };
   render() {
+    console.log(this.state);
     return (
-      <div className="ss">
+      <div className={this.state.active ? "ss right-panel-active" : "ss"}>
+        <Container id="login-container">
+          <Container className="form-container sign-up-container">
+            <Form onSubmit={this.signUpSubmit}>
+              <h1>Create an account</h1>
+              <hr />
+              <FormGroup>
+                <Input
+                  name="signUpName"
+                  type="text"
+                  placeholder="Name"
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  name="signUpEmail"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Email"
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  name="signUpPassword"
+                  type="password"
+                  placeholder="Password"
+                  autoComplete="current-password"
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+              <button>Sign Up</button>
+            </Form>
+          </Container>
+          <Container className="form-container sign-in-container">
+            <Form onSubmit={this.signInSubmit}>
+              <h1>Sign in</h1>
+              <hr />
+              <FormGroup>
+                <Input
+                  name="email"
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  autoComplete="email"
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Input
+                  name="password"
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  autoComplete="current-password"
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+              <a href="#">Forgot your password?</a>
+              <button>Sign In</button>
+            </Form>
+          </Container>
+          <div className="overlay-container">
+            <div className="overlay">
+              <div className="overlay-panel overlay-left">
+                <h1>Already have an account?</h1>
+                <p>
+                  To keep connected with us please login with your personal info
+                </p>
+                <button
+                  onClick={this.togglePanel}
+                  className="ghost"
+                  id="signIn"
+                >
+                  Sign In
+                </button>
+              </div>
+              <div className="overlay-panel overlay-right">
+                <h1>Don't have an account yet?</h1>
+                <p>
+                  No worries! Enter your personal details and start listening to
+                  music with us.
+                </p>
+                <button
+                  onClick={this.togglePanel}
+                  className="ghost"
+                  id="signUp"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </div>
+          </div>
+        </Container>
+
         <Button onClick={this.login}>d</Button>
       </div>
     );

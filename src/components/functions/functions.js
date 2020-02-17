@@ -162,6 +162,12 @@ export const getPlaylists = async () => {
   let res = await axios.get("http://localhost:8080/playlists");
   return res;
 };*/
+export const setTitle = title => {
+  if (typeof title !== "string") {
+    throw new Error("Title should be an string");
+  }
+  document.title = title;
+};
 export const makePlaylist = async body => {
   //console.log(body);
 

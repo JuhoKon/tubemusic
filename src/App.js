@@ -8,6 +8,7 @@ import Spotify from "./components/spotify/spotify-component";
 import { authenticationService } from "./components/functions/authenthication";
 import { tokenConfig } from "./components/functions/functions";
 import { PrivateRoute } from "./components/functions/PrivateRoute";
+
 import { history } from "./components/History";
 import Admin from "./components/admin/Admin";
 

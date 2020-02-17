@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Modal, ModalHeader, ModalBody, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Button, Row, Col } from "reactstrap";
 import { CSSTransition } from "react-transition-group";
 import HistoryItem from "./history-item";
 import isEqual from "react-fast-compare";
+import "./History.css";
 class HistoryModal extends Component {
   state = {
     modal: false,
@@ -26,15 +27,23 @@ class HistoryModal extends Component {
       });
     }
   }
+
   render() {
-    //console.log(this.props);
+    console.log(this.props);
     return (
       <div>
         <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
           <ModalHeader className="mb-4" toggle={this.props.toggle}>
             Recently played songs:
           </ModalHeader>
-          <Button className="float-right">Clear All</Button>
+          <Row>
+            <div className="clearButton">
+              <Button className="float-right" onClick={this.props.clearList}>
+                Clear All
+              </Button>
+            </div>
+          </Row>
+
           <ModalBody>
             <div id="videolist">
               {this.state.history.map(({ title, videoId, url }) => (
