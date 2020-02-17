@@ -150,6 +150,7 @@ class Playlist extends Component {
             loadPlaylist={this.props.loadPlaylist}
           />
           <SaveModal
+            userRole={this.props.userRole}
             userName={this.state.userName}
             playlistId={this.props.playlistId}
             isPrivate={this.props.isPrivate}

@@ -28,18 +28,23 @@ function newToken(token) {
   currentUserSubject.next(token);
   localStorage.setItem("token", JSON.stringify(token));
 }
-async function login(email, password) {
+function login(email, password) {
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
   const body = JSON.stringify({ email, password });
-  let res = await axios.post("http://localhost:8080/auth", body, config);
+  return axios
+    .post("http://localhost:8080/auth", body, config)
+    .then(res => {
+      currentUserSubject.next(res.data);
+      localStorage.setItem("token", JSON.stringify(res.data));
+    })
+    .catch(e => {
+      return e.response.data.msg;
+    });
   //error handling?
-  currentUserSubject.next(res.data);
-  localStorage.setItem("token", JSON.stringify(res.data));
-  return res.data.user;
 }
 function logout() {
   localStorage.removeItem("token");

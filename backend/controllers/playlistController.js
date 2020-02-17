@@ -1,11 +1,6 @@
 var Playlist = require("../models/playlist.model");
 var User = require("../models/user.model");
 exports.index = function(req, res, next) {
-  if (req.user.role !== "Admin") {
-    return res
-      .status(401)
-      .json({ msg: "Authorization denied. Insufficient role" });
-  }
   Playlist.find()
     .select("-playlist")
     .then(Playlist => {

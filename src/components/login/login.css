@@ -170,3 +170,13 @@
 .ss.right-panel-active .overlay-right {
   transform: translateX(20%);
 }
+h1.position {
+  transform: translateY(-3em);
+}
+.error {
+  background-color: red;
+  padding-left: 4em;
+  padding-right: 4em;
+  border-radius: 10px;
+  color: #fff;
+}

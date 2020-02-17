@@ -129,11 +129,12 @@ export default class Homepage extends Component {
   }
   componentDidMount() {
     const currentUser = authenticationService.currentUserValue;
-
+    console.log(currentUser);
     if (currentUser && currentUser.token) {
       this.setState({
         token: currentUser.token,
-        userName: currentUser.user.name
+        userName: currentUser.user.name,
+        userRole: currentUser.user.role
       });
     }
   }
@@ -505,6 +506,7 @@ export default class Homepage extends Component {
             <Col sm="4">
               <Playlist
                 userName={this.state.userName}
+                userRole={this.state.userRole}
                 playlists={playlists}
                 playlistOwner={this.state.playlistOwner}
                 isPrivate={this.state.private}

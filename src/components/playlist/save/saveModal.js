@@ -72,8 +72,9 @@ class SaveModal extends Component {
           href="#"
           color="primary"
           disabled={
-            this.props.playlistId &&
-            this.state.playlistOwner === this.state.userName
+            (this.props.playlistId &&
+              this.state.playlistOwner === this.state.userName) ||
+            this.props.userRole === "Admin"
               ? false
               : true
           }

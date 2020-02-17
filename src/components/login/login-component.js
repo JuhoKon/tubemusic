@@ -16,7 +16,8 @@ export default class Homepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false
+      active: false,
+      error: ""
     };
     // redirect to home if already logged in
     if (authenticationService.currentUserValue) {
@@ -36,12 +37,18 @@ export default class Homepage extends Component {
     this.setState({
       loading: true
     });
-    await authenticationService.login(
+    /*await authenticationService.login(
       "juh3do.ko3sdntdiainen@hotmail.fi",
       "kidasa3sdadsdasdask"
-    );
-    //await authenticationService.login(username, password);
-    this.props.history.push("/");
+    );*/
+    let res = await authenticationService.login(username, password);
+    if (!res) {
+      this.props.history.push("/");
+    }
+    this.setState({
+      error: res
+    });
+    //this.props.history.push("/");
   }
   signUpSubmit = e => {
     e.preventDefault();
@@ -54,6 +61,7 @@ export default class Homepage extends Component {
     console.log(this.state);
     return (
       <div className={this.state.active ? "ss right-panel-active" : "ss"}>
+        <h1 className="position">WELCOME TO TUBEMUSIC</h1>
         <Container id="login-container">
           <Container className="form-container sign-up-container">
             <Form onSubmit={this.signUpSubmit}>
@@ -92,13 +100,16 @@ export default class Homepage extends Component {
             <Form onSubmit={this.signInSubmit}>
               <h1>Sign in</h1>
               <hr />
+              <div className="error">{this.state.error}</div>
+              <hr />
+
               <FormGroup>
                 <Input
                   name="email"
                   id="email"
                   type="email"
                   placeholder="Email"
-                  autoComplete="email"
+                  autoComplete="username"
                   onChange={this.onChange}
                 />
               </FormGroup>
@@ -148,8 +159,6 @@ export default class Homepage extends Component {
             </div>
           </div>
         </Container>
-
-        <Button onClick={this.login}>d</Button>
       </div>
     );
   }
