@@ -2,10 +2,14 @@
   text-align: center;
 }
 body > #root > div {
-  height: 100vh;
-  overflow-y: hidden !important;
+  height: 100%;
+  min-height: 100vh;
   background-color: #ffffff;
   background-image: linear-gradient(315deg, #d7e1ec 0%, #ffffff 74%);
+}
+html {
+  height: 100%;
+  margin: 0;
 }
 .App-logo {
   height: 40vmin;
@@ -41,4 +45,30 @@ body > #root > div {
 .btn-margin {
   margin-right: 4px;
   margin-left: 4px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .btn {
+    height: 2em;
+  }
+  .card-text {
+    font-size: 0.9em !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 }

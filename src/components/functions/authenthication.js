@@ -8,7 +8,7 @@ try {
 } catch {
   localStorage.removeItem("token");
 }
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const currentUserSubject = new BehaviorSubject(
   JSON.parse(localStorage.getItem("token"))
 );
@@ -45,7 +45,7 @@ function logout() {
   localStorage.removeItem("token");
   currentUserSubject.next(null);
 }
-function signup() {}
+function signup() {} //TODO ..duh
 
 async function loadUser() {
   return axios

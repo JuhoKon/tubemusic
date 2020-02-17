@@ -19,7 +19,7 @@ class Link extends Component {
                 color="danger"
                 onClick={this.deletePlaylist.bind(this, this.props)}
               >
-                Delete
+                x
               </Button>
               <Button className="btn btn-primary float-right" color="info">
                 Edit
