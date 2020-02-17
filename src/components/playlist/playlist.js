@@ -129,7 +129,7 @@ class Playlist extends Component {
     //console.log(filteredData);
     return (
       <div>
-        <div className="btn-group">
+        <div className="btn-group ">
           <Button
             className="float-left btn-margin"
             color="info"
@@ -143,7 +143,7 @@ class Playlist extends Component {
             playlistName={this.state.playlistName}
           />
           <LoadPlaylistModal
-            name="Available playlists"
+            name="Playlists"
             deletePlaylist={this.props.deletePlaylist}
             getPlayList={this.props.getPlayList}
             playlists={playlists}
@@ -163,9 +163,10 @@ class Playlist extends Component {
             onClick={this.addPlaylistToQueue.bind(this, filteredData)}
             disabled={this.props.playlist[0] ? false : true}
           >
-            + Queue
+            + Q
           </Button>
         </div>
+
         <br />
         <br />
         <p className="float-left">

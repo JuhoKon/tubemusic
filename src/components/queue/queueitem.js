@@ -54,7 +54,7 @@ class Queueitem extends Component {
                 <div className="placeforbutton">
                   {this.props.editMode ? (
                     <Button
-                      className="btn btn-primary float-right"
+                      className="btn btn-primary btn-remove float-right"
                       color="danger"
                       onClick={this.onRemoveClick.bind(this, this.props)}
                     >
