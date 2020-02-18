@@ -135,7 +135,7 @@ export default class Homepage extends Component {
                 <button className={this.state.loading ? "loading" : ""}>
                   Sign In
                 </button>
-                {this.state.loading ? <div class="spin"></div> : ""}
+                {this.state.loading ? <div className="spin"></div> : ""}
               </div>
             </Form>
           </Container>
