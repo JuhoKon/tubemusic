@@ -17,7 +17,8 @@ export default class Homepage extends Component {
     super(props);
     this.state = {
       active: false,
-      error: ""
+      error: "",
+      SignUpError: ""
     };
     // redirect to home if already logged in
     if (authenticationService.currentUserValue) {
@@ -55,8 +56,36 @@ export default class Homepage extends Component {
     });
     //this.props.history.push("/");
   }
+  async signUp(newUser) {
+    this.setState({
+      loading: true
+    });
+    await timeout(1500);
+    let res = await authenticationService.signup(newUser);
+    this.setState({
+      loading: false
+    });
+    if (!res) {
+      this.props.history.push("/");
+    }
+    if (res && res.data.error[0]) {
+      let data = res.data.error[0];
+      this.setState({
+        SignUpError: data.name || data.email || data.password || res.data.error
+      });
+    }
+  }
   signUpSubmit = e => {
     e.preventDefault();
+    const { signUpName, signUpEmail, signUpPassword } = this.state;
+    const role = "User";
+    const newUser = {
+      signUpName,
+      signUpEmail,
+      signUpPassword,
+      role
+    };
+    this.signUp(newUser);
   };
   signInSubmit = e => {
     e.preventDefault();
@@ -71,22 +100,34 @@ export default class Homepage extends Component {
           <Container className="form-container sign-up-container">
             <Form onSubmit={this.signUpSubmit}>
               <h1>Create an account</h1>
-              <hr />
+              <br />
+              {this.state.SignUpError ? (
+                <div className="error2">{this.state.SignUpError}</div>
+              ) : (
+                <span className="span2">
+                  Please fill in the form to create a new account!
+                </span>
+              )}
+              <br />
               <FormGroup>
                 <Input
                   name="signUpName"
+                  autoComplete="username"
                   type="text"
                   placeholder="Name"
                   onChange={this.onChange}
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
                 <Input
                   name="signUpEmail"
+                  autoComplete="username"
                   type="email"
                   autoComplete="email"
                   placeholder="Email"
                   onChange={this.onChange}
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
@@ -96,20 +137,29 @@ export default class Homepage extends Component {
                   placeholder="Password"
                   autoComplete="current-password"
                   onChange={this.onChange}
+                  required={true}
                 />
               </FormGroup>
-              <button className={this.state.loading ? "loading" : ""}>
-                Sign Up
-              </button>
+              <div>
+                <button className={this.state.loading ? "loading" : ""}>
+                  {this.state.loading ? "Loading..." : "Sign up"}
+                </button>
+                {this.state.loading ? <div className="spin"></div> : ""}
+              </div>
             </Form>
           </Container>
           <Container className="form-container sign-in-container">
             <Form onSubmit={this.signInSubmit}>
               <h1>Sign in</h1>
-              <hr />
-              <div className="error">{this.state.error}</div>
-              <hr />
-
+              <br />
+              {this.state.error ? (
+                <div className="error">{this.state.error}</div>
+              ) : (
+                <span className="span2">
+                  Please login using your email and password!
+                </span>
+              )}
+              <br />
               <FormGroup>
                 <Input
                   name="email"
@@ -118,6 +168,7 @@ export default class Homepage extends Component {
                   placeholder="Email"
                   autoComplete="username"
                   onChange={this.onChange}
+                  required={true}
                 />
               </FormGroup>
               <FormGroup>
@@ -128,12 +179,13 @@ export default class Homepage extends Component {
                   placeholder="Password"
                   autoComplete="current-password"
                   onChange={this.onChange}
+                  required={true}
                 />
               </FormGroup>
               <a href="#">Forgot your password?</a>
               <div>
                 <button className={this.state.loading ? "loading" : ""}>
-                  Sign In
+                  {this.state.loading ? "Signing in..." : "Sign in"}
                 </button>
                 {this.state.loading ? <div className="spin"></div> : ""}
               </div>

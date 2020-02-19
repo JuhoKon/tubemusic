@@ -28,29 +28,49 @@ function newToken(token) {
   currentUserSubject.next(token);
   localStorage.setItem("token", JSON.stringify(token));
 }
-function login(email, password) {
+async function login(email, password) {
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
   const body = JSON.stringify({ email, password });
-  return axios
-    .post("http://localhost:8080/auth", body, config)
-    .then(res => {
-      currentUserSubject.next(res.data);
-      localStorage.setItem("token", JSON.stringify(res.data));
-    })
-    .catch(e => {
-      return e.response.data.msg;
-    });
+  try {
+    const res = await axios.post("http://localhost:8080/auth", body, config);
+    currentUserSubject.next(res.data);
+    localStorage.setItem("token", JSON.stringify(res.data));
+  } catch (e) {
+    return e.response.data.msg;
+  }
   //error handling?
 }
 function logout() {
   localStorage.removeItem("token");
   currentUserSubject.next(null);
 }
-function signup() {} //TODO ..duh
+function signup(newUser) {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  console.log(newUser);
+  const body = JSON.stringify({
+    name: newUser.signUpName,
+    email: newUser.signUpEmail,
+    role: "User",
+    password: newUser.signUpPassword
+  });
+  return axios
+    .post("http://localhost:8080/users/create", body, config)
+    .then(res => {
+      currentUserSubject.next(res.data);
+      localStorage.setItem("token", JSON.stringify(res.data));
+    })
+    .catch(err => {
+      return err.response;
+    });
+} //TODO ..duh
 
 async function loadUser() {
   return axios
