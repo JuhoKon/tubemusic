@@ -46,7 +46,11 @@ class NavbarComponent extends Component {
       });
     return (
       <div>
-        <Navbar color="light" light expand="md" id="navbar">
+        <Navbar
+          className="navbar navbar-dark navbar-expand-lg"
+          expand="md"
+          id="navbar"
+        >
           <NavbarBrand href="/">TubeMusic</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
