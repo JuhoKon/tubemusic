@@ -188,7 +188,7 @@ export default class Player extends Component {
                     <td>
                       <FormGroup>
                         <Button
-                          className="btn-controls"
+                          className="btn-controls btn-secondary"
                           onClick={this.handlePlayPause}
                         >
                           {playing ? "Pause" : "Play"}
@@ -196,21 +196,21 @@ export default class Player extends Component {
 
                         <Button
                           disabled={this.props.array[0] ? false : true}
-                          className="btn-controls"
+                          className="btn-controls btn-secondary"
                           onClick={this.handleEnded}
                         >
                           Play from queue
                         </Button>
                         <Button
                           disabled={this.props.array[0] ? false : true}
-                          className="btn-controls"
+                          className="btn-controls btn-secondary"
                           onClick={this.handleEnded}
                         >
                           Play next song
                         </Button>
                         <Button
                           disabled={this.state.history[0] ? false : true}
-                          className="btn-controls float-right"
+                          className="btn-controls btn-secondary float-right"
                           onClick={this.toggle}
                         >
                           History
