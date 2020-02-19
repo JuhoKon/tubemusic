@@ -52,3 +52,69 @@
   position: relative;
   transform: translateY(100px);
 }
+.homepage1.col-sm-4 {
+  color: #fff;
+
+  min-height: 100vh;
+}
+.homepage2.col-sm-4 {
+  color: #fff;
+  min-height: 100vh;
+}
+.homepage2.col-sm-4 {
+  color: #fff;
+  min-height: 100vh;
+}
+.homepage-div {
+  background-image: radial-gradient(
+    circle farthest-corner at -0.4% 112%,
+    rgba(102, 51, 204, 1) 0%,
+    rgba(244, 111, 111, 1) 92.7%
+  );
+}
+.ReactVirtualized__Grid.ReactVirtualized__List {
+  background-color: transparent;
+}
+.card {
+  background-color: transparent !important;
+}
+.div #videolist {
+  background-color: transparent !important;
+}
+button.btn-secondary {
+  outline: none !important;
+  border: none !important;
+  background-color: #0000003d;
+  transition: transform 80ms ease-in;
+}
+button.btn-secondary:hover {
+  background-color: #0000003d;
+}
+button.btn-secondary:active {
+  border: none !important;
+  background-color: #d042a8;
+  transform: scale(0.92);
+  box-shadow: 0 0 0 0 !important;
+}
+button.btn-secondary:active:focus {
+  outline: none !important;
+  border: none !important;
+  background-color: #d042a8 !important;
+}
+button.btn-secondary:focus:active {
+  outline: none !important;
+  border: none !important;
+  background-color: #d042a8;
+}
+
+button.btn-secondary:focus {
+  outline: none !important;
+  border: none !important;
+  background-color: #0000003d;
+  box-shadow: 0 0 0 0;
+}
+
+button.btn-secondary.disabled {
+  border: none !important;
+  background-color: #0000003d;
+}

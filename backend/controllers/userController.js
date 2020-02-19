@@ -23,7 +23,7 @@ exports.create = function(req, res, next) {
   //validation is done in middleware, but double checking here
   //(uservalidator.js)
   if (!req.body.name || !req.body.email || !req.body.password) {
-    return res.status(400).json({ err: "Please enter all fields" });
+    return res.status(400).json({ error: "Please enter all fields" });
   }
   //Check if there's an entry with the email
   User.findOne({ email: email })
@@ -34,7 +34,7 @@ exports.create = function(req, res, next) {
           //in case email and username are both taken.
           resSent = true;
           return res.status(400).json({
-            err: "The email already exists. Please use a different email"
+            error: "The email already exists. Please use a different email"
           });
         }
       }
@@ -49,7 +49,8 @@ exports.create = function(req, res, next) {
           //in case email and username are both taken.
           resSent = true;
           return res.status(400).json({
-            err: "The username already exists. Please use a different username"
+            error:
+              "The username already exists. Please use a different username"
           });
         }
       }

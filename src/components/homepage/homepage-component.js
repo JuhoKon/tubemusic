@@ -475,11 +475,11 @@ export default class Homepage extends Component {
     const playlist = this.state.playlist;
     //console.log(this.state.private);
     return (
-      <div>
-        <br />
+      <div className="homepage-div">
         <div className="container-fluid">
           <Row>
-            <Col sm="4">
+            <Col sm="4" className="homepage1">
+              <br />
               <Player
                 ref={this.ref}
                 array={queue}
@@ -503,7 +503,8 @@ export default class Homepage extends Component {
                 setQueue={this.setQueue}
               />
             </Col>
-            <Col sm="4">
+            <Col sm="4" className="homepage2">
+              <br />
               <Playlist
                 userName={this.state.userName}
                 userRole={this.state.userRole}
@@ -529,7 +530,8 @@ export default class Homepage extends Component {
               />
             </Col>
 
-            <Col sm="4">
+            <Col sm="4" className="homepage3">
+              <br />
               <Search handleSubmit={this.handleSubmit} />
               <hr />
               <Videolist

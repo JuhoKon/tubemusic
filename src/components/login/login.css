@@ -182,6 +182,17 @@ h1.position {
   border-radius: 10px;
   color: #fff;
 }
+.error2 {
+  background-color: red;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 10px;
+  color: #fff;
+}
+span.span2 {
+  color: black;
+  font-size: 0.8em !important;
+}
 button.loading {
   animation: load-animate infinite linear 1.5s;
 }

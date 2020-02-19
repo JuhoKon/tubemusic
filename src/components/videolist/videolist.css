@@ -17,7 +17,7 @@
   padding: 1rem !important;
 }
 #videolist {
-  background-color: #f8f9fa !important;
+  background-color: transparent !important;
   max-height: 700px;
   overflow-y: scroll;
 }
@@ -49,5 +49,7 @@
   transform: translate(-50%, -50%);
 }
 .card-2 {
+  color: #fff;
+  background-color: transparent !important;
   height: auto !important;
 }

@@ -26,14 +26,6 @@ class AdminPlaylistModal extends Component {
     console.log(playlists);
     return (
       <div>
-        <Button
-          disabled={playlists ? false : true}
-          className="btn-margin"
-          onClick={this.toggle}
-          href="#"
-        >
-          {this.props.name}
-        </Button>
         <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
           <ModalHeader className="mb-4" toggle={this.props.toggle}>
             {this.props.name}

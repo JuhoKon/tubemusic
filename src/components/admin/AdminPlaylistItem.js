@@ -75,7 +75,6 @@ class AdminPlaylistItem extends Component {
             </Row>
           </CardBody>
         </Card>
-
         <AdminPlaylistModal
           isOpen={this.state.modal}
           toggle={this.toggle}
