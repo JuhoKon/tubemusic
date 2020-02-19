@@ -49,11 +49,13 @@ export default class Homepage extends Component {
       loading: false
     });
     if (!res) {
+      //no res => all OK
       this.props.history.push("/");
+    } else {
+      this.setState({
+        error: res
+      });
     }
-    this.setState({
-      error: res
-    });
     //this.props.history.push("/");
   }
   async signUp(newUser) {
