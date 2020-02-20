@@ -305,7 +305,7 @@ class PlaylistModal extends Component {
                 </h3>
                 {this.state.notFoundArray.map(({ title, artistName }) => (
                   <span id="notFoundItem" key={title}>
-                    <i>{title}</i> by <i>{artistName} </i>
+                    <p>{title}</p> by <p>{artistName} </p>
                     <br />
                   </span>
                 ))}
@@ -376,8 +376,10 @@ class PlaylistModal extends Component {
               </Col>
               <Col xs="6" sm="6">
                 <div id="lists">
-                  {filteredData.length} songs
-                  <span className="float-right">By {this.props.ownerName}</span>
+                  <p>{filteredData.length} songs</p>
+                  <span className="float-right filterSpan">
+                    By {this.props.ownerName}
+                  </span>
                   <br />
                   <Input
                     value={filter}

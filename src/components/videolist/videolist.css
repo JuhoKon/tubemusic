@@ -19,7 +19,7 @@
 #videolist {
   background-color: transparent !important;
   max-height: 700px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .btn-item {
   font-size: small !important;

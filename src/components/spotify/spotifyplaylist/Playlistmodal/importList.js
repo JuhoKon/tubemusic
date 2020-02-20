@@ -62,9 +62,9 @@ class ImportList extends Component {
     return (
       <div>
         <br />
-        Title &emsp;&emsp; {this.props.toBeImportedPlaylist.length} songs in the
-        list.
-        <span className="float-right">Artist</span>
+        <p>{this.props.toBeImportedPlaylist.length} songs in the list.</p>
+
+        <br />
         <br />
         <br />
         <AutoSizer>

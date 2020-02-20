@@ -30,7 +30,11 @@ class SpotifyPlaylist extends Component {
           Click on a playlist to see what songs there are, and to choose which
           songs will be imported.
         </p>
-        <div id="spotifyPlaylist">
+        <div
+          id={
+            this.state.userPlaylists.length > 0 ? "spotifyPlaylist" : "template"
+          }
+        >
           {this.state.loading ? (
             <div className="loadingPlace">
               <LoadingSpinner />
