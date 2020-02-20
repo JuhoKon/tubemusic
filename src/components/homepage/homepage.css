@@ -77,6 +77,9 @@
 }
 .card {
   background-color: transparent !important;
+  color: #fff !important;
+  text-align: center;
+  font-family: "Itim", cursive;
 }
 .div #videolist {
   background-color: transparent !important;
@@ -84,37 +87,82 @@
 button.btn-secondary {
   outline: none !important;
   border: none !important;
-  background-color: #0000003d;
+  background-color: #0000003d !important;
   transition: transform 80ms ease-in;
 }
-button.btn-secondary:hover {
-  background-color: #0000003d;
-}
-button.btn-secondary:active {
+.btn-secondary {
+  outline: none !important;
   border: none !important;
-  background-color: #d042a8;
-  transform: scale(0.92);
+  background-color: #0000003d !important;
+  transition: transform 80ms ease-in;
+}
+button.btn-secondary:hover,
+.btn-secondary:hover {
+  background-color: #d1d1d13d !important;
+}
+button.btn-secondary:active,
+.btn-secondary:active {
+  border: none !important;
+  background-color: #d1d1d13d !important;
+  transform: scale(0.92) !important;
   box-shadow: 0 0 0 0 !important;
 }
-button.btn-secondary:active:focus {
+button.btn-secondary:active:focus,
+.bt-secondary:active:focus {
   outline: none !important;
   border: none !important;
-  background-color: #d042a8 !important;
+  background-color: #d1d1d13d !important;
 }
-button.btn-secondary:focus:active {
+button.btn-secondary:focus:active,
+.btn-secondary:focus:active {
   outline: none !important;
   border: none !important;
-  background-color: #d042a8;
 }
 
-button.btn-secondary:focus {
+button.btn-secondary:focus,
+.btn-secondary:focus {
   outline: none !important;
   border: none !important;
-  background-color: #0000003d;
+  background-color: #0000003d !important;
   box-shadow: 0 0 0 0;
 }
 
 button.btn-secondary.disabled {
   border: none !important;
   background-color: #0000003d;
+}
+.modal-content {
+  animation-name: blurEffect;
+  animation-duration: 0.7s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  background-color: rgba(0, 7, 70, 0.66) !important;
+}
+h5.modal-title {
+  color: #fff !important;
+}
+p {
+  color: #fff;
+}
+.modal-header span {
+  color: #fff;
+}
+label {
+  color: #fff;
+  animation-name: blurEffect;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+@keyframes blurEffect {
+  0% {
+    opacity: 1;
+    left: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+  }
 }

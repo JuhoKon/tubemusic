@@ -29,8 +29,9 @@ class LoadPlaylistModal extends Component {
       <div>
         <Button
           disabled={playlists ? false : true}
-          className="btn-margin"
+          className="btn-margin btn btn-secondary button"
           onClick={this.toggle}
+          color="secondary"
           href="#"
         >
           {this.props.name}

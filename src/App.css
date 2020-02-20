@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Reem+Kufi&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Itim&display=swap");
 .App {
   text-align: center;
-  font-family: "Reem Kufi", sans-serif;
+  font-family: "Itim", cursive;
   font-size: 1.03em;
 }
 body > #root > div {

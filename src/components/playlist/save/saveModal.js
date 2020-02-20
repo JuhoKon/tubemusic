@@ -67,7 +67,7 @@ class SaveModal extends Component {
     return (
       <div>
         <Button
-          className="float-right btn-margin"
+          className="float-right btn-margin btn btn-secondary button"
           onClick={this.toggle}
           href="#"
           color="primary"
@@ -109,6 +109,7 @@ class SaveModal extends Component {
                     Make the playlist private?
                   </Label>
                 </div>
+                <br />
                 <Button className="btn btn-primary my-4 btn-block">Save</Button>
               </FormGroup>
             </ModalBody>

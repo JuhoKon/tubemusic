@@ -308,7 +308,6 @@ export default class Homepage extends Component {
   async loadPlaylist(id) {
     //loads a single database based on the id
     const result = await getPlayListById(id);
-    console.log(result.data);
 
     this.setState({
       playlist: result.data.playlist,
@@ -318,6 +317,7 @@ export default class Homepage extends Component {
       private: result.data.private,
       playlistOwner: result.data.owner
     });
+    return "OK";
   }
   async getPlaylist() {
     //called when making changes to the playlists, don't remove

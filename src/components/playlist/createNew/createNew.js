@@ -38,10 +38,10 @@ class CreateNew extends Component {
     return (
       <div>
         <Button
-          className="float-left btn-margin"
+          className="float-left btn-margin btn-secondary btn button"
           onClick={this.toggle}
           href="#"
-          color="primary"
+          color="secondary"
         >
           Create new
         </Button>
@@ -62,7 +62,7 @@ class CreateNew extends Component {
                   onChange={this.onChange}
                 ></Input>
                 <div className="check">
-                  <Label check className="float-right">
+                  <Label check className="float-right ">
                     <Input
                       name="checked"
                       onChange={this.boxChange}

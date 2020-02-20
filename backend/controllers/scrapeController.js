@@ -1,6 +1,8 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
 
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const handleScrape = async (term, counter) => {
   try {
     let url = encodeURI(term);
@@ -42,7 +44,6 @@ const handleScrape = async (term, counter) => {
     throw err;
   }
 };
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 exports.searchScrape = async function(req, res, next) {
   //console.log(req.query.term);

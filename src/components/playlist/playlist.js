@@ -131,7 +131,7 @@ class Playlist extends Component {
       <div>
         <div className="btn-group ">
           <Button
-            className="float-left btn-margin"
+            className="float-left btn-margin btn-secondary"
             color="info"
             onClick={this.playPlaylist.bind(this, filteredData)}
             disabled={this.props.playlist[0] ? false : true}
@@ -159,7 +159,7 @@ class Playlist extends Component {
             playlistOwner={this.state.playlistOwner}
           />
           <Button
-            className="float-right btn-margin "
+            className="float-right btn-margin btn btn-secondary button"
             color="info"
             onClick={this.addPlaylistToQueue.bind(this, filteredData)}
             disabled={this.props.playlist[0] ? false : true}
