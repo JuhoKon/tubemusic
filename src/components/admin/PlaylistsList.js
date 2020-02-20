@@ -46,6 +46,8 @@ class PlaylistsList extends Component {
     return (
       <div>
         All playlists
+        <br />
+        <br />
         <AutoSizer>
           {({ width }) => (
             <List

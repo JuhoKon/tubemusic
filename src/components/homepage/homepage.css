@@ -72,6 +72,24 @@
     rgba(244, 111, 111, 1) 92.7%
   );
 }
+.homepage-div2 {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    54deg,
+    rgba(2, 0, 36, 0.2049194677871149) 0%,
+    rgba(5, 241, 219, 0.42620798319327735) 15%,
+    rgba(43, 3, 95, 0.3253676470588235) 41%,
+    rgba(3, 34, 95, 0.5186449579831933) 62%,
+    rgba(8, 183, 190, 0.2665441176470589) 73%,
+    rgba(7, 231, 217, 1) 100%
+  );
+
+  animation-name: blurEffectBackground;
+  animation-duration: 2.16666s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
 .ReactVirtualized__Grid.ReactVirtualized__List {
   background-color: transparent;
 }
@@ -165,4 +183,30 @@ label {
   100% {
     opacity: 1;
   }
+}
+@keyframes blurEffectBackground {
+  0% {
+    opacity: 1;
+    left: 0;
+    backdrop-filter: brightness(0%);
+  }
+  50% {
+    opacity: 1;
+    backdrop-filter: brightness(70%) blur(4px) hue-rotate(20deg);
+  }
+  100% {
+    opacity: 1;
+    backdrop-filter: brightness(0%);
+  }
+}
+.Toaster__alert {
+  background-color: rgba(59, 30, 63, 0.63);
+  color: #fff;
+}
+.Toaster__alert span {
+  color: #fff;
+}
+.loadingPlace {
+  background-color: #f8f9fa2b;
+  color: #fff;
 }

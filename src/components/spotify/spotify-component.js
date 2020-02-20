@@ -117,11 +117,11 @@ export default class Spotify extends Component {
     //console.log(this.state);
 
     return (
-      <div>
+      <div className="homepage-div">
         <h3>Import your spotify playlists into the app!</h3>
         <div className="container-fluid">
           <Row>
-            <Col sm="4">
+            <Col sm="4" className="spotifypage1">
               {this.state.auth ? (
                 <span>
                   Hello, you are logged in as <br />
@@ -131,7 +131,7 @@ export default class Spotify extends Component {
                 "Please login to use the playlist importer!"
               )}
             </Col>
-            <Col sm="4">
+            <Col sm="4" className="spotifypage2">
               <Button
                 href={
                   "https://accounts.spotify.com/authorize?client_id=dc20085012814f3d8cab4b36a4144393&response_type=token&redirect_uri=http:%2F%2Flocalhost:3000%2Fspotify&show_dialog=true&scope=playlist-read-private%20playlist-read-collaborative%20user-follow-read"
@@ -140,7 +140,7 @@ export default class Spotify extends Component {
                 Log in
               </Button>
             </Col>
-            <Col sm="4">
+            <Col sm="4" className="spotifypage3">
               {this.state.auth ? (
                 <SpotifyPlaylist
                   Userplaylists={this.state.userPlaylists}

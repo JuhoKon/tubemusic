@@ -467,15 +467,20 @@ export default class Homepage extends Component {
     });
   }
   render() {
+    const songs = ["Rex Orange County - Sunflower", "...more songs "]; //easter eggs
     //console.log(this.state.error); /* ----TO CLEAN UP --- and switch to webscraping instead of youtube API (it sucks)*/
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
     // console.log(this.props);
     const playlist = this.state.playlist;
-    //console.log(this.state.private);
+    console.log(this.state.title);
     return (
-      <div className="homepage-div">
+      <div
+        className={
+          songs.includes(this.state.title) ? "homepage-div2" : "homepage-div"
+        }
+      >
         <div className="container-fluid">
           <Row>
             <Col sm="4" className="homepage1">

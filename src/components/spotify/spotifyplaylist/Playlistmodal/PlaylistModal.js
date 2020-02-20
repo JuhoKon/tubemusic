@@ -331,7 +331,7 @@ class PlaylistModal extends Component {
               <div id="LoadingSpot">
                 <h2 className="loadingTitle">Importing songs</h2>
                 <div id="spinner">
-                  <LoadingSpinner size={35} />
+                  <LoadingSpinner size={35} color={"#17a2b8"} />
                 </div>
                 <span className="importedNumbers" id="creatingInfo">
                   {this.state.progressValue < 100

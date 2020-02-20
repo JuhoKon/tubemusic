@@ -62,7 +62,8 @@
   left: 27%;
   top: 10%;
   position: absolute;
-  background-color: #ffffff;
+  background-color: #0b0b10f2;
+  color: white;
   width: 800px;
   height: 600px;
   z-index: 9999;
