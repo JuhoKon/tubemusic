@@ -4,7 +4,8 @@
 @import url("https://fonts.googleapis.com/css?family=Reem+Kufi&display=swap");
 .ss {
   font-family: "Reem Kufi", sans-serif;
-  background: #f6f5f7;
+  background-color: whitesmoke;
+
   height: 100vh;
   display: flex;
   flex-direction: column;
