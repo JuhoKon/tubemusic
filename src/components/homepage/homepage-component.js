@@ -169,9 +169,14 @@ export default class Homepage extends Component {
     this.setState({
       queue: itemArray
     });
-    toaster.notify(<span>Now playing: {this.state.playlistName}</span>, {
-      duration: 1200
-    });
+    toaster.notify(
+      <span className="styled-toast">
+        Now playing: {this.state.playlistName}
+      </span>,
+      {
+        duration: 1200
+      }
+    );
     //this.onPlay(itemArray[0]);
   }
   addPlaylistToQueue(playlist) {

@@ -118,3 +118,9 @@ button.btn-secondary.disabled {
   border: none !important;
   background-color: #0000003d;
 }
+span.styled-toast {
+  background-color: antiquewhite;
+}
+.div#2.Toaster__alert {
+  background-color: black !important;
+}
