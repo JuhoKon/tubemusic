@@ -32,7 +32,7 @@ class SaveModal extends Component {
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
-      console.log(this.props.isPrivate);
+      //console.log(this.props.isPrivate);
       this.setState({
         playlistName: this.props.playlistName,
         checked: this.props.isPrivate,
@@ -67,7 +67,7 @@ class SaveModal extends Component {
     return (
       <div>
         <Button
-          className="float-right btn-margin"
+          className="float-right btn-margin btn btn-secondary button"
           onClick={this.toggle}
           href="#"
           color="primary"
@@ -84,7 +84,10 @@ class SaveModal extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
             Save playlist as
+            <br />
+            <br />
           </ModalHeader>
+
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
               <FormGroup>
@@ -109,6 +112,7 @@ class SaveModal extends Component {
                     Make the playlist private?
                   </Label>
                 </div>
+                <br />
                 <Button className="btn btn-primary my-4 btn-block">Save</Button>
               </FormGroup>
             </ModalBody>

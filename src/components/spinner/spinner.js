@@ -16,7 +16,7 @@ export default class LoadingSpinner extends React.Component {
         <PacmanLoader
           size={this.state.size}
           //size={"150px"} this also works
-          color={"#36D7B7"}
+          color={this.props.color || "#c45a8e"}
           loading={this.state.loading}
         />
         <br />

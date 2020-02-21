@@ -205,7 +205,7 @@ class PlaylistModal extends Component {
       const contentDetails = await getContentDetails(result[0].id.videoId);
       trackObject["duration"] = contentDetails[0].contentDetails.duration;
       trackObject["uniqueId"] = Math.random();
-      console.log(trackObject);
+      //console.log(trackObject);
       tracksFromYoutube.push(trackObject);
       this.setState({
         progressValue: this.state.progressValue + step
@@ -230,7 +230,7 @@ class PlaylistModal extends Component {
       });
       alert("Error");
     }
-    console.log(res);
+    //console.log(res);
   }
   removeFromPlaylist(item) {
     if (!item) return;
@@ -305,7 +305,7 @@ class PlaylistModal extends Component {
                 </h3>
                 {this.state.notFoundArray.map(({ title, artistName }) => (
                   <span id="notFoundItem" key={title}>
-                    <i>{title}</i> by <i>{artistName} </i>
+                    <p>{title}</p> by <p>{artistName} </p>
                     <br />
                   </span>
                 ))}
@@ -331,7 +331,7 @@ class PlaylistModal extends Component {
               <div id="LoadingSpot">
                 <h2 className="loadingTitle">Importing songs</h2>
                 <div id="spinner">
-                  <LoadingSpinner size={35} />
+                  <LoadingSpinner size={35} color={"#17a2b8"} />
                 </div>
                 <span className="importedNumbers" id="creatingInfo">
                   {this.state.progressValue < 100
@@ -376,8 +376,10 @@ class PlaylistModal extends Component {
               </Col>
               <Col xs="6" sm="6">
                 <div id="lists">
-                  {filteredData.length} songs
-                  <span className="float-right">By {this.props.ownerName}</span>
+                  <p>{filteredData.length} songs</p>
+                  <span className="float-right filterSpan">
+                    By {this.props.ownerName}
+                  </span>
                   <br />
                   <Input
                     value={filter}

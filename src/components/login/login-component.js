@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import { authenticationService } from "../functions/authenthication";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-  Container
-} from "reactstrap";
+import { Form, FormGroup, Input, Container } from "reactstrap";
 import "./login.css";
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 //https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
@@ -124,7 +116,6 @@ export default class Homepage extends Component {
               <FormGroup>
                 <Input
                   name="signUpEmail"
-                  autoComplete="username"
                   type="email"
                   autoComplete="email"
                   placeholder="Email"
@@ -184,7 +175,7 @@ export default class Homepage extends Component {
                   required={true}
                 />
               </FormGroup>
-              <a href="#">Forgot your password?</a>
+              <a href="# ">Forgot your password?</a>
               <div>
                 <button className={this.state.loading ? "loading" : ""}>
                   {this.state.loading ? "Signing in..." : "Sign in"}

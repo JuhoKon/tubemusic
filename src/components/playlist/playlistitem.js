@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./playlist.css";
 import isEqual from "react-fast-compare";
-
 import "moment-duration-format";
 
 class Playlistitem extends Component {
@@ -48,25 +47,25 @@ class Playlistitem extends Component {
             <Col xs="2" sm="2">
               <div className="placeforbutton">
                 <Button
-                  className="btn btn-primary btn-item"
+                  className="button btn-secondary btn-item"
                   onClick={this.onPlayClick.bind(this, this.props)}
-                  color="primary"
+                  color="secondary"
                 >
                   Play
                 </Button>
               </div>
             </Col>
-            <Col xs="7" sm="7">
+            <Col xs="6" sm="6">
               <CardText>{this.props.title}</CardText>
             </Col>
-            <Col xs="1" sm="1">
+            <Col xs="2" sm="2">
               <small className="float-left">{this.props.duration}</small>
             </Col>
             <Col xs="2" sm="2">
               <div className="placeforbutton">
                 {this.props.editMode ? (
                   <Button
-                    className="btn btn-primary btn-remove float-right btn-item"
+                    className="btn btn-secondary btn-remove float-right btn-item"
                     color="danger"
                     onClick={this.onDeleteClick.bind(this, this.props)}
                   >
@@ -74,7 +73,7 @@ class Playlistitem extends Component {
                   </Button>
                 ) : (
                   <Button
-                    className="btn btn-primary float-right btn-item"
+                    className="btn btn-secondary float-right btn-item"
                     color="info"
                     onClick={this.onAddClick.bind(this, this.props)}
                   >

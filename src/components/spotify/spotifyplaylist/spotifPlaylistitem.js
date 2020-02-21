@@ -38,7 +38,7 @@ class PlaylistItem extends Component {
     let dataArray = [];
     let nextData = null;
     dataArray = data.items;
-    console.log(dataArray);
+    //console.log(dataArray);
     while (data.next !== null && typeof data.next !== "undefined") {
       nextData = await getRequestWithToken(token, data.next);
       // console.log(nextData);
@@ -98,7 +98,8 @@ class PlaylistItem extends Component {
         <a
           //href="# "
           style={{ cursor: "pointer" }}
-          onClick={this.clickOnPlayList.bind(this, this.state)}>
+          onClick={this.clickOnPlayList.bind(this, this.state)}
+        >
           <Card className="card">
             <CardBody>
               <Row>

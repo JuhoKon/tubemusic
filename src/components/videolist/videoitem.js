@@ -46,9 +46,9 @@ class Videoitem extends Component {
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
                   <Button
-                    className="btn btn-primary btn-item"
+                    className="btn btn-btn-secondary  btn-item"
                     onClick={this.onPlayClick.bind(this, this.props)}
-                    color="primary"
+                    color="secondary"
                   >
                     Play
                   </Button>
@@ -60,8 +60,8 @@ class Videoitem extends Component {
               <Col xs="1" sm="1">
                 <div className="placeforbutton">
                   <Button
-                    className="btn btn-primary float-right btn-item"
-                    color="info"
+                    className="btn btn-secondary  float-right btn-item"
+                    color="secondary"
                     onClick={this.onAddClick.bind(this, this.props)}
                   >
                     +Q

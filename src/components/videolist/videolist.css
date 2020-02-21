@@ -10,7 +10,7 @@
   font-size: 0.9em;
 }
 .card {
-  margin-bottom: 0.5rem;
+  /*margin-bottom: 0.5rem;*/
   min-height: 60px;
 }
 .card-body {
@@ -19,7 +19,7 @@
 #videolist {
   background-color: transparent !important;
   max-height: 700px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .btn-item {
   font-size: small !important;

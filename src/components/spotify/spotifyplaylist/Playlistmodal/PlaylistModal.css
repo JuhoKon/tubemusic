@@ -21,7 +21,7 @@
   left: 25%;
 }
 #lists {
-  height: 650px;
+  height: 700px;
 }
 #successImport {
   position: absolute;
@@ -31,7 +31,7 @@
   left: 37%;
   top: 0%;
   border-radius: 10px;
-  background-color: mediumspringgreen;
+  background-color: #009688;
 }
 #errorImport {
   position: absolute;
@@ -62,7 +62,8 @@
   left: 27%;
   top: 10%;
   position: absolute;
-  background-color: #ffffff;
+  background-color: #0b0b10f2;
+  color: white;
   width: 800px;
   height: 600px;
   z-index: 9999;
@@ -105,4 +106,19 @@ span.importedNumbers {
 #creatingInfo2 {
   left: 65%;
   top: 72%;
+}
+span.float-right.filterSpan {
+  padding-bottom: 9px;
+}
+
+/*TODO: do this better, this is sketchy */
+#lists > div > div:nth-child(1) > div {
+  border: rgb(255, 255, 255);
+  border-width: 1px;
+  border-style: groove;
+}
+#lists > div > div:nth-child(6) > div {
+  border: rgb(255, 255, 255);
+  border-width: 1px;
+  border-style: groove;
 }

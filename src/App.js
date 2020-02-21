@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/navbar/navbar-component";
 import "./App.css";
 import HomePage from "./components/homepage/homepage-component";
@@ -42,7 +42,7 @@ class App extends Component {
     }
   }
   componentDidMount() {
-    console.log("I mount");
+    //console.log("I mount");
 
     authenticationService.currentUser.subscribe(x => {
       //when change happens, this gets called
@@ -72,7 +72,7 @@ class App extends Component {
   }
   render() {
     const { currentUserInfo, token } = this.state;
-    console.log(currentUserInfo);
+    //console.log(currentUserInfo);
 
     return (
       <div className="App wrapper">

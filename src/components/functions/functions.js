@@ -208,7 +208,7 @@ export const getPlayListById = async id => {
 
 export const addUserPlaylist = async (playlistid, name, token) => {
   const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
-  let res = await axios
+  await axios
     .put("http://localhost:8080/users/addPlaylist", body, tokenConfig())
     .catch(err => {
       handleError(err);
@@ -227,7 +227,7 @@ export const deleteUserPlaylist = async (playlistid, token) => {
 };
 export const updateUserPlaylist = async (playlistid, name, token) => {
   const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
-  let res = await axios
+  await axios
     .put(
       `http://localhost:8080/users/editPlaylist${playlistid}`,
       body,
@@ -238,7 +238,7 @@ export const updateUserPlaylist = async (playlistid, name, token) => {
     });
 };
 export const tokenConfig = () => {
-  console.log("TokenCONFIG CONFIG OFIONG OFING");
+  //console.log("TokenCONFIG CONFIG OFIONG OFING");
   //gets called to each action needing auth
   //retrieves token
   //checks token if it's going to expire soon, if so, renew that token
@@ -256,7 +256,7 @@ export const tokenConfig = () => {
       window.location.reload(true);
     }
     const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
-    console.log(diff);
+    //console.log(diff);
     config.headers["x-auth-token"] = currentUser.token;
     if ((diff > -(60 * 65 * 1) + 30) & (diff < -10)) {
       //if token will expire in 1 hr 5mins 30 seconds && will not expire in 10seconds

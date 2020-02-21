@@ -1,5 +1,28 @@
 #spotifyPlaylist {
-  background-color: #f8f9fa !important;
+  background-color: transparent !important;
   height: 700px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  animation-name: blurEffect;
+  animation-duration: 0.32s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+.spotifypage1.col-sm-4 {
+  color: #fff;
+  min-height: 100vh;
+}
+.spotifypage2.col-sm-4 {
+  color: #fff;
+  min-height: 100vh;
+}
+.spotifypage3.col-sm-4 {
+  color: #fff;
+  min-height: 100vh;
+}
+h3 {
+  color: #fff;
+}
+span {
+  color: #fff;
 }

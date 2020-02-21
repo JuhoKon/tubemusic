@@ -26,7 +26,7 @@ class Queueitem extends Component {
     }
   }
   render() {
-    const fade = this.state.fade;
+    //const fade = this.state.fade;
     //console.log("queue item");
     return (
       <div>
@@ -36,9 +36,9 @@ class Queueitem extends Component {
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
                   <Button
-                    className="btn btn-primary btn-item"
+                    className="btn btn-secondary button btn-item"
                     onClick={this.onPlayClick.bind(this, this.props)}
-                    color="primary"
+                    color="secondary"
                   >
                     Play
                   </Button>
@@ -54,8 +54,8 @@ class Queueitem extends Component {
                 <div className="placeforbutton">
                   {this.props.editMode ? (
                     <Button
-                      className="btn btn-primary btn-remove float-right"
-                      color="danger"
+                      className="btn btn-secondary button float-right"
+                      color="secondary"
                       onClick={this.onRemoveClick.bind(this, this.props)}
                     >
                       x

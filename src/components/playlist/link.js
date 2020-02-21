@@ -1,9 +1,23 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardTitle, Button } from "reactstrap";
 
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 class Link extends Component {
-  loadPlaylist(playlist) {
-    this.props.loadPlaylist(playlist._id);
+  state = {
+    loading: false
+  };
+  async loadPlaylist(playlist) {
+    this.setState({
+      loading: true
+    });
+    await timeout(500);
+    let res = await this.props.loadPlaylist(playlist._id);
+    //console.log(res);
+    if (res) {
+      this.setState({
+        loading: false
+      });
+    }
   }
   deletePlaylist(playlist) {
     this.props.deletePlaylist(playlist._id);
@@ -21,15 +35,16 @@ class Link extends Component {
               >
                 x
               </Button>
-              <Button className="btn btn-primary float-right" color="info">
-                Edit
-              </Button>
               <Button
-                className="btn btn-primary float-left"
                 color="primary"
                 onClick={this.loadPlaylist.bind(this, this.props)}
+                className={
+                  this.state.loading
+                    ? "loading btn btn-primary float-left"
+                    : "btn btn-primary float-left"
+                }
               >
-                Load
+                {this.state.loading ? "Loading..." : "Load"}
               </Button>
             </span>
             <CardTitle style={{ textAlign: "center" }}>

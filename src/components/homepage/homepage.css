@@ -54,7 +54,6 @@
 }
 .homepage1.col-sm-4 {
   color: #fff;
-
   min-height: 100vh;
 }
 .homepage2.col-sm-4 {
@@ -72,11 +71,32 @@
     rgba(244, 111, 111, 1) 92.7%
   );
 }
+.homepage-div2 {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    54deg,
+    rgba(2, 0, 36, 0.2049194677871149) 0%,
+    rgba(5, 241, 219, 0.42620798319327735) 15%,
+    rgba(43, 3, 95, 0.3253676470588235) 41%,
+    rgba(3, 34, 95, 0.5186449579831933) 62%,
+    rgba(8, 183, 190, 0.2665441176470589) 73%,
+    rgba(7, 231, 217, 1) 100%
+  );
+
+  animation-name: blurEffectBackground;
+  animation-duration: 2.16666s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
 .ReactVirtualized__Grid.ReactVirtualized__List {
   background-color: transparent;
 }
 .card {
   background-color: transparent !important;
+  color: #fff !important;
+  text-align: center;
+  font-family: "Itim", cursive;
 }
 .div #videolist {
   background-color: transparent !important;
@@ -84,33 +104,43 @@
 button.btn-secondary {
   outline: none !important;
   border: none !important;
-  background-color: #0000003d;
+  background-color: #0000003d !important;
   transition: transform 80ms ease-in;
 }
-button.btn-secondary:hover {
-  background-color: #0000003d;
-}
-button.btn-secondary:active {
+.btn-secondary {
+  outline: none !important;
   border: none !important;
-  background-color: #d042a8;
-  transform: scale(0.92);
+  background-color: #0000003d !important;
+  transition: transform 80ms ease-in;
+}
+button.btn-secondary:hover,
+.btn-secondary:hover {
+  background-color: #d1d1d13d !important;
+}
+button.btn-secondary:active,
+.btn-secondary:active {
+  border: none !important;
+  background-color: #d1d1d13d !important;
+  transform: scale(0.92) !important;
   box-shadow: 0 0 0 0 !important;
 }
-button.btn-secondary:active:focus {
+button.btn-secondary:active:focus,
+.bt-secondary:active:focus {
   outline: none !important;
   border: none !important;
-  background-color: #d042a8 !important;
+  background-color: #d1d1d13d !important;
 }
-button.btn-secondary:focus:active {
+button.btn-secondary:focus:active,
+.btn-secondary:focus:active {
   outline: none !important;
   border: none !important;
-  background-color: #d042a8;
 }
 
-button.btn-secondary:focus {
+button.btn-secondary:focus,
+.btn-secondary:focus {
   outline: none !important;
   border: none !important;
-  background-color: #0000003d;
+  background-color: #0000003d !important;
   box-shadow: 0 0 0 0;
 }
 
@@ -118,9 +148,73 @@ button.btn-secondary.disabled {
   border: none !important;
   background-color: #0000003d;
 }
+<<<<<<< HEAD
 span.styled-toast {
   background-color: antiquewhite;
 }
 .div#2.Toaster__alert {
   background-color: black !important;
+=======
+.modal-content {
+  animation-name: blurEffect;
+  animation-duration: 0.7s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  background-color: rgba(27, 89, 132, 0.93) !important;
+}
+h5.modal-title {
+  color: #fff !important;
+}
+p {
+  color: #fff;
+}
+.modal-header span {
+  color: #fff;
+}
+
+label {
+  color: #fff;
+  animation-name: blurEffect;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+@keyframes blurEffect {
+  0% {
+    opacity: 1;
+    left: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes blurEffectBackground {
+  0% {
+    opacity: 1;
+    left: 0;
+    backdrop-filter: brightness(0%);
+  }
+  50% {
+    opacity: 1;
+    backdrop-filter: brightness(70%) blur(4px) hue-rotate(20deg);
+  }
+  100% {
+    opacity: 1;
+    backdrop-filter: brightness(0%);
+  }
+}
+.Toaster__alert {
+  background-color: rgba(59, 30, 63, 0.63);
+  color: #fff;
+}
+.Toaster__alert span {
+  color: #fff;
+}
+.loadingPlace {
+  background-color: #f8f9fa2b;
+  color: #fff;
+>>>>>>> 04f4ec4c08f8dff7cec7f8cce93ae781371bd8cc
 }

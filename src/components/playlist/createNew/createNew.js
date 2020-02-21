@@ -34,21 +34,24 @@ class CreateNew extends Component {
     this.setState({ checked: evt.target.checked });
   };
   render() {
-    console.log(this.state.checked);
+    //console.log(this.state.checked);
     return (
       <div>
         <Button
-          className="float-left btn-margin"
+          className="float-left btn-margin btn-secondary btn button"
           onClick={this.toggle}
           href="#"
-          color="primary"
+          color="secondary"
         >
           Create new
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
             Create a new playlist here :)
+            <br />
+            <br />
           </ModalHeader>
+
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
               <FormGroup>
@@ -62,7 +65,7 @@ class CreateNew extends Component {
                   onChange={this.onChange}
                 ></Input>
                 <div className="check">
-                  <Label check className="float-right">
+                  <Label check className="float-right ">
                     <Input
                       name="checked"
                       onChange={this.boxChange}

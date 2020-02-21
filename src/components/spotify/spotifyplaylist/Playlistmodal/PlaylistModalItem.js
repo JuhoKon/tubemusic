@@ -21,7 +21,7 @@ class PlaylistModalItem extends Component {
     this.props.removeFromPlaylist(props);
   }
   render() {
-    console.log("item");
+    //console.log("item");
     return (
       <div>
         <Card className="card">

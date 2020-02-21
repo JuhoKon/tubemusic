@@ -13,7 +13,7 @@
 }
 .navbar .navbar-brand:hover,
 .navbar .navbar-brand:focus {
-  color: #ffbbbc;
+  color: #ecf0f1;
 }
 .navbar .navbar-text {
   color: #ecf0f1;
@@ -23,7 +23,7 @@
 }
 .navbar .navbar-text a:hover,
 .navbar .navbar-text a:focus {
-  color: #ffbbbc;
+  color: #ecf0f1;
 }
 .navbar .navbar-nav .nav-link {
   color: #ecf0f1;
@@ -32,7 +32,7 @@
 }
 .navbar .navbar-nav .nav-link:not(.disabled):hover,
 .navbar .navbar-nav .nav-link:not(.disabled):focus {
-  color: #ffbbbc;
+  color: #ecf0f1;
 }
 .navbar .navbar-nav .nav-item.active .nav-link,
 .navbar .navbar-nav .nav-item.active .nav-link:hover,
@@ -40,8 +40,7 @@
 .navbar .navbar-nav .nav-item.show .nav-link,
 .navbar .navbar-nav .nav-item.show .nav-link:hover,
 .navbar .navbar-nav .nav-item.show .nav-link:focus {
-  color: #ffbbbc;
-  background-color: #c0392b;
+  color: #ecf0f1;
 }
 .navbar .navbar-toggle {
   border-color: #c0392b;
@@ -61,5 +60,5 @@
   color: #ecf0f1;
 }
 .navbar .navbar-link:hover {
-  color: #ffbbbc;
+  color: #ecf0f1;
 }

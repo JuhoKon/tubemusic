@@ -41,8 +41,8 @@ class ImportList extends Component {
   removeFromPlaylist(item) {
     if (!item) return;
     if (typeof this.state.toBeImportedPlaylist[0] === "undefined") return;
-    console.log(this.state.toBeImportedPlaylist[0]);
-    console.log(item);
+    // console.log(this.state.toBeImportedPlaylist[0]);
+    //console.log(item);
     for (let i = 0; i < this.state.toBeImportedPlaylist.length; i++) {
       if (this.state.toBeImportedPlaylist[i].id === item.id) {
         //console.log(this.state.toBeImportedPlaylist[i]);
@@ -62,9 +62,9 @@ class ImportList extends Component {
     return (
       <div>
         <br />
-        Title &emsp;&emsp; {this.props.toBeImportedPlaylist.length} songs in the
-        list.
-        <span className="float-right">Artist</span>
+        <p>{this.props.toBeImportedPlaylist.length} songs in the list.</p>
+
+        <br />
         <br />
         <br />
         <AutoSizer>

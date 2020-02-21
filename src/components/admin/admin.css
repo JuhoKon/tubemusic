@@ -1,0 +1,15 @@
+.adminpage1.col-sm-2 {
+  color: #fff;
+  min-height: 100vh;
+}
+.adminpage2.col-sm-6 {
+  color: #fff;
+  min-height: 100vh;
+}
+.adminpage3.col-sm-4 {
+  color: #fff;
+  min-height: 100vh;
+}
+small.text-muted {
+  color: #fff !important;
+}
