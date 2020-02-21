@@ -43,7 +43,7 @@ class AdminPlaylistItem extends Component {
     });
   };
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     //console.log(this.state);
     return (
       <div>
@@ -51,13 +51,14 @@ class AdminPlaylistItem extends Component {
           <CardBody>
             <Row>
               <Col xs="6" sm="6">
-                <a
-                  //href="# "
+                <Button
+                  href="# "
+                  color="secondary"
                   style={{ cursor: "pointer" }}
                   onClick={this.clickOnPlayList.bind(this, this.state)}
                 >
                   <CardText>{this.props.name}</CardText>
-                </a>
+                </Button>
               </Col>
 
               <Col xs="4" sm="4">

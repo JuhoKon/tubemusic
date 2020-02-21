@@ -154,7 +154,7 @@ button.btn-secondary.disabled {
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-  background-color: rgba(0, 7, 70, 0.66) !important;
+  background-color: rgba(27, 89, 132, 0.93) !important;
 }
 h5.modal-title {
   color: #fff !important;
@@ -165,6 +165,7 @@ p {
 .modal-header span {
   color: #fff;
 }
+
 label {
   color: #fff;
   animation-name: blurEffect;

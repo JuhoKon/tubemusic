@@ -41,8 +41,8 @@ class ImportList extends Component {
   removeFromPlaylist(item) {
     if (!item) return;
     if (typeof this.state.toBeImportedPlaylist[0] === "undefined") return;
-    console.log(this.state.toBeImportedPlaylist[0]);
-    console.log(item);
+    // console.log(this.state.toBeImportedPlaylist[0]);
+    //console.log(item);
     for (let i = 0; i < this.state.toBeImportedPlaylist.length; i++) {
       if (this.state.toBeImportedPlaylist[i].id === item.id) {
         //console.log(this.state.toBeImportedPlaylist[i]);

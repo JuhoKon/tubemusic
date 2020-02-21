@@ -52,7 +52,7 @@ export default class Spotify extends Component {
 
     while (data.next !== null || typeof data.next !== "undefined") {
       nextData = await getRequestWithToken(token, data.next);
-      console.log(nextData);
+      //console.log(nextData);
       dataArray = dataArray.concat(nextData.items);
 
       if (nextData.next === null) {
@@ -65,7 +65,7 @@ export default class Spotify extends Component {
     let trackRefArray = [];
     let ownerArray = [];
     let trackTotalArray = [];
-    console.log(dataArray);
+    //console.log(dataArray);
     let userPlaylists = [];
     dataArray.forEach(item =>
       item.images[0]
@@ -118,6 +118,7 @@ export default class Spotify extends Component {
 
     return (
       <div className="homepage-div">
+        <br />
         <h3>Import your spotify playlists into the app!</h3>
         <div className="container-fluid">
           <Row>
@@ -137,7 +138,7 @@ export default class Spotify extends Component {
                   "https://accounts.spotify.com/authorize?client_id=dc20085012814f3d8cab4b36a4144393&response_type=token&redirect_uri=http:%2F%2Flocalhost:3000%2Fspotify&show_dialog=true&scope=playlist-read-private%20playlist-read-collaborative%20user-follow-read"
                 }
               >
-                Log in
+                {this.state.auth ? "Change account." : "Log in."}
               </Button>
             </Col>
             <Col sm="4" className="spotifypage3">

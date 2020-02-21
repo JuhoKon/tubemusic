@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { authenticationService } from "../functions/authenthication";
 import { getPlaylists } from "../functions/functions";
-import { AutoSizer } from "react-virtualized";
 import PlaylistsList from "./PlaylistsList";
-import { Row, Col, Container } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import "./admin.css";
 class AdminPage extends Component {
   constructor(props) {
@@ -31,7 +30,7 @@ class AdminPage extends Component {
   }
 
   render() {
-    console.log(this.state);
+    //console.log(this.state);
     const { token, playlists } = this.state;
     //console.log(filteredData);
     return (

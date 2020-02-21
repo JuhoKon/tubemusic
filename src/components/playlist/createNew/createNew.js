@@ -34,7 +34,7 @@ class CreateNew extends Component {
     this.setState({ checked: evt.target.checked });
   };
   render() {
-    console.log(this.state.checked);
+    //console.log(this.state.checked);
     return (
       <div>
         <Button
@@ -48,7 +48,10 @@ class CreateNew extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
             Create a new playlist here :)
+            <br />
+            <br />
           </ModalHeader>
+
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
               <FormGroup>

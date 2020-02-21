@@ -24,7 +24,7 @@ class LoadPlaylistModal extends Component {
 
   render() {
     const playlists = this.props.playlists;
-    console.log(playlists);
+    //console.log(playlists);
     return (
       <div>
         <Button
@@ -39,7 +39,10 @@ class LoadPlaylistModal extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
             Playlists
+            <br />
+            <br />
           </ModalHeader>
+
           <p className="formText text-center">
             Select a playlist and load it :)
           </p>

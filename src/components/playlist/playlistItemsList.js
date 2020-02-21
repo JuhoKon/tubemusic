@@ -34,7 +34,7 @@ const SortableItem = sortableElement(
   )
 );
 export default class PlaylistItemsList extends Component {
-  renderRow = ({ index, key, isScrolling, isVisible, style }) => {
+  renderRow = ({ index, style }) => {
     const playlist = this.props.playlist;
     const { title, publishedAt, videoId, uniqueId, duration } = playlist[index];
     //const { value } = items[index];

@@ -16,7 +16,6 @@ import {
   getPlaylists,
   makePlaylist,
   updatePlaylist,
-  deletePlaylist,
   getPlayListById,
   getContentDetails,
   addUserPlaylist,
@@ -129,7 +128,7 @@ export default class Homepage extends Component {
   }
   componentDidMount() {
     const currentUser = authenticationService.currentUserValue;
-    console.log(currentUser);
+    //console.log(currentUser);
     if (currentUser && currentUser.token) {
       this.setState({
         token: currentUser.token,
@@ -474,7 +473,7 @@ export default class Homepage extends Component {
     const playlists = this.state.playlists;
     // console.log(this.props);
     const playlist = this.state.playlist;
-    console.log(this.state.title);
+    //console.log(this.state.title);
     return (
       <div
         className={

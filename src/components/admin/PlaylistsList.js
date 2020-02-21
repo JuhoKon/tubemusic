@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import isEqual from "react-fast-compare";
 import { List, AutoSizer } from "react-virtualized";
-import PlaylistItem from "../spotify/spotifyplaylist/spotifPlaylistitem";
-import { Row, Col, Container } from "reactstrap";
 import AdminPlaylistItem from "./AdminPlaylistItem";
 
 class PlaylistsList extends Component {
@@ -22,7 +20,7 @@ class PlaylistsList extends Component {
       });
     }
   }
-  renderRow = ({ index, key, isScrolling, isVisible, style }) => {
+  renderRow = ({ index, style }) => {
     const playlists = this.props.playlists;
     const { name, _id, createdAt } = playlists[index];
     //const { value } = items[index];
@@ -40,7 +38,7 @@ class PlaylistsList extends Component {
   };
 
   render() {
-    console.log(this.state);
+    //console.log(this.state);
     const { playlists } = this.state;
     //console.log(filteredData);
     return (

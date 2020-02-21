@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { List, AutoSizer } from "react-virtualized";
+import { List } from "react-virtualized";
 import isEqual from "react-fast-compare";
 import PlayListItem from "./PlayListItem";
 
@@ -19,9 +19,9 @@ class ChosenPlaylist extends Component {
       });
     }
   }
-  renderRow = ({ index, key, isScrolling, isVisible, style }) => {
+  renderRow = ({ index, style }) => {
     const playlists = this.props.playlists;
-    console.log(playlists);
+    //console.log(playlists);
     const { title, artistName, uniqueId } = playlists[index];
     //const { value } = items[index];
     return (

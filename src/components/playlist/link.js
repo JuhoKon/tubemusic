@@ -12,7 +12,7 @@ class Link extends Component {
     });
     await timeout(500);
     let res = await this.props.loadPlaylist(playlist._id);
-    console.log(res);
+    //console.log(res);
     if (res) {
       this.setState({
         loading: false

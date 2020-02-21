@@ -205,7 +205,7 @@ class PlaylistModal extends Component {
       const contentDetails = await getContentDetails(result[0].id.videoId);
       trackObject["duration"] = contentDetails[0].contentDetails.duration;
       trackObject["uniqueId"] = Math.random();
-      console.log(trackObject);
+      //console.log(trackObject);
       tracksFromYoutube.push(trackObject);
       this.setState({
         progressValue: this.state.progressValue + step
@@ -230,7 +230,7 @@ class PlaylistModal extends Component {
       });
       alert("Error");
     }
-    console.log(res);
+    //console.log(res);
   }
   removeFromPlaylist(item) {
     if (!item) return;

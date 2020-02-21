@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { CSSTransition } from "react-transition-group";
-import Link from "../playlist/link";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import ChosenPlaylist from "./ChosenPlaylist";
 class AdminPlaylistModal extends Component {
   state = {
@@ -23,7 +21,7 @@ class AdminPlaylistModal extends Component {
 
   render() {
     const playlists = this.props.playlists;
-    console.log(playlists);
+    //console.log(playlists);
     return (
       <div>
         <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>

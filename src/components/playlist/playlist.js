@@ -112,11 +112,11 @@ class Playlist extends Component {
   };
 
   render() {
-    const { filter, playlistOwner } = this.state;
-    const { playlists, playlist, Allplaylists } = this.props;
+    const { filter } = this.state;
+    const { playlists, playlist } = this.props;
 
     const lowercasedFilter = filter.toLowerCase();
-    console.log(playlist);
+    //console.log(playlist);
     const filteredData = playlist.filter(item => {
       if (item === null || typeof item === "undefined") return playlist; //problems
       return Object.keys(item).some(
@@ -182,7 +182,7 @@ class Playlist extends Component {
 
         <hr />
         <Button
-          color={this.state.editMode ? "primary" : "secondary"}
+          color={this.state.editMode ? "secondary" : "secondary"}
           className="float-right btn-remove"
           onClick={this.toggle}
           disabled={this.state.playlistName ? false : true}

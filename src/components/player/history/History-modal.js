@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, ModalHeader, ModalBody, Button, Row, Col } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Button, Row } from "reactstrap";
 import { CSSTransition } from "react-transition-group";
 import HistoryItem from "./history-item";
 import isEqual from "react-fast-compare";
@@ -29,7 +29,7 @@ class HistoryModal extends Component {
   }
 
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <div>
         <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>

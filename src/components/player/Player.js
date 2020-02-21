@@ -115,12 +115,12 @@ export default class Player extends Component {
         url: url,
         title: this.state.array[0].title
       });
+      toaster.notify(<span>Now playing: {this.state.array[0].title}</span>, {
+        duration: 1200,
+        position: "bottom"
+      });
       this.props.onRemove(this.state.array[0]); //removes item from queue
       this.props.setUrl(url);
-      toaster.notify(<span>Now playing: {this.state.title}</span>, {
-        duration: 1200,
-        position: "bottom-left"
-      });
     } else {
       this.setState({
         playing: false,
@@ -152,7 +152,7 @@ export default class Player extends Component {
     this.player.seekTo(0); //Seeks to 0
   }
   render() {
-    console.log("player");
+    //console.log("player");
     const { playing, volume } = this.state;
     //console.log(this.state.array);
 

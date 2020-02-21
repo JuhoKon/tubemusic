@@ -32,7 +32,7 @@ class SaveModal extends Component {
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
-      console.log(this.props.isPrivate);
+      //console.log(this.props.isPrivate);
       this.setState({
         playlistName: this.props.playlistName,
         checked: this.props.isPrivate,
@@ -84,7 +84,10 @@ class SaveModal extends Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
             Save playlist as
+            <br />
+            <br />
           </ModalHeader>
+
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
               <FormGroup>

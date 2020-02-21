@@ -4,7 +4,6 @@ import { CSSTransition } from "react-transition-group";
 import isEqual from "react-fast-compare";
 import LoadingSpinner from "../spinner/spinner";
 import "./videolist.css";
-import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 class Videolist extends Component {
   constructor(props) {
@@ -25,7 +24,7 @@ class Videolist extends Component {
   }
   render() {
     const items = this.props.items;
-    console.log(this.state.error);
+    //console.log(this.state.error);
 
     return (
       <div id="videolist">
