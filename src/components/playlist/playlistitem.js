@@ -55,10 +55,10 @@ class Playlistitem extends Component {
                 </Button>
               </div>
             </Col>
-            <Col xs="7" sm="7">
+            <Col xs="6" sm="6">
               <CardText>{this.props.title}</CardText>
             </Col>
-            <Col xs="1" sm="1">
+            <Col xs="2" sm="2">
               <small className="float-left">{this.props.duration}</small>
             </Col>
             <Col xs="2" sm="2">
