@@ -27,6 +27,7 @@ export default class Homepage extends Component {
   }
   async getPlayListById(id) {
     const result = await getPlayListById(id);
+    console.log(result);
   }
   componentDidMount() {
     const currentUser = authenticationService.currentUserValue;
