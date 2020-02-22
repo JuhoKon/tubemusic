@@ -412,7 +412,7 @@ export default class Homepage extends Component {
     //console.log(this.state.queue);
     //console.log(videoId);
     toaster.notify(<span>{item.title} added to the queue.</span>, {
-      duration: 400
+      duration: 800
     });
   }
   onDelete(item) {

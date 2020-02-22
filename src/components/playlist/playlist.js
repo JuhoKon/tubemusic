@@ -167,7 +167,6 @@ class Playlist extends Component {
             + Q
           </Button>
         </div>
-
         <br />
         <br />
         <p className="float-left">
@@ -179,7 +178,6 @@ class Playlist extends Component {
           onChange={this.handleChange}
           placeholder="Filter songs..."
         />
-
         <hr />
         <Button
           color={this.state.editMode ? "secondary" : "secondary"}

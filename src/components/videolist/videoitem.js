@@ -33,7 +33,8 @@ class Videoitem extends Component {
       videoId: id.videoId,
       duration: id.duration,
       publishedAt: id.publishedAt,
-      channelTitle: id.channelTitle
+      channelTitle: id.channelTitle,
+      date: Date.now()
     });
   };
   render() {
