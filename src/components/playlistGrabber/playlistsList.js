@@ -23,6 +23,7 @@ class PlaylistsList extends Component {
   renderRow = ({ index, style }) => {
     const playlists = this.props.playlists;
     const { name, _id, createdAt, owner } = playlists[index];
+    const priv = playlists[index].private;
     //const { value } = items[index];
     return (
       <div key={_id} style={style}>
@@ -34,6 +35,7 @@ class PlaylistsList extends Component {
           id={_id}
           name={name}
           owner={owner}
+          private={priv}
         ></PlayListItem>
       </div>
     );

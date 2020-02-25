@@ -65,12 +65,14 @@ export default class Homepage extends Component {
     return (
       <div className="container-fluid homepage-div">
         <br />
-        <h3>Public playlists</h3>
-
         <div className="container-fluid">
           <Row>
             <Col xs="4" sm="4" className="spotifypage1">
               Playlists to choose from :)!
+              <br />
+              You can subscribe to public playlists or just load a playlist by
+              clicking on the name and editing on the playlist-editor on the
+              right side.
               <br />
               <br />
               <Input

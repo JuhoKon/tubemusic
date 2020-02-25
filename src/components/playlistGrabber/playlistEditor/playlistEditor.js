@@ -49,11 +49,15 @@ class PlaylistModal extends Component {
     console.log(this.state.tracks);
     return (
       <div>
+        <br />
+        <br />
+        <br />
         <Row>
           <Col xs="6" sm="6">
             <div id="lists">
               <ImportList toBeImportedPlaylist={this.state.tracks} />
               {/* will have the chosen tracks from loaded list? */}
+              {/* aka a tobeAddedPlaylist or so on.*/}
             </div>
           </Col>
           <Col xs="6" sm="6">

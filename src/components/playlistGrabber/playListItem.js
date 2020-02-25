@@ -21,7 +21,20 @@ class PlayListItem extends Component {
         <Card className="card">
           <CardBody>
             <Row>
-              <Col xs="6" sm="6">
+              <Col xs="2" sm="2">
+                <Button
+                  disabled={this.props.private}
+                  href="# "
+                  color="secondary"
+                  style={{ cursor: "pointer" }}
+                  onClick={this.clickOnPlayList.bind(this, this.state)}
+                >
+                  <CardText>Subscribe</CardText>{" "}
+                  {/* Add this playlist id straight to current users array of playlists. */}
+                  {/* disabled is based on the playlists public shit? */}
+                </Button>
+              </Col>
+              <Col xs="4" sm="4">
                 <Button
                   href="# "
                   color="secondary"
