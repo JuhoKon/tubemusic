@@ -3,7 +3,7 @@ import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 
 import "moment-duration-format";
 
-class PlaylistModalItem extends Component {
+class TrackItem extends Component {
   state = {
     artistName: this.props.artistName,
     title: this.props.title,
@@ -21,7 +21,7 @@ class PlaylistModalItem extends Component {
     this.props.removeFromPlaylist(props);
   }
   render() {
-    //console.log("item");
+    console.log(this.props);
     return (
       <div>
         <Card className="card">
@@ -63,4 +63,4 @@ class PlaylistModalItem extends Component {
   }
 }
 //actions we want to use as second paranthesis
-export default PlaylistModalItem;
+export default TrackItem;

@@ -90,13 +90,23 @@ export default class Homepage extends Component {
             <Col xs="8" sm="8" className="spotifypage2">
               Chosen playlist. With options to A) Make a copy to your playlists
               B) If it's a yhteissoittolista: "subscribe"
-              <PlayListEditor
-                loadPlaylists={this.loadPlaylists}
-                token={token}
-                playlists={filteredData}
-                getPlayListById={this.getPlayListById}
-                tracks={this.state.tracks}
-              />
+              <div
+                className={
+                  this.state.tracks.length
+                    ? "playListEditorActive"
+                    : "playListEditorNotActive"
+                }
+              >
+                {this.state.tracks.length ? (
+                  <PlayListEditor
+                    loadPlaylists={this.loadPlaylists}
+                    token={token}
+                    playlists={filteredData}
+                    getPlayListById={this.getPlayListById}
+                    tracks={this.state.tracks}
+                  />
+                ) : null}
+              </div>
             </Col>
           </Row>
         </div>

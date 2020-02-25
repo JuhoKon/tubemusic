@@ -1,0 +1,6 @@
+.playListEditorActive {
+  transition: ease-in 0.19s;
+}
+.playListEditorNotActive {
+  opacity: 0.3;
+}
