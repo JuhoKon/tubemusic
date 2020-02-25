@@ -54,6 +54,7 @@ class Videolist extends Component {
           }) => (
             <CSSTransition key={uniqueId} timeout={500} classNames="fade">
               <Videoitem
+                playNext={this.props.playNext}
                 uniqueId={uniqueId}
                 title={title}
                 thumbnail={thumbnail}

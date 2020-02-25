@@ -200,6 +200,7 @@ class Playlist extends Component {
         <AutoSizer disableHeight>
           {({ width }) => (
             <SortableVirtualList
+              playNext={this.props.playNext}
               editMode={this.state.editMode}
               getRef={this.registerListRef}
               playlist={filteredData}
@@ -208,6 +209,7 @@ class Playlist extends Component {
               onPlay={this.props.onPlay}
               onDeleteFromPlaylist={this.onDeleteFromPlaylist}
               width={width}
+              distance={1}
             />
           )}
         </AutoSizer>

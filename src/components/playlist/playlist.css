@@ -6,6 +6,7 @@
 }
 .btn-item {
   font-size: small !important;
+  margin: 1px;
   display: inline-block !important;
   top: 50% !important;
 }
@@ -44,4 +45,19 @@
     opacity: 0;
     transform: translateX(-100px);
   }
+}
+.flex-container {
+  display: flex;
+}
+.play-icon {
+  /* color: rgb(117, 255, 148);*/
+  cursor: pointer;
+  transition: transform 80ms ease-in;
+}
+.play-icon:hover {
+  transform: scale(0.95);
+  color: #00ffb3 !important;
+}
+.play-icon:active {
+  transform: scale(0.8);
 }

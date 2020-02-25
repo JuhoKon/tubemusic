@@ -48,6 +48,7 @@ export default class Homepage extends Component {
     this.setPlaylist = this.setPlaylist.bind(this);
     this.setTitle = this.setTitle.bind(this);
     this.setPlaying = this.setPlaying.bind(this);
+    this.playNext = this.playNext.bind(this);
     this.state = {
       items: [], //from youtube API
       queue: [],
@@ -78,6 +79,14 @@ export default class Homepage extends Component {
         });
       }
     }
+  }
+  playNext(item) {
+    let a = Object.assign({}, item);
+    a["uniqueId"] = Math.random();
+    this.state.queue.unshift(a);
+    this.setState({
+      updated: true
+    });
   }
   setPlaying(playing) {
     this.setState({
@@ -392,17 +401,12 @@ export default class Homepage extends Component {
   onAdd(item) {
     //ADDS SELECTED ITEM TO QUEUE - -> PLAYER & QUEUE
     //console.log(item);
-    let object = {};
-    object["title"] = item["title"];
-    object["videoId"] = item["videoId"];
-    object["channelTitle"] = item["channelTitle"];
-    object["duration"] = item["duration"];
-    object["uniqueId"] = Math.random(); //to ensure every track has an unique id.
-    //item["uniqueId"] = Math.random();
-    this.state.queue.push(object);
+    let itemCopy = Object.assign({}, item);
+    itemCopy["uniqueId"] = Math.random(); //ensure that all elements have unique keys
+    this.state.queue.push(itemCopy);
     this.setState({
       //just to trigger re-render->new props to children
-      updated: object
+      updated: itemCopy
     });
     //console.log(this.state.queue);
     //console.log(videoId);
@@ -510,6 +514,7 @@ export default class Homepage extends Component {
             <Col sm="4" className="homepage2">
               <br />
               <Playlist
+                playNext={this.playNext}
                 userName={this.state.userName}
                 userRole={this.state.userRole}
                 playlists={playlists}
@@ -539,6 +544,7 @@ export default class Homepage extends Component {
               <Search handleSubmit={this.handleSubmit} />
               <hr />
               <Videolist
+                playNext={this.playNext}
                 loading={this.state.loading}
                 items={this.state.items}
                 onAdd={this.onAdd}
