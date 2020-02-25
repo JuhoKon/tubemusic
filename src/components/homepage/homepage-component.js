@@ -87,6 +87,9 @@ export default class Homepage extends Component {
     this.setState({
       updated: true
     });
+    toaster.notify(<span>{item.title} added to in front of the queue.</span>, {
+      duration: 800
+    });
   }
   setPlaying(playing) {
     this.setState({

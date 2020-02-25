@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getPlaylists, getPlayListById } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import PlaylistsList from "./playlistsList";
+import PlayListEditor from "./playlistEditor/playlistEditor";
 //import PlaylistsList from "../admin/PlaylistsList";
 import { Row, Col, Input } from "reactstrap";
 
@@ -14,9 +15,11 @@ export default class Homepage extends Component {
     this.state = {
       playlists: [],
       token: "",
-      filter: ""
+      filter: "",
+      tracks: []
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
+    this.getPlayListById = this.getPlayListById.bind(this);
     // redirect to home if already logged in
   }
   async loadPlaylists() {
@@ -27,7 +30,10 @@ export default class Homepage extends Component {
   }
   async getPlayListById(id) {
     const result = await getPlayListById(id);
-    console.log(result);
+    this.setState({
+      tracks: result.data.playlist
+    });
+    //console.log(result);
   }
   componentDidMount() {
     const currentUser = authenticationService.currentUserValue;
@@ -82,6 +88,13 @@ export default class Homepage extends Component {
             <Col xs="8" sm="8" className="spotifypage2">
               Chosen playlist. With options to A) Make a copy to your playlists
               B) If it's a yhteissoittolista: "subscribe"
+              <PlayListEditor
+                loadPlaylists={this.loadPlaylists}
+                token={token}
+                playlists={filteredData}
+                getPlayListById={this.getPlayListById}
+                tracks={this.state.tracks}
+              />
             </Col>
           </Row>
         </div>
