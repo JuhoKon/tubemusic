@@ -50,8 +50,8 @@ export default class Spotify extends Component {
     let dataArray = [];
     let nextData = null;
     dataArray = data.items;
-    //doesn't work if user has less than 20 playlists
-    while (typeof data.next !== "undefined" || data.next !== null) {
+
+    while (typeof data.next !== "undefined" && data.next !== null) {
       console.log(token, data.next);
       nextData = await getRequestWithToken(token, data.next);
       //console.log(nextData);
