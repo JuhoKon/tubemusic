@@ -4,3 +4,9 @@
 .playListEditorNotActive {
   opacity: 0.3;
 }
+#spinnerDiv {
+  position: fixed;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+}

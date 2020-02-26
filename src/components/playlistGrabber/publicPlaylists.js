@@ -4,6 +4,7 @@ import { authenticationService } from "../functions/authenthication";
 import PlaylistsList from "./playlistsList";
 import PlayListEditor from "./playlistEditor/playlistEditor";
 //import PlaylistsList from "../admin/PlaylistsList";
+import Spinner from "../spinner/spinner";
 import { Row, Col, Input } from "reactstrap";
 
 import "./styles.css";
@@ -16,12 +17,14 @@ export default class Homepage extends Component {
       playlists: [],
       token: "",
       filter: "",
-      tracks: []
+      tracks: [],
+      loading: true
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
     this.getPlayListById = this.getPlayListById.bind(this);
     // redirect to home if already logged in
   }
+
   async loadPlaylists() {
     let res = await getPlaylists();
     this.setState({
@@ -29,9 +32,14 @@ export default class Homepage extends Component {
     });
   }
   async getPlayListById(id) {
+    this.setState({
+      loading: true
+    });
+    //tähä vois laittaa ihan pienen delayn.
     const result = await getPlayListById(id);
     this.setState({
-      tracks: result.data.playlist
+      tracks: result.data.playlist,
+      loading: false
     });
     //console.log(result);
   }
@@ -64,11 +72,13 @@ export default class Homepage extends Component {
     console.log(filteredData);
     return (
       <div className="container-fluid homepage-div">
+        Playlists to choose from :)!
+        <div id="spinnerDiv">{this.state.loading ? <Spinner /> : " Hello"}</div>
+        {/*tee uus spinneri sinne spinner kansioo , vähä elegantimpi ja tähä*/}
         <br />
         <div className="container-fluid">
           <Row>
             <Col xs="4" sm="4" className="spotifypage1">
-              Playlists to choose from :)!
               <br />
               You can subscribe to public playlists or just load a playlist by
               clicking on the name and editing on the playlist-editor on the
