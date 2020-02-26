@@ -27,29 +27,25 @@ class TrackItem extends Component {
         <Card className="card">
           <CardBody>
             <Row>
-              <Col xs="1" sm="1"></Col>
-              <Col xs="5" sm="5">
+              <Col xs="2" sm="2"></Col>
+              <Col xs="8" sm="8">
                 <CardText>{this.state.title}</CardText>
               </Col>
-              <Col xs="4" sm="4">
-                <CardText className="float-left">
-                  {this.state.artistName}
-                </CardText>
-              </Col>
+              {/*tänne tavaraa mm. milloin lisätty? ovat nyt propeissa  */}
               <Col xs="2" sm="2">
                 {this.state.imported ? (
                   <Button
                     onClick={this.removeFromPlaylist.bind(this, this.props)}
-                    className="btn btn-primary"
-                    color="danger"
+                    className="btn btn-secondary"
+                    color="secondary"
                   >
                     x
                   </Button>
                 ) : (
                   <Button
                     onClick={this.addToImport.bind(this, this.props)}
-                    className="btn btn-primary"
-                    color="primary"
+                    className="btn btn-secondary"
+                    color="secondary"
                   >
                     +
                   </Button>

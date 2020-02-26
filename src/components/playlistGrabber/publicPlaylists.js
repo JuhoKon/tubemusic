@@ -69,16 +69,17 @@ export default class Homepage extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    console.log(filteredData);
+    console.log(this.state.tracks);
+    //console.log(filteredData);
     return (
       <div className="container-fluid homepage-div">
-        Playlists to choose from :)!
-        <div id="spinnerDiv">{this.state.loading ? <Spinner /> : " Hello"}</div>
+        <div id="spinnerDiv">{this.state.loading ? <Spinner /> : null}</div>
         {/*tee uus spinneri sinne spinner kansioo , vähä elegantimpi ja tähä*/}
         <br />
         <div className="container-fluid">
           <Row>
             <Col xs="4" sm="4" className="spotifypage1">
+              Playlists to choose from :)!
               <br />
               You can subscribe to public playlists or just load a playlist by
               clicking on the name and editing on the playlist-editor on the

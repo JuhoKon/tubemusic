@@ -114,7 +114,7 @@ class Playlist extends Component {
   render() {
     const { filter } = this.state;
     const { playlists, playlist } = this.props;
-
+    console.log(playlist);
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
     const filteredData = playlist.filter(item => {

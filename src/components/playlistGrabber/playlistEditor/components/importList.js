@@ -24,6 +24,7 @@ class ImportList extends Component {
     const toBeImportedPlaylist = this.props.toBeImportedPlaylist;
     const { title, artistName, id } = toBeImportedPlaylist[index];
     //const { value } = items[index];
+    //tänne samalla lailla noi durationit datet jne kuten loadedListissä
     return (
       <div key={id} style={style}>
         <PlaylistModalItem

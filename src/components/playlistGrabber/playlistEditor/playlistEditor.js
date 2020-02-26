@@ -12,16 +12,7 @@
 //game changing plan pog
 //tehdään samanlailla ku se spotifyModal
 import React, { Component } from "react";
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Button,
-  Row,
-  Col,
-  Progress,
-  Input
-} from "reactstrap";
+import { Button, Row, Col, Input } from "reactstrap";
 import LoadedList from "./components/loadedList";
 import ImportList from "./components/importList";
 import isEqual from "react-fast-compare";
@@ -41,6 +32,7 @@ class PlaylistModal extends Component {
     this.addToImport = this.addToImport.bind(this);
   }
   addToImport(item) {
+    //tänne durationit datet videoid:t
     let song = {};
     song["artistName"] = item.artistName;
     song["title"] = item.title;
@@ -70,6 +62,13 @@ class PlaylistModal extends Component {
       toBeImportedPlaylist: []
     });
   };
+  getAllSongs = () => {
+    this.setState({
+      toBeImportedPlaylist: this.state.toBeImportedPlaylist.concat(
+        this.state.tracks
+      )
+    });
+  };
   render() {
     const {
       importFilter,
@@ -77,6 +76,7 @@ class PlaylistModal extends Component {
       toBeImportedPlaylist,
       tracks
     } = this.state;
+    console.log(tracks);
     ///console.log(this.state.tracks);
     const lowercasedFilterImport = importFilter.toLowerCase();
     const importfilteredData = toBeImportedPlaylist.filter(item => {
@@ -97,7 +97,7 @@ class PlaylistModal extends Component {
           item[key].toLowerCase().includes(lowercasedFilterLoad)
       );
     });
-
+    console.log(LoadfilteredData);
     return (
       <div className="playlistEditor">
         <br />
@@ -111,6 +111,9 @@ class PlaylistModal extends Component {
                 onChange={this.handleChangeImport}
                 placeholder="Filter songs based on artist, album or title..."
               />
+              <span className="float-left">
+                Songs: {this.state.toBeImportedPlaylist.length}
+              </span>
               <br />
               <ImportList
                 removeFromImport={this.removeFromImport}
@@ -127,6 +130,9 @@ class PlaylistModal extends Component {
                 onChange={this.handleChangeLoad}
                 placeholder="Filter songs based on artist, album or title..."
               />
+              <span className="float-left">
+                Songs: {this.state.tracks.length}
+              </span>
               <br />
               <LoadedList
                 tracks={LoadfilteredData}
@@ -148,7 +154,9 @@ class PlaylistModal extends Component {
           </Col>
           <Col xs="4" sm="4">
             <div className="placeforbutton">
-              <Button>Get all songs</Button>
+              <Button onClick={this.getAllSongs.bind(this)}>
+                Get all songs
+              </Button>
             </div>
           </Col>
         </Row>
