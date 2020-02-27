@@ -10,6 +10,7 @@ import { Row, Col, Input } from "reactstrap";
 import "./styles.css";
 
 //https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 export default class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +19,7 @@ export default class Homepage extends Component {
       token: "",
       filter: "",
       tracks: [],
-      loading: true
+      loading: false
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
     this.getPlayListById = this.getPlayListById.bind(this);
@@ -36,6 +37,7 @@ export default class Homepage extends Component {
       loading: true
     });
     //tähä vois laittaa ihan pienen delayn.
+    await timeout(1000);
     const result = await getPlayListById(id);
     this.setState({
       tracks: result.data.playlist,

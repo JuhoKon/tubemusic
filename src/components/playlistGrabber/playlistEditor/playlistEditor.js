@@ -17,7 +17,6 @@ import LoadedList from "./components/loadedList";
 import ImportList from "./components/importList";
 import isEqual from "react-fast-compare";
 
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 //TODO: add option to "create" own songs just by entering title and artist. These songs
 //can be added  then to the importList which will be further on webscraped
 class PlaylistModal extends Component {
