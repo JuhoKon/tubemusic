@@ -37,7 +37,7 @@ export default class Homepage extends Component {
       loading: true
     });
     //tähä vois laittaa ihan pienen delayn.
-    await timeout(1500);
+    await timeout(2500);
     const result = await getPlayListById(id);
     this.setState({
       tracks: result.data.playlist,

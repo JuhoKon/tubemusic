@@ -123,7 +123,7 @@ class PlaylistModal extends Component {
               <Input
                 value={importFilter}
                 onChange={this.handleChangeImport}
-                placeholder="Filter songs based on artist, album or title..."
+                placeholder="Filter songs based on title..."
               />
               <span className="float-left">
                 Songs: {this.state.toBeImportedPlaylist.length}
@@ -142,10 +142,10 @@ class PlaylistModal extends Component {
               <Input
                 value={loadFilter}
                 onChange={this.handleChangeLoad}
-                placeholder="Filter songs based on artist, album or title..."
+                placeholder="Filter songs based on title..."
               />
               <span className="float-left">
-                Songs: {this.state.tracks.length}
+                Songs: {LoadfilteredData.length}
               </span>
               <br />
               <LoadedList
@@ -156,19 +156,19 @@ class PlaylistModal extends Component {
           </Col>
         </Row>
         <Row id="lowerRow">
-          <Col xs="2" sm="2">
+          <Col xs="4" sm="4">
             <div className="placeforbutton">
               <Button onClick={this.addPlayListToColl.bind(this)}>
                 Add playlist to your collections.
               </Button>
             </div>
           </Col>
-          <Col xs="2" sm="2">
+          <Col xs="1" sm="1">
             <div className="placeforbutton">
               <Button onClick={this.clearList.bind(this)}>Clear list</Button>
             </div>
           </Col>
-          <Col xs="4" sm="4">
+          <Col xs="2" sm="2">
             <div className="placeforbutton">
               <Button onClick={this.getAllSongs.bind(this, LoadfilteredData)}>
                 Get all songs

@@ -36,6 +36,8 @@ class PlayListItem extends Component {
                   onClick={this.subscribe.bind(this, this.state)}
                 >
                   <CardText>Subscribe</CardText>{" "}
+                  {/* this also should be UnSubscribe if you have the playlist already?
+                  should check it somehow maybe*/}
                   {/* Add this playlist id straight to current users array of playlists. */}
                   {/* disabled is based on the playlists public? */}
                 </Button>
