@@ -4,3 +4,12 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.sweet-loading2 {
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+#spinner2 i {
+  color: aliceblue;
+}

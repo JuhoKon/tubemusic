@@ -6,7 +6,7 @@
 }
 #spinnerDiv {
   position: fixed;
-  background-color: white;
-  top: 50%;
+  top: 40%;
   left: 50%;
+  border-radius: 50px;
 }

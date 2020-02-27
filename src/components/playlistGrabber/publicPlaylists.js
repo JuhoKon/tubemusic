@@ -4,7 +4,7 @@ import { authenticationService } from "../functions/authenthication";
 import PlaylistsList from "./playlistsList";
 import PlayListEditor from "./playlistEditor/playlistEditor";
 //import PlaylistsList from "../admin/PlaylistsList";
-import Spinner from "../spinner/spinner";
+import Spinner from "../spinner/spinnerNo2";
 import { Row, Col, Input } from "reactstrap";
 
 import "./styles.css";
@@ -37,7 +37,7 @@ export default class Homepage extends Component {
       loading: true
     });
     //tähä vois laittaa ihan pienen delayn.
-    await timeout(1000);
+    await timeout(1500);
     const result = await getPlayListById(id);
     this.setState({
       tracks: result.data.playlist,
@@ -75,7 +75,9 @@ export default class Homepage extends Component {
     //console.log(filteredData);
     return (
       <div className="container-fluid homepage-div">
-        <div id="spinnerDiv">{this.state.loading ? <Spinner /> : null}</div>
+        <div id="spinnerDiv">
+          {this.state.loading ? <Spinner color="white" /> : null}
+        </div>
         {/*tee uus spinneri sinne spinner kansioo , vähä elegantimpi ja tähä*/}
         <br />
         <div className="container-fluid">
