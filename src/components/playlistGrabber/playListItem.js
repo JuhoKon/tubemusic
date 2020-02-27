@@ -12,7 +12,13 @@ class PlayListItem extends Component {
   clickOnPlayList() {
     this.props.getPlayListById(this.props.id);
   }
-
+  subscribe(playlist) {
+    console.log(this.props);
+    //props has token,createdAt,id,owner,private
+    //adds this playlist ID and NAME to current users (token)
+    //playlists.
+    //he cannot change name but he can delete & add items & change order
+  }
   render() {
     //console.log(this.props);
     //console.log(this.state);
@@ -27,7 +33,7 @@ class PlayListItem extends Component {
                   href="# "
                   color="secondary"
                   style={{ cursor: "pointer" }}
-                  onClick={this.clickOnPlayList.bind(this, this.state)}
+                  onClick={this.subscribe.bind(this, this.state)}
                 >
                   <CardText>Subscribe</CardText>{" "}
                   {/* Add this playlist id straight to current users array of playlists. */}
