@@ -24,7 +24,7 @@ class LoadPlaylistModal extends Component {
 
   render() {
     const playlists = this.props.playlists;
-    //console.log(playlists);
+    console.log(playlists);
     return (
       <div>
         <Button

@@ -334,11 +334,6 @@ export default class Homepage extends Component {
     //called when making changes to the playlists, don't remove
     this.props.loadUser();
     //gets ALL playlists from database
-    const result = await getPlaylists();
-    //console.log(result);
-    this.setState({
-      Allplaylists: result.data.Playlist
-    });
   }
   async makePlaylist(name, playlist, isPrivate) {
     //API request to create a new playlist (database)
@@ -356,7 +351,16 @@ export default class Homepage extends Component {
       owner: this.state.userName
     });
     const result = await makePlaylist(item);
-    addUserPlaylist(result.data._id, result.data.name, this.state.token);
+    const data = result.data;
+    console.log(result);
+    addUserPlaylist(
+      data._id,
+      data.name,
+      data.private,
+      data.owner,
+      data.createdAt,
+      this.state.token
+    );
     //updateUsersPlaylistarray
     //console.log(result.data._id);
     this.setState({
@@ -380,7 +384,7 @@ export default class Homepage extends Component {
     console.log(isPrivate);
     const item = JSON.stringify({ name, playlist, private: isPrivate });
     const result = await updatePlaylist(item, id);
-    updateUserPlaylist(id, name, this.state.token);
+    updateUserPlaylist(id, name, isPrivate, this.state.token);
     //console.log(result);
     this.setState({
       playlistName: result.data.name,
@@ -480,7 +484,7 @@ export default class Homepage extends Component {
     const playlists = this.state.playlists;
     // console.log(this.props);
     const playlist = this.state.playlist;
-    //console.log(this.state.title);
+    console.log(this.state.playlists);
     return (
       <div
         className={

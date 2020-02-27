@@ -118,7 +118,10 @@ exports.addPlaylist = function(req, res, next) {
       //console.log(user);
       user.playlists.push({
         _id: req.body.playlistId,
-        name: req.body.playlistName
+        name: req.body.playlistName,
+        private: req.body.private,
+        owner: req.body.owner,
+        createdAt: req.body.createdAt
       });
       user
         .save() //attempt to save the user
@@ -154,6 +157,7 @@ exports.editPlaylist = function(req, res, next) {
     for (let i = 0; i < user.playlists.length; i++) {
       if (user.playlists[i]._id === req.params.id) {
         user.playlists[i].name = req.body.playlistName;
+        user.playlists[i].private = req.body.private;
       }
     }
     user.markModified("playlists"); //very important.....

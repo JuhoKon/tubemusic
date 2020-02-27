@@ -49,13 +49,8 @@ class PlaylistModal extends Component {
     });
   }
   addToImport(item) {
-    //tänne durationit datet videoid:t
     let song = Object.assign({}, item);
     song["id"] = Math.random();
-    /* let song = {};
-    song["artistName"] = item.artistName;
-    song["title"] = item.title;
-    song["id"] = Math.random();*/
     this.state.toBeImportedPlaylist.push(song);
     this.setState({
       //just to trigger re-rendering -> new props to children

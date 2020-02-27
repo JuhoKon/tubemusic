@@ -13,6 +13,7 @@ export default class LoadingSpinner extends React.Component {
   render() {
     return (
       <div className="sweet-loading" id="spinner2">
+        <br />
         <HashLoader
           size={this.state.size}
           //size={"150px"} this also works
