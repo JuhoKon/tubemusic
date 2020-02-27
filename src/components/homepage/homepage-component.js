@@ -48,6 +48,7 @@ export default class Homepage extends Component {
     this.setPlaylist = this.setPlaylist.bind(this);
     this.setTitle = this.setTitle.bind(this);
     this.setPlaying = this.setPlaying.bind(this);
+    this.playNext = this.playNext.bind(this);
     this.state = {
       items: [], //from youtube API
       queue: [],
@@ -78,6 +79,17 @@ export default class Homepage extends Component {
         });
       }
     }
+  }
+  playNext(item) {
+    let a = Object.assign({}, item);
+    a["uniqueId"] = Math.random();
+    this.state.queue.unshift(a);
+    this.setState({
+      updated: true
+    });
+    toaster.notify(<span>{item.title} added to in front of the queue.</span>, {
+      duration: 800
+    });
   }
   setPlaying(playing) {
     this.setState({
@@ -327,11 +339,6 @@ export default class Homepage extends Component {
     //called when making changes to the playlists, don't remove
     this.props.loadUser();
     //gets ALL playlists from database
-    const result = await getPlaylists();
-    //console.log(result);
-    this.setState({
-      Allplaylists: result.data.Playlist
-    });
   }
   async makePlaylist(name, playlist, isPrivate) {
     //API request to create a new playlist (database)
@@ -349,7 +356,16 @@ export default class Homepage extends Component {
       owner: this.state.userName
     });
     const result = await makePlaylist(item);
-    addUserPlaylist(result.data._id, result.data.name, this.state.token);
+    const data = result.data;
+    console.log(result);
+    addUserPlaylist(
+      data._id,
+      data.name,
+      data.private,
+      data.owner,
+      data.createdAt,
+      this.state.token
+    );
     //updateUsersPlaylistarray
     //console.log(result.data._id);
     this.setState({
@@ -373,7 +389,7 @@ export default class Homepage extends Component {
     console.log(isPrivate);
     const item = JSON.stringify({ name, playlist, private: isPrivate });
     const result = await updatePlaylist(item, id);
-    updateUserPlaylist(id, name, this.state.token);
+    updateUserPlaylist(id, name, isPrivate, this.state.token);
     //console.log(result);
     this.setState({
       playlistName: result.data.name,
@@ -397,17 +413,12 @@ export default class Homepage extends Component {
   onAdd(item) {
     //ADDS SELECTED ITEM TO QUEUE - -> PLAYER & QUEUE
     //console.log(item);
-    let object = {};
-    object["title"] = item["title"];
-    object["videoId"] = item["videoId"];
-    object["channelTitle"] = item["channelTitle"];
-    object["duration"] = item["duration"];
-    object["uniqueId"] = Math.random(); //to ensure every track has an unique id.
-    //item["uniqueId"] = Math.random();
-    this.state.queue.push(object);
+    let itemCopy = Object.assign({}, item);
+    itemCopy["uniqueId"] = Math.random(); //ensure that all elements have unique keys
+    this.state.queue.push(itemCopy);
     this.setState({
       //just to trigger re-render->new props to children
-      updated: object
+      updated: itemCopy
     });
     //console.log(this.state.queue);
     //console.log(videoId);
@@ -478,7 +489,7 @@ export default class Homepage extends Component {
     const playlists = this.state.playlists;
     // console.log(this.props);
     const playlist = this.state.playlist;
-    //console.log(this.state.title);
+    console.log(this.state.playlists);
     return (
       <div
         className={
@@ -515,6 +526,7 @@ export default class Homepage extends Component {
             <Col sm="4" className="homepage2">
               <br />
               <Playlist
+                playNext={this.playNext}
                 userName={this.state.userName}
                 userRole={this.state.userRole}
                 playlists={playlists}
@@ -544,6 +556,7 @@ export default class Homepage extends Component {
               <Search handleSubmit={this.handleSubmit} />
               <hr />
               <Videolist
+                playNext={this.playNext}
                 loading={this.state.loading}
                 items={this.state.items}
                 onAdd={this.onAdd}

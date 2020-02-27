@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./videolist.css";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "moment-duration-format";
 
 class Videoitem extends Component {
@@ -37,6 +37,9 @@ class Videoitem extends Component {
       date: Date.now()
     });
   };
+  playNextClick = item => {
+    this.props.playNext(item);
+  };
   render() {
     //TODO: make it look much better
     return (
@@ -46,28 +49,16 @@ class Videoitem extends Component {
             <Row>
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
-                  <Button
-                    className="btn btn-btn-secondary  btn-item"
+                  <FontAwesomeIcon
+                    className="play-icon"
+                    icon="play-circle"
                     onClick={this.onPlayClick.bind(this, this.props)}
-                    color="secondary"
-                  >
-                    Play
-                  </Button>
+                    size="lg"
+                  />
                 </div>
               </Col>
               <Col xs="7" sm="7">
                 <CardText>{this.props.title}</CardText>
-              </Col>
-              <Col xs="1" sm="1">
-                <div className="placeforbutton">
-                  <Button
-                    className="btn btn-secondary  float-right btn-item"
-                    color="secondary"
-                    onClick={this.onAddClick.bind(this, this.props)}
-                  >
-                    +Q
-                  </Button>
-                </div>
               </Col>
               <Col xs="2" sm="2">
                 <br />
@@ -79,6 +70,24 @@ class Videoitem extends Component {
                     onClick={this.onAddToPlaylist.bind(this, this.props)}
                   >
                     +P
+                  </Button>
+                </div>
+              </Col>
+              <Col xs="1" sm="1">
+                <div className="placeforbutton">
+                  <Button
+                    className="btn btn-secondary  float-right btn-item"
+                    color="secondary"
+                    onClick={this.playNextClick.bind(this, this.props)}
+                  >
+                    +N
+                  </Button>
+                  <Button
+                    className="btn btn-secondary  float-right btn-item"
+                    color="secondary"
+                    onClick={this.onAddClick.bind(this, this.props)}
+                  >
+                    +Q
                   </Button>
                 </div>
               </Col>

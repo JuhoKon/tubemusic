@@ -16,7 +16,8 @@ const SortableItem = sortableElement(
     onDeleteFromPlaylist,
     duration,
     onRemove,
-    editMode
+    editMode,
+    playNext
   }) => (
     <Playlistitem
       key={uniqueId}
@@ -30,6 +31,7 @@ const SortableItem = sortableElement(
       duration={duration}
       publishedAt={publishedAt}
       editMode={editMode}
+      playNext={playNext}
     />
   )
 );
@@ -53,6 +55,7 @@ export default class PlaylistItemsList extends Component {
           duration={duration}
           publishedAt={publishedAt}
           editMode={this.props.editMode}
+          playNext={this.props.playNext}
         />
       </div>
     );

@@ -23,6 +23,7 @@ class Link extends Component {
     this.props.deletePlaylist(playlist._id);
   }
   render() {
+    console.log(this.props);
     return (
       <div>
         <Card className="card">

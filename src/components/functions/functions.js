@@ -206,8 +206,21 @@ export const getPlayListById = async id => {
   return res;
 };
 
-export const addUserPlaylist = async (playlistid, name, token) => {
-  const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
+export const addUserPlaylist = async (
+  playlistid,
+  name,
+  priv,
+  owner,
+  createdAt,
+  token
+) => {
+  const body = JSON.stringify({
+    playlistId: playlistid,
+    playlistName: name,
+    private: priv,
+    owner: owner,
+    createdAt: createdAt
+  });
   await axios
     .put("http://localhost:8080/users/addPlaylist", body, tokenConfig())
     .catch(err => {
@@ -225,8 +238,12 @@ export const deleteUserPlaylist = async (playlistid, token) => {
     });
   return res;
 };
-export const updateUserPlaylist = async (playlistid, name, token) => {
-  const body = JSON.stringify({ playlistId: playlistid, playlistName: name });
+export const updateUserPlaylist = async (playlistid, name, priv, token) => {
+  const body = JSON.stringify({
+    playlistId: playlistid,
+    playlistName: name,
+    private: priv
+  });
   await axios
     .put(
       `http://localhost:8080/users/editPlaylist${playlistid}`,

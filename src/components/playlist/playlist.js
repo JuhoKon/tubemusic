@@ -114,7 +114,7 @@ class Playlist extends Component {
   render() {
     const { filter } = this.state;
     const { playlists, playlist } = this.props;
-
+    console.log(playlist);
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
     const filteredData = playlist.filter(item => {
@@ -200,6 +200,7 @@ class Playlist extends Component {
         <AutoSizer disableHeight>
           {({ width }) => (
             <SortableVirtualList
+              playNext={this.props.playNext}
               editMode={this.state.editMode}
               getRef={this.registerListRef}
               playlist={filteredData}
@@ -208,6 +209,7 @@ class Playlist extends Component {
               onPlay={this.props.onPlay}
               onDeleteFromPlaylist={this.onDeleteFromPlaylist}
               width={width}
+              distance={1}
             />
           )}
         </AutoSizer>

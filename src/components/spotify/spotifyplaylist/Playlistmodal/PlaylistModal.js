@@ -106,7 +106,14 @@ class PlaylistModal extends Component {
       if (playlist.length > 0) {
         //console.log(tracksFromYoutube.length - playlist.length);
         const respond = await makePlaylist(body);
-        addUserPlaylist(respond.data._id, respond.data.name, this.state.token);
+        addUserPlaylist(
+          respond.data._id,
+          respond.data.name,
+          respond.data.private,
+          respond.data.owner,
+          respond.data.createdAt,
+          this.state.token
+        );
         if (respond.status === 200) {
           this.setState({
             imported: true,

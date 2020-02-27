@@ -46,11 +46,13 @@ export default class Spotify extends Component {
       loading: true
     });
     let data = await getSpotifyUsersPlaylists(token);
+    console.log(data);
     let dataArray = [];
     let nextData = null;
     dataArray = data.items;
 
-    while (data.next !== null || typeof data.next !== "undefined") {
+    while (typeof data.next !== "undefined" && data.next !== null) {
+      console.log(token, data.next);
       nextData = await getRequestWithToken(token, data.next);
       //console.log(nextData);
       dataArray = dataArray.concat(nextData.items);

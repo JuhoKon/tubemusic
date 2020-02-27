@@ -3,7 +3,7 @@ import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./playlist.css";
 import isEqual from "react-fast-compare";
 import "moment-duration-format";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Playlistitem extends Component {
   state = {
     playlist: this.props.playlist,
@@ -21,6 +21,9 @@ class Playlistitem extends Component {
   };
   onDeleteClick = id => {
     this.props.onDeleteFromPlaylist(id);
+  };
+  playNextClick = item => {
+    this.props.playNext(item);
   };
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
@@ -46,13 +49,12 @@ class Playlistitem extends Component {
           <Row>
             <Col xs="2" sm="2">
               <div className="placeforbutton">
-                <Button
-                  className="button btn-secondary btn-item"
+                <FontAwesomeIcon
+                  className="play-icon"
+                  icon="play-circle"
                   onClick={this.onPlayClick.bind(this, this.props)}
-                  color="secondary"
-                >
-                  Play
-                </Button>
+                  size="lg"
+                />
               </div>
             </Col>
             <Col xs="6" sm="6">
@@ -72,13 +74,22 @@ class Playlistitem extends Component {
                     x
                   </Button>
                 ) : (
-                  <Button
-                    className="btn btn-secondary float-right btn-item"
-                    color="info"
-                    onClick={this.onAddClick.bind(this, this.props)}
-                  >
-                    +Q
-                  </Button>
+                  <div className="flex-container">
+                    <Button
+                      className="btn btn-secondary float-right btn-item"
+                      color="info"
+                      onClick={this.playNextClick.bind(this, this.props)}
+                    >
+                      +N
+                    </Button>
+                    <Button
+                      className="btn btn-secondary float-right btn-item"
+                      color="info"
+                      onClick={this.onAddClick.bind(this, this.props)}
+                    >
+                      +Q
+                    </Button>
+                  </div>
                 )}
               </div>
             </Col>
