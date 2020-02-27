@@ -148,13 +148,6 @@ button.btn-secondary.disabled {
   border: none !important;
   background-color: #0000003d;
 }
-<<<<<<< HEAD
-span.styled-toast {
-  background-color: antiquewhite;
-}
-.div#2.Toaster__alert {
-  background-color: black !important;
-=======
 .modal-content {
   animation-name: blurEffect;
   animation-duration: 0.7s;
@@ -216,5 +209,4 @@ label {
 .loadingPlace {
   background-color: #f8f9fa2b;
   color: #fff;
->>>>>>> 04f4ec4c08f8dff7cec7f8cce93ae781371bd8cc
 }
