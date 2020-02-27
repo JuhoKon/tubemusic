@@ -10,7 +10,6 @@ class ImportList extends Component {
       toBeImportedPlaylist: this.props.toBeImportedPlaylist,
       updated: ""
     };
-    this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
@@ -22,7 +21,14 @@ class ImportList extends Component {
   }
   renderRow = ({ index, key, isScrolling, isVisible, style }) => {
     const toBeImportedPlaylist = this.props.toBeImportedPlaylist;
-    const { title, artistName, id } = toBeImportedPlaylist[index];
+    const {
+      title,
+      artistName,
+      id,
+      duration,
+      date,
+      videoId
+    } = toBeImportedPlaylist[index];
     //const { value } = items[index];
     //tänne samalla lailla noi durationit datet jne kuten loadedListissä
     return (
@@ -32,30 +38,16 @@ class ImportList extends Component {
           id={id}
           artistName={artistName}
           importPlaylistToApp={this.props.importPlaylistToApp}
-          removeFromPlaylist={this.removeFromPlaylist}
+          removeFromPlaylist={this.props.removeFromPlaylist}
           imported={true}
           title={title}
+          duration={duration}
+          date={date}
+          videoId={videoId}
         ></PlaylistModalItem>
       </div>
     );
   };
-  removeFromPlaylist(item) {
-    if (!item) return;
-    if (typeof this.state.toBeImportedPlaylist[0] === "undefined") return;
-    // console.log(this.state.toBeImportedPlaylist[0]);
-    //console.log(item);
-    for (let i = 0; i < this.state.toBeImportedPlaylist.length; i++) {
-      if (this.state.toBeImportedPlaylist[i].id === item.id) {
-        //console.log(this.state.toBeImportedPlaylist[i]);
-        //delete item from toBeImportedPlaylist
-        this.state.toBeImportedPlaylist.splice(i, 1);
-        break;
-      }
-    }
-    this.setState({
-      updated: item.videoId
-    });
-  }
   render() {
     //console.log("Importlist");
     //const toBeImportedPlaylist = this.state.toBeImportedPlaylist;

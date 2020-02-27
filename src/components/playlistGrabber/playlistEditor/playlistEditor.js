@@ -30,13 +30,33 @@ class PlaylistModal extends Component {
       toBeImportedPlaylist: []
     };
     this.addToImport = this.addToImport.bind(this);
+    this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
+  }
+  removeFromPlaylist(item) {
+    if (!item) return;
+    if (typeof this.state.toBeImportedPlaylist[0] === "undefined") return;
+    // console.log(this.state.toBeImportedPlaylist[0]);
+    //console.log(item);
+    for (let i = 0; i < this.state.toBeImportedPlaylist.length; i++) {
+      if (this.state.toBeImportedPlaylist[i].id === item.id) {
+        //console.log(this.state.toBeImportedPlaylist[i]);
+        //delete item from toBeImportedPlaylist
+        this.state.toBeImportedPlaylist.splice(i, 1);
+        break;
+      }
+    }
+    this.setState({
+      updated: item.videoId
+    });
   }
   addToImport(item) {
     //tänne durationit datet videoid:t
-    let song = {};
+    let song = Object.assign({}, item);
+    song["id"] = Math.random();
+    /* let song = {};
     song["artistName"] = item.artistName;
     song["title"] = item.title;
-    song["id"] = Math.random();
+    song["id"] = Math.random();*/
     this.state.toBeImportedPlaylist.push(song);
     this.setState({
       //just to trigger re-rendering -> new props to children
@@ -62,12 +82,12 @@ class PlaylistModal extends Component {
       toBeImportedPlaylist: []
     });
   };
-  getAllSongs = () => {
-    this.setState({
-      toBeImportedPlaylist: this.state.toBeImportedPlaylist.concat(
-        this.state.tracks
-      )
-    });
+  addPlayListToColl = () => {
+    //makes new playlist, based on some name chosen by user.
+    //then adds the toBeImportedPlaylist to that.
+  };
+  getAllSongs = LoadfilteredData => {
+    LoadfilteredData.forEach(track => this.addToImport(track));
   };
   render() {
     const {
@@ -116,7 +136,7 @@ class PlaylistModal extends Component {
               </span>
               <br />
               <ImportList
-                removeFromImport={this.removeFromImport}
+                removeFromPlaylist={this.removeFromPlaylist}
                 toBeImportedPlaylist={importfilteredData}
               />
               {/* will have the chosen tracks from loaded list? */}
@@ -144,7 +164,9 @@ class PlaylistModal extends Component {
         <Row id="lowerRow">
           <Col xs="2" sm="2">
             <div className="placeforbutton">
-              <Button>Add playlist to your collections.</Button>
+              <Button onClick={this.addPlayListToColl.bind(this)}>
+                Add playlist to your collections.
+              </Button>
             </div>
           </Col>
           <Col xs="2" sm="2">
@@ -154,7 +176,7 @@ class PlaylistModal extends Component {
           </Col>
           <Col xs="4" sm="4">
             <div className="placeforbutton">
-              <Button onClick={this.getAllSongs.bind(this)}>
+              <Button onClick={this.getAllSongs.bind(this, LoadfilteredData)}>
                 Get all songs
               </Button>
             </div>

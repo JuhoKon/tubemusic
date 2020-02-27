@@ -31,7 +31,7 @@ class PlayListItem extends Component {
                 >
                   <CardText>Subscribe</CardText>{" "}
                   {/* Add this playlist id straight to current users array of playlists. */}
-                  {/* disabled is based on the playlists public shit? */}
+                  {/* disabled is based on the playlists public? */}
                 </Button>
               </Col>
               <Col xs="4" sm="4">
