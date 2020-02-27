@@ -47,12 +47,13 @@ class LoadPlaylistModal extends Component {
             Select a playlist and load it :)
           </p>
           <div id="videolist">
-            {playlists.map(({ playlist, name, _id }) => (
+            {playlists.map(({ playlist, name, _id, owner, createdAt }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <Link
                   deletePlaylist={this.props.deletePlaylist}
                   _id={_id}
-                  playlist={playlist}
+                  owner={owner}
+                  createdAt={createdAt}
                   name={name}
                   loadPlaylist={this.props.loadPlaylist}
                   disabled={this.props.disabled}
