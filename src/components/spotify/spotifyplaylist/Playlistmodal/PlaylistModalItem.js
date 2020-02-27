@@ -27,14 +27,17 @@ class PlaylistModalItem extends Component {
         <Card className="card">
           <CardBody>
             <Row>
-              <Col xs="1" sm="1"></Col>
-              <Col xs="5" sm="5">
+              <Col xs="4" sm="4">
                 <CardText>{this.state.title}</CardText>
               </Col>
               <Col xs="4" sm="4">
                 <CardText className="float-left">
                   {this.state.artistName}
                 </CardText>
+              </Col>
+              <Col xs="2" sm="2">
+                {this.props.createdAt}
+                {/* format better using moment */}
               </Col>
               <Col xs="2" sm="2">
                 {this.state.imported ? (
