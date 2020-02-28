@@ -126,15 +126,13 @@ class PlaylistModal extends Component {
                 placeholder="Filter songs based on title..."
               />
               <span className="float-left">
-                Songs: {this.state.toBeImportedPlaylist.length}
+                Songs: {importfilteredData.length}
               </span>
               <br />
               <ImportList
                 removeFromPlaylist={this.removeFromPlaylist}
                 toBeImportedPlaylist={importfilteredData}
               />
-              {/* will have the chosen tracks from loaded list? */}
-              {/* aka a tobeAddedPlaylist or so on.*/}
             </div>
           </Col>
           <Col xs="6" sm="6">
