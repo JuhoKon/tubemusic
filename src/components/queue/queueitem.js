@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Card, CardBody, Button, CardText, Row, Col } from "reactstrap";
 import isEqual from "react-fast-compare";
 import "./queue.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Queueitem extends Component {
   state = {
     editMode: this.props.editMode
@@ -35,12 +34,12 @@ class Queueitem extends Component {
             <Row>
               <Col xs="2" sm="2">
                 <div className="placeforbutton">
-                  <FontAwesomeIcon
-                    className="play-icon"
-                    icon="play-circle"
+                  <Button
+                    className="btn btn-secondary float-right btn-item"
                     onClick={this.onPlayClick.bind(this, this.props)}
-                    size="lg"
-                  />
+                  >
+                    Play
+                  </Button>
                 </div>
               </Col>
               <Col xs="7" sm="7">

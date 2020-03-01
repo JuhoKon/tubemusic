@@ -53,6 +53,9 @@
   /* color: rgb(117, 255, 148);*/
   cursor: pointer;
   transition: transform 80ms ease-in;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 2px;
 }
 .play-icon:hover {
   transform: scale(0.95);

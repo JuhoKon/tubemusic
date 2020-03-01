@@ -3,7 +3,6 @@ import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./playlist.css";
 import isEqual from "react-fast-compare";
 import "moment-duration-format";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Playlistitem extends Component {
   state = {
     playlist: this.props.playlist,
@@ -49,12 +48,12 @@ class Playlistitem extends Component {
           <Row>
             <Col xs="2" sm="2">
               <div className="placeforbutton">
-                <FontAwesomeIcon
-                  className="play-icon"
-                  icon="play-circle"
+                <Button
+                  className="btn btn-secondary float-right btn-item"
                   onClick={this.onPlayClick.bind(this, this.props)}
-                  size="lg"
-                />
+                >
+                  Play
+                </Button>
               </div>
             </Col>
             <Col xs="6" sm="6">

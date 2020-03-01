@@ -12,9 +12,6 @@ import PublicPlaylists from "./components/playlistGrabber/publicPlaylists";
 import { history } from "./components/History";
 import Admin from "./components/admin/Admin";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlayCircle, faCoffee } from "@fortawesome/free-solid-svg-icons";
-library.add(faPlayCircle);
 const NoMatchPage = () => {
   return <h3>404 - Not found</h3>;
 };

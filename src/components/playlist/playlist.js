@@ -209,7 +209,7 @@ class Playlist extends Component {
               onPlay={this.props.onPlay}
               onDeleteFromPlaylist={this.onDeleteFromPlaylist}
               width={width}
-              distance={1}
+              distance={10}
             />
           )}
         </AutoSizer>
