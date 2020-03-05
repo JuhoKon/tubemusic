@@ -340,7 +340,7 @@ export default class Homepage extends Component {
     this.props.loadUser();
     //gets ALL playlists from database
   }
-  async makePlaylist(name, playlist, isPrivate) {
+  async makePlaylist(name, playlist, isPrivate, genre) {
     //API request to create a new playlist (database)
     //console.log(this.state.user.name);
 
@@ -353,7 +353,8 @@ export default class Homepage extends Component {
       name,
       playlist,
       isPrivate,
-      owner: this.state.userName
+      owner: this.state.userName,
+      genre
     });
     const result = await makePlaylist(item);
     const data = result.data;

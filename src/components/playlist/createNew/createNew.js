@@ -9,12 +9,14 @@ import {
   Label,
   Input
 } from "reactstrap";
+import GenresOptions from "../../functions/genres";
 
 class CreateNew extends Component {
   state = {
     modal: false,
     name: "",
-    checked: false
+    checked: false,
+    select: "Random"
   };
   toggle = () => {
     this.setState({
@@ -23,11 +25,17 @@ class CreateNew extends Component {
   };
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state.select);
   };
   onSubmit = e => {
     e.preventDefault();
     console.log(e);
-    this.props.makePlaylist(this.state.name, [], this.state.checked); //if true, we have a private playlist
+    this.props.makePlaylist(
+      this.state.name,
+      [],
+      this.state.checked,
+      this.state.select
+    ); //if true, we have a private playlist
     this.toggle();
   };
   boxChange = evt => {
@@ -64,6 +72,10 @@ class CreateNew extends Component {
                   className="mb-4"
                   onChange={this.onChange}
                 ></Input>
+
+                <Label className="">Genres</Label>
+                {GenresOptions(this.onChange)}
+                <br />
                 <div className="check">
                   <Label check className="float-right ">
                     <Input
@@ -75,6 +87,7 @@ class CreateNew extends Component {
                     Make the playlist private?
                   </Label>
                 </div>
+
                 <br />
                 <Button className="btn btn-primary my-4 btn-block">Save</Button>
               </FormGroup>

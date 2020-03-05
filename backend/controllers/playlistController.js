@@ -14,7 +14,8 @@ exports.create = function(req, res, next) {
     name: req.body.name,
     playlist: req.body.playlist,
     private: req.body.isPrivate,
-    owner: req.body.owner
+    owner: req.body.owner,
+    genre: req.body.genre
   });
   playlist
     .save()
