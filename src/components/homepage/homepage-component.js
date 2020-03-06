@@ -75,7 +75,7 @@ export default class Homepage extends Component {
       });
       if (this.props.data) {
         this.setState({
-          playlists: this.props.data.playlists
+          playlists: this.props.data.playlists.reverse()
         });
       }
     }

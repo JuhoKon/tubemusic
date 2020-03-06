@@ -160,9 +160,8 @@ export default class Player extends Component {
     //console.log(this.state.title);
     return (
       <div>
+        <p>Now playing: {this.state.title}</p>
         <section className="section">
-          <p>Now playing: {this.state.title}</p>
-
           <Container className="container-fluid">
             <div className="app">
               <div className="player-wrapper">
