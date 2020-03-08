@@ -4,6 +4,7 @@ import { authenticationService } from "../functions/authenthication";
 import PlaylistsList from "./playlistsList";
 import PlayListEditor from "./playlistEditor/playlistEditor";
 //import PlaylistsList from "../admin/PlaylistsList";
+import isEqual from "react-fast-compare";
 import Spinner from "../spinner/spinnerNo2";
 import { Row, Col, Input } from "reactstrap";
 
@@ -19,7 +20,8 @@ export default class Homepage extends Component {
       token: "",
       filter: "",
       tracks: [],
-      loading: false
+      loading: false,
+      data: this.props.data
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
     this.getPlayListById = this.getPlayListById.bind(this);
@@ -45,11 +47,25 @@ export default class Homepage extends Component {
     });
     //console.log(result);
   }
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      //if change in props
+      this.setState({
+        user: this.props.data
+      });
+      if (this.props.data) {
+        this.setState({
+          Userplaylists: this.props.data.playlists
+        });
+      }
+    }
+  }
   componentDidMount() {
     const currentUser = authenticationService.currentUserValue;
     if (currentUser && currentUser.token) {
       this.setState({
-        token: currentUser.token
+        token: currentUser.token,
+        data: this.props.data
       });
       this.loadPlaylists();
     }
@@ -58,6 +74,7 @@ export default class Homepage extends Component {
     this.setState({ filter: event.target.value });
   };
   render() {
+    console.log(this.state);
     const { token, playlists, filter } = this.state;
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
@@ -96,6 +113,7 @@ export default class Homepage extends Component {
                 placeholder="Filter playlists..."
               />
               <PlaylistsList
+                userData={this.state.Userplaylists}
                 loadPlaylists={this.loadPlaylists}
                 token={token}
                 playlists={filteredData}

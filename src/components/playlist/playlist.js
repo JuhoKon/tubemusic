@@ -45,7 +45,7 @@ class Playlist extends Component {
       //if change in props
       this.setState({
         playlist: this.props.playlist,
-        playlists: this.props.playlists,
+        playlists: this.props.playlists.reverse,
         playlistName: this.props.playlistName,
         playlistId: this.props.playlistId,
         playlistOwner: this.props.playlistOwner,

@@ -16,7 +16,8 @@ class PlaylistsList extends Component {
       //if change in props
       this.setState({
         playlists: this.props.playlists,
-        token: this.props.token
+        token: this.props.token,
+        Userplaylists: this.props.Userplaylists
       });
     }
   }
@@ -28,6 +29,7 @@ class PlaylistsList extends Component {
     return (
       <div key={_id} style={style}>
         <PlayListItem
+          userData={this.props.userData}
           loadPlaylists={this.props.loadPlaylists}
           getPlayListById={this.props.getPlayListById}
           token={this.props.token}
@@ -40,8 +42,8 @@ class PlaylistsList extends Component {
       </div>
     );
   };
-
   render() {
+    console.log(this.props.userData);
     //console.log(this.state);
     const { playlists } = this.state;
     //console.log(filteredData);

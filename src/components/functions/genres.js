@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "reactstrap";
 export default function GenresOptions(onChange) {
-  const genres = ["Random", "Rock", "RNB"];
+  const genres = ["Random", "Rock", "EDM", "Rap", "Chill", "parti"];
   const genreItems = genres.map(genre => (
     <option key={genre} value={genre}>
       {genre}

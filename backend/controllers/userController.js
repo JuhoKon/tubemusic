@@ -116,7 +116,7 @@ exports.addPlaylist = function(req, res, next) {
   User.findById(req.user.id)
     .then(user => {
       //console.log(user);
-      user.playlists.push({
+      user.playlists.unshift({
         _id: req.body.playlistId,
         name: req.body.playlistName,
         private: req.body.private,
