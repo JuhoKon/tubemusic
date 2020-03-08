@@ -55,7 +55,8 @@ export default class Homepage extends Component {
       });
       if (this.props.data) {
         this.setState({
-          Userplaylists: this.props.data.playlists
+          Userplaylists: this.props.data.playlists,
+          data: this.props.data
         });
       }
     }
@@ -69,10 +70,12 @@ export default class Homepage extends Component {
       });
       this.loadPlaylists();
     }
+    this.props.loadUser();
   }
   handleChange = event => {
     this.setState({ filter: event.target.value });
   };
+
   render() {
     console.log(this.state);
     const { token, playlists, filter } = this.state;
@@ -132,6 +135,7 @@ export default class Homepage extends Component {
               >
                 {this.state.tracks.length ? (
                   <PlayListEditor
+                    data={this.props.data}
                     loadPlaylists={this.loadPlaylists}
                     token={token}
                     playlists={filteredData}

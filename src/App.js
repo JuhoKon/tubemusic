@@ -96,6 +96,7 @@ class App extends Component {
               path="/playlists"
               data={currentUserInfo}
               component={PublicPlaylists}
+              loadUser={this.loadUser}
             />
             <PrivateRoute
               path="/admin"

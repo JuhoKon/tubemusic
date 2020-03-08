@@ -3,13 +3,19 @@ import isEqual from "react-fast-compare";
 import { List, AutoSizer } from "react-virtualized";
 import PlayListItem from "./playListItem";
 import "react-virtualized/styles.css";
+import { authenticationService } from "../functions/authenthication";
 class PlaylistsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       playlists: this.props.playlists,
-      token: this.props.token
+      token: this.props.token,
+      userData: this.props.userData
     };
+    this.load = this.load.bind(this);
+  }
+  componentDidMount() {
+    this.load(this.state.token);
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
@@ -17,7 +23,20 @@ class PlaylistsList extends Component {
       this.setState({
         playlists: this.props.playlists,
         token: this.props.token,
-        Userplaylists: this.props.Userplaylists
+        Userplaylists: this.props.Userplaylists,
+        userData: this.props.userData
+      });
+    }
+  }
+  async load(token) {
+    const Array2 = [];
+    let response = await authenticationService.loadUser(token);
+    if (response !== null) {
+      response.playlists.forEach(element => {
+        Array2.push(element._id);
+      });
+      this.setState({
+        currentUserInfo: Array2
       });
     }
   }
@@ -29,7 +48,7 @@ class PlaylistsList extends Component {
     return (
       <div key={_id} style={style}>
         <PlayListItem
-          userData={this.props.userData}
+          currentUserInfo={this.state.currentUserInfo}
           loadPlaylists={this.props.loadPlaylists}
           getPlayListById={this.props.getPlayListById}
           token={this.props.token}
@@ -42,6 +61,7 @@ class PlaylistsList extends Component {
       </div>
     );
   };
+
   render() {
     console.log(this.props.userData);
     //console.log(this.state);

@@ -16,7 +16,8 @@ import { Button, Row, Col, Input } from "reactstrap";
 import LoadedList from "./components/loadedList";
 import ImportList from "./components/importList";
 import isEqual from "react-fast-compare";
-
+import CreatePlayListModal from "./components/createPlayListModal";
+import { makePlaylist, addUserPlaylist } from "../../functions/functions";
 //TODO: add option to "create" own songs just by entering title and artist. These songs
 //can be added  then to the importList which will be further on webscraped
 class PlaylistModal extends Component {
@@ -26,10 +27,12 @@ class PlaylistModal extends Component {
       importFilter: "",
       loadFilter: "",
       tracks: this.props.tracks,
-      toBeImportedPlaylist: []
+      toBeImportedPlaylist: [],
+      modal: true
     };
     this.addToImport = this.addToImport.bind(this);
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
+    this.addPlayListToColl = this.addPlayListToColl.bind(this);
   }
   removeFromPlaylist(item) {
     if (!item) return;
@@ -76,10 +79,29 @@ class PlaylistModal extends Component {
       toBeImportedPlaylist: []
     });
   };
-  addPlayListToColl = () => {
+  async addPlayListToColl(name, isPrivate, genre, owner) {
+    const playlist = this.state.toBeImportedPlaylist;
+    const item = JSON.stringify({
+      name,
+      playlist,
+      isPrivate,
+      owner: owner,
+      genre
+    });
+    const result = await makePlaylist(item);
+    console.log(result);
+    addUserPlaylist(
+      result.data._id,
+      name,
+      isPrivate,
+      owner,
+      result.data.createdAt,
+      this.props.token
+    );
+    //this.props.token;
     //makes new playlist, based on some name chosen by user.
     //then adds the toBeImportedPlaylist to that.
-  };
+  }
   getAllSongs = LoadfilteredData => {
     LoadfilteredData.forEach(track => this.addToImport(track));
   };
@@ -112,6 +134,7 @@ class PlaylistModal extends Component {
       );
     });
     console.log(LoadfilteredData);
+    console.log(this.props);
     return (
       <div className="playlistEditor">
         <br />
@@ -156,9 +179,11 @@ class PlaylistModal extends Component {
         <Row id="lowerRow">
           <Col xs="4" sm="4">
             <div className="placeforbutton">
-              <Button onClick={this.addPlayListToColl.bind(this)}>
-                Add playlist to your collections.
-              </Button>
+              <CreatePlayListModal
+                owner={this.props.data.name}
+                makePlaylist={this.addPlayListToColl}
+              />
+              <Button>Add playlist to your collections.</Button>
             </div>
           </Col>
           <Col xs="1" sm="1">

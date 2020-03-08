@@ -10,10 +10,17 @@ class PlayListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUserInfo: []
+      currentUserInfo: this.props.currentUserInfo
     };
   }
-
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      //if change in props
+      this.setState({
+        currentUserInfo: this.props.currentUserInfo
+      });
+    }
+  }
   clickOnPlayList() {
     this.props.getPlayListById(this.props.id);
   }
@@ -29,9 +36,7 @@ class PlayListItem extends Component {
       });
     }
   }
-  componentDidMount() {
-    this.load(this.props.token);
-  }
+
   async subscribe() {
     console.log(this.props);
     console.log(this.state);
@@ -54,7 +59,7 @@ class PlayListItem extends Component {
     this.load(this.props.token);
   }
   render() {
-    const playlists = this.state.currentUserInfo || "s";
+    const playlists = this.state.currentUserInfo || "";
     const id = this.props.id;
     //console.log(this.props);
     //console.log(this.state);
