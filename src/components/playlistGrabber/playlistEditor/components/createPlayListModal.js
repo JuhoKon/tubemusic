@@ -46,12 +46,13 @@ class CreateNew extends Component {
     return (
       <div>
         <Button
+          disabled={this.props.disabled}
           className="float-left btn-margin btn-secondary btn button"
           onClick={this.toggle}
           href="#"
           color="secondary"
         >
-          Create new
+          Add playlist to your collections.
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
@@ -71,6 +72,7 @@ class CreateNew extends Component {
                   placeholder="epic-partylist"
                   className="mb-4"
                   onChange={this.onChange}
+                  required={true}
                 ></Input>
 
                 <Label className="">Genres</Label>

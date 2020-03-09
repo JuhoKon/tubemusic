@@ -18,6 +18,7 @@ import ImportList from "./components/importList";
 import isEqual from "react-fast-compare";
 import CreatePlayListModal from "./components/createPlayListModal";
 import { makePlaylist, addUserPlaylist } from "../../functions/functions";
+import toaster from "toasted-notes";
 //TODO: add option to "create" own songs just by entering title and artist. These songs
 //can be added  then to the importList which will be further on webscraped
 class PlaylistModal extends Component {
@@ -89,7 +90,17 @@ class PlaylistModal extends Component {
       genre
     });
     const result = await makePlaylist(item);
-    console.log(result);
+    if (!result) {
+      toaster.notify(
+        <span>
+          An error making the playlist has occured. Please try again!
+        </span>,
+        {
+          duration: 2800
+        }
+      );
+      return;
+    }
     addUserPlaylist(
       result.data._id,
       name,
@@ -98,6 +109,9 @@ class PlaylistModal extends Component {
       result.data.createdAt,
       this.props.token
     );
+    toaster.notify(<span>Playlist created!</span>, {
+      duration: 2800
+    });
     //this.props.token;
     //makes new playlist, based on some name chosen by user.
     //then adds the toBeImportedPlaylist to that.
@@ -180,10 +194,10 @@ class PlaylistModal extends Component {
           <Col xs="4" sm="4">
             <div className="placeforbutton">
               <CreatePlayListModal
+                disabled={this.state.toBeImportedPlaylist.length ? false : true}
                 owner={this.props.data.name}
                 makePlaylist={this.addPlayListToColl}
               />
-              <Button>Add playlist to your collections.</Button>
             </div>
           </Col>
           <Col xs="1" sm="1">
