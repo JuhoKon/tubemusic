@@ -7,7 +7,7 @@ import PlayListEditor from "./playlistEditor/playlistEditor";
 import isEqual from "react-fast-compare";
 import Spinner from "../spinner/spinnerNo2";
 import { Row, Col, Input } from "reactstrap";
-
+import GenresOptions from "../functions/genres";
 import "./styles.css";
 
 //https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
@@ -21,6 +21,8 @@ export default class Homepage extends Component {
       filter: "",
       tracks: [],
       loading: false,
+      filteredData: [],
+      genreFilteredData: [],
       data: this.props.data
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
@@ -31,7 +33,9 @@ export default class Homepage extends Component {
   async loadPlaylists() {
     let res = await getPlaylists();
     this.setState({
-      playlists: res.data.Playlist
+      playlists: res.data.Playlist,
+      filteredData: res.data.Playlist,
+      genreFilteredData: res.data.Playlist
     });
   }
   async getPlayListById(id) {
@@ -72,13 +76,12 @@ export default class Homepage extends Component {
     }
     this.props.loadUser();
   }
-  handleChange = event => {
-    this.setState({ filter: event.target.value });
-  };
-
-  render() {
-    console.log(this.state);
-    const { token, playlists, filter } = this.state;
+  onChange = e => {
+    //genre
+    this.setState({ [e.target.name]: e.target.value });
+    let filter = e.target.value;
+    if (e.target.value === "All") filter = "";
+    const { playlists } = this.state;
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
     const filteredData = playlists.filter(item => {
@@ -86,13 +89,37 @@ export default class Homepage extends Component {
       return Object.keys(item).some(
         key =>
           typeof item[key] === "string" &&
-          key !== "_id" &&
+          key !== "_id" && //TODO: make it so only it can be filtered only by name or owner?
           //only filter based on name
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    console.log(this.state.tracks);
-    //console.log(filteredData);
+    this.setState({
+      genreFilter: e.target.value,
+      genreFilteredData: filteredData
+    });
+  };
+  handleChange = event => {
+    this.setState({ filter: event.target.value });
+  };
+
+  render() {
+    console.log(this.state);
+    const { token, filter } = this.state;
+    const { playlists, genreFilteredData } = this.state;
+    const lowercasedFilter = filter.toLowerCase();
+    //console.log(playlist);
+    const filteredData = genreFilteredData.filter(item => {
+      if (item === null || typeof item === "undefined")
+        return genreFilteredData; //problems
+      return Object.keys(item).some(
+        key =>
+          typeof item[key] === "string" &&
+          key !== "_id" && //TODO: make it so only it can be filtered only by name or owner?
+          //only filter based on name
+          item[key].toLowerCase().includes(lowercasedFilter)
+      );
+    });
     return (
       <div className="container-fluid homepage-div">
         <div id="spinnerDiv">
@@ -110,11 +137,15 @@ export default class Homepage extends Component {
               right side.
               <br />
               <br />
-              <Input
-                value={filter}
-                onChange={this.handleChange}
-                placeholder="Filter playlists..."
-              />
+              <div className="inputDiv">
+                <Input
+                  id="filterId"
+                  value={filter}
+                  onChange={this.handleChange}
+                  placeholder="Filter playlists..."
+                />
+                {GenresOptions(this.onChange, true)}
+              </div>
               <PlaylistsList
                 userData={this.state.Userplaylists}
                 loadPlaylists={this.loadPlaylists}

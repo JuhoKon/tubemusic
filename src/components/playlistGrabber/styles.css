@@ -16,3 +16,10 @@
   box-shadow: 0px 5px 39px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 12px 0px 30px 0px rgba(0, 0, 0, 0.75);
 }
+.inputDiv {
+  display: flex;
+  justify-content: space-between;
+}
+#filterId {
+  width: 300%;
+}
