@@ -78,9 +78,11 @@ export default class Homepage extends Component {
   }
   onChange = e => {
     //genre
-    this.setState({ [e.target.name]: e.target.value });
+
     let filter = e.target.value;
+    console.log(filter);
     if (e.target.value === "All") filter = "";
+    this.setState({ genreFilter: filter });
     const { playlists } = this.state;
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
@@ -94,6 +96,7 @@ export default class Homepage extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
+    console.log(filteredData);
     this.setState({
       genreFilter: e.target.value,
       genreFilteredData: filteredData
@@ -120,6 +123,7 @@ export default class Homepage extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
+    console.log(filteredData);
     return (
       <div className="container-fluid homepage-div">
         <div id="spinnerDiv">

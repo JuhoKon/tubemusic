@@ -20,6 +20,9 @@ class PlaylistsList extends Component {
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
+      if (this.list) {
+        this.list.forceUpdateGrid();
+      }
       this.setState({
         playlists: this.props.playlists,
         token: this.props.token,
@@ -61,9 +64,12 @@ class PlaylistsList extends Component {
       </div>
     );
   };
-
+  bindListRef = ref => {
+    //so we can force update, when props change cos thats how react-virtualized list works
+    this.list = ref;
+  };
   render() {
-    console.log(this.props.userData);
+    console.log(this.props.playlists);
     //console.log(this.state);
     const { playlists } = this.state;
     //console.log(filteredData);
@@ -73,6 +79,7 @@ class PlaylistsList extends Component {
         <AutoSizer>
           {({ width }) => (
             <List
+              ref={this.bindListRef}
               width={width}
               height={700}
               rowCount={playlists.length}
