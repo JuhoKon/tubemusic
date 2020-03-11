@@ -9,13 +9,17 @@ class AdminPlaylistItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      loading: false
     };
     this.deletePlaylist = this.deletePlaylist.bind(this);
   }
   deletePlaylist() {
-    deletePlaylist(this.props.id);
-    this.props.loadPlaylists();
+    console.log("Hey");
+    this.setState({
+      loading: true
+    });
+    this.props.deletePlaylist(this.props.id);
   }
   async clickOnPlayList() {
     this.setState({
@@ -71,7 +75,17 @@ class AdminPlaylistItem extends Component {
               </Col>
 
               <Col xs="2" sm="2">
-                <Button onClick={this.deletePlaylist.bind(this)}>Delete</Button>
+                <Button
+                  color="secondary"
+                  onClick={this.deletePlaylist.bind(this)}
+                  className={
+                    this.state.loading
+                      ? "loading btn btn-primary float-left"
+                      : "btn btn-primary float-left"
+                  }
+                >
+                  {this.state.loading ? "Deleting..." : "Delete"}
+                </Button>
               </Col>
             </Row>
           </CardBody>

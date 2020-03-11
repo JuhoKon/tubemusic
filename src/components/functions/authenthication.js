@@ -2,6 +2,7 @@ import axios from "axios";
 import { BehaviorSubject } from "rxjs";
 import { handleError } from "./handleError";
 import { tokenConfig } from "./functions";
+const API = "https://still-crag-42621.herokuapp.com";
 try {
   //in case that the token item is invalid, we delete it
   JSON.parse(localStorage.getItem("token"));
@@ -62,7 +63,7 @@ function signup(newUser) {
     password: newUser.signUpPassword
   });
   return axios
-    .post("http://localhost:8080/users/create", body, config)
+    .post(API + "/users/create", body, config)
     .then(res => {
       currentUserSubject.next(res.data);
       localStorage.setItem("token", JSON.stringify(res.data));
@@ -74,7 +75,7 @@ function signup(newUser) {
 
 async function loadUser() {
   return axios
-    .get("http://localhost:8080/auth/user", tokenConfig())
+    .get(API + "/auth/user", tokenConfig())
     .then(res => {
       return res.data;
     })

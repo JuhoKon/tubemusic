@@ -4,6 +4,26 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var cors = require("cors");
+var bodyParser = require("body-parser");
+var Promise = require("bluebird");
+require("dotenv").config();
+var app = express();
+
+var whitelist = ["http://localhost:3000"];
+
+var corsOptions = {
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
+};
+
+// Then pass them to cors:
+app.use(cors(corsOptions));
 
 var indexRouter = require("./routes/index");
 var playlistsRouter = require("./routes/playlists");
@@ -11,13 +31,6 @@ var scrapeRouter = require("./routes/scrape");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
 
-var cors = require("cors");
-var bodyParser = require("body-parser");
-var Promise = require("bluebird");
-require("dotenv").config();
-var app = express();
-
-app.use(cors());
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");

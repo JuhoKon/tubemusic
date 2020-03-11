@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import isEqual from "react-fast-compare";
 import { List, AutoSizer } from "react-virtualized";
 import AdminPlaylistItem from "./AdminPlaylistItem";
+import { deletePlaylist } from "../functions/functions";
 
 class PlaylistsList extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class PlaylistsList extends Component {
       });
     }
   }
+
   renderRow = ({ index, style }) => {
     const playlists = this.props.playlists;
     const { name, _id, createdAt } = playlists[index];
@@ -28,6 +30,7 @@ class PlaylistsList extends Component {
       <div key={_id} style={style}>
         <AdminPlaylistItem
           loadPlaylists={this.props.loadPlaylists}
+          deletePlaylist={this.props.deletePlaylist}
           token={this.props.token}
           createdAt={createdAt}
           id={_id}

@@ -5,11 +5,12 @@ import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
+const API = "https://still-crag-42621.herokuapp.com";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
   let res = await axios
     .post(
-      "http://localhost:8080/scrape/scrape",
+      API + "/scrape/scrape",
       {
         items: items
       },
@@ -42,7 +43,7 @@ export const handleSubmit = async termFromSearch => {
   }
   /////////
   let res = await axios
-    .get("http://localhost:8080/scrape/search", config)
+    .get(API + "/scrape/search", config)
     .then(handleResponse)
     .catch(err => {
       handleError(err);
@@ -149,17 +150,15 @@ export const getPlaylistTracks = async (id, token) => {
 /* -------------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------------*/
 export const getPlaylists = async () => {
-  let res = await axios
-    .get("http://localhost:8080/playlists", tokenConfig())
-    .catch(err => {
-      handleError(err);
-    });
+  let res = await axios.get(API + "/playlists", tokenConfig()).catch(err => {
+    handleError(err);
+  });
 
   //console.log(res);
   return res;
 };
 /*export const getPlaylists = async () => {
-  let res = await axios.get("http://localhost:8080/playlists");
+  let res = await axios.get(API+`/playlists");
   return res;
 };*/
 export const setTitle = title => {
@@ -172,7 +171,7 @@ export const makePlaylist = async body => {
   //console.log(body);
 
   let res = await axios
-    .post("http://localhost:8080/playlists/create", body, tokenConfig())
+    .post(API + "/playlists/create", body, tokenConfig())
     .catch(err => {
       handleError(err);
     });
@@ -183,7 +182,7 @@ export const makePlaylist = async body => {
 export const updatePlaylist = async (body, id) => {
   await timeout(100);
   let res = await axios.put(
-    `http://localhost:8080/playlists/update/${id}`,
+    API + `/playlists/update/${id}`,
     body,
     tokenConfig()
   );
@@ -191,7 +190,7 @@ export const updatePlaylist = async (body, id) => {
 };
 export const deletePlaylist = async id => {
   let res = await axios
-    .delete(`http://localhost:8080/playlists/delete/${id}`, tokenConfig())
+    .delete(API + `/playlists/delete/${id}`, tokenConfig())
     .catch(err => {
       handleError(err);
     });
@@ -199,7 +198,7 @@ export const deletePlaylist = async id => {
 };
 export const getPlayListById = async id => {
   let res = await axios
-    .get(`http://localhost:8080/playlists/find/${id}`, tokenConfig())
+    .get(API + `/playlists/find/${id}`, tokenConfig())
     .catch(err => {
       handleError(err);
     });
@@ -222,17 +221,14 @@ export const addUserPlaylist = async (
     createdAt: createdAt
   });
   await axios
-    .put("http://localhost:8080/users/addPlaylist", body, tokenConfig())
+    .put(API + "/users/addPlaylist", body, tokenConfig())
     .catch(err => {
       handleError(err);
     });
 };
 export const deleteUserPlaylist = async (playlistid, token) => {
   let res = await axios
-    .delete(
-      `http://localhost:8080/users/deletePlaylist${playlistid}`,
-      tokenConfig()
-    )
+    .delete(API + `/users/deletePlaylist${playlistid}`, tokenConfig())
     .catch(err => {
       handleError(err);
     });
@@ -245,11 +241,7 @@ export const updateUserPlaylist = async (playlistid, name, priv, token) => {
     private: priv
   });
   await axios
-    .put(
-      `http://localhost:8080/users/editPlaylist${playlistid}`,
-      body,
-      tokenConfig()
-    )
+    .put(API + `/users/editPlaylist${playlistid}`, body, tokenConfig())
     .catch(err => {
       handleError(err);
     });
@@ -278,7 +270,7 @@ export const tokenConfig = () => {
     if ((diff > -(60 * 65 * 1) + 30) & (diff < -10)) {
       //if token will expire in 1 hr 5mins 30 seconds && will not expire in 10seconds
       //issue new Token
-      axios.get("http://localhost:8080/auth/renew", config).then(res => {
+      axios.get(API + "/auth/renew", config).then(res => {
         authenticationService.newToken(res.data);
       });
     }

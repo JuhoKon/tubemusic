@@ -23,6 +23,7 @@ import {
   updateUserPlaylist
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
+const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 export default class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -406,9 +407,21 @@ export default class Homepage extends Component {
         playlist: []
       });
     }
+    for (let i = 0; i < this.state.playlists.length; i++) {
+      if (this.state.playlists[i]._id === id) {
+        //delete item from playlists
+        this.state.playlists.splice(i, 1);
+        break;
+      }
+    }
+    this.setState({
+      //trigger re-render
+      updated: true
+    });
     //await deletePlaylist(id); this is for deleting whole together a playlist from db
     await deleteUserPlaylist(id, this.state.token); //deletes playlist from the user
     //delete users playlist
+    await timeout(30000);
     this.getPlaylist();
   }
   onAdd(item) {
