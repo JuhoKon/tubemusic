@@ -23,3 +23,11 @@
 #filterId {
   width: 300%;
 }
+#spinnerDiv2 {
+  position: fixed;
+  background-color: #9e4aa8;
+  top: 50%;
+  left: 50%;
+  border-radius: 50px;
+  z-index: 10;
+}

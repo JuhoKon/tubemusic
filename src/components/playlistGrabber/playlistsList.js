@@ -4,13 +4,16 @@ import { List, AutoSizer } from "react-virtualized";
 import PlayListItem from "./playListItem";
 import "react-virtualized/styles.css";
 import { authenticationService } from "../functions/authenthication";
+import Spinner from "../spinner/spinner3";
+
 class PlaylistsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       playlists: this.props.playlists,
       token: this.props.token,
-      userData: this.props.userData
+      userData: this.props.userData,
+      loading: this.props.loading || true
     };
     this.load = this.load.bind(this);
   }
@@ -28,7 +31,8 @@ class PlaylistsList extends Component {
         playlists: this.props.playlists,
         token: this.props.token,
         Userplaylists: this.props.Userplaylists,
-        userData: this.props.userData
+        userData: this.props.userData,
+        loading: this.props.loading
       });
     }
   }
@@ -38,9 +42,6 @@ class PlaylistsList extends Component {
     if (response !== null) {
       response.playlists.forEach(element => {
         Array2.push(element._id);
-      });
-      this.setState({
-        currentUserInfo: Array2
       });
     }
   }
@@ -70,13 +71,16 @@ class PlaylistsList extends Component {
     this.list = ref;
   };
   render() {
-    console.log(this.props.playlists);
+    console.log(this.props);
     //console.log(this.state);
     const { playlists } = this.state;
     //console.log(filteredData);
     return (
       <div>
         <br />
+        <div id="spinnerDiv2">
+          {this.state.loading ? <Spinner size={50} color="white" /> : null}
+        </div>
         <AutoSizer>
           {({ width }) => (
             <List

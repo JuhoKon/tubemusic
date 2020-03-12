@@ -11,10 +11,10 @@ import Spinner from "../spinner/spinnerNo2";
 import { Row, Col, Input } from "reactstrap";
 import GenresOptions from "../functions/genres";
 import "./styles.css";
-
+import Spinner2 from "../spinner/spinner3";
 //https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
-export default class Homepage extends Component {
+export default class PublicPlaylists extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,12 +34,17 @@ export default class Homepage extends Component {
   }
 
   async loadPlaylists() {
-    let res = await getPlaylists();
+    this.setState({
+      loadingPlaylists: true
+    });
+    await timeout(300);
+    const res = await getPlaylists();
     this.setState({
       playlists: res.data.Playlist.reverse(),
       filteredData: res.data.Playlist,
       genreFilteredData: res.data.Playlist,
-      sortedPlaylists: res.data.Playlist
+      sortedPlaylists: res.data.Playlist,
+      loadingPlaylists: false
     });
   }
   async getPlayListById(id) {
@@ -137,7 +142,7 @@ export default class Homepage extends Component {
     const { token, filter } = this.state;
     const { playlists, genreFilteredData, sortedPlaylists } = this.state;
     const lowercasedFilter = filter.toLowerCase();
-
+    console.log(this.state.loadingPlaylists);
     let finalSorted = sortedPlaylists.filter(
       item => -1 !== genreFilteredData.indexOf(item)
     );
@@ -162,18 +167,15 @@ export default class Homepage extends Component {
         <div id="spinnerDiv">
           {this.state.loading ? <Spinner color="white" /> : null}
         </div>
+        <div id="spinnerDiv2">
+          {this.state.playlistsLoading ? (
+            <Spinner size={50} color="white" />
+          ) : null}
+        </div>
         {/*tee uus spinneri sinne spinner kansioo , vähä elegantimpi ja tähä*/}
         <br />
         <div className="container-fluid">
           <Row>
-            {/*<TableComponent
-              userData={this.state.Userplaylists}
-              loadPlaylists={this.loadPlaylists}
-              token={token}
-              playlists={filteredData}
-              getPlayListById={this.getPlayListById}
-              item={<PlayListItem name="Kikels" />}
-            />*/}
             <Col xs="4" sm="4" className="spotifypage1">
               Playlists to choose from :)!
               <br />
@@ -216,6 +218,7 @@ export default class Homepage extends Component {
                 token={token}
                 playlists={filteredData}
                 getPlayListById={this.getPlayListById}
+                loading={this.state.loadingPlaylists}
               />
             </Col>
             <Col xs="8" sm="8" className="spotifypage2">
