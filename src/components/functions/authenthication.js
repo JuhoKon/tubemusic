@@ -37,7 +37,7 @@ async function login(email, password) {
   };
   const body = JSON.stringify({ email, password });
   try {
-    const res = await axios.post("http://localhost:8080/auth", body, config);
+    const res = await axios.post(API + "/auth", body, config);
     currentUserSubject.next(res.data);
     localStorage.setItem("token", JSON.stringify(res.data));
   } catch (e) {

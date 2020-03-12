@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { getPlaylists, getPlayListById } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import PlaylistsList from "./playlistsList";
+import PlayListItem from "./playListItem";
 import PlayListEditor from "./playlistEditor/playlistEditor";
+import TableComponent from "../Tablecomponent/TableComponent";
 //import PlaylistsList from "../admin/PlaylistsList";
 import isEqual from "react-fast-compare";
 import Spinner from "../spinner/spinnerNo2";
@@ -23,6 +25,7 @@ export default class Homepage extends Component {
       loading: false,
       filteredData: [],
       genreFilteredData: [],
+      sortedPlaylists: [],
       data: this.props.data
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
@@ -33,9 +36,10 @@ export default class Homepage extends Component {
   async loadPlaylists() {
     let res = await getPlaylists();
     this.setState({
-      playlists: res.data.Playlist,
+      playlists: res.data.Playlist.reverse(),
       filteredData: res.data.Playlist,
-      genreFilteredData: res.data.Playlist
+      genreFilteredData: res.data.Playlist,
+      sortedPlaylists: res.data.Playlist
     });
   }
   async getPlayListById(id) {
@@ -76,9 +80,32 @@ export default class Homepage extends Component {
     }
     this.props.loadUser();
   }
+  onSortChange = e => {
+    let filter = e.target.value;
+    const { playlists } = this.state;
+    switch (filter) {
+      case "Latest":
+        playlists.sort((a, b) => (b.createdAt > a.createdAt ? 1 : -1));
+        break;
+      case "Last":
+        playlists.sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1));
+        break;
+      case "By name":
+        playlists.sort((a, b) => (a.name > b.name ? 1 : -1));
+        break;
+      case "By owner":
+        playlists.sort((a, b) => (a.owner > b.owner ? 1 : -1));
+        break;
+      default:
+        break;
+    }
+    console.log("Yeps...");
+    this.setState({
+      sortedPlaylists: playlists
+    });
+  };
   onChange = e => {
     //genre
-
     let filter = e.target.value;
     console.log(filter);
     if (e.target.value === "All") filter = "";
@@ -96,7 +123,6 @@ export default class Homepage extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    console.log(filteredData);
     this.setState({
       genreFilter: e.target.value,
       genreFilteredData: filteredData
@@ -109,16 +135,23 @@ export default class Homepage extends Component {
   render() {
     console.log(this.state);
     const { token, filter } = this.state;
-    const { playlists, genreFilteredData } = this.state;
+    const { playlists, genreFilteredData, sortedPlaylists } = this.state;
     const lowercasedFilter = filter.toLowerCase();
-    //console.log(playlist);
-    const filteredData = genreFilteredData.filter(item => {
-      if (item === null || typeof item === "undefined")
-        return genreFilteredData; //problems
+
+    let finalSorted = sortedPlaylists.filter(
+      item => -1 !== genreFilteredData.indexOf(item)
+    );
+
+    console.log(sortedPlaylists);
+    console.log(genreFilteredData);
+    const filteredData = finalSorted.filter(item => {
+      if (item === null || typeof item === "undefined") return finalSorted; //problems
       return Object.keys(item).some(
         key =>
           typeof item[key] === "string" &&
-          key !== "_id" && //TODO: make it so only it can be filtered only by name or owner?
+          key !== "_id" &&
+          key !== "createdAt" &&
+          key !== "updatedAt" && //TODO: make it so only it can be filtered only by name or owner?
           //only filter based on name
           item[key].toLowerCase().includes(lowercasedFilter)
       );
@@ -133,6 +166,14 @@ export default class Homepage extends Component {
         <br />
         <div className="container-fluid">
           <Row>
+            {/*<TableComponent
+              userData={this.state.Userplaylists}
+              loadPlaylists={this.loadPlaylists}
+              token={token}
+              playlists={filteredData}
+              getPlayListById={this.getPlayListById}
+              item={<PlayListItem name="Kikels" />}
+            />*/}
             <Col xs="4" sm="4" className="spotifypage1">
               Playlists to choose from :)!
               <br />
@@ -148,6 +189,25 @@ export default class Homepage extends Component {
                   onChange={this.handleChange}
                   placeholder="Filter playlists..."
                 />
+                <Input
+                  onChange={this.onSortChange}
+                  type="select"
+                  name="select"
+                  id="exampleSelect"
+                >
+                  <option key={"Latest"} value={"Latest"}>
+                    Latest
+                  </option>
+                  <option key={"Last"} value={"Last"}>
+                    Last
+                  </option>
+                  <option key={"By name"} value={"By name"}>
+                    By name
+                  </option>
+                  <option key={"By owner"} value={"By owner"}>
+                    By owner
+                  </option>
+                </Input>
                 {GenresOptions(this.onChange, true)}
               </div>
               <PlaylistsList

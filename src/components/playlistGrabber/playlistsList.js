@@ -20,6 +20,7 @@ class PlaylistsList extends Component {
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
+      console.log("Change?");
       if (this.list) {
         this.list.forceUpdateGrid();
       }

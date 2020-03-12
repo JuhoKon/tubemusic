@@ -91,13 +91,16 @@
 }
 .ReactVirtualized__Grid.ReactVirtualized__List {
   background-color: transparent;
+  --stagger-delay: 100ms;
 }
+
 .card {
   background-color: transparent !important;
   color: #fff !important;
   text-align: center;
   font-family: "Itim", cursive;
 }
+
 .div #videolist {
   background-color: transparent !important;
 }
