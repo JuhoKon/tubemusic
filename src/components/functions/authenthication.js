@@ -3,6 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { handleError } from "./handleError";
 import { tokenConfig } from "./functions";
 const API = "https://still-crag-42621.herokuapp.com";
+//const API = "http://localhost:8080";
 try {
   //in case that the token item is invalid, we delete it
   JSON.parse(localStorage.getItem("token"));

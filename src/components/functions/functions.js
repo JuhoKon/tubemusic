@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 const API = "https://still-crag-42621.herokuapp.com";
+//const API = "https://localhost:8080";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async items => {
   let res = await axios
@@ -44,6 +45,7 @@ export const handleSubmit = async termFromSearch => {
   /////////
   let res = await axios
     .get(API + "/scrape/search", config)
+    //.get("http://localhost:8080/scrape/search", config)
     .then(handleResponse)
     .catch(err => {
       handleError(err);
