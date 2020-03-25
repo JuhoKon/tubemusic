@@ -14,6 +14,7 @@ var whitelist = ["http://localhost:3000"];
 
 var corsOptions = {
   origin: function(origin, callback) {
+    console.log(origin);
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -23,7 +24,7 @@ var corsOptions = {
 };
 
 // Then pass them to cors:
-app.use(cors(corsOptions));
+app.use(cors());
 
 var indexRouter = require("./routes/index");
 var playlistsRouter = require("./routes/playlists");
@@ -31,7 +32,6 @@ var scrapeRouter = require("./routes/scrape");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
 
-// view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(logger("dev"));
@@ -59,7 +59,8 @@ db.on(
   "open",
   console.log.bind(console, "MongoDB connection successful: " + mongoURL)
 );
-
+app.set("trust proxy", 1);
+// view engine setup
 app.use("/", indexRouter);
 app.use("/playlists", playlistsRouter);
 app.use("/scrape", scrapeRouter);

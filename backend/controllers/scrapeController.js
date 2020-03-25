@@ -50,9 +50,11 @@ exports.searchScrape = async function(req, res, next) {
 
   let string = "https://www.youtube.com/results?search_query=";
   let term = req.query.item;
+  term = term.replace("&", "");
   term = term.split(" ").join("+");
   term = string.concat(term);
   let url = encodeURI(term);
+  console.log(url);
   let response = await request(url);
   let $ = cheerio.load(response);
   let timeArray = [];
