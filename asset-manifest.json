@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/tubemusic/static/css/main.1653c22a.chunk.css",
+    "main.js": "/tubemusic/static/js/main.ea6b7a51.chunk.js",
+    "main.js.map": "/tubemusic/static/js/main.ea6b7a51.chunk.js.map",
+    "runtime-main.js": "/tubemusic/static/js/runtime-main.fc7db40d.js",
+    "runtime-main.js.map": "/tubemusic/static/js/runtime-main.fc7db40d.js.map",
+    "static/css/2.f611fbd2.chunk.css": "/tubemusic/static/css/2.f611fbd2.chunk.css",
+    "static/js/2.e2ce41a6.chunk.js": "/tubemusic/static/js/2.e2ce41a6.chunk.js",
+    "static/js/2.e2ce41a6.chunk.js.map": "/tubemusic/static/js/2.e2ce41a6.chunk.js.map",
+    "index.html": "/tubemusic/index.html",
+    "precache-manifest.02b7f14e7c7aedfd9c90bf5de732bd20.js": "/tubemusic/precache-manifest.02b7f14e7c7aedfd9c90bf5de732bd20.js",
+    "service-worker.js": "/tubemusic/service-worker.js",
+    "static/css/2.f611fbd2.chunk.css.map": "/tubemusic/static/css/2.f611fbd2.chunk.css.map",
+    "static/css/main.1653c22a.chunk.css.map": "/tubemusic/static/css/main.1653c22a.chunk.css.map",
+    "static/js/2.e2ce41a6.chunk.js.LICENSE": "/tubemusic/static/js/2.e2ce41a6.chunk.js.LICENSE",
+    "static/media/homepage.css": "/tubemusic/static/media/cloud.20e831da.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fc7db40d.js",
+    "static/css/2.f611fbd2.chunk.css",
+    "static/js/2.e2ce41a6.chunk.js",
+    "static/css/main.1653c22a.chunk.css",
+    "static/js/main.ea6b7a51.chunk.js"
+  ]
+}
