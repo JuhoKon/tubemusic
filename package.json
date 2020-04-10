@@ -1,5 +1,4 @@
 {
-  "homepage": "http://JuhoKon.github.io/tubemusic",
   "name": "tubemusic",
   "version": "0.1.0",
   "private": true,
@@ -25,7 +24,7 @@
     "react-moment": "^0.9.7",
     "react-player": "^1.14.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0",
+    "react-scripts": "3.4.0",
     "react-shuffle": "^2.1.0",
     "react-sortable-hoc": "^1.11.0",
     "react-spinners": "^0.8.0",
