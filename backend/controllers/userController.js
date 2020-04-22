@@ -161,6 +161,6 @@ exports.editPlaylist = function (req, res, next) {
       }
     }
     user.markModified("playlists"); //very important.....
-    user.save();
+    user.save().then(res.json({ status: "OK" }));
   });
 };
