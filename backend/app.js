@@ -13,14 +13,14 @@ var app = express();
 var whitelist = ["http://localhost:3000"];
 
 var corsOptions = {
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     console.log(origin);
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
-  }
+  },
 };
 
 // Then pass them to cors:
@@ -42,15 +42,15 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
-//var mongoURL = process.env.MONGO_URL;
-var mongoURL =
-  "mongodb+srv://newuser123:jtLiGwVrgP2C9rNl@cluster0-n7w4j.mongodb.net/test?retryWrites=true&w=majority";
+var mongoURL = process.env.MONGO_URL;
+//var mongoURL =
+//  "mongodb+srv://newuser123:jtLiGwVrgP2C9rNl@cluster0-n7w4j.mongodb.net/test?retryWrites=true&w=majority";
 // Connecting to mongoose
 //console.log(mongoURL);
 mongoose.connect(mongoURL, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 mongoose.Promise = Promise;
 var db = mongoose.connection;
@@ -67,12 +67,12 @@ app.use("/scrape", scrapeRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
