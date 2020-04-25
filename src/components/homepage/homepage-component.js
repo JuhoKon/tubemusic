@@ -20,10 +20,10 @@ import {
   getContentDetails,
   addUserPlaylist,
   deleteUserPlaylist,
-  updateUserPlaylist
+  updateUserPlaylist,
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export default class Homepage extends Component {
   constructor(props) {
     super(props);
@@ -65,18 +65,18 @@ export default class Homepage extends Component {
       playlistId: "",
       playlistName: "",
       error: false,
-      title: ""
+      title: "",
     };
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        user: this.props.data
+        user: this.props.data,
       });
       if (this.props.data) {
         this.setState({
-          playlists: this.props.data.playlists
+          playlists: this.props.data.playlists,
         });
       }
     }
@@ -86,21 +86,21 @@ export default class Homepage extends Component {
     a["uniqueId"] = Math.random();
     this.state.queue.unshift(a);
     this.setState({
-      updated: true
+      updated: true,
     });
     toaster.notify(<span>{item.title} added to in front of the queue.</span>, {
-      duration: 800
+      duration: 800,
     });
   }
   setPlaying(playing) {
     this.setState({
-      playing: playing
+      playing: playing,
     });
   }
   setQueue(queue) {
     console.log(this.state.url);
     this.setState({
-      queue: queue
+      queue: queue,
     });
     console.log(this.state.url);
   }
@@ -122,20 +122,20 @@ export default class Homepage extends Component {
       [Array[i], Array[j]] = [Array[j], Array[i]];
     }
     this.setState({
-      queue: Array
+      queue: Array,
     });
   }
   clearQueue() {
     if (typeof this.state.queue[0] !== "undefined") {
       this.setState({
-        queue: []
+        queue: [],
       });
     }
   }
   setPlaylist(playlistitems) {
     //updates state to given playlist
     this.setState({
-      playlist: playlistitems
+      playlist: playlistitems,
     });
     console.log(playlistitems);
   }
@@ -146,7 +146,7 @@ export default class Homepage extends Component {
       this.setState({
         token: currentUser.token,
         userName: currentUser.user.name,
-        userRole: currentUser.user.role
+        userRole: currentUser.user.role,
       });
     }
   }
@@ -179,14 +179,14 @@ export default class Homepage extends Component {
       //console.log(playlist[i]);
     }
     this.setState({
-      queue: itemArray
+      queue: itemArray,
     });
     toaster.notify(
       <span className="styled-toast">
         Now playing: {this.state.playlistName}
       </span>,
       {
-        duration: 1200
+        duration: 1200,
       }
     );
     //this.onPlay(itemArray[0]);
@@ -208,10 +208,10 @@ export default class Homepage extends Component {
       queue.push(object);
     }
     this.setState({
-      queue: queue
+      queue: queue,
     });
     toaster.notify(<span>{this.state.playlistName} added to the queue!</span>, {
-      duration: 1200
+      duration: 1200,
     });
   }
   AddToPlaylist(item) {
@@ -227,7 +227,7 @@ export default class Homepage extends Component {
       this.state.playlist.push(item);
       this.makePlaylist(nameGenerator(), this.state.playlist, true);
       this.setState({
-        updated: item
+        updated: item,
       });
       setTimeout(
         () =>
@@ -239,7 +239,7 @@ export default class Homepage extends Component {
         100
       );
       toaster.notify(<span>{item.title} added to the playlist.</span>, {
-        duration: 750
+        duration: 750,
       });
     } else {
       this.state.playlist.push(item);
@@ -250,10 +250,10 @@ export default class Homepage extends Component {
       );
 
       this.setState({
-        updated: item
+        updated: item,
       });
       toaster.notify(<span>{item.title} added to the playlist.</span>, {
-        duration: 750
+        duration: 750,
       });
     }
   }
@@ -272,7 +272,7 @@ export default class Homepage extends Component {
     }
 
     this.setState({
-      updated: item.videoId
+      updated: item.videoId,
     });
 
     //this.Updateplaylist(this.state.playlistName, this.state.playlistId);
@@ -281,45 +281,45 @@ export default class Homepage extends Component {
     //handles search-query from search bar webscraping
     this.setState({
       //set loading to true
-      loading: true
+      loading: true,
     });
     const result = await handleSubmit(termFromSearch);
     console.log(result);
     //console.log(result);
     if (result === null) {
       this.setState({
-        error: true
+        error: true,
       });
       return;
     }
     this.setState({
       items: result,
-      loading: false
+      loading: false,
     });
   }
   async handleSubmit2(termFromSearch) {
     //handles search-query from search bar to YouTube API
     this.setState({
       //set loading to true
-      loading: true
+      loading: true,
     });
     const result = await handleSubmit(termFromSearch);
     //console.log(result);
     if (result === null) {
       this.setState({
-        error: true
+        error: true,
       });
       return;
     }
     var listOfIds = [];
-    result.map(item => listOfIds.push(item.id.videoId));
+    result.map((item) => listOfIds.push(item.id.videoId));
     listOfIds = listOfIds.join(",");
     const contentDetails = await getContentDetails(listOfIds);
     //console.log(contentDetails);
     this.setState({
       items: result,
       contentDetails: contentDetails,
-      loading: false
+      loading: false,
     });
   }
   async loadPlaylist(id) {
@@ -332,7 +332,7 @@ export default class Homepage extends Component {
       playlistId: result.data._id,
       loading: false,
       private: result.data.private,
-      playlistOwner: result.data.owner
+      playlistOwner: result.data.owner,
     });
     return "OK";
   }
@@ -346,7 +346,7 @@ export default class Homepage extends Component {
     //console.log(this.state.user.name);
 
     this.setState({
-      playlist: playlist
+      playlist: playlist,
     });
     //let playlist = this.state.playlist;
     //console.log(isPrivate);
@@ -355,7 +355,7 @@ export default class Homepage extends Component {
       playlist,
       isPrivate,
       owner: this.state.userName,
-      genre
+      genre,
     });
     const result = await makePlaylist(item);
     const data = result.data;
@@ -373,7 +373,7 @@ export default class Homepage extends Component {
     this.setState({
       playlistId: result.data._id,
       playlistName: result.data.name,
-      private: isPrivate
+      private: isPrivate,
     });
   }
   async UpdateCurrentPlaylist() {
@@ -395,7 +395,7 @@ export default class Homepage extends Component {
     //console.log(result);
     this.setState({
       playlistName: result.data.name,
-      playlist: playlist
+      playlist: playlist,
     });
   }
   async deletePlaylist(id) {
@@ -404,7 +404,7 @@ export default class Homepage extends Component {
       this.setState({
         playlistId: "",
         playlistName: "",
-        playlist: []
+        playlist: [],
       });
     }
     for (let i = 0; i < this.state.playlists.length; i++) {
@@ -416,7 +416,7 @@ export default class Homepage extends Component {
     }
     this.setState({
       //trigger re-render
-      updated: true
+      updated: true,
     });
     //await deletePlaylist(id); this is for deleting whole together a playlist from db
     await deleteUserPlaylist(id, this.state.token); //deletes playlist from the user
@@ -432,12 +432,12 @@ export default class Homepage extends Component {
     this.state.queue.push(itemCopy);
     this.setState({
       //just to trigger re-render->new props to children
-      updated: itemCopy
+      updated: itemCopy,
     });
     //console.log(this.state.queue);
     //console.log(videoId);
     toaster.notify(<span>{item.title} added to the queue.</span>, {
-      duration: 800
+      duration: 800,
     });
   }
   onDelete(item) {
@@ -454,10 +454,10 @@ export default class Homepage extends Component {
       }
     }
     this.setState({
-      updated: item.videoId
+      updated: item.videoId,
     });
   }
-  ref = player => {
+  ref = (player) => {
     //reference to player Child
     this.player = player;
   };
@@ -466,15 +466,18 @@ export default class Homepage extends Component {
 
     this.setState({
       url: url,
-      playing: true
+      playing: true,
     });
   }
   onPlay(item) {
     //sets given item to be played
     if (!item) return;
     console.log(item);
+    this.state.queue.unshift(item);
+
     const videoId = item.videoId;
     const title = item.title;
+    //console.log(item);
     const url = "https://www.youtube.com/watch?v=" + videoId;
     if (url === this.state.url) {
       this.player.seekTo0(); //Seeks to 0 incase of having same url
@@ -483,16 +486,20 @@ export default class Homepage extends Component {
       url: url, //url gets passed to player as props
       playing: true,
       updated: true,
-      title: title
+      title: title,
+    });
+    /*this.setState({
+      title: title,
     });
     toaster.notify(<span>Now playing: {title}</span>, {
       duration: 1200,
-      position: "bottom"
-    });
+      position: "bottom",
+    });*/
+    this.player.handleEnded();
   }
   setTitle(title) {
     this.setState({
-      title: title
+      title: title,
     });
   }
   render() {

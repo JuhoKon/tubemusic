@@ -32,20 +32,20 @@ export default class Player extends Component {
       loop: false,
       array: this.props.array,
       modal: false,
-      history: [] //TODO: joku raja tälle
+      history: [], //TODO: joku raja tälle
     };
   }
-  load = url => {
+  load = (url) => {
     this.setState({
       url,
       played: 0,
       loaded: 0,
-      pip: false
+      pip: false,
     });
   };
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
   componentDidUpdate(prevProps) {
@@ -55,28 +55,29 @@ export default class Player extends Component {
         url: this.props.url,
         array: this.props.array,
         title: this.props.title,
-        playing: this.props.playing
+        playing: this.props.playing,
       });
       setTitle(this.props.title); //setting document title
       if (this.props.url !== prevProps.url) {
         if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
           let itemObject = {};
           console.log(prevProps);
-          itemObject["title"] = prevProps.title;
+          console.log(this.props);
+          itemObject["title"] = prevProps.title || "error";
           itemObject["url"] = prevProps.url;
           itemObject["duration"] = prevProps.duration;
           //TODO millon tehty
           if (itemObject["url"] === null) {
             return;
           }
-          this.addToHistory(itemObject);
+          //this.addToHistory(itemObject);
         }
       }
     }
   }
   clearHistory = () => {
     this.setState({
-      history: []
+      history: [],
     });
   };
   handlePlayPause = () => {
@@ -95,7 +96,7 @@ export default class Player extends Component {
       this.handlePlayNext();
     }
   };
-  addToHistory = item => {
+  addToHistory = (item) => {
     //Adds item to history array
     this.state.history.unshift(item);
     //console.log(this.state.history);
@@ -113,24 +114,24 @@ export default class Player extends Component {
       this.setState({
         playing: true,
         url: url,
-        title: this.state.array[0].title
+        title: this.state.array[0].title,
       });
       toaster.notify(<span>Now playing: {this.state.array[0].title}</span>, {
         duration: 1200,
-        position: "bottom"
+        position: "bottom",
       });
       this.props.onRemove(this.state.array[0]); //removes item from queue
       this.props.setUrl(url);
     } else {
       this.setState({
         playing: false,
-        url: null
+        url: null,
       });
     }
 
     //this.props.onRemove(this.state.array[0]); //removes from queue
   };
-  handleVolumeChange = e => {
+  handleVolumeChange = (e) => {
     this.setState({ volume: parseFloat(e.target.value) });
   };
   handlePause = () => {
@@ -140,12 +141,19 @@ export default class Player extends Component {
   handleEnded = () => {
     console.log("onEnded");
     //this.setState({ playing: false });
+    if (this.state.url !== null) {
+      let itemObject = {};
+      itemObject["title"] = this.state.title || "error";
+      itemObject["url"] = this.state.url;
+      itemObject["duration"] = this.state.duration;
+      this.addToHistory(itemObject);
+    }
     this.handlePlayNext();
   };
   renderLoadButton = (url, label) => {
     return <button onClick={() => this.load(url)}>{label}</button>;
   };
-  ref = player => {
+  ref = (player) => {
     this.player = player;
   };
   seekTo0() {
@@ -177,7 +185,7 @@ export default class Player extends Component {
                   onPlay={this.handlePlay}
                   onPause={this.handlePause}
                   onEnded={this.handleEnded}
-                  onError={e => console.log("onError", e)}
+                  onError={(e) => console.log("onError", e)}
                 />
               </div>
               <br />
