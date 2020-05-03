@@ -7,6 +7,8 @@
     "devstart": "nodemon ./bin/www"
   },
   "dependencies": {
+    "clean-css": ">=4.1.11",
+    "minimist": ">=1.2.3",
     "bcrypt": "^3.0.8",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
