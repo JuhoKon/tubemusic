@@ -6,7 +6,7 @@ import PlaylistModal from "./Playlistmodal/PlaylistModal";
 import LoadingSpinner from "../../spinner/spinner";
 import {
   getPlaylistTracks,
-  getRequestWithToken
+  getRequestWithToken,
 } from "../../functions/functions";
 class PlaylistItem extends Component {
   constructor(props) {
@@ -23,14 +23,14 @@ class PlaylistItem extends Component {
       ownerName: this.props.ownerName,
       token: this.props.token,
       chosenListsTracks: [],
-      loading: false
+      loading: false,
     };
     this.toggle = this.toggle.bind(this);
     this.clickOnPlayList = this.clickOnPlayList.bind(this);
   }
   async clickOnPlayList() {
     this.setState({
-      loading: true
+      loading: true,
     });
     let token = this.state.token;
     let data = await getPlaylistTracks(this.state.id, token);
@@ -54,11 +54,14 @@ class PlaylistItem extends Component {
     let idArray = [];
     let albumArray = [];
     let createdAtArray = [];
-    dataArray.forEach(item => nameArray.push(item.track.name));
-    dataArray.forEach(item => tempArtistArray.push(item.track.artists));
-    dataArray.forEach(item => idArray.push(item.track.id));
-    dataArray.forEach(item => albumArray.push(item.track.album.name));
-    dataArray.forEach(item => createdAtArray.push(item.added_at));
+
+    dataArray = dataArray.filter((item) => item.track !== null); //filter out those which are null (for some reason)
+    dataArray.forEach((item) => console.log(item.track.name));
+    dataArray.forEach((item) => nameArray.push(item.track.name));
+    dataArray.forEach((item) => tempArtistArray.push(item.track.artists));
+    dataArray.forEach((item) => idArray.push(item.track.id));
+    dataArray.forEach((item) => albumArray.push(item.track.album.name));
+    dataArray.forEach((item) => createdAtArray.push(item.added_at));
     //TODO: use map to do this better
     //console.log(dataArray);
     for (let i = 0; i < tempArtistArray.length; i++) {
@@ -80,18 +83,18 @@ class PlaylistItem extends Component {
 
     this.setState({
       loading: false,
-      chosenListsTracks: itemArray
+      chosenListsTracks: itemArray,
     });
     this.toggleList(itemArray);
   }
   toggleList = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
   render() {
