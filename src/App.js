@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/navbar/navbar-component";
 import "./App.css";
-import HomePage from "./components/homepage/homepage-component";
+import HomePage from "./components/homepage/homepage-component.tsx";
 import Login from "./components/login/login-component";
 import Spotify from "./components/spotify/spotify-component";
 import { authenticationService } from "./components/functions/authenthication";
@@ -21,7 +21,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentUserInfo: null,
-      isAuth: false
+      isAuth: false,
     };
     this.loadUser = this.loadUser.bind(this);
     this.logout = this.logout.bind(this);
@@ -31,24 +31,24 @@ class App extends Component {
     if (res2 !== null) {
       this.setState({
         currentUserInfo: res2,
-        isAuth: true
+        isAuth: true,
       });
     } else {
       this.setState({
         currentUserInfo: null,
         isAuth: false,
-        token: null
+        token: null,
       });
     }
   }
   componentDidMount() {
     //console.log("I mount");
 
-    authenticationService.currentUser.subscribe(x => {
+    authenticationService.currentUser.subscribe((x) => {
       //when change happens, this gets called
       if (x) {
         this.setState({
-          token: x.token
+          token: x.token,
         });
         this.loadUser();
       }
@@ -67,7 +67,7 @@ class App extends Component {
     authenticationService.logout();
     history.push("/login");
     this.setState({
-      token: null
+      token: null,
     });
   }
   render() {
