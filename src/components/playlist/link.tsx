@@ -3,20 +3,24 @@ import { Card, CardBody, CardTitle, Button } from "reactstrap";
 type LinkState = {
   loading: boolean;
 };
-interface Playlist {
+type Playlist = {
   //here what playlist has
   createdAt: string;
-  deletePlaylist: Function;
   disabled?: boolean;
-  loadPlaylist: Function;
-  name: string;
-  owner: string;
-  _id: string;
-}
-interface LinkProps {
   loadPlaylist: (id: Playlist["_id"]) => string; //TODO add something to these functions
   deletePlaylist: (id: Playlist["_id"]) => void;
   name: string;
+  owner: string;
+  _id: string;
+};
+interface LinkProps {
+  createdAt: string;
+  disabled?: boolean;
+  loadPlaylist: (id: Playlist["_id"]) => string; //TODO add something to these functions
+  deletePlaylist: (id: Playlist["_id"]) => void;
+  name: string;
+  owner: string;
+  _id: string;
 }
 //TODO: add universal types somewhere for playlist items, playlists and so on.
 const timeout = (ms: number) =>
@@ -39,6 +43,7 @@ class Link extends Component<LinkProps, LinkState> {
     }
   }
   deletePlaylist(playlist: Playlist) {
+    console.log(playlist);
     this.props.deletePlaylist(playlist._id);
   }
   render() {
