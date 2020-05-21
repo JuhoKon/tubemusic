@@ -1,24 +1,24 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader } from "reactstrap";
 import { CSSTransition } from "react-transition-group";
-import Link from "./link.js";
+import Link from "./link.tsx";
 
 class LoadPlaylistModal extends Component {
   state = {
-    modal: false
+    modal: false,
   };
   toggle = () => {
     this.props.getPlayList();
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
   };
 

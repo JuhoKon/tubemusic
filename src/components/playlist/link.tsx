@@ -1,25 +1,44 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardTitle, Button } from "reactstrap";
-
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
-class Link extends Component {
+type LinkState = {
+  loading: boolean;
+};
+interface Playlist {
+  //here what playlist has
+  createdAt: string;
+  deletePlaylist: Function;
+  disabled?: boolean;
+  loadPlaylist: Function;
+  name: string;
+  owner: string;
+  _id: string;
+}
+interface LinkProps {
+  loadPlaylist: (id: Playlist["_id"]) => string; //TODO add something to these functions
+  deletePlaylist: (id: Playlist["_id"]) => void;
+  name: string;
+}
+//TODO: add universal types somewhere for playlist items, playlists and so on.
+const timeout = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+class Link extends Component<LinkProps, LinkState> {
   state = {
-    loading: false
+    loading: false,
   };
-  async loadPlaylist(playlist) {
+  async loadPlaylist(playlist: Playlist) {
     this.setState({
-      loading: true
+      loading: true,
     });
     await timeout(500);
     let res = await this.props.loadPlaylist(playlist._id);
-    //console.log(res);
+
     if (res) {
       this.setState({
-        loading: false
+        loading: false,
       });
     }
   }
-  deletePlaylist(playlist) {
+  deletePlaylist(playlist: Playlist) {
     this.props.deletePlaylist(playlist._id);
   }
   render() {
