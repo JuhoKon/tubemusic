@@ -25,7 +25,7 @@ class Playlist extends Component {
       editMode: false,
       filter: "",
       playlistOwner: this.props.playlistOwner,
-      userName: this.props.userName
+      userName: this.props.userName,
     };
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -36,7 +36,7 @@ class Playlist extends Component {
   addPlaylistToQueue(filteredData) {
     this.props.addPlaylistToQueue(filteredData);
   }
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ filter: event.target.value });
   };
 
@@ -49,7 +49,7 @@ class Playlist extends Component {
         playlistName: this.props.playlistName,
         playlistId: this.props.playlistId,
         playlistOwner: this.props.playlistOwner,
-        userName: this.props.userName
+        userName: this.props.userName,
       });
     }
   }
@@ -71,7 +71,7 @@ class Playlist extends Component {
   }
   toggle = () => {
     this.setState({
-      editMode: !this.state.editMode
+      editMode: !this.state.editMode,
     });
 
     setTimeout(() => this.props.loadPlaylist(this.state.playlistId), 200);
@@ -85,7 +85,7 @@ class Playlist extends Component {
     this.toggle();
   }
 
-  registerListRef = listInstance => {
+  registerListRef = (listInstance) => {
     this.List = listInstance;
   };
 
@@ -97,7 +97,7 @@ class Playlist extends Component {
     const { playlist } = this.props;
 
     this.setState({
-      playlist: arrayMove(playlist, oldIndex, newIndex)
+      playlist: arrayMove(playlist, oldIndex, newIndex),
     });
     //console.log(playlist);
     //console.log(arrayMove(playlist, oldIndex, newIndex));
@@ -114,13 +114,14 @@ class Playlist extends Component {
   render() {
     const { filter } = this.state;
     const { playlists, playlist } = this.props;
+
     console.log(playlist);
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
-    const filteredData = playlist.filter(item => {
+    const filteredData = playlist.filter((item) => {
       if (item === null || typeof item === "undefined") return playlist; //problems
       return Object.keys(item).some(
-        key =>
+        (key) =>
           typeof item[key] === "string" &&
           key === "title" && //only filter based on name
           item[key].toLowerCase().includes(lowercasedFilter)

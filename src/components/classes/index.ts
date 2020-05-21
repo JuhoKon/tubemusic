@@ -1,4 +1,4 @@
-import { Playlist } from "./PlaylistClass";
+import { PlaylistObject } from "./PlaylistClass";
 import { Song } from "./SongClass";
 
-export { Playlist, Song };
+export { PlaylistObject, Song };

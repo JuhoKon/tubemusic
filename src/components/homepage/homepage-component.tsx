@@ -6,7 +6,7 @@ import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
 import nameGenerator from "../functions/nameGenerator";
-import { Song } from "../classes/index";
+import { Song, PlaylistObject } from "../classes/index";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css"; // optional styles
@@ -547,6 +547,7 @@ export default class Homepage extends Component<any, HomepageState> {
     // console.log(this.props);
     const playlist = this.state.playlist;
     console.log(this.state.playlists);
+
     return (
       <div
         className={

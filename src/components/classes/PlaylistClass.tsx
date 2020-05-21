@@ -1,37 +1,26 @@
+import { Song } from "./SongClass";
+
 //TODO: make it work like an actual playlist?
 interface playlist {
   //here what playlist has
-  createdAt: string;
-  disabled?: boolean;
-  loadPlaylist: (id: Playlist["_id"]) => string; //TODO add something to these functions
-  deletePlaylist: (id: Playlist["_id"]) => void;
-  name: string;
-  owner: string;
-  _id: string;
+  songs: Array<song>;
 }
-class Playlist implements playlist {
-  createdAt: string;
-  disabled?: boolean;
-  name: string;
-  owner: string;
-  _id: string;
+interface song {
+  //here what playlist has
+  title: string;
+  channelTitle: string;
+  videoId: string;
+  uniqueId: number;
+  duration: string;
+}
+class PlaylistObject implements playlist {
+  songs: Array<song>;
 
-  constructor(
-    createdAt: string,
-    disabled: boolean,
-    name: string,
-    owner: string,
-    _id: string
-  ) {
-    this.createdAt = createdAt;
-    this.disabled = disabled;
-    this.name = name;
-    this.owner = owner;
-    this._id = _id;
+  constructor(songs: Array<Song>) {
+    this.songs = songs;
   }
-  deletePlaylist(id: string) {}
-  loadPlaylist(id: string) {
-    return "string";
+  addSong(Song: song) {
+    this.songs.push(Song);
   }
 }
-export { Playlist };
+export { PlaylistObject };
