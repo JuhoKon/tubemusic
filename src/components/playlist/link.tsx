@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardTitle, Button } from "reactstrap";
+
 type LinkState = {
   loading: boolean;
 };
@@ -48,6 +49,7 @@ class Link extends Component<LinkProps, LinkState> {
   }
   render() {
     console.log(this.props);
+
     return (
       <div>
         <Card className="card">
