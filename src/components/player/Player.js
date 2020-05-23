@@ -185,7 +185,8 @@ export default class Player extends Component {
                   onPlay={this.handlePlay}
                   onPause={this.handlePause}
                   onEnded={this.handleEnded}
-                  onError={(e) => console.log("onError", e)}
+                  onError={this.handlePlayNext}
+                  //{(e) => console.log("onError", e)}
                 />
               </div>
               <br />
