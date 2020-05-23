@@ -1,12 +1,12 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
 
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
-
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+//TODO: handle if there are no results found
 const handleScrape = async (term, counter) => {
   try {
     let url = encodeURI(term);
-    let response = await request(url).catch(async e => {
+    let response = await request(url).catch(async (e) => {
       console.log(e);
       await timeout(2500);
       return handleScrape(term, counter);
@@ -28,12 +28,13 @@ const handleScrape = async (term, counter) => {
         duration: videoTime,
         scraped: true,
         uniqueId: Math.random(),
-        date: Date.now()
+        date: Date.now(),
       };
     } else {
       if (counter < 5) {
         //try again
         console.log("Trying again..");
+        console.log(term);
         await timeout(100);
         return handleScrape(term, counter++);
       } else {
@@ -45,7 +46,7 @@ const handleScrape = async (term, counter) => {
   }
 };
 
-exports.searchScrape = async function(req, res, next) {
+exports.searchScrape = async function (req, res, next) {
   //console.log(req.query.term);
 
   let string = "https://www.youtube.com/results?search_query=";
@@ -71,7 +72,7 @@ exports.searchScrape = async function(req, res, next) {
         dataArray.push({
           videoId: href.split("v=")[1],
           title: title,
-          uniqueId: Math.random()
+          uniqueId: Math.random(),
         });
       }
     }
@@ -84,11 +85,11 @@ exports.searchScrape = async function(req, res, next) {
     title: track.title,
     uniqueId: track.uniqueId,
     videoId: track.videoId,
-    duration: timeArray[index]
+    duration: timeArray[index],
   }));
   res.json({ array });
 };
-exports.scrape = async function(req, res, next) {
+exports.scrape = async function (req, res, next) {
   //console.log(req.body.term);
   let tracks = req.body.items;
   let promises = [];
@@ -105,10 +106,10 @@ exports.scrape = async function(req, res, next) {
     promises.push(handleScrape(term, 0));
   }
   Promise.all(promises)
-    .then(results => {
+    .then((results) => {
       res.json(results);
     })
-    .catch(e => {
+    .catch((e) => {
       res.json(e);
     });
 };

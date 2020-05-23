@@ -4,7 +4,7 @@ const cheerio = require("cheerio");
 const handleScrape = async (term, counter) => {
   try {
     let url = encodeURI(term);
-    let response = await request("https://crossorigin.me/" + url).catch(e => {
+    let response = await request("https://crossorigin.me/" + url).catch((e) => {
       console.log(e);
       return;
     }); //mby add catch here? .catch(err => console.log(err));
@@ -23,7 +23,7 @@ const handleScrape = async (term, counter) => {
         duration: videoTime,
         scraped: true,
         uniqueId: Math.random(),
-        date: Date.now()
+        date: Date.now(),
       };
     } else {
       if (counter < 5) {
@@ -39,9 +39,9 @@ const handleScrape = async (term, counter) => {
     throw err;
   }
 };
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const scrape = async function(items) {
+export const scrape = async function (items) {
   //console.log(req.body.term);
   let tracks = items;
   let promises = [];
@@ -58,10 +58,10 @@ export const scrape = async function(items) {
     promises.push(handleScrape(term, 0));
   }
   return Promise.all(promises)
-    .then(results => {
+    .then((results) => {
       return results;
     })
-    .catch(e => {
+    .catch((e) => {
       return e;
     });
 };

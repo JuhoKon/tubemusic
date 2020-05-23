@@ -3,21 +3,21 @@ import { authenticationService } from "./authenthication";
 import { handleError } from "./handleError";
 import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 const API = "https://still-crag-42621.herokuapp.com";
-//const API = "https://localhost:8080";
+//const API = "http://localhost:8080";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
-export const handleScrape = async items => {
+export const handleScrape = async (items) => {
   let res = await axios
     .post(
       API + "/scrape/scrape",
       {
-        items: items
+        items: items,
       },
       tokenConfig()
     )
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
 
@@ -28,15 +28,15 @@ export const handleScrape = async items => {
   }
 };
 //////////////////////////////////////////////////////////
-export const handleSubmit = async termFromSearch => {
+export const handleSubmit = async (termFromSearch) => {
   //SETUPPING HEADERS ETC.
   const config = {
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     params: {
-      item: termFromSearch
-    }
+      item: termFromSearch,
+    },
   };
   const currentUser = authenticationService.currentUserValue;
   if (currentUser.token) {
@@ -47,7 +47,7 @@ export const handleSubmit = async termFromSearch => {
     .get(API + "/scrape/search", config)
     //.get("http://localhost:8080/scrape/search", config)
     .then(handleResponse)
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
 
@@ -57,17 +57,17 @@ export const handleSubmit = async termFromSearch => {
     return null;
   }
 };
-export const handleSubmit2 = async termFromSearch => {
+export const handleSubmit2 = async (termFromSearch) => {
   let res = await axios
     .get("https://www.googleapis.com/youtube/v3/search", {
       params: {
         part: "snippet",
         maxResults: 30,
         key: key,
-        q: termFromSearch
-      }
+        q: termFromSearch,
+      },
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
   console.log(res.data.items);
   if (res) {
     return res.data.items;
@@ -75,7 +75,7 @@ export const handleSubmit2 = async termFromSearch => {
     return null;
   }
 };
-export const handleSpotifySearchFromYoutube = async termFromSearch => {
+export const handleSpotifySearchFromYoutube = async (termFromSearch) => {
   //OLD
   let res = await axios
     .get("https://www.googleapis.com/youtube/v3/search", {
@@ -83,10 +83,10 @@ export const handleSpotifySearchFromYoutube = async termFromSearch => {
         part: "snippet",
         maxResults: 1,
         key: key,
-        q: termFromSearch
-      }
+        q: termFromSearch,
+      },
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 
   if (res) {
     return res.data.items;
@@ -94,31 +94,31 @@ export const handleSpotifySearchFromYoutube = async termFromSearch => {
     return null;
   }
 };
-export const getContentDetails = async ListOfIds => {
+export const getContentDetails = async (ListOfIds) => {
   let res = await axios.get("https://www.googleapis.com/youtube/v3/videos", {
     params: {
       part: "contentDetails",
       id: ListOfIds,
-      key: key
-    }
+      key: key,
+    },
   });
   return res.data.items;
 };
-export const getSpotifyUserId = async token => {
+export const getSpotifyUserId = async (token) => {
   const config = {
     headers: {
-      Authorization: "Bearer " + token
-    }
+      Authorization: "Bearer " + token,
+    },
   };
   let res = await axios.get("https://api.spotify.com/v1/me", config);
 
   return res;
 };
-export const getSpotifyUsersPlaylists = async token => {
+export const getSpotifyUsersPlaylists = async (token) => {
   const config = {
     headers: {
-      Authorization: "Bearer " + token
-    }
+      Authorization: "Bearer " + token,
+    },
   };
   let res = await axios.get("https://api.spotify.com/v1/me/playlists", config);
   return res.data;
@@ -126,8 +126,8 @@ export const getSpotifyUsersPlaylists = async token => {
 export const getRequestWithToken = async (token, address) => {
   const config = {
     headers: {
-      Authorization: "Bearer " + token
-    }
+      Authorization: "Bearer " + token,
+    },
   };
   let res = await axios.get(address, config);
   return res.data;
@@ -135,8 +135,8 @@ export const getRequestWithToken = async (token, address) => {
 export const getPlaylistTracks = async (id, token) => {
   const config = {
     headers: {
-      Authorization: "Bearer " + token
-    }
+      Authorization: "Bearer " + token,
+    },
   };
   let res = await axios.get(
     `https://api.spotify.com/v1/playlists/${id}/tracks`,
@@ -152,7 +152,7 @@ export const getPlaylistTracks = async (id, token) => {
 /* -------------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------------*/
 export const getPlaylists = async () => {
-  let res = await axios.get(API + "/playlists", tokenConfig()).catch(err => {
+  let res = await axios.get(API + "/playlists", tokenConfig()).catch((err) => {
     handleError(err);
   });
 
@@ -163,18 +163,18 @@ export const getPlaylists = async () => {
   let res = await axios.get(API+`/playlists");
   return res;
 };*/
-export const setTitle = title => {
+export const setTitle = (title) => {
   if (typeof title !== "string") {
     throw new Error("Title should be an string");
   }
   document.title = title;
 };
-export const makePlaylist = async body => {
+export const makePlaylist = async (body) => {
   //console.log(body);
 
   let res = await axios
     .post(API + "/playlists/create", body, tokenConfig())
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
 
@@ -190,18 +190,18 @@ export const updatePlaylist = async (body, id) => {
   );
   return res;
 };
-export const deletePlaylist = async id => {
+export const deletePlaylist = async (id) => {
   let res = await axios
     .delete(API + `/playlists/delete/${id}`, tokenConfig())
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
   return res;
 };
-export const getPlayListById = async id => {
+export const getPlayListById = async (id) => {
   let res = await axios
     .get(API + `/playlists/find/${id}`, tokenConfig())
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
   return res;
@@ -220,18 +220,18 @@ export const addUserPlaylist = async (
     playlistName: name,
     private: priv,
     owner: owner,
-    createdAt: createdAt
+    createdAt: createdAt,
   });
   await axios
     .put(API + "/users/addPlaylist", body, tokenConfig())
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
 };
 export const deleteUserPlaylist = async (playlistid, token) => {
   let res = await axios
     .delete(API + `/users/deletePlaylist${playlistid}`, tokenConfig())
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
   return res;
@@ -240,11 +240,11 @@ export const updateUserPlaylist = async (playlistid, name, priv, token) => {
   const body = JSON.stringify({
     playlistId: playlistid,
     playlistName: name,
-    private: priv
+    private: priv,
   });
   await axios
     .put(API + `/users/editPlaylist${playlistid}`, body, tokenConfig())
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
 };
@@ -256,8 +256,8 @@ export const tokenConfig = () => {
   //returns token as config header to the calls
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   const currentUser = authenticationService.currentUserValue;
   if (currentUser) {
@@ -272,7 +272,7 @@ export const tokenConfig = () => {
     if ((diff > -(60 * 65 * 1) + 30) & (diff < -10)) {
       //if token will expire in 1 hr 5mins 30 seconds && will not expire in 10seconds
       //issue new Token
-      axios.get(API + "/auth/renew", config).then(res => {
+      axios.get(API + "/auth/renew", config).then((res) => {
         authenticationService.newToken(res.data);
       });
     }

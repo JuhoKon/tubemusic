@@ -10,7 +10,7 @@ var Promise = require("bluebird");
 require("dotenv").config();
 var app = express();
 
-var whitelist = ["http://localhost:3000"];
+var whitelist = ["https://localhost:3000"];
 
 var corsOptions = {
   origin: function (origin, callback) {
