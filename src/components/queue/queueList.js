@@ -17,7 +17,7 @@ const SortableItem = sortableElement(
     duration,
     onRemove,
     onPlay,
-    editMode
+    editMode,
   }) => (
     <Queueitem
       key={uniqueId}
@@ -44,7 +44,7 @@ export default class QueueList extends Component {
       videoId,
       thumbnail,
       uniqueId,
-      duration
+      duration,
     } = queue[index];
     //const { value } = items[index];
     return (
@@ -78,7 +78,7 @@ export default class QueueList extends Component {
         rowRenderer={this.renderRow}
         rowCount={queue.length}
         width={this.props.width}
-        height={300}
+        height={250}
       />
     );
   }

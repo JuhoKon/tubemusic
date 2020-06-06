@@ -607,22 +607,6 @@ export default class Homepage extends Component<any, HomepageState> {
                   />
                 </Col>
               </Row>
-              <Row>
-                <MediaPlayer
-                  ref={this.ref}
-                  array={queue}
-                  onRemove={this.onDelete}
-                  url={url}
-                  playing={this.state.playing}
-                  title={this.state.title}
-                  onAdd={this.onAdd}
-                  AddToPlaylist={this.AddToPlaylist}
-                  onPlay={this.onPlay}
-                  setUrl={this.setUrl}
-                  setTitle={this.setTitle}
-                  setPlaying={this.setPlaying}
-                />
-              </Row>
             </Col>
 
             <Col sm="4" className="homepage3">
@@ -645,6 +629,24 @@ export default class Homepage extends Component<any, HomepageState> {
                 shuffleQueue={this.shuffleQueue}
                 clearQueue={this.clearQueue}
                 setQueue={this.setQueue}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="12" className="mediaplayer">
+              <MediaPlayer
+                ref={this.ref}
+                array={queue}
+                onRemove={this.onDelete}
+                url={url}
+                playing={this.state.playing}
+                title={this.state.title}
+                onAdd={this.onAdd}
+                AddToPlaylist={this.AddToPlaylist}
+                onPlay={this.onPlay}
+                setUrl={this.setUrl}
+                setTitle={this.setTitle}
+                setPlaying={this.setPlaying}
               />
             </Col>
           </Row>

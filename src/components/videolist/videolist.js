@@ -10,7 +10,7 @@ class Videolist extends Component {
     super(props);
     this.state = {
       loading: this.props.loading,
-      error: this.props.error
+      error: this.props.error,
     };
   }
   componentDidUpdate(prevProps) {
@@ -18,7 +18,7 @@ class Videolist extends Component {
       //if change in props
       this.setState({
         loading: this.props.loading,
-        error: this.props.error
+        error: this.props.error,
       });
     }
   }
@@ -27,7 +27,7 @@ class Videolist extends Component {
     //console.log(this.state.error);
 
     return (
-      <div id="videolist">
+      <div id="videolist33">
         {this.state.loading ? (
           <div className="loadingPlace">
             <LoadingSpinner />
@@ -50,7 +50,7 @@ class Videolist extends Component {
             videoId,
             thumbnail,
             uniqueId,
-            duration
+            duration,
           }) => (
             <CSSTransition key={uniqueId} timeout={500} classNames="fade">
               <Videoitem

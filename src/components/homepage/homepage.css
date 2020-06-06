@@ -54,16 +54,16 @@
 }
 .homepage1.col-sm-4 {
   color: #fff;
-  min-height: 100vh;
 }
 .homepage2.col-sm-8 {
   color: #fff;
-  min-height: 100vh;
 }
-
+.mediaplayer.col-sm-12 {
+  position: sticky;
+  padding: 0;
+}
 .homepage3.col-sm-4 {
   color: #fff;
-  min-height: 100vh;
 }
 .sidebar.col-sm-2 {
   color: #fff;

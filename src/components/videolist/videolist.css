@@ -23,6 +23,13 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+#videolist33 {
+  background-color: transparent !important;
+  max-height: 350px;
+  min-height: 350px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .btn-item {
   font-size: small !important;
   display: inline-block !important;
