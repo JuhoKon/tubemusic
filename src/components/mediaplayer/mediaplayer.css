@@ -44,4 +44,28 @@ p.titleplaying {
   position: absolute;
   left: 35%;
   top: 10%;
+  padding: 10px;
+}
+@media only screen and (max-width: 575px) {
+  .buttonit {
+    position: absolute;
+    left: 23.5%;
+    top: 50%;
+  }
+  .volumecontrol {
+    position: absolute;
+    width: 100px;
+    left: 67.5%;
+    top: 53%;
+  }
+  p.titleplaying {
+    position: absolute;
+    left: 18.5%;
+    top: 10%;
+    padding: 10px;
+  }
+  .testi123 {
+    position: absolute;
+    left: 0%;
+  }
 }

@@ -74,10 +74,12 @@
   padding-bottom: 20px;
 }
 .homepage-div {
-  background-image: radial-gradient(
-    circle farthest-corner at -0.4% 112%,
-    rgba(102, 51, 204, 1) 0%,
-    rgba(244, 111, 111, 1) 92.7%
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    355deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 35%,
+    rgba(25, 172, 201, 1) 100%
   );
 }
 .homepage-div2 {
