@@ -5,8 +5,10 @@ import Search from "../search/search";
 import Queue from "../queue/queue";
 import Player from "../player/Player";
 import Playlist from "../playlist/playlist";
+import SideBar from "../sidebar/sidebar";
 import nameGenerator from "../functions/nameGenerator";
 import { Song, PlaylistObject } from "../classes/index";
+import MediaPlayer from "../mediaplayer/mediaplayer";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
 import "toasted-notes/src/styles.css"; // optional styles
@@ -547,16 +549,7 @@ export default class Homepage extends Component<any, HomepageState> {
     // console.log(this.props);
     const playlist = this.state.playlist;
     console.log(this.state.playlists);
-
-    return (
-      <div
-        className={
-          songs.includes(this.state.title) ? "homepage-div2" : "homepage-div"
-        }
-      >
-        <div className="container-fluid">
-          <Row>
-            <Col sm="4" className="homepage1">
+    /*  <Col sm="4" className="homepage1">
               <br />
               <Player
                 ref={this.ref}
@@ -572,41 +565,51 @@ export default class Homepage extends Component<any, HomepageState> {
                 setTitle={this.setTitle}
                 setPlaying={this.setPlaying}
               />
-              <Queue
-                queue={queue}
-                onRemove={this.onDelete}
-                onPlay={this.onPlay}
-                shuffleQueue={this.shuffleQueue}
-                clearQueue={this.clearQueue}
-                setQueue={this.setQueue}
-              />
-            </Col>
-            <Col sm="4" className="homepage2">
-              <br />
-              <Playlist
-                playNext={this.playNext}
-                userName={this.state.userName}
-                userRole={this.state.userRole}
-                playlists={playlists}
-                playlistOwner={this.state.playlistOwner}
-                isPrivate={this.state.private}
-                playlist={playlist}
-                playlistName={this.state.playlistName}
-                playlistId={this.state.playlistId}
-                getPlayList={this.getPlaylist}
-                loadPlaylist={this.loadPlaylist}
-                onDeleteFromPlaylist={this.onDeleteFromPlaylist}
-                onPlay={this.onPlay}
-                addPlaylistToQueue={this.addPlaylistToQueue}
-                onRemove={this.onDelete}
-                playPlaylist={this.playPlaylist}
-                makePlaylist={this.makePlaylist}
-                Updateplaylist={this.Updateplaylist}
-                deletePlaylist={this.deletePlaylist}
-                onAdd={this.onAdd}
-                UpdateCurrentPlaylist={this.UpdateCurrentPlaylist}
-                setPlaylist={this.setPlaylist}
-              />
+            </Col> */
+    return (
+      <div
+        className={
+          songs.includes(this.state.title) ? "homepage-div2" : "homepage-div"
+        }
+      >
+        <div className="container-fluid">
+          <Row>
+            <Col sm="8" className="homepage2">
+              <Row>
+                <Col sm="2" className="sidebar">
+                  <SideBar />
+                </Col>
+                <Col sm="10" className="playlist">
+                  <br />
+                  <Playlist
+                    playNext={this.playNext}
+                    userName={this.state.userName}
+                    userRole={this.state.userRole}
+                    playlists={playlists}
+                    playlistOwner={this.state.playlistOwner}
+                    isPrivate={this.state.private}
+                    playlist={playlist}
+                    playlistName={this.state.playlistName}
+                    playlistId={this.state.playlistId}
+                    getPlayList={this.getPlaylist}
+                    loadPlaylist={this.loadPlaylist}
+                    onDeleteFromPlaylist={this.onDeleteFromPlaylist}
+                    onPlay={this.onPlay}
+                    addPlaylistToQueue={this.addPlaylistToQueue}
+                    onRemove={this.onDelete}
+                    playPlaylist={this.playPlaylist}
+                    makePlaylist={this.makePlaylist}
+                    Updateplaylist={this.Updateplaylist}
+                    deletePlaylist={this.deletePlaylist}
+                    onAdd={this.onAdd}
+                    UpdateCurrentPlaylist={this.UpdateCurrentPlaylist}
+                    setPlaylist={this.setPlaylist}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <MediaPlayer />
+              </Row>
             </Col>
 
             <Col sm="4" className="homepage3">
@@ -621,6 +624,14 @@ export default class Homepage extends Component<any, HomepageState> {
                 onPlay={this.onPlay}
                 AddToPlaylist={this.AddToPlaylist}
                 error={this.state.error}
+              />
+              <Queue
+                queue={queue}
+                onRemove={this.onDelete}
+                onPlay={this.onPlay}
+                shuffleQueue={this.shuffleQueue}
+                clearQueue={this.clearQueue}
+                setQueue={this.setQueue}
               />
             </Col>
           </Row>

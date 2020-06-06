@@ -4,27 +4,27 @@ import "./videolist.css";
 import "moment-duration-format";
 
 class Videoitem extends Component {
-  onAddClick = id => {
+  onAddClick = (id) => {
     this.props.addFunc({
       uniqueId: Math.random(),
       title: id.title,
       videoId: id.videoId,
       duration: id.duration,
       publishedAt: id.publishedAt,
-      channelTitle: id.channelTitle
+      channelTitle: id.channelTitle,
     });
   };
-  onPlayClick = id => {
+  onPlayClick = (id) => {
     this.props.onPlay({
       uniqueId: Math.random(),
       title: id.title,
       videoId: id.videoId,
       duration: id.duration,
       publishedAt: id.publishedAt,
-      channelTitle: id.channelTitle
+      channelTitle: id.channelTitle,
     });
   };
-  onAddToPlaylist = id => {
+  onAddToPlaylist = (id) => {
     console.log(id);
     this.props.AddToPlaylist({
       uniqueId: Math.random(),
@@ -33,10 +33,10 @@ class Videoitem extends Component {
       duration: id.duration,
       publishedAt: id.publishedAt,
       channelTitle: id.channelTitle,
-      date: Date.now()
+      date: Date.now(),
     });
   };
-  playNextClick = item => {
+  playNextClick = (item) => {
     this.props.playNext(item);
   };
   render() {

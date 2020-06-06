@@ -18,8 +18,10 @@
 }
 #videolist {
   background-color: transparent !important;
-  max-height: 700px;
+  max-height: 400px;
+  min-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 .btn-item {
   font-size: small !important;

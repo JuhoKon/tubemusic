@@ -2,7 +2,7 @@
 .App {
   text-align: center;
   font-family: "Itim", cursive;
-  font-size: 1.03em;
+  font-size: 1em;
 }
 body > #root > div {
   height: 100%;
