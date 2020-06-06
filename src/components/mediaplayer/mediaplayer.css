@@ -1,12 +1,16 @@
 .MediaPlayerdiv {
   background-color: #151313;
-  height: 160px;
+  height: 100px;
   width: 100%;
   position: relative;
+  border: 2px solid #00000047;
 }
 .testi123 {
   position: absolute;
-  left: 16.5%;
+  left: 11%;
+  width: 200px;
+  height: 100px;
+  border: 2px solid #00000047;
 }
 .react-player {
   margin-bottom: 10px;

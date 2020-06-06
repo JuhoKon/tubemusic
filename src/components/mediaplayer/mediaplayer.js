@@ -176,7 +176,7 @@ export default class MediaPlayer extends Component {
             <ReactPlayer
               ref={this.ref}
               className="react-player"
-              width="50%"
+              width="100%"
               height="100%"
               url={this.state.url}
               playing={playing}
