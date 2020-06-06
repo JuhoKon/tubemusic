@@ -5,14 +5,16 @@ import toaster from "toasted-notes";
 import { Container, CustomInput, FormGroup, Label } from "reactstrap";
 import { Button } from "reactstrap";
 
-import HistoryModal from "./history/History-modal";
+import HistoryModal from "../player/history/History-modal";
 import { setTitle } from "../functions/functions";
-import "./player.css";
+
+import "./mediaplayer.css";
 //TODO: ADD VOLUME CONTROL
 //CHANGE BUTTONS TO LOOK BETTER
 //ADD DATABASE
 // ADD PLAYLISTS!!
-export default class Player extends Component {
+
+export default class MediaPlayer extends Component {
   constructor(props) {
     super(props);
 
@@ -167,94 +169,78 @@ export default class Player extends Component {
     //console.log(this.state.url);
     //console.log(this.state.title);
     return (
-      <div>
-        <p>Now playing: {this.state.title}</p>
-        <section className="section">
-          <Container className="container-fluid">
-            <div className="app">
-              <div className="player-wrapper">
-                <ReactPlayer
-                  ref={this.ref}
-                  className="react-player"
-                  width="40%"
-                  height="40%"
-                  url={this.state.url}
-                  playing={playing}
-                  controls={this.state.controls}
-                  volume={volume}
-                  onPlay={this.handlePlay}
-                  onPause={this.handlePause}
-                  onEnded={this.handleEnded}
-                  onError={this.handlePlayNext}
-                  //{(e) => console.log("onError", e)}
-                />
-              </div>
-              <br />
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <FormGroup>
-                        <Button
-                          className="btn-controls btn-secondary"
-                          onClick={this.handlePlayPause}
-                        >
-                          {playing ? "Pause" : "Play"}
-                        </Button>
+      <div className="MediaPlayerdiv">
+        <div>
+          <p className="titleplaying">Now playing: {this.state.title}</p>
+          <div className="testi123">
+            <ReactPlayer
+              ref={this.ref}
+              className="react-player"
+              width="50%"
+              height="100%"
+              url={this.state.url}
+              playing={playing}
+              controls={true}
+              volume={volume}
+              onPlay={this.handlePlay}
+              onPause={this.handlePause}
+              onEnded={this.handleEnded}
+              onError={this.handlePlayNext}
+              //{(e) => console.log("onError", e)}
+            />
+          </div>
+          <div className="buttonit">
+            <Button
+              className="btn-controls btn-secondary"
+              onClick={this.handlePlayPause}
+            >
+              {playing ? "Pause" : "Play"}
+            </Button>
 
-                        <Button
-                          disabled={this.props.array[0] ? false : true}
-                          className="btn-controls btn-secondary"
-                          onClick={this.handleEnded}
-                        >
-                          Play from queue
-                        </Button>
-                        <Button
-                          disabled={this.props.array[0] ? false : true}
-                          className="btn-controls btn-secondary"
-                          onClick={this.handleEnded}
-                        >
-                          Play next song
-                        </Button>
-                        <Button
-                          disabled={this.state.history[0] ? false : true}
-                          className="btn-controls btn-secondary float-right"
-                          onClick={this.toggle}
-                        >
-                          History
-                        </Button>
-                        <HistoryModal
-                          isOpen={this.state.modal}
-                          toggle={this.toggle}
-                          history={this.state.history}
-                          clearList={this.clearHistory}
-                          addFunc={this.props.onAdd}
-                          onPlay={this.props.onPlay}
-                          AddToPlaylist={this.props.AddToPlaylist}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for="exampleCustomRange">Volume control</Label>
-                        <CustomInput
-                          type="range"
-                          id="exampleCustomRange"
-                          name="customRange"
-                          min={0}
-                          max={1}
-                          step="any"
-                          value={volume}
-                          onChange={this.handleVolumeChange}
-                        />
-
-                        <p> Use this to change volume.</p>
-                      </FormGroup>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </Container>
-        </section>
+            <Button
+              disabled={this.props.array[0] ? false : true}
+              className="btn-controls btn-secondary"
+              onClick={this.handleEnded}
+            >
+              Play from queue
+            </Button>
+            <Button
+              disabled={this.props.array[0] ? false : true}
+              className="btn-controls btn-secondary"
+              onClick={this.handleEnded}
+            >
+              Play next song
+            </Button>
+            <Button
+              disabled={this.state.history[0] ? false : true}
+              className="btn-controls btn-secondary float-right"
+              onClick={this.toggle}
+            >
+              History
+            </Button>
+            <HistoryModal
+              isOpen={this.state.modal}
+              toggle={this.toggle}
+              history={this.state.history}
+              clearList={this.clearHistory}
+              addFunc={this.props.onAdd}
+              onPlay={this.props.onPlay}
+              AddToPlaylist={this.props.AddToPlaylist}
+            />
+          </div>
+          <div className="volumecontrol">
+            <CustomInput
+              type="range"
+              id="exampleCustomRange"
+              name="customRange"
+              min={0}
+              max={1}
+              step="any"
+              value={volume}
+              onChange={this.handleVolumeChange}
+            />
+          </div>
+        </div>
       </div>
     );
   }

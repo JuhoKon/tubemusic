@@ -608,7 +608,20 @@ export default class Homepage extends Component<any, HomepageState> {
                 </Col>
               </Row>
               <Row>
-                <MediaPlayer />
+                <MediaPlayer
+                  ref={this.ref}
+                  array={queue}
+                  onRemove={this.onDelete}
+                  url={url}
+                  playing={this.state.playing}
+                  title={this.state.title}
+                  onAdd={this.onAdd}
+                  AddToPlaylist={this.AddToPlaylist}
+                  onPlay={this.onPlay}
+                  setUrl={this.setUrl}
+                  setTitle={this.setTitle}
+                  setPlaying={this.setPlaying}
+                />
               </Row>
             </Col>
 
