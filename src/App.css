@@ -8,13 +8,11 @@ body > #root > div {
   height: 100%;
   min-height: 100vh;
   background-color: #151313;
-
-  overflow: hidden;
 }
+
 html {
   height: 100%;
   margin: 0;
-  overflow: hidden;
 }
 .App-logo {
   height: 40vmin;

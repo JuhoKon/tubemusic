@@ -1,9 +1,12 @@
 .MediaPlayerdiv {
   background-color: #151313;
-  height: 200px;
+  height: 100px;
   width: 100%;
   position: relative;
-  border: 2px solid #00000047;
+  /*border: 2px solid #00000047;*/
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 .testi123 {
   position: absolute;

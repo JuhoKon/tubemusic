@@ -288,7 +288,7 @@ export default class MediaPlayer extends Component {
               <Row>
                 <Col sm="2">
                   {" "}
-                  <div className="elapsedTime">
+                  <div className="elapsedTime float-right">
                     <Duration seconds={duration * played} />
                   </div>
                 </Col>
@@ -311,7 +311,7 @@ export default class MediaPlayer extends Component {
                 </Col>
                 <Col sm="2">
                   {" "}
-                  <div className="durationOfSong">
+                  <div className="durationOfSong float-left">
                     <Duration seconds={duration} />
                   </div>
                 </Col>
