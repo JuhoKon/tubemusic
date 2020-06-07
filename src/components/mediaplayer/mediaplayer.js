@@ -203,138 +203,145 @@ export default class MediaPlayer extends Component {
     const { playing, volume, duration, played } = this.state;
     return (
       <div className="MediaPlayerdiv">
+        <Row>
+          <Col sm="3">
+            {this.state.title && this.state.title.length > 26 ? (
+              <span id="TooltipExample" className="marquee">
+                <span>{this.state.title}</span>
+                <span>{this.state.title}</span>
+                <Tooltip
+                  placement="top"
+                  isOpen={this.state.tooltipOpen}
+                  target="TooltipExample"
+                  toggle={this.toggletip}
+                >
+                  {this.state.title}
+                </Tooltip>
+              </span>
+            ) : (
+              <p className="titleplaying">{this.state.title}</p>
+            )}
+
+            <div className="testi123">
+              <ReactPlayer
+                ref={this.ref}
+                className="react-player"
+                width="100%"
+                height="100%"
+                url={this.state.url}
+                playing={playing}
+                controls={true}
+                volume={volume}
+                onPlay={this.handlePlay}
+                onPause={this.handlePause}
+                onEnded={this.handleEnded}
+                onError={this.handlePlayNext}
+                onDuration={this.handleDuration}
+                onProgress={this.handleProgress}
+
+                //{(e) => console.log("onError", e)}
+              />
+            </div>
+          </Col>
+          <Col sm="6">
+            <div className="playercontrols">
+              <div className="buttonit">
+                <Button
+                  className="btn-controls btn-secondary"
+                  onClick={this.handlePlayPause}
+                >
+                  {playing ? "Pause" : "Play"}
+                </Button>
+
+                <Button
+                  disabled={this.props.array[0] ? false : true}
+                  className="btn-controls btn-secondary"
+                  onClick={this.handleEnded}
+                >
+                  Play from queue
+                </Button>
+                <Button
+                  disabled={this.props.array[0] ? false : true}
+                  className="btn-controls btn-secondary"
+                  onClick={this.handleEnded}
+                >
+                  Play next song
+                </Button>
+                <Button
+                  disabled={this.state.history[0] ? false : true}
+                  className="btn-controls btn-secondary"
+                  onClick={this.toggle}
+                >
+                  History
+                </Button>
+                <HistoryModal
+                  isOpen={this.state.modal}
+                  toggle={this.toggle}
+                  history={this.state.history}
+                  clearList={this.clearHistory}
+                  addFunc={this.props.onAdd}
+                  onPlay={this.props.onPlay}
+                  AddToPlaylist={this.props.AddToPlaylist}
+                />
+              </div>
+              <Row>
+                <Col sm="2">
+                  {" "}
+                  <div className="elapsedTime">
+                    <Duration seconds={duration * played} />
+                  </div>
+                </Col>
+                <Col sm="8">
+                  <div className="durationcontrol">
+                    <CustomInput
+                      type="range"
+                      id="exampleCustomRange"
+                      name="customRange"
+                      type="range"
+                      min={0}
+                      max={0.999999}
+                      step="any"
+                      value={played}
+                      onMouseDown={this.handleSeekMouseDown}
+                      onChange={this.handleSeekChange}
+                      onMouseUp={this.handleSeekMouseUp}
+                    />
+                  </div>
+                </Col>
+                <Col sm="2">
+                  {" "}
+                  <div className="durationOfSong">
+                    <Duration seconds={duration} />
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col sm="3">
+            <div className="volumeiconcontrols">
+              <div className="volumecontrol">
+                {/* tänne ääni iconi*/}
+                <CustomInput
+                  type="range"
+                  id="exampleCustomRange"
+                  name="customRange"
+                  min={0}
+                  max={1}
+                  step="any"
+                  value={volume}
+                  onChange={this.handleVolumeChange}
+                />
+              </div>
+            </div>
+          </Col>
+        </Row>
         <div>
-          {this.state.title && this.state.title.length > 26 ? (
-            <span id="TooltipExample" className="marquee">
-              <span>{this.state.title}</span>
-              <span>{this.state.title}</span>
-              <Tooltip
-                placement="top"
-                isOpen={this.state.tooltipOpen}
-                target="TooltipExample"
-                toggle={this.toggletip}
-              >
-                {this.state.title}
-              </Tooltip>
-            </span>
-          ) : (
-            <p className="titleplaying">{this.state.title}</p>
-          )}
-
-          <div className="testi123">
-            <ReactPlayer
-              ref={this.ref}
-              className="react-player"
-              width="100%"
-              height="100%"
-              url={this.state.url}
-              playing={playing}
-              controls={true}
-              volume={volume}
-              onPlay={this.handlePlay}
-              onPause={this.handlePause}
-              onEnded={this.handleEnded}
-              onError={this.handlePlayNext}
-              onDuration={this.handleDuration}
-              onProgress={this.handleProgress}
-
-              //{(e) => console.log("onError", e)}
-            />
-          </div>
           <tr>
             <th>remaining</th>
             <td>
               <Duration seconds={duration * (1 - played)} />
             </td>
           </tr>
-          <div className="buttonit">
-            <Button
-              className="btn-controls btn-secondary"
-              onClick={this.handlePlayPause}
-            >
-              {playing ? "Pause" : "Play"}
-            </Button>
-
-            <Button
-              disabled={this.props.array[0] ? false : true}
-              className="btn-controls btn-secondary"
-              onClick={this.handleEnded}
-            >
-              Play from queue
-            </Button>
-            <Button
-              disabled={this.props.array[0] ? false : true}
-              className="btn-controls btn-secondary"
-              onClick={this.handleEnded}
-            >
-              Play next song
-            </Button>
-            <Button
-              disabled={this.state.history[0] ? false : true}
-              className="btn-controls btn-secondary float-right"
-              onClick={this.toggle}
-            >
-              History
-            </Button>
-            <HistoryModal
-              isOpen={this.state.modal}
-              toggle={this.toggle}
-              history={this.state.history}
-              clearList={this.clearHistory}
-              addFunc={this.props.onAdd}
-              onPlay={this.props.onPlay}
-              AddToPlaylist={this.props.AddToPlaylist}
-            />
-          </div>
-        </div>
-
-        <div className="playercontrols">
-          <Row>
-            <Col sm="4">
-              {" "}
-              <div className="elapsedTime float-right">
-                <Duration seconds={duration * played} />
-              </div>
-            </Col>
-            <Col sm="4">
-              <div className="durationcontrol">
-                <CustomInput
-                  type="range"
-                  id="exampleCustomRange"
-                  name="customRange"
-                  type="range"
-                  min={0}
-                  max={0.999999}
-                  step="any"
-                  value={played}
-                  onMouseDown={this.handleSeekMouseDown}
-                  onChange={this.handleSeekChange}
-                  onMouseUp={this.handleSeekMouseUp}
-                />
-              </div>
-            </Col>
-            <Col sm="4">
-              {" "}
-              <div className="durationOfSong float-left">
-                <Duration seconds={duration} />
-              </div>
-            </Col>
-          </Row>
-        </div>
-        <div className="volumeiconcontrols">
-          <div className="volumecontrol">
-            {/* tänne ääni iconi*/}
-            <CustomInput
-              type="range"
-              id="exampleCustomRange"
-              name="customRange"
-              min={0}
-              max={1}
-              step="any"
-              value={volume}
-              onChange={this.handleVolumeChange}
-            />
-          </div>
         </div>
       </div>
     );

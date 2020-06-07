@@ -7,7 +7,7 @@
 }
 .testi123 {
   position: absolute;
-  left: 11%;
+  left: 46%;
   width: 180px;
   height: 90px;
   border: 2px solid #00000047;
@@ -35,8 +35,8 @@
 }
 .buttonit {
   position: absolute;
-  left: 40.1%;
-  top: 10%;
+  left: 27.1%;
+  top: 50%;
 }
 .volumecontrol {
   position: absolute;
@@ -45,18 +45,18 @@
 .durationcontrol {
   flex: 1 0 10%;
   position: relative;
-  top: 160%;
+  top: 220%;
 }
 .durationOfSong {
   flex: 1 0 10%;
   color: #ffffff;
   position: relative;
-  top: 150%;
+  top: 210%;
 }
 .elapsedTime {
   flex: 1 0 10%;
   position: relative;
-  top: 150%;
+  top: 210%;
   color: #ffffff;
 }
 .playercontrols {
@@ -64,14 +64,16 @@
 }
 .volumeiconcontrols {
   position: absolute;
-  left: 68%;
-  top: 70%;
+  left: 10%;
+  top: 210%;
 }
 
 p.titleplaying {
+  background-color: black;
   position: absolute;
-  left: 20%;
-  top: 0%;
+  left: 46.6%;
+  top: -120%;
+
   padding: 5px;
   width: 250px;
 }
@@ -100,9 +102,10 @@ p.titleplaying {
   }
 }
 .marquee {
+  background-color: black;
   position: absolute;
-  left: 20%;
-  top: 0%;
+  left: 46.6%;
+  top: -120%;
   width: 250px;
   margin: 0 auto;
   white-space: nowrap;
