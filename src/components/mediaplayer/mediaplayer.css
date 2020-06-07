@@ -8,8 +8,8 @@
 .testi123 {
   position: absolute;
   left: 11%;
-  width: 200px;
-  height: 100px;
+  width: 180px;
+  height: 90px;
   border: 2px solid #00000047;
 }
 .react-player {
@@ -35,21 +35,46 @@
 }
 .buttonit {
   position: absolute;
-  left: 40%;
-  top: 50%;
+  left: 40.1%;
+  top: 10%;
 }
 .volumecontrol {
   position: absolute;
-  width: 100px;
-  left: 84%;
-  top: 53%;
+  width: 140px;
+}
+.durationcontrol {
+  width: 400px;
+}
+.durationOfSong {
+  color: #ffffff;
+  position: absolute;
+  top: -10%;
+}
+.playercontrols {
+  position: absolute;
+  width: 600px;
+  left: 35%;
+  top: 70%;
+}
+.volumeiconcontrols {
+  position: absolute;
+  left: 68%;
+  top: 70%;
+}
+.elapsedTime {
+  position: absolute;
+  color: #ffffff;
+  top: -10%;
+  left: 68%;
 }
 p.titleplaying {
   position: absolute;
-  left: 35%;
-  top: 10%;
-  padding: 10px;
+  left: 20%;
+  top: 0%;
+  padding: 5px;
+  width: 250px;
 }
+
 @media only screen and (max-width: 575px) {
   .buttonit {
     position: absolute;
@@ -71,5 +96,51 @@ p.titleplaying {
   .testi123 {
     position: absolute;
     left: 0%;
+  }
+}
+.marquee {
+  position: absolute;
+  left: 20%;
+  top: 0%;
+  width: 250px;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: inline-flex;
+  position: absolute;
+  padding: 5px;
+}
+
+.marquee span {
+  display: flex;
+  flex-basis: 100%;
+  animation: marquee 30s linear infinite;
+  animation-play-state: running;
+  padding-left: 50px;
+}
+
+.marquee:hover > span {
+  animation: marquee 30s linear infinite;
+  animation-play-state: running;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0%, 0);
+  }
+  50% {
+    transform: translate(-100%, 0);
+  }
+  50.001% {
+    transform: translate(0%, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+@keyframes marquee-reset {
+  0% {
+    transform: translate(0%, 0);
   }
 }

@@ -2,12 +2,20 @@ import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
-import { Container, CustomInput, FormGroup, Label } from "reactstrap";
+import {
+  Container,
+  CustomInput,
+  FormGroup,
+  Label,
+  Tooltip,
+  Row,
+  Col,
+} from "reactstrap";
 import { Button } from "reactstrap";
-
+import ScrollText from "react-scroll-text";
 import HistoryModal from "../player/history/History-modal";
 import { setTitle } from "../functions/functions";
-
+import Duration from "./duration";
 import "./mediaplayer.css";
 //TODO: ADD VOLUME CONTROL
 //CHANGE BUTTONS TO LOOK BETTER
@@ -35,6 +43,8 @@ export default class MediaPlayer extends Component {
       array: this.props.array,
       modal: false,
       history: [], //TODO: joku raja tälle
+      tooltipOpen: false,
+      duration: 0,
     };
   }
   load = (url) => {
@@ -120,7 +130,6 @@ export default class MediaPlayer extends Component {
       });
       toaster.notify(<span>Now playing: {this.state.array[0].title}</span>, {
         duration: 1200,
-        position: "bottom",
       });
       this.props.onRemove(this.state.array[0]); //removes item from queue
       this.props.setUrl(url);
@@ -161,17 +170,56 @@ export default class MediaPlayer extends Component {
   seekTo0() {
     this.player.seekTo(0); //Seeks to 0
   }
-  render() {
-    //console.log("player");
-    const { playing, volume } = this.state;
-    //console.log(this.state.array);
+  toggletip = () => {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen,
+    });
+  };
+  handleDuration = (duration) => {
+    console.log("onDuration", duration);
+    this.setState({ duration });
+  };
+  handleSeekMouseDown = (e) => {
+    this.setState({ seeking: true });
+  };
 
-    //console.log(this.state.url);
-    //console.log(this.state.title);
+  handleSeekChange = (e) => {
+    this.setState({ played: parseFloat(e.target.value) });
+  };
+
+  handleSeekMouseUp = (e) => {
+    this.setState({ seeking: false });
+    this.player.seekTo(parseFloat(e.target.value));
+  };
+  handleProgress = (state) => {
+    console.log("onProgress", state);
+    // We only want to update time slider if we are not currently seeking
+    if (!this.state.seeking) {
+      this.setState(state);
+    }
+  };
+  render() {
+    const { playing, volume, duration, played } = this.state;
     return (
       <div className="MediaPlayerdiv">
         <div>
-          <p className="titleplaying">Now playing: {this.state.title}</p>
+          {this.state.title && this.state.title.length > 26 ? (
+            <span id="TooltipExample" className="marquee">
+              <span>{this.state.title}</span>
+              <span>{this.state.title}</span>
+              <Tooltip
+                placement="top"
+                isOpen={this.state.tooltipOpen}
+                target="TooltipExample"
+                toggle={this.toggletip}
+              >
+                {this.state.title}
+              </Tooltip>
+            </span>
+          ) : (
+            <p className="titleplaying">{this.state.title}</p>
+          )}
+
           <div className="testi123">
             <ReactPlayer
               ref={this.ref}
@@ -186,9 +234,18 @@ export default class MediaPlayer extends Component {
               onPause={this.handlePause}
               onEnded={this.handleEnded}
               onError={this.handlePlayNext}
+              onDuration={this.handleDuration}
+              onProgress={this.handleProgress}
+
               //{(e) => console.log("onError", e)}
             />
           </div>
+          <tr>
+            <th>remaining</th>
+            <td>
+              <Duration seconds={duration * (1 - played)} />
+            </td>
+          </tr>
           <div className="buttonit">
             <Button
               className="btn-controls btn-secondary"
@@ -228,18 +285,54 @@ export default class MediaPlayer extends Component {
               AddToPlaylist={this.props.AddToPlaylist}
             />
           </div>
-          <div className="volumecontrol">
-            <CustomInput
-              type="range"
-              id="exampleCustomRange"
-              name="customRange"
-              min={0}
-              max={1}
-              step="any"
-              value={volume}
-              onChange={this.handleVolumeChange}
-            />
+          <div className="volumeiconcontrols">
+            <div className="volumecontrol">
+              {/* tänne ääni iconi*/}
+              <CustomInput
+                type="range"
+                id="exampleCustomRange"
+                name="customRange"
+                min={0}
+                max={1}
+                step="any"
+                value={volume}
+                onChange={this.handleVolumeChange}
+              />
+            </div>
           </div>
+        </div>
+        <div className="playercontrols">
+          <Row>
+            <Col sm="2">
+              {" "}
+              <div className="elapsedTime float-right">
+                <Duration seconds={duration * played} />
+              </div>
+            </Col>
+            <Col sm="8">
+              <div className="durationcontrol">
+                <CustomInput
+                  type="range"
+                  id="exampleCustomRange"
+                  name="customRange"
+                  type="range"
+                  min={0}
+                  max={0.999999}
+                  step="any"
+                  value={played}
+                  onMouseDown={this.handleSeekMouseDown}
+                  onChange={this.handleSeekChange}
+                  onMouseUp={this.handleSeekMouseUp}
+                />
+              </div>
+            </Col>
+            <Col sm="2">
+              {" "}
+              <div className="durationOfSong float-left">
+                <Duration seconds={duration} />
+              </div>
+            </Col>
+          </Row>
         </div>
       </div>
     );
