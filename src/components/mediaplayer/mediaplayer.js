@@ -199,6 +199,7 @@ export default class MediaPlayer extends Component {
     }
   };
   /* TODO: add responsiveness to the mediaplayer. Add all elements to a row and columns. Positioning with display:relative and top:10% etc. */
+  /* Tooltip is not working correctly. Fix it !*/
   render() {
     const { playing, volume, duration, played } = this.state;
     return (
