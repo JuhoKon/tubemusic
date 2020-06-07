@@ -35,7 +35,7 @@
 }
 .buttonit {
   position: absolute;
-  left: 27.1%;
+  left: 25.1%;
   top: 50%;
 }
 .volumecontrol {
@@ -69,11 +69,9 @@
 }
 
 p.titleplaying {
-  background-color: black;
   position: absolute;
-  left: 46.6%;
-  top: -120%;
-
+  left: 80%;
+  top: 0%;
   padding: 5px;
   width: 250px;
 }
@@ -102,10 +100,9 @@ p.titleplaying {
   }
 }
 .marquee {
-  background-color: black;
   position: absolute;
-  left: 46.6%;
-  top: -120%;
+  left: 87%;
+  top: 0%;
   width: 250px;
   margin: 0 auto;
   white-space: nowrap;
