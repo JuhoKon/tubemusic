@@ -43,30 +43,31 @@
   width: 140px;
 }
 .durationcontrol {
-  width: 400px;
+  flex: 1 0 10%;
+  position: relative;
+  top: 160%;
 }
 .durationOfSong {
+  flex: 1 0 10%;
   color: #ffffff;
-  position: absolute;
-  top: -10%;
+  position: relative;
+  top: 150%;
+}
+.elapsedTime {
+  flex: 1 0 10%;
+  position: relative;
+  top: 150%;
+  color: #ffffff;
 }
 .playercontrols {
-  position: absolute;
-  width: 600px;
-  left: 35%;
-  top: 70%;
+  transform: translate(0 50px);
 }
 .volumeiconcontrols {
   position: absolute;
   left: 68%;
   top: 70%;
 }
-.elapsedTime {
-  position: absolute;
-  color: #ffffff;
-  top: -10%;
-  left: 68%;
-}
+
 p.titleplaying {
   position: absolute;
   left: 20%;

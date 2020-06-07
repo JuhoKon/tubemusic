@@ -198,6 +198,7 @@ export default class MediaPlayer extends Component {
       this.setState(state);
     }
   };
+  /* TODO: add responsiveness to the mediaplayer */
   render() {
     const { playing, volume, duration, played } = this.state;
     return (
@@ -285,31 +286,17 @@ export default class MediaPlayer extends Component {
               AddToPlaylist={this.props.AddToPlaylist}
             />
           </div>
-          <div className="volumeiconcontrols">
-            <div className="volumecontrol">
-              {/* tänne ääni iconi*/}
-              <CustomInput
-                type="range"
-                id="exampleCustomRange"
-                name="customRange"
-                min={0}
-                max={1}
-                step="any"
-                value={volume}
-                onChange={this.handleVolumeChange}
-              />
-            </div>
-          </div>
         </div>
+
         <div className="playercontrols">
           <Row>
-            <Col sm="2">
+            <Col sm="4">
               {" "}
               <div className="elapsedTime float-right">
                 <Duration seconds={duration * played} />
               </div>
             </Col>
-            <Col sm="8">
+            <Col sm="4">
               <div className="durationcontrol">
                 <CustomInput
                   type="range"
@@ -326,7 +313,7 @@ export default class MediaPlayer extends Component {
                 />
               </div>
             </Col>
-            <Col sm="2">
+            <Col sm="4">
               {" "}
               <div className="durationOfSong float-left">
                 <Duration seconds={duration} />
