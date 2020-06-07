@@ -198,7 +198,7 @@ export default class MediaPlayer extends Component {
       this.setState(state);
     }
   };
-  /* TODO: add responsiveness to the mediaplayer */
+  /* TODO: add responsiveness to the mediaplayer. Add all elements to a row and columns. Positioning with display:relative and top:10% etc. */
   render() {
     const { playing, volume, duration, played } = this.state;
     return (
@@ -320,6 +320,21 @@ export default class MediaPlayer extends Component {
               </div>
             </Col>
           </Row>
+        </div>
+        <div className="volumeiconcontrols">
+          <div className="volumecontrol">
+            {/* tänne ääni iconi*/}
+            <CustomInput
+              type="range"
+              id="exampleCustomRange"
+              name="customRange"
+              min={0}
+              max={1}
+              step="any"
+              value={volume}
+              onChange={this.handleVolumeChange}
+            />
+          </div>
         </div>
       </div>
     );
