@@ -167,6 +167,7 @@ p.titleplaying {
   display: inline-flex;
   position: absolute;
   padding: 5px;
+  z-index: 50;
 }
 
 .marquee span {

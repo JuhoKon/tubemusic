@@ -217,23 +217,23 @@ export default class MediaPlayer extends Component {
         <Row>
           <Col sm="3">
             {this.state.title && this.state.title.length > 26 ? (
-              <span id="TooltipExample" className="marquee">
+              <span className="marquee">
                 <span>{this.state.title}</span>
                 <span>{this.state.title}</span>
-                <Tooltip
-                  placement="top"
-                  isOpen={this.state.tooltipOpen}
-                  target="TooltipExample"
-                  toggle={this.toggletip}
-                >
-                  {this.state.title}
-                </Tooltip>
               </span>
             ) : (
               <p className="titleplaying">{this.state.title}</p>
             )}
 
-            <div className="testi123">
+            <Tooltip
+              placement="top"
+              isOpen={this.state.tooltipOpen}
+              target="TooltipExample"
+              toggle={this.toggletip}
+            >
+              {this.state.title}
+            </Tooltip>
+            <div className="testi123" id="TooltipExample">
               <ReactPlayer
                 ref={this.ref}
                 className="react-player"
