@@ -17,6 +17,8 @@ import HistoryModal from "../player/history/History-modal";
 import { setTitle } from "../functions/functions";
 import Duration from "./duration";
 import "./mediaplayer.css";
+import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //TODO: ADD VOLUME CONTROL
 //CHANGE BUTTONS TO LOOK BETTER
 //ADD DATABASE
@@ -247,6 +249,11 @@ export default class MediaPlayer extends Component {
           <Col sm="6">
             <div className="playercontrols">
               <div className="buttonit">
+                <FontAwesomeIcon icon={faPlay} onClick={this.handlePlayPause} />
+                <FontAwesomeIcon
+                  icon={faPause}
+                  onClick={this.handlePlayPause}
+                />
                 <Button
                   className="btn-controls btn-secondary"
                   onClick={this.handlePlayPause}
