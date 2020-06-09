@@ -17,7 +17,12 @@ import HistoryModal from "../player/history/History-modal";
 import { setTitle } from "../functions/functions";
 import Duration from "./duration";
 import "./mediaplayer.css";
-import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faPause,
+  faForward,
+  faBackward,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //TODO: ADD VOLUME CONTROL
 //CHANGE BUTTONS TO LOOK BETTER
@@ -177,6 +182,9 @@ export default class MediaPlayer extends Component {
       tooltipOpen: !this.state.tooltipOpen,
     });
   };
+  handleStartOver = () => {
+    this.seekTo0();
+  };
   handleDuration = (duration) => {
     console.log("onDuration", duration);
     this.setState({ duration });
@@ -249,48 +257,25 @@ export default class MediaPlayer extends Component {
           <Col sm="6">
             <div className="playercontrols">
               <div className="buttonit">
-                <FontAwesomeIcon icon={faPlay} onClick={this.handlePlayPause} />
-                <FontAwesomeIcon
-                  icon={faPause}
-                  onClick={this.handlePlayPause}
-                />
-                <Button
-                  className="btn-controls btn-secondary"
-                  onClick={this.handlePlayPause}
-                >
-                  {playing ? "Pause" : "Play"}
-                </Button>
-
-                <Button
-                  disabled={this.props.array[0] ? false : true}
-                  className="btn-controls btn-secondary"
-                  onClick={this.handleEnded}
-                >
-                  Play from queue
-                </Button>
-                <Button
-                  disabled={this.props.array[0] ? false : true}
-                  className="btn-controls btn-secondary"
-                  onClick={this.handleEnded}
-                >
-                  Play next song
-                </Button>
-                <Button
-                  disabled={this.state.history[0] ? false : true}
-                  className="btn-controls btn-secondary"
-                  onClick={this.toggle}
-                >
-                  History
-                </Button>
-                <HistoryModal
-                  isOpen={this.state.modal}
-                  toggle={this.toggle}
-                  history={this.state.history}
-                  clearList={this.clearHistory}
-                  addFunc={this.props.onAdd}
-                  onPlay={this.props.onPlay}
-                  AddToPlaylist={this.props.AddToPlaylist}
-                />
+                {playing ? (
+                  <div className="buttonArea" onClick={this.handlePlayPause}>
+                    <FontAwesomeIcon size={"lg"} icon={faPause} />
+                  </div>
+                ) : (
+                  <div
+                    className="buttonArea"
+                    disabled={this.props.array[0] ? false : true}
+                    onClick={this.handlePlayPause}
+                  >
+                    <FontAwesomeIcon size={"lg"} icon={faPlay} />
+                  </div>
+                )}
+                <div className="buttonArea2" onClick={this.handleEnded}>
+                  <FontAwesomeIcon size={"lg"} icon={faForward} />
+                </div>
+                <div className="buttonArea3" onClick={this.handleStartOver}>
+                  <FontAwesomeIcon size={"lg"} icon={faBackward} />
+                </div>
               </div>
               <Row>
                 <Col sm="2">
