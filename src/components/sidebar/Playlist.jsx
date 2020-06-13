@@ -12,7 +12,7 @@ export default class Playlist extends React.Component {
     this.props.loadPlaylist(id);
   }
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <div
         onClick={this.loadPlaylist.bind(this, this.props._id)}
