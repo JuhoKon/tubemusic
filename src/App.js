@@ -40,6 +40,7 @@ class App extends Component {
         token: null,
       });
     }
+    this.forceUpdate();
   }
   componentDidMount() {
     //console.log("I mount");
@@ -72,7 +73,7 @@ class App extends Component {
   }
   render() {
     const { currentUserInfo, token, isAuth } = this.state;
-    //console.log(currentUserInfo);
+    console.log(currentUserInfo);
 
     return (
       <div className="App wrapper">
@@ -83,6 +84,7 @@ class App extends Component {
             <PrivateRoute
               path="/"
               data={currentUserInfo}
+              data2={this.state.index}
               loadUser={this.loadUser}
               exact
               component={HomePage}

@@ -85,7 +85,7 @@ export default class Homepage extends Component<any, HomepageState> {
       contentDetails: [],
       Allplaylists: [], //all of the playlists, maybe render seperately somewhere
       //could add public/private playlists etc.
-      playlists: [], //users playlists
+      playlists: this.props?.data?.playlists || [], //users playlists
       loading: false,
       updated: false,
       url: "",
@@ -107,11 +107,10 @@ export default class Homepage extends Component<any, HomepageState> {
       this.setState({
         user: this.props.data,
       });
-      if (this.props.data) {
-        this.setState({
-          playlists: this.props.data.playlists,
-        });
-      }
+
+      this.setState({
+        playlists: this.props.data.playlists,
+      });
     }
   }
   playNext(item: Song) {
@@ -556,6 +555,7 @@ export default class Homepage extends Component<any, HomepageState> {
     // console.log(this.props);
     const playlist = this.state.playlist;
     console.log(this.state.playlists);
+    console.log(this.props);
     /*  <Col sm="4" className="homepage1">
               <br />
               <Player
