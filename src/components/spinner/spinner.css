@@ -9,6 +9,11 @@
   padding-left: 50px;
   padding-top: 50px;
   padding-bottom: 50px;
+  position: absolute;
+  left: 45%;
+  top: 35%;
+  background-color: black;
+  border-radius: 50px;
 }
 #spinner2 i {
   color: aliceblue;

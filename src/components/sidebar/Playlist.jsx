@@ -1,6 +1,6 @@
 import React from "react";
+//Tänne myös contet menu? Load playlist && Delete playlist tms.
 
-//https://www.davidhu.io/react-spinners/
 export default class Playlist extends React.Component {
   constructor(props) {
     super(props);
@@ -8,8 +8,18 @@ export default class Playlist extends React.Component {
       name: this.props.name.substring(0, 400),
     };
   }
+  loadPlaylist(id) {
+    this.props.loadPlaylist(id);
+  }
   render() {
     console.log(this.props);
-    return <div className="sidebar-playlist">{this.state.name}</div>;
+    return (
+      <div
+        onClick={this.loadPlaylist.bind(this, this.props._id)}
+        className="sidebar-playlist"
+      >
+        {this.state.name}
+      </div>
+    );
   }
 }

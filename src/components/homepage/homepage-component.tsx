@@ -25,6 +25,7 @@ import {
   updateUserPlaylist,
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
+import Spinner from "../spinner/spinner4";
 
 type HomepageState = {
   items: Array<Song>;
@@ -47,6 +48,7 @@ type HomepageState = {
   userRole: string;
   private?: boolean;
   playlistOwner?: string;
+  loadingPlaylist?: boolean;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -96,6 +98,7 @@ export default class Homepage extends Component<any, HomepageState> {
       token: "",
       userName: "",
       userRole: "",
+      loadingPlaylist: false,
     };
   }
   componentDidUpdate(prevProps: any) {
@@ -357,6 +360,9 @@ export default class Homepage extends Component<any, HomepageState> {
   }
   async loadPlaylist(id: String) {
     //loads a single database based on the id
+    this.setState({
+      loadingPlaylist: true,
+    });
     const result: any = await getPlayListById(id);
 
     this.setState({
@@ -366,6 +372,7 @@ export default class Homepage extends Component<any, HomepageState> {
       loading: false,
       private: result.data.private,
       playlistOwner: result.data.owner,
+      loadingPlaylist: false,
     });
     return "OK";
   }
@@ -572,12 +579,20 @@ export default class Homepage extends Component<any, HomepageState> {
           songs.includes(this.state.title) ? "homepage-div2" : "homepage-div"
         }
       >
-        <div className="container-fluid">
+        <div id="spinnerDivHomePage">
+          {this.state.loadingPlaylist ? (
+            <Spinner size={50} color="white" />
+          ) : null}
+
           <Row>
             <Col sm="8" className="homepage2">
               <Row>
                 <Col sm="2" className="sidebar">
-                  <SideBar playlists={playlists} />
+                  <SideBar
+                    loadPlaylist={this.loadPlaylist}
+                    playlists={playlists}
+                    getPlaylist={this.getPlaylist}
+                  />
                 </Col>
                 <Col sm="10" className="playlist">
                   <br />

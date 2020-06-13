@@ -47,6 +47,9 @@
     left: 90%;
   }
 }
+.spinnerDivHomePage {
+  position: relative;
+}
 .footerName {
   opacity: 1;
   position: relative;
