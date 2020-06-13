@@ -3,3 +3,16 @@
   height: 100%;
   width: 100%;
 }
+.sidebar-playlist {
+  color: #a8a8a8 !important;
+  font-size: 15px;
+  padding: 3px;
+}
+.sidebar-playlist:hover {
+  color: #ffffff !important;
+  cursor: default;
+}
+.playlists-sidebar {
+  height: 90%;
+  overflow: auto;
+}

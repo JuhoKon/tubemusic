@@ -110,7 +110,9 @@
   text-align: center;
   font-family: "Itim", cursive;
 }
-
+p.card-text {
+  cursor: default;
+}
 .div #videolist {
   background-color: transparent !important;
 }
