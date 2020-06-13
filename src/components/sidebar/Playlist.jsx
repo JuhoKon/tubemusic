@@ -1,6 +1,13 @@
 import React from "react";
 //Tänne myös contet menu? Load playlist && Delete playlist tms.
-
+//contextiin voisi tehdä mm. save-as model
+//tänne voisi laittaa sen create new jutunkin
+//pitää miettii uudelleen minne laittaa sen put to queue ja play playlist
+//nekin voisi löytyä siitä context - menusta.
+//&edit modalkin voisi olla siellä context menussa linkkinä?
+//oikeet propsit vaa ni toimii.
+//playlist-itemien eli niiden osittolistojen nimiä täytyy parsia että ei oo koko mitaltaan siellä
+//lisää toolboxin kaikkiin niiihin, johon tulee sitten se nimi näkyviin.
 export default class Playlist extends React.Component {
   constructor(props) {
     super(props);

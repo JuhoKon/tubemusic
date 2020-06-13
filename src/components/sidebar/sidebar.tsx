@@ -5,6 +5,7 @@ import "./sidebar.css";
 
 //todo: check for cuomponentdidupdate - tuliko uusia propseja, jos tuli niin tehdään niillä jottai?
 //force update tms jos tulee uusia propseja. ei tarvii ottaa omaa stateee. Tää homma ei piirrä itteesä uudellee jos ei state vaihu?
+//lisää suunnitelmia playlist.jsx
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 class Sidebar extends Component<any, any> {

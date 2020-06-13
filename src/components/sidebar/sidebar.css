@@ -6,13 +6,13 @@
 .sidebar-playlist {
   color: #a8a8a8 !important;
   font-size: 15px;
-  padding: 3px;
+  padding: 2px;
 }
 .sidebar-playlist:hover {
   color: #ffffff !important;
   cursor: default;
 }
 .playlists-sidebar {
-  height: 70%;
+  height: 80%;
   overflow: auto;
 }
