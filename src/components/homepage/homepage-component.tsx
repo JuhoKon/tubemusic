@@ -577,7 +577,7 @@ export default class Homepage extends Component<any, HomepageState> {
             <Col sm="8" className="homepage2">
               <Row>
                 <Col sm="2" className="sidebar">
-                  <SideBar />
+                  <SideBar playlists={playlists} />
                 </Col>
                 <Col sm="10" className="playlist">
                   <br />

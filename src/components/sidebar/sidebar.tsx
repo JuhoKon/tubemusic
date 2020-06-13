@@ -9,7 +9,13 @@ class Sidebar extends Component<any, any> {
   render() {
     console.log(this.props);
 
-    return <div className="sidebardiv">asdasdasddas</div>;
+    return (
+      <div className="sidebardiv">
+        {this.props.playlists.map((item: any, i: any) => (
+          <div key={i}>{item.name}</div>
+        ))}
+      </div>
+    );
   }
 }
 //actions we want to use as second paranthesis
