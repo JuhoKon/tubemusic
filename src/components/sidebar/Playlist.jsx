@@ -8,12 +8,20 @@ import React from "react";
 //oikeet propsit vaa ni toimii.
 //playlist-itemien eli niiden osittolistojen nimiä täytyy parsia että ei oo koko mitaltaan siellä
 //lisää toolboxin kaikkiin niiihin, johon tulee sitten se nimi näkyviin.
+import isEqual from "react-fast-compare";
 export default class Playlist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: this.props.name.substring(0, 400),
     };
+  }
+  componentDidUpdate(prevProps) {
+    if (!isEqual(this.props, prevProps)) {
+      this.setState({
+        name: this.props.name,
+      });
+    }
   }
   loadPlaylist(id) {
     this.props.loadPlaylist(id);

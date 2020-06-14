@@ -2,16 +2,27 @@ import React, { Component } from "react";
 import { Card, CardBody, CardTitle, Button } from "reactstrap";
 import PlaylistItem from "./Playlist";
 import "./sidebar.css";
-
+import isEqual from "react-fast-compare";
 //todo: check for cuomponentdidupdate - tuliko uusia propseja, jos tuli niin tehdään niillä jottai?
 //force update tms jos tulee uusia propseja. ei tarvii ottaa omaa stateee. Tää homma ei piirrä itteesä uudellee jos ei state vaihu?
 //lisää suunnitelmia playlist.jsx
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 class Sidebar extends Component<any, any> {
-  state = {
-    loading: false,
-  };
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      playlists: this.props.playlists,
+      loading: false,
+    };
+  }
+  componentDidUpdate(prevProps: any) {
+    if (!isEqual(this.props, prevProps)) {
+      this.setState({
+        playlists: this.props.playlists,
+      });
+    }
+  }
   componentDidMount() {
     this.getPlaylists();
   }
@@ -33,8 +44,8 @@ class Sidebar extends Component<any, any> {
         </button>
         <br />
         <div className="playlists-sidebar">
-          {this.props.playlists.map((item: any, i: any) => (
-            <div key={i}>
+          {this.state.playlists.map((item: any, i: any) => (
+            <div key={item._id}>
               <PlaylistItem
                 loadPlaylist={this.props.loadPlaylist}
                 name={item.name}

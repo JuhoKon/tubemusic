@@ -419,6 +419,8 @@ export default class Homepage extends Component<any, HomepageState> {
       playlistName: result.data.name,
       private: isPrivate,
     });
+    await timeout(500);
+    this.getPlaylist();
   }
   async UpdateCurrentPlaylist() {
     //updates current status of active playlist to database
@@ -441,6 +443,8 @@ export default class Homepage extends Component<any, HomepageState> {
       playlistName: result.data.name,
       playlist: playlist,
     });
+    await timeout(500);
+    this.getPlaylist();
   }
   async deletePlaylist(id: String) {
     //DELETE PLAYLIST BASED ON ID
