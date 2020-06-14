@@ -6,7 +6,7 @@
   z-index: 1; /* have navbar above everything, always */
 }
 .navbar {
-  background-color: #5a2a3a !important;
+  background-color: #312f2f !important ;
 }
 .navbar .navbar-brand {
   color: #ecf0f1;

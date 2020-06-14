@@ -55,34 +55,67 @@
   position: relative;
   transform: translateY(100px);
 }
-.homepage1.col-sm-4 {
+
+.homepage-div {
+  background: rgb(98, 98, 98);
+  background: linear-gradient(
+    278deg,
+    rgba(98, 98, 98, 0.9864320728291317) 0%,
+    rgba(0, 0, 0, 0.8155637254901961) 100%
+  );
+}
+.homepage-div .homepage1.col-sm-4 {
   color: #fff;
 }
-.homepage2.col-sm-8 {
+.homepage-div .homepage2.col-sm-8 {
   color: #fff;
 }
-.mediaplayer.col-sm-12 {
+.homepage-div .mediaplayer.col-sm-12 {
   position: sticky;
   padding: 0;
 }
-.homepage3.col-sm-4 {
-  color: #fff;
+.homepage-div .homepage3.col-sm-4 {
+  color: #fff !important;
 }
-.sidebar.col-sm-2 {
-  color: #fff;
+.homepage-div .sidebar.col-sm-2 {
+  color: #fff !important;
   padding: 0;
 }
-.playlist.col-sm-10 {
+.homepage-div .playlist.col-sm-10 {
   padding-bottom: 78px;
 }
-.homepage-div {
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    355deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(9, 9, 121, 1) 35%,
-    rgba(25, 172, 201, 1) 100%
-  );
+.homepage-div .card {
+  background-color: transparent !important;
+  color: #fff !important;
+  text-align: center;
+  font-family: "Itim", cursive;
+}
+.homepage-div p {
+  color: #fff !important;
+}
+.homepage-div .modal-header span {
+  color: #fff !important;
+}
+
+.homepage-div .Toaster__alert {
+  background-color: #131411;
+  color: #fff !important;
+}
+.homepage-div .Toaster__alert span {
+  color: #fff !important;
+}
+.homepage-div .loadingPlace {
+  background-color: #f8f9fa2b;
+  color: #fff !important;
+}
+.homepage-div .modal-content {
+  animation-name: blurEffect;
+  animation-duration: 0.7s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  background-color: rgba(27, 89, 132, 0.93) !important;
+  color: #ffffff;
 }
 .homepage-div2 {
   background: rgb(2, 0, 36);
@@ -95,23 +128,74 @@
     rgba(8, 183, 190, 0.2665441176470589) 73%,
     rgba(7, 231, 217, 1) 100%
   );
-
   animation-name: blurEffectBackground;
   animation-duration: 2.16666s;
   animation-fill-mode: both;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
-.ReactVirtualized__Grid.ReactVirtualized__List {
-  background-color: transparent;
-  --stagger-delay: 100ms;
+.homepage-div2 .homepage1.col-sm-4 {
+  color: #fff;
 }
-
-.card {
+.homepage-div2 .homepage2.col-sm-8 {
+  color: #fff;
+}
+.homepage-div2 .mediaplayer.col-sm-12 {
+  position: sticky;
+  padding: 0;
+}
+.homepage-div2 .homepage3.col-sm-4 {
+  color: #fff;
+}
+.homepage-div2 .sidebar.col-sm-2 {
+  color: #fff;
+  padding: 0;
+}
+.homepage-div2 .playlist.col-sm-10 {
+  padding-bottom: 78px;
+}
+.homepage-div2 .card {
   background-color: transparent !important;
   color: #fff !important;
   text-align: center;
   font-family: "Itim", cursive;
+}
+.homepage-div2 p {
+  color: #fff;
+}
+.homepage-div2 .modal-header span {
+  color: #fff;
+}
+.homepage-div2 label {
+  color: #fff;
+  animation-name: blurEffect;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+.ReactVirtualized__Grid.ReactVirtualized__List {
+  background-color: transparent;
+  --stagger-delay: 100ms;
+}
+.homepage-div2 .Toaster__alert {
+  background-color: #131411;
+  color: #fff;
+}
+.homepage-div2 .Toaster__alert span {
+  color: #fff;
+}
+.homepage-div2 .loadingPlace {
+  background-color: #f8f9fa2b;
+  color: #fff;
+}
+label {
+  color: #fff !important;
+  animation-name: blurEffect;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
 }
 p.card-text {
   cursor: default;
@@ -177,21 +261,7 @@ button.btn-secondary.disabled {
 h5.modal-title {
   color: #fff !important;
 }
-p {
-  color: #fff;
-}
-.modal-header span {
-  color: #fff;
-}
 
-label {
-  color: #fff;
-  animation-name: blurEffect;
-  animation-duration: 0.8s;
-  animation-fill-mode: both;
-  animation-iteration-count: 1;
-  animation-timing-function: linear;
-}
 @keyframes blurEffect {
   0% {
     opacity: 1;
@@ -216,15 +286,4 @@ label {
     opacity: 1;
     backdrop-filter: brightness(0%);
   }
-}
-.Toaster__alert {
-  background-color: rgba(59, 30, 63, 0.63);
-  color: #fff;
-}
-.Toaster__alert span {
-  color: #fff;
-}
-.loadingPlace {
-  background-color: #f8f9fa2b;
-  color: #fff;
 }

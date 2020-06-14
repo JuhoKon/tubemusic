@@ -84,7 +84,7 @@ class App extends Component {
             <PrivateRoute
               path="/"
               data={currentUserInfo}
-              data2={this.state.index}
+              darkMode={false}
               loadUser={this.loadUser}
               exact
               component={HomePage}
