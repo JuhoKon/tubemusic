@@ -143,13 +143,13 @@ class Playlist extends Component {
             makePlaylist={this.props.makePlaylist}
             playlistName={this.state.playlistName}
           />
-          <LoadPlaylistModal
+          {/*<LoadPlaylistModal
             name="Playlists"
             deletePlaylist={this.props.deletePlaylist}
             getPlayList={this.props.getPlayList}
             playlists={playlists}
             loadPlaylist={this.props.loadPlaylist}
-          />
+          />*/}
           <SaveModal
             userRole={this.props.userRole}
             userName={this.state.userName}

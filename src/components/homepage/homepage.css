@@ -114,7 +114,7 @@
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-  background-color: rgba(27, 89, 132, 0.93) !important;
+  background-color: rgba(0, 0, 0, 0.93) !important;
   color: #ffffff;
 }
 .homepage-div2 {
@@ -256,7 +256,7 @@ button.btn-secondary.disabled {
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-  background-color: rgba(27, 89, 132, 0.93) !important;
+  background-color: rgb(24, 23, 23) !important;
 }
 h5.modal-title {
   color: #fff !important;
