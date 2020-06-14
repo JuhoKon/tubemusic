@@ -97,8 +97,8 @@
   color: #fff !important;
 }
 
-.homepage-div .Toaster__alert {
-  background-color: #131411;
+.Toaster__alert {
+  background-color: #131411 !important;
   color: #fff !important;
 }
 .homepage-div .Toaster__alert span {
