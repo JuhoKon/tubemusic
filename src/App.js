@@ -78,13 +78,13 @@ class App extends Component {
     return (
       <div className="App wrapper">
         <Router history={history}>
-          {token && <Navbar logout={this.logout} />}
+          {token && <Navbar darkMode={true} logout={this.logout} />}
           <Switch>
             <Route path="/login" component={Login} />
             <PrivateRoute
               path="/"
               data={currentUserInfo}
-              darkMode={false}
+              darkMode={true}
               loadUser={this.loadUser}
               exact
               component={HomePage}

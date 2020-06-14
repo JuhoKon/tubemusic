@@ -117,22 +117,14 @@
   background-color: rgba(0, 0, 0, 0.93) !important;
   color: #ffffff;
 }
+
 .homepage-div2 {
-  background: rgb(2, 0, 36);
+  background: rgb(255, 119, 0);
   background: linear-gradient(
-    54deg,
-    rgba(2, 0, 36, 0.2049194677871149) 0%,
-    rgba(5, 241, 219, 0.42620798319327735) 15%,
-    rgba(43, 3, 95, 0.3253676470588235) 41%,
-    rgba(3, 34, 95, 0.5186449579831933) 62%,
-    rgba(8, 183, 190, 0.2665441176470589) 73%,
-    rgba(7, 231, 217, 1) 100%
+    278deg,
+    rgba(255, 119, 0, 1) 0%,
+    rgba(227, 250, 0, 0.8155637254901961) 100%
   );
-  animation-name: blurEffectBackground;
-  animation-duration: 2.16666s;
-  animation-fill-mode: both;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
 }
 .homepage-div2 .homepage1.col-sm-4 {
   color: #fff;
@@ -145,10 +137,10 @@
   padding: 0;
 }
 .homepage-div2 .homepage3.col-sm-4 {
-  color: #fff;
+  color: #fff !important;
 }
 .homepage-div2 .sidebar.col-sm-2 {
-  color: #fff;
+  color: #fff !important;
   padding: 0;
 }
 .homepage-div2 .playlist.col-sm-10 {
@@ -161,34 +153,33 @@
   font-family: "Itim", cursive;
 }
 .homepage-div2 p {
-  color: #fff;
+  color: #fff !important;
 }
 .homepage-div2 .modal-header span {
-  color: #fff;
+  color: #fff !important;
 }
-.homepage-div2 label {
-  color: #fff;
+
+.homepage-div2 .Toaster__alert span {
+  color: #fff !important;
+}
+.homepage-div2 .loadingPlace {
+  background-color: #f8f9fa2b;
+  color: #fff !important;
+}
+.homepage-div2 .modal-content {
   animation-name: blurEffect;
-  animation-duration: 0.8s;
+  animation-duration: 0.7s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
+  background-color: rgba(0, 0, 0, 0.93) !important;
+  color: #ffffff;
 }
 .ReactVirtualized__Grid.ReactVirtualized__List {
   background-color: transparent;
   --stagger-delay: 100ms;
 }
-.homepage-div2 .Toaster__alert {
-  background-color: #131411;
-  color: #fff;
-}
-.homepage-div2 .Toaster__alert span {
-  color: #fff;
-}
-.homepage-div2 .loadingPlace {
-  background-color: #f8f9fa2b;
-  color: #fff;
-}
+
 label {
   color: #fff !important;
   animation-name: blurEffect;

@@ -49,7 +49,11 @@ class NavbarComponent extends Component {
     return (
       <div>
         <Navbar
-          className="navbar navbar-dark navbar-expand-lg"
+          className={
+            this.props.darkMode
+              ? "navbar navbar-dark navbar-expand-lg"
+              : "navbar2 navbar-dark navbar-expand-lg"
+          }
           expand="md"
           id="navbar"
         >

@@ -578,7 +578,7 @@ export default class Homepage extends Component<any, HomepageState> {
               />
             </Col> */
     return (
-      <div className={this.props.darkMode ? "homepage-div2" : "homepage-div"}>
+      <div className={this.props.darkMode ? "homepage-div" : "homepage-div2"}>
         <div id="spinnerDivHomePage">
           {this.state.loadingPlaylist ? (
             <Spinner size={50} color="white" />
