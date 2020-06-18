@@ -246,7 +246,7 @@ export default class MediaPlayer extends Component {
                 onPlay={this.handlePlay}
                 onPause={this.handlePause}
                 onEnded={this.handleEnded}
-                onError={(error) => console.log(error)}
+                onError={this.handlePlayNext}
                 onDuration={this.handleDuration}
                 onProgress={this.handleProgress}
 
