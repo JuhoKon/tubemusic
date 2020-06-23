@@ -1,6 +1,6 @@
 # DEMO
 
-Demo is now available at: https://tubemusicapp.herokuapp.com/.
+Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friendly, mobile app in development).
 
 ### Backend setup (If you want to run your own backend)
 
