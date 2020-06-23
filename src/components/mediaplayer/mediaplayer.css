@@ -115,9 +115,7 @@
   top: 210%;
   color: #ffffff;
 }
-.playercontrols {
-  transform: translate(0 50px);
-}
+
 .volumeiconcontrols {
   position: absolute;
   left: 10%;
