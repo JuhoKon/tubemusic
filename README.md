@@ -1,3 +1,10 @@
+## ENV
+
+### Backend folder
+
+You have to have a mongoDB url set up as MONGO_URL = YOUR_MONGO_URL
+and a JWTSECRET = YOUR_JWT_SECRET
+
 ## Available Scripts for TubeMusic
 
 In the project directory, you can run:
