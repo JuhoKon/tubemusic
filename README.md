@@ -1,9 +1,12 @@
-## ENV
+### Backend setup (If you want to run your own backend)
 
-### Backend folder
+Environment variable setup:
 
 You have to have a mongoDB url set up as MONGO_URL = YOUR_MONGO_URL
-and a JWTSECRET = YOUR_JWT_SECRET
+
+You also have to have a setup JWTSECRET = YOUR_JWT_SECRET
+
+Api endpoints need to be changed from the client folder (files authenthication.js and functions.js)
 
 ## Available Scripts for TubeMusic
 
