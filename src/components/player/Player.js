@@ -176,8 +176,8 @@ export default class Player extends Component {
                 <ReactPlayer
                   ref={this.ref}
                   className="react-player"
-                  width="100%"
-                  height="100%"
+                  width="40%"
+                  height="40%"
                   url={this.state.url}
                   playing={playing}
                   controls={this.state.controls}
@@ -185,7 +185,8 @@ export default class Player extends Component {
                   onPlay={this.handlePlay}
                   onPause={this.handlePause}
                   onEnded={this.handleEnded}
-                  onError={(e) => console.log("onError", e)}
+                  onError={this.handlePlayNext}
+                  //{(e) => console.log("onError", e)}
                 />
               </div>
               <br />

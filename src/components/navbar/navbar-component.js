@@ -12,7 +12,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
+  NavbarText,
 } from "reactstrap";
 import { authenticationService } from "../functions/authenthication";
 
@@ -22,7 +22,7 @@ class NavbarComponent extends Component {
 
     // https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp
     let prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
+    window.onscroll = function () {
       let currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
         document.getElementById("navbar").style.top = "0";
@@ -34,20 +34,26 @@ class NavbarComponent extends Component {
   }
 
   state = {
-    isOpen: false
+    isOpen: false,
   };
 
   render() {
     const currentUser = authenticationService.currentUserValue;
+
     //console.log(currentUser.user.role);
     const toggle = () =>
       this.setState({
-        isOpen: !this.state.isOpen
+        isOpen: !this.state.isOpen,
       });
+
     return (
       <div>
         <Navbar
-          className="navbar navbar-dark navbar-expand-lg"
+          className={
+            this.props.darkMode
+              ? "navbar navbar-dark navbar-expand-lg"
+              : "navbar2 navbar-dark navbar-expand-lg"
+          }
           expand="md"
           id="navbar"
         >

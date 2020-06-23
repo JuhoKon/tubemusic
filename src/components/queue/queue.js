@@ -10,19 +10,19 @@ import arrayMove from "array-move";
 import "./queue.css";
 
 const SortableVirtualList = SortableContainer(QueueList);
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 class Queue extends Component {
   constructor(props) {
     super(props);
     this.state = {
       queue: this.props.queue,
       editMode: false,
-      animation: false
+      animation: false,
     };
     this.shuffleQueue = this.shuffleQueue.bind(this);
     this.clearQueue = this.clearQueue.bind(this);
   }
-  registerListRef = listInstance => {
+  registerListRef = (listInstance) => {
     this.List = listInstance;
   };
 
@@ -34,7 +34,7 @@ class Queue extends Component {
     const { queue } = this.state;
 
     this.setState({
-      queue: arrayMove(queue, oldIndex, newIndex)
+      queue: arrayMove(queue, oldIndex, newIndex),
     }); //tässä ongelma
     //katso m,yös auuto scroller
     //sekä vähä styling?
@@ -51,13 +51,13 @@ class Queue extends Component {
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       this.setState({
-        queue: this.props.queue
+        queue: this.props.queue,
       });
     }
   }
   async shuffleQueue() {
     this.setState({
-      animation: true
+      animation: true,
     });
     await timeout(200);
     this.props.shuffleQueue();
@@ -70,7 +70,7 @@ class Queue extends Component {
 
   toggle = () => {
     this.setState({
-      editMode: !this.state.editMode
+      editMode: !this.state.editMode,
     });
     this.List.recomputeRowHeights();
     this.List.forceUpdate(); //force list to update
@@ -81,7 +81,7 @@ class Queue extends Component {
     //console.log("queue");
     //console.log(this.state.editMode);
     return (
-      <div>
+      <div className="queueList">
         {this.props.queue[0] ? (
           <Container>
             <Button

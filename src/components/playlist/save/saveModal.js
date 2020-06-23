@@ -7,7 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
 } from "reactstrap";
 import isEqual from "react-fast-compare";
 
@@ -19,14 +19,14 @@ class SaveModal extends Component {
       playlistName: this.props.playlistName,
       checked: this.props.isPrivate,
       playlistOwner: this.props.playlistOwner,
-      userName: this.props.userName
+      userName: this.props.userName,
     };
     this.toggle = this.toggle.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.boxChange = this.boxChange.bind(this);
   }
-  boxChange = evt => {
+  boxChange = (evt) => {
     this.setState({ checked: evt.target.checked });
   };
   componentDidUpdate(prevProps) {
@@ -37,7 +37,7 @@ class SaveModal extends Component {
         playlistName: this.props.playlistName,
         checked: this.props.isPrivate,
         playlistOwner: this.props.playlistOwner,
-        userName: this.props.userName
+        userName: this.props.userName,
       });
     }
   }
@@ -45,14 +45,14 @@ class SaveModal extends Component {
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
-      playlistName: this.props.playlistName
+      playlistName: this.props.playlistName,
     });
   };
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     this.props.Updateplaylist(
@@ -91,7 +91,9 @@ class SaveModal extends Component {
           <Form onSubmit={this.onSubmit}>
             <ModalBody>
               <FormGroup>
-                <Label for="name">Name:</Label>
+                <Label className="label" for="name">
+                  Name:
+                </Label>
                 <Input
                   type="name"
                   name="playlistName"

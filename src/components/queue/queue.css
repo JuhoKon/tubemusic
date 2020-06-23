@@ -38,3 +38,9 @@
 .remove {
   animation: fadeRemove 0.3s;
 }
+.queueList {
+  padding-top: 10px;
+  margin-top: 40px;
+  border: #b6e1ff3d;
+  border-style: solid;
+}

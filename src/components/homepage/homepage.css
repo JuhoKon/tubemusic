@@ -47,60 +47,156 @@
     left: 90%;
   }
 }
+.spinnerDivHomePage {
+  position: relative;
+}
 .footerName {
   opacity: 1;
   position: relative;
   transform: translateY(100px);
 }
-.homepage1.col-sm-4 {
-  color: #fff;
-  min-height: 100vh;
-}
-.homepage2.col-sm-4 {
-  color: #fff;
-  min-height: 100vh;
-}
-.homepage2.col-sm-4 {
-  color: #fff;
-  min-height: 100vh;
-}
+
 .homepage-div {
-  background-image: radial-gradient(
-    circle farthest-corner at -0.4% 112%,
-    rgba(102, 51, 204, 1) 0%,
-    rgba(244, 111, 111, 1) 92.7%
-  );
-}
-.homepage-div2 {
-  background: rgb(2, 0, 36);
+  background: rgb(98, 98, 98);
   background: linear-gradient(
-    54deg,
-    rgba(2, 0, 36, 0.2049194677871149) 0%,
-    rgba(5, 241, 219, 0.42620798319327735) 15%,
-    rgba(43, 3, 95, 0.3253676470588235) 41%,
-    rgba(3, 34, 95, 0.5186449579831933) 62%,
-    rgba(8, 183, 190, 0.2665441176470589) 73%,
-    rgba(7, 231, 217, 1) 100%
+    278deg,
+    rgba(98, 98, 98, 0.9864320728291317) 0%,
+    rgba(0, 0, 0, 0.8155637254901961) 100%
   );
-
-  animation-name: blurEffectBackground;
-  animation-duration: 2.16666s;
-  animation-fill-mode: both;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
 }
-.ReactVirtualized__Grid.ReactVirtualized__List {
-  background-color: transparent;
-  --stagger-delay: 100ms;
+.homepage-div .homepage1.col-sm-4 {
+  color: #fff;
 }
-
+.homepage-div .homepage2.col-sm-8 {
+  color: #fff;
+}
+.homepage-div .mediaplayer.col-sm-12 {
+  position: sticky;
+  padding: 0;
+}
+.homepage-div .homepage3.col-sm-4 {
+  color: #fff !important;
+}
+.homepage-div .sidebar.col-sm-2 {
+  color: #fff !important;
+  padding: 0;
+}
+.homepage-div .playlist.col-sm-10 {
+  padding-bottom: 78px;
+}
+.homepage-div .card {
+  background-color: transparent !important;
+  color: #fff !important;
+  text-align: center;
+  font-family: "Itim", cursive;
+}
 .card {
   background-color: transparent !important;
   color: #fff !important;
   text-align: center;
   font-family: "Itim", cursive;
 }
+.homepage-div p {
+  color: #fff !important;
+}
+.homepage-div .modal-header span {
+  color: #fff !important;
+}
 
+.Toaster__alert {
+  background-color: #131411 !important;
+  color: #fff !important;
+}
+.homepage-div .Toaster__alert span {
+  color: #fff !important;
+}
+.homepage-div .loadingPlace {
+  background-color: #f8f9fa2b;
+  color: #fff !important;
+}
+.homepage-div .modal-content {
+  animation-name: blurEffect;
+  animation-duration: 0.7s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  background-color: rgba(0, 0, 0, 0.93) !important;
+  color: #ffffff;
+}
+
+.homepage-div2 {
+  background: rgb(255, 119, 0);
+  background: linear-gradient(
+    278deg,
+    rgba(255, 119, 0, 1) 0%,
+    rgba(227, 250, 0, 0.8155637254901961) 100%
+  );
+}
+.homepage-div2 .homepage1.col-sm-4 {
+  color: #fff;
+}
+.homepage-div2 .homepage2.col-sm-8 {
+  color: #fff;
+}
+.homepage-div2 .mediaplayer.col-sm-12 {
+  position: sticky;
+  padding: 0;
+}
+.homepage-div2 .homepage3.col-sm-4 {
+  color: #fff !important;
+}
+.homepage-div2 .sidebar.col-sm-2 {
+  color: #fff !important;
+  padding: 0;
+}
+.homepage-div2 .playlist.col-sm-10 {
+  padding-bottom: 78px;
+}
+.homepage-div2 .card {
+  background-color: transparent !important;
+  color: #fff !important;
+  text-align: center;
+  font-family: "Itim", cursive;
+}
+.homepage-div2 p {
+  color: #fff !important;
+}
+.homepage-div2 .modal-header span {
+  color: #fff !important;
+}
+
+.homepage-div2 .Toaster__alert span {
+  color: #fff !important;
+}
+.homepage-div2 .loadingPlace {
+  background-color: #f8f9fa2b;
+  color: #fff !important;
+}
+.homepage-div2 .modal-content {
+  animation-name: blurEffect;
+  animation-duration: 0.7s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  background-color: rgba(0, 0, 0, 0.93) !important;
+  color: #ffffff;
+}
+.ReactVirtualized__Grid.ReactVirtualized__List {
+  background-color: transparent;
+  --stagger-delay: 100ms;
+}
+
+label {
+  color: #fff !important;
+  animation-name: blurEffect;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+p.card-text {
+  cursor: default;
+}
 .div #videolist {
   background-color: transparent !important;
 }
@@ -157,26 +253,12 @@ button.btn-secondary.disabled {
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-  background-color: rgba(27, 89, 132, 0.93) !important;
+  background-color: rgb(24, 23, 23) !important;
 }
 h5.modal-title {
   color: #fff !important;
 }
-p {
-  color: #fff;
-}
-.modal-header span {
-  color: #fff;
-}
 
-label {
-  color: #fff;
-  animation-name: blurEffect;
-  animation-duration: 0.8s;
-  animation-fill-mode: both;
-  animation-iteration-count: 1;
-  animation-timing-function: linear;
-}
 @keyframes blurEffect {
   0% {
     opacity: 1;
@@ -201,15 +283,4 @@ label {
     opacity: 1;
     backdrop-filter: brightness(0%);
   }
-}
-.Toaster__alert {
-  background-color: rgba(59, 30, 63, 0.63);
-  color: #fff;
-}
-.Toaster__alert span {
-  color: #fff;
-}
-.loadingPlace {
-  background-color: #f8f9fa2b;
-  color: #fff;
 }

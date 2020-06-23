@@ -18,8 +18,22 @@
 }
 #videolist {
   background-color: transparent !important;
-  max-height: 700px;
+  max-height: 400px;
+  min-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
+}
+#videolist33 {
+  background-color: transparent !important;
+  max-height: 350px;
+  min-height: 350px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 10px;
+
+  border: #b6e1ff3d;
+  border-style: solid;
 }
 .btn-item {
   font-size: small !important;

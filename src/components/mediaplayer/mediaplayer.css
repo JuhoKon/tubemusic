@@ -1,0 +1,204 @@
+.MediaPlayerdiv {
+  background-color: #151313;
+  height: 100px;
+  width: 100%;
+  position: relative;
+  /*border: 2px solid #00000047;*/
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+.testi123 {
+  position: absolute;
+  left: 46.5%;
+  width: 180px;
+  height: 90px;
+  border: 2px solid #00000047;
+}
+.react-player {
+  margin-bottom: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+.section {
+  display: inline-block;
+
+  text-align: left;
+  vertical-align: top;
+}
+
+.player-wrapper {
+  max-width: 480px;
+  height: 270px;
+}
+.btn-controls {
+  margin-left: 2px !important;
+}
+#exampleCustomRange {
+  color: rgb(0, 136, 255) !important;
+}
+.buttonArea {
+  position: absolute;
+  left: 100%;
+  background-color: #0000003d !important;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 10px;
+}
+.buttonArea:hover {
+  transform: scale(1.07) !important;
+  cursor: pointer;
+}
+.buttonArea2 {
+  position: absolute;
+  left: 130%;
+  background-color: #0000003d !important;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 10px;
+}
+.buttonArea2:hover {
+  transform: scale(1.07) !important;
+  cursor: pointer;
+}
+.buttonArea3 {
+  position: absolute;
+  left: 70%;
+  background-color: #0000003d !important;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 10px;
+}
+.buttonArea3:hover {
+  transform: scale(1.07) !important;
+  cursor: pointer;
+}
+.fa-lg {
+  color: #009688;
+}
+.buttonArea:active {
+  transform: scale(0.92) !important;
+}
+.buttonArea2:active {
+  transform: scale(0.92) !important;
+}
+.buttonArea3:active {
+  transform: scale(0.92) !important;
+}
+.buttonit {
+  position: absolute;
+  left: 25.1%;
+  top: 50%;
+  z-index: 100;
+  width: 200px;
+}
+.volumecontrol {
+  position: absolute;
+  width: 170px;
+}
+.durationcontrol {
+  flex: 1 0 10%;
+  position: relative;
+  top: 220%;
+}
+.durationOfSong {
+  flex: 1 0 10%;
+  color: #ffffff;
+  position: relative;
+  top: 210%;
+}
+.elapsedTime {
+  flex: 1 0 10%;
+  position: relative;
+  top: 210%;
+  color: #ffffff;
+}
+.playercontrols {
+  transform: translate(0 50px);
+}
+.volumeiconcontrols {
+  position: absolute;
+  left: 10%;
+  top: 210%;
+}
+
+p.titleplaying {
+  position: absolute;
+  left: 80%;
+  top: 0%;
+  padding: 5px;
+  width: 250px;
+}
+
+@media only screen and (max-width: 575px) {
+  .buttonit {
+    position: absolute;
+    left: 23.5%;
+    top: 50%;
+  }
+  .volumecontrol {
+    position: absolute;
+    width: 100px;
+    left: 67.5%;
+    top: 53%;
+  }
+  p.titleplaying {
+    position: absolute;
+    left: 18.5%;
+    top: 10%;
+    padding: 10px;
+  }
+  .testi123 {
+    position: absolute;
+    left: 0%;
+  }
+}
+.marquee {
+  position: absolute;
+  left: 87%;
+  top: 0%;
+  width: 250px;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: inline-flex;
+  position: absolute;
+  padding: 5px;
+  z-index: 50;
+}
+
+.marquee span {
+  display: flex;
+  flex-basis: 100%;
+  animation: marquee 30s linear infinite;
+  animation-play-state: running;
+  padding-left: 50px;
+}
+
+.marquee:hover > span {
+  animation: marquee 30s linear infinite;
+  animation-play-state: running;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0%, 0);
+  }
+  50% {
+    transform: translate(-100%, 0);
+  }
+  50.001% {
+    transform: translate(0%, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+@keyframes marquee-reset {
+  0% {
+    transform: translate(0%, 0);
+  }
+}

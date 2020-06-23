@@ -6,7 +6,7 @@ import { authenticationService } from "./authenthication";
 export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
   <Route
     {...rest}
-    render={props => {
+    render={(props) => {
       const currentUser = authenticationService.currentUserValue;
       if (!currentUser) {
         // not logged in so redirect to login page with the return url
@@ -23,7 +23,14 @@ export const PrivateRoute = ({ component: Component, roles, ...rest }) => (
         return <Redirect to={{ pathname: "/" }} />;
       }
       // authorised so return component
-      return <Component {...props} data={rest.data} loadUser={rest.loadUser} />;
+      return (
+        <Component
+          {...props}
+          data={rest.data}
+          darkMode={rest.darkMode}
+          loadUser={rest.loadUser}
+        />
+      );
     }}
   />
 );

@@ -17,7 +17,7 @@ const SortableItem = sortableElement(
     duration,
     onRemove,
     editMode,
-    playNext
+    playNext,
   }) => (
     <Playlistitem
       key={uniqueId}

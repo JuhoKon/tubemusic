@@ -1,0 +1,21 @@
+.sidebardiv {
+  background-color: #151313;
+  height: 100%;
+  width: 100%;
+}
+.sidebar-playlist {
+  color: #a8a8a8 !important;
+  font-size: 15px;
+  padding: 2px;
+
+  padding-left: 20px;
+  padding-right: 5px;
+}
+.sidebar-playlist:hover {
+  color: #ffffff !important;
+  cursor: default;
+}
+.playlists-sidebar {
+  height: 80%;
+  overflow: auto;
+}

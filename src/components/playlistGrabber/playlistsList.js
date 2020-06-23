@@ -13,7 +13,7 @@ class PlaylistsList extends Component {
       playlists: this.props.playlists,
       token: this.props.token,
       userData: this.props.userData,
-      loading: this.props.loading || true
+      loading: this.props.loading || true,
     };
     this.load = this.load.bind(this);
   }
@@ -32,7 +32,7 @@ class PlaylistsList extends Component {
         token: this.props.token,
         Userplaylists: this.props.Userplaylists,
         userData: this.props.userData,
-        loading: this.props.loading
+        loading: this.props.loading,
       });
     }
   }
@@ -40,7 +40,7 @@ class PlaylistsList extends Component {
     const Array2 = [];
     let response = await authenticationService.loadUser(token);
     if (response !== null) {
-      response.playlists.forEach(element => {
+      response.playlists.forEach((element) => {
         Array2.push(element._id);
       });
     }
@@ -66,7 +66,7 @@ class PlaylistsList extends Component {
       </div>
     );
   };
-  bindListRef = ref => {
+  bindListRef = (ref) => {
     //so we can force update, when props change cos thats how react-virtualized list works
     this.list = ref;
   };
