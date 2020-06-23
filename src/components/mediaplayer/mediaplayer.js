@@ -22,6 +22,7 @@ import {
   faPause,
   faForward,
   faBackward,
+  faVolumeUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //TODO: ADD VOLUME CONTROL
@@ -51,7 +52,6 @@ export default class MediaPlayer extends Component {
       modal: false,
       history: [], //TODO: joku raja tälle
       tooltipOpen: false,
-      duration: 0,
     };
   }
   load = (url) => {
@@ -134,6 +134,7 @@ export default class MediaPlayer extends Component {
         playing: true,
         url: url,
         title: this.state.array[0].title,
+        played: 0,
       });
       toaster.notify(<span>Now playing: {this.state.array[0].title}</span>, {
         duration: 1200,
@@ -256,27 +257,6 @@ export default class MediaPlayer extends Component {
           </Col>
           <Col sm="6">
             <div className="playercontrols">
-              <div className="buttonit">
-                {playing ? (
-                  <div className="buttonArea" onClick={this.handlePlayPause}>
-                    <FontAwesomeIcon size={"lg"} icon={faPause} />
-                  </div>
-                ) : (
-                  <div
-                    className="buttonArea"
-                    disabled={this.props.array[0] ? false : true}
-                    onClick={this.handlePlayPause}
-                  >
-                    <FontAwesomeIcon size={"lg"} icon={faPlay} />
-                  </div>
-                )}
-                <div className="buttonArea2" onClick={this.handleEnded}>
-                  <FontAwesomeIcon size={"lg"} icon={faForward} />
-                </div>
-                <div className="buttonArea3" onClick={this.handleStartOver}>
-                  <FontAwesomeIcon size={"lg"} icon={faBackward} />
-                </div>
-              </div>
               <Row>
                 <Col sm="2">
                   {" "}
@@ -284,22 +264,53 @@ export default class MediaPlayer extends Component {
                     <Duration seconds={duration * played} />
                   </div>
                 </Col>
-                <Col sm="8">
-                  <div className="durationcontrol">
-                    <CustomInput
-                      type="range"
-                      id="exampleCustomRange"
-                      name="customRange"
-                      type="range"
-                      min={0}
-                      max={0.999999}
-                      step="any"
-                      value={played}
-                      onMouseDown={this.handleSeekMouseDown}
-                      onChange={this.handleSeekChange}
-                      onMouseUp={this.handleSeekMouseUp}
-                    />
-                  </div>
+                <Col sm="8" className="asd">
+                  <Row>
+                    <div className="durationcontrol">
+                      <CustomInput
+                        type="range"
+                        id="exampleCustomRange"
+                        name="customRange"
+                        type="range"
+                        min={0}
+                        max={0.999999}
+                        step="any"
+                        value={played}
+                        onMouseDown={this.handleSeekMouseDown}
+                        onChange={this.handleSeekChange}
+                        onMouseUp={this.handleSeekMouseUp}
+                      />
+                    </div>
+                  </Row>
+                  <Row>
+                    <div className="buttonit">
+                      {playing ? (
+                        <div
+                          className="buttonArea"
+                          onClick={this.handlePlayPause}
+                        >
+                          <FontAwesomeIcon size={"lg"} icon={faPause} />
+                        </div>
+                      ) : (
+                        <div
+                          className="buttonArea"
+                          disabled={this.props.array[0] ? false : true}
+                          onClick={this.handlePlayPause}
+                        >
+                          <FontAwesomeIcon size={"lg"} icon={faPlay} />
+                        </div>
+                      )}
+                      <div className="buttonArea2" onClick={this.handleEnded}>
+                        <FontAwesomeIcon size={"lg"} icon={faForward} />
+                      </div>
+                      <div
+                        className="buttonArea3"
+                        onClick={this.handleStartOver}
+                      >
+                        <FontAwesomeIcon size={"lg"} icon={faBackward} />
+                      </div>
+                    </div>
+                  </Row>
                 </Col>
                 <Col sm="2">
                   {" "}
@@ -314,6 +325,10 @@ export default class MediaPlayer extends Component {
             <div className="volumeiconcontrols">
               <div className="volumecontrol">
                 {/* tänne ääni iconi*/}
+                <div className="volumecontrolicon">
+                  <FontAwesomeIcon size={"lg"} icon={faVolumeUp} />
+                </div>
+
                 <CustomInput
                   type="range"
                   id="exampleCustomRange"
