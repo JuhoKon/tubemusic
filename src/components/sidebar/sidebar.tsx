@@ -50,6 +50,7 @@ class Sidebar extends Component<any, any> {
                 loadPlaylist={this.props.loadPlaylist}
                 name={item.name}
                 _id={item._id}
+                deletePlaylist={this.props.deletePlaylist}
               />
             </div>
           ))}

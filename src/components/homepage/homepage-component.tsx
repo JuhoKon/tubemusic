@@ -592,6 +592,7 @@ export default class Homepage extends Component<any, HomepageState> {
                     loadPlaylist={this.loadPlaylist}
                     playlists={playlists}
                     getPlaylist={this.getPlaylist}
+                    deletePlaylist={this.deletePlaylist}
                   />
                 </Col>
                 <Col sm="10" className="playlist">
