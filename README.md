@@ -1,3 +1,7 @@
+# DEMO
+
+Demo is now available at: https://tubemusicapp.herokuapp.com/.
+
 ### Backend setup (If you want to run your own backend)
 
 Environment variable setup:
@@ -7,6 +11,8 @@ You have to have a mongoDB url set up as MONGO_URL = YOUR_MONGO_URL
 You also have to have a setup JWTSECRET = YOUR_JWT_SECRET
 
 Api endpoints need to be changed from the client folder (files authenthication.js and functions.js)
+
+Backend is available at https://github.com/JuhoKon/tubemusic-backend.
 
 ## Available Scripts for TubeMusic
 
