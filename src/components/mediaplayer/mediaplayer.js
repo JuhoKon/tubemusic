@@ -23,6 +23,7 @@ import {
   faForward,
   faBackward,
   faVolumeUp,
+  faVolumeMute,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //TODO: ADD VOLUME CONTROL
@@ -52,6 +53,7 @@ export default class MediaPlayer extends Component {
       modal: false,
       history: [], //TODO: joku raja tälle
       tooltipOpen: false,
+      historyToPlayFrom: [],
     };
   }
   load = (url) => {
@@ -65,6 +67,12 @@ export default class MediaPlayer extends Component {
   toggle = () => {
     this.setState({
       modal: !this.state.modal,
+    });
+  };
+  setMute = () => {
+    console.log("I was clicked");
+    this.setState({
+      muted: !this.state.muted,
     });
   };
   componentDidUpdate(prevProps) {
@@ -117,8 +125,33 @@ export default class MediaPlayer extends Component {
   };
   addToHistory = (item) => {
     //Adds item to history array
+    if (item.duration === 0) return;
     this.state.history.unshift(item);
+    this.state.historyToPlayFrom.unshift(item);
     //console.log(this.state.history);
+  };
+  handlePlayPrevious = () => {
+    if (typeof this.state.historyToPlayFrom[0] !== "undefined") {
+      let item = this.state.historyToPlayFrom.shift();
+      console.log("ASDASDASD");
+      console.log(item);
+      this.props.setTitle(item.title);
+      const url = item.url;
+      //console.log(url);
+      if (url === this.state.url) {
+        this.player.seekTo(0); //Seeks to 0 incase of having same url
+      }
+      this.setState({
+        playing: true,
+        url: url,
+        title: item.title,
+        played: 0,
+      });
+      toaster.notify(<span>Now playing: {item.title}</span>, {
+        duration: 1200,
+      });
+      this.props.setUrl(url);
+    }
   };
   handlePlayNext = () => {
     console.log("onPlay");
@@ -216,6 +249,22 @@ export default class MediaPlayer extends Component {
     return (
       <div className="MediaPlayerdiv">
         <Row>
+          <Button
+            disabled={this.state.history[0] ? false : true}
+            className="btn-controls btn-secondary float-right"
+            onClick={this.toggle}
+          >
+            History
+          </Button>
+          <HistoryModal
+            isOpen={this.state.modal}
+            toggle={this.toggle}
+            history={this.state.history}
+            clearList={this.clearHistory}
+            addFunc={this.props.onAdd}
+            onPlay={this.props.onPlay}
+            AddToPlaylist={this.props.AddToPlaylist}
+          />
           <Col sm="3">
             {this.state.title && this.state.title.length > 26 ? (
               <span className="marquee">
@@ -237,6 +286,7 @@ export default class MediaPlayer extends Component {
             <div className="testi123" id="TooltipExample">
               <ReactPlayer
                 ref={this.ref}
+                muted={this.state.muted}
                 className="react-player"
                 width="100%"
                 height="100%"
@@ -305,7 +355,7 @@ export default class MediaPlayer extends Component {
                       </div>
                       <div
                         className="buttonArea3"
-                        onClick={this.handleStartOver}
+                        onClick={this.handlePlayPrevious}
                       >
                         <FontAwesomeIcon size={"lg"} icon={faBackward} />
                       </div>
@@ -325,8 +375,12 @@ export default class MediaPlayer extends Component {
             <div className="volumeiconcontrols">
               <div className="volumecontrol">
                 {/* tänne ääni iconi*/}
-                <div className="volumecontrolicon">
-                  <FontAwesomeIcon size={"lg"} icon={faVolumeUp} />
+                <div className="volumecontrolicon" onClick={this.setMute}>
+                  {this.state.muted ? (
+                    <FontAwesomeIcon size={"lg"} icon={faVolumeMute} />
+                  ) : (
+                    <FontAwesomeIcon size={"lg"} icon={faVolumeUp} />
+                  )}
                 </div>
 
                 <CustomInput

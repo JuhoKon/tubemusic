@@ -204,8 +204,11 @@ p.titleplaying {
   top: 70%;
 }
 .volumecontrolicon {
+  padding: 2px;
+  padding-right: 3px;
   position: absolute;
-  left: -20%;
+  left: -25%;
+  top: -4%;
 }
 input#exampleCustomRange.custom-range {
 }
