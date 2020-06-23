@@ -2,7 +2,7 @@ import axios from "axios";
 import { BehaviorSubject } from "rxjs";
 import { handleError } from "./handleError";
 import { tokenConfig } from "./functions";
-const API = "https://still-crag-42621.herokuapp.com";
+const API = "https://secure-retreat-97998.herokuapp.com";
 //const API = "http://localhost:8080";
 try {
   //in case that the token item is invalid, we delete it
@@ -24,7 +24,7 @@ export const authenticationService = {
   currentUser: currentUserSubject.asObservable(),
   get currentUserValue() {
     return currentUserSubject.value;
-  }
+  },
 };
 function newToken(token) {
   currentUserSubject.next(token);
@@ -33,8 +33,8 @@ function newToken(token) {
 async function login(email, password) {
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   const body = JSON.stringify({ email, password });
   try {
@@ -53,23 +53,23 @@ function logout() {
 function signup(newUser) {
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   console.log(newUser);
   const body = JSON.stringify({
     name: newUser.signUpName,
     email: newUser.signUpEmail,
     role: "User",
-    password: newUser.signUpPassword
+    password: newUser.signUpPassword,
   });
   return axios
     .post(API + "/users/create", body, config)
-    .then(res => {
+    .then((res) => {
       currentUserSubject.next(res.data);
       localStorage.setItem("token", JSON.stringify(res.data));
     })
-    .catch(err => {
+    .catch((err) => {
       return err.response;
     });
 } //TODO ..duh
@@ -77,10 +77,10 @@ function signup(newUser) {
 async function loadUser() {
   return axios
     .get(API + "/auth/user", tokenConfig())
-    .then(res => {
+    .then((res) => {
       return res.data;
     })
-    .catch(err => {
+    .catch((err) => {
       handleError(err);
     });
 }
