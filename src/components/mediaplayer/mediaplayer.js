@@ -249,7 +249,7 @@ export default class MediaPlayer extends Component {
     return (
       <div className="MediaPlayerdiv">
         <Row>
-          <Button
+          {/*<Button
             disabled={this.state.history[0] ? false : true}
             className="btn-controls btn-secondary float-right"
             onClick={this.toggle}
@@ -264,7 +264,7 @@ export default class MediaPlayer extends Component {
             addFunc={this.props.onAdd}
             onPlay={this.props.onPlay}
             AddToPlaylist={this.props.AddToPlaylist}
-          />
+          />*/}
           <Col sm="3">
             {this.state.title && this.state.title.length > 26 ? (
               <span className="marquee">
