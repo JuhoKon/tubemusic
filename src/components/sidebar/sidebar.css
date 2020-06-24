@@ -16,8 +16,10 @@
   cursor: default;
 }
 .playlists-sidebar {
-  height: 80%;
-  overflow: auto;
+  max-height: 650px;
+  min-height: 650px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .createnewdiv {
   position: relative;

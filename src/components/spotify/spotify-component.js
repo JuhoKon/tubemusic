@@ -4,7 +4,7 @@ import SpotifyPlaylist from "./spotifyplaylist/spotifyPlaylist";
 import {
   getSpotifyUserId,
   getSpotifyUsersPlaylists,
-  getRequestWithToken
+  getRequestWithToken,
 } from "../functions/functions";
 
 export default class Spotify extends Component {
@@ -18,7 +18,7 @@ export default class Spotify extends Component {
       user_id: "",
       nextPlaylists: null,
       loading: false,
-      chosenPlaylist: [] //chosen playlist
+      chosenPlaylist: [], //chosen playlist
     };
     this.getUserId = this.getUserId.bind(this);
     this.getPlayListData = this.getPlayListData.bind(this);
@@ -26,11 +26,11 @@ export default class Spotify extends Component {
 
   async getUserId(token) {
     this.setState({
-      loading: true
+      loading: true,
     });
     let data = await getSpotifyUserId(token);
     setTimeout(
-      function() {
+      function () {
         this.getPlayListData(token);
       }.bind(this),
       2000
@@ -38,12 +38,12 @@ export default class Spotify extends Component {
     //console.log(data.data);
     this.setState({
       display_name: data.data.display_name,
-      user_id: data.data.id
+      user_id: data.data.id,
     });
   }
   async getPlayListData(token) {
     this.setState({
-      loading: true
+      loading: true,
     });
     let data = await getSpotifyUsersPlaylists(token);
     console.log(data);
@@ -69,14 +69,14 @@ export default class Spotify extends Component {
     let trackTotalArray = [];
     //console.log(dataArray);
     let userPlaylists = [];
-    dataArray.forEach(item =>
+    dataArray.forEach((item) =>
       item.images[0]
         ? imageArray.push(item.images[0].url)
         : imageArray.push(null)
     );
-    dataArray.forEach(item => trackRefArray.push(item.tracks.href));
-    dataArray.forEach(item => trackTotalArray.push(item.tracks.total));
-    dataArray.forEach(item => ownerArray.push(item.owner.display_name));
+    dataArray.forEach((item) => trackRefArray.push(item.tracks.href));
+    dataArray.forEach((item) => trackTotalArray.push(item.tracks.total));
+    dataArray.forEach((item) => ownerArray.push(item.owner.display_name));
 
     for (let i = 0; i < dataArray.length; i++) {
       let dataObject = {};
@@ -92,7 +92,7 @@ export default class Spotify extends Component {
 
     this.setState({
       loading: false,
-      userPlaylists
+      userPlaylists,
     });
   }
 
@@ -103,14 +103,14 @@ export default class Spotify extends Component {
       url = url.split("&token")[0];
       this.setState({
         token: url,
-        auth: true
+        auth: true,
       });
       this.getUserId(url);
       //playlist haku->
     } else {
       this.setState({
         token: null,
-        auth: false
+        auth: false,
       });
     }
   }
@@ -135,9 +135,10 @@ export default class Spotify extends Component {
               )}
             </Col>
             <Col sm="4" className="spotifypage2">
+              {/*https://accounts.spotify.com/authorize?client_id=dc20085012814f3d8cab4b36a4144393&response_type=token&redirect_uri=http:%2F%2Flocalhost:3000%2Fspotify&show_dialog=true&scope=playlist-read-private%20playlist-read-collaborative%20user-follow-read */}
               <Button
                 href={
-                  "https://accounts.spotify.com/authorize?client_id=dc20085012814f3d8cab4b36a4144393&response_type=token&redirect_uri=http:%2F%2Flocalhost:3000%2Fspotify&show_dialog=true&scope=playlist-read-private%20playlist-read-collaborative%20user-follow-read"
+                  "https://accounts.spotify.com/fi/authorize?client_id=dc20085012814f3d8cab4b36a4144393&response_type=token&redirect_uri=https:%2F%2Ftubemusicapp.herokuapp.com%2Fspotify&show_dialog=true&scope=playlist-read-private%20playlist-read-collaborative%20user-follow-read"
                 }
               >
                 {this.state.auth ? "Change account." : "Log in."}
