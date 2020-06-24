@@ -33,14 +33,7 @@ class Videolist extends Component {
             <LoadingSpinner />
           </div>
         ) : null}
-        {this.state.error ? (
-          <span>
-            Error has occured. Most likely quote limit has been exceeded for the
-            day.
-          </span>
-        ) : (
-          ""
-        )}
+        {this.state.error ? <span>Please try again.</span> : ""}
 
         {items.map(
           ({

@@ -315,18 +315,33 @@ export default class Homepage extends Component<any, HomepageState> {
 
     //this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
-  async handleSubmit(termFromSearch: String) {
+  async handleSubmit(termFromSearch: String, tries = 10) {
     //handles search-query from search bar webscraping
     this.setState({
       //set loading to true
       loading: true,
+      error: false,
     });
     const result = await handleSubmit(termFromSearch);
-    console.log(result);
-    //console.log(result);
-    if (result === null) {
+    console.log(result.length);
+    if (!result) {
       this.setState({
         error: true,
+        loading: false,
+        items: [],
+      });
+      return;
+    }
+    //console.log(result);
+    if (result.length === 0) {
+      if (tries > 0) {
+        this.handleSubmit(termFromSearch, tries - 1);
+        return;
+      }
+      this.setState({
+        error: true,
+        loading: false,
+        items: [],
       });
       return;
     }
@@ -342,7 +357,7 @@ export default class Homepage extends Component<any, HomepageState> {
       loading: true,
     });
     const result = await handleSubmit(termFromSearch);
-    //console.log(result);
+    console.log(result);
     if (result === null) {
       this.setState({
         error: true,
@@ -574,8 +589,7 @@ export default class Homepage extends Component<any, HomepageState> {
     const playlists = this.state.playlists;
     // console.log(this.props);
     const playlist = this.state.playlist;
-    console.log(this.state.playlists);
-    console.log(this.props);
+    console.log(this.state.error);
     /*  <Col sm="4" className="homepage1">
               <br />
               <Player
