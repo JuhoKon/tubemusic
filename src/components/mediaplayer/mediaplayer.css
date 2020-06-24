@@ -212,3 +212,8 @@ p.titleplaying {
 }
 input#exampleCustomRange.custom-range {
 }
+.historybutton {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+}

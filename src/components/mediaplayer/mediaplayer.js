@@ -249,22 +249,6 @@ export default class MediaPlayer extends Component {
     return (
       <div className="MediaPlayerdiv">
         <Row>
-          {/*<Button
-            disabled={this.state.history[0] ? false : true}
-            className="btn-controls btn-secondary float-right"
-            onClick={this.toggle}
-          >
-            History
-          </Button>
-          <HistoryModal
-            isOpen={this.state.modal}
-            toggle={this.toggle}
-            history={this.state.history}
-            clearList={this.clearHistory}
-            addFunc={this.props.onAdd}
-            onPlay={this.props.onPlay}
-            AddToPlaylist={this.props.AddToPlaylist}
-          />*/}
           <Col sm="3">
             {this.state.title && this.state.title.length > 26 ? (
               <span className="marquee">
@@ -372,6 +356,24 @@ export default class MediaPlayer extends Component {
             </div>
           </Col>
           <Col sm="3">
+            <div className="historybutton">
+              <Button
+                disabled={this.state.history[0] ? false : true}
+                className="btn-controls btn-secondary float-right"
+                onClick={this.toggle}
+              >
+                History
+              </Button>
+              <HistoryModal
+                isOpen={this.state.modal}
+                toggle={this.toggle}
+                history={this.state.history}
+                clearList={this.clearHistory}
+                addFunc={this.props.onAdd}
+                onPlay={this.props.onPlay}
+                AddToPlaylist={this.props.AddToPlaylist}
+              />
+            </div>
             <div className="volumeiconcontrols">
               <div className="volumecontrol">
                 {/* tänne ääni iconi*/}

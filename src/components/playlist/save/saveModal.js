@@ -79,7 +79,7 @@ class SaveModal extends Component {
               : true
           }
         >
-          Save as
+          Save playlist as
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>

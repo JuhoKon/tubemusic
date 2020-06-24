@@ -7,21 +7,21 @@ class Playlistitem extends Component {
   state = {
     playlist: this.props.playlist,
     editMode: this.props.editMode,
-    fade: false
+    fade: false,
   };
-  onAddClick = id => {
+  onAddClick = (id) => {
     this.setState({
-      fade: true
+      fade: true,
     });
     this.props.addFunc(id);
   };
-  onPlayClick = id => {
+  onPlayClick = (id) => {
     this.props.onPlay(id);
   };
-  onDeleteClick = id => {
+  onDeleteClick = (id) => {
     this.props.onDeleteFromPlaylist(id);
   };
-  playNextClick = item => {
+  playNextClick = (item) => {
     this.props.playNext(item);
   };
   componentDidUpdate(prevProps) {
@@ -29,7 +29,7 @@ class Playlistitem extends Component {
       //if change in props
       this.setState({
         playlist: this.props.playlist,
-        editMode: this.props.editMode
+        editMode: this.props.editMode,
       });
     }
   }
@@ -43,6 +43,7 @@ class Playlistitem extends Component {
       <Card
         onAnimationEnd={() => this.setState({ fade: false })}
         className={fade ? "card fade2" : "card"}
+        onDoubleClick={this.onPlayClick.bind(this, this.props)}
       >
         <CardBody>
           <Row>

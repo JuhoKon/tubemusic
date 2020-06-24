@@ -43,7 +43,11 @@ class Videoitem extends Component {
     //TODO: make it look much better
     return (
       <div>
-        <Card className="card-2" id="videoitem">
+        <Card
+          className="card-2"
+          id="videoitem"
+          onDoubleClick={this.onPlayClick.bind(this, this.props)}
+        >
           <CardBody>
             <Row>
               <Col xs="2" sm="2">

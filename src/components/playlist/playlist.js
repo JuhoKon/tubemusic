@@ -137,7 +137,7 @@ class Playlist extends Component {
             onClick={this.playPlaylist.bind(this, filteredData)}
             disabled={this.props.playlist[0] ? false : true}
           >
-            Play
+            Play playlist
           </Button>
           <CreateNew
             makePlaylist={this.props.makePlaylist}

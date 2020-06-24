@@ -4,7 +4,7 @@ import isEqual from "react-fast-compare";
 import "./queue.css";
 class Queueitem extends Component {
   state = {
-    editMode: this.props.editMode
+    editMode: this.props.editMode,
   };
 
   async onRemoveClick(id) {
@@ -12,7 +12,7 @@ class Queueitem extends Component {
 
     this.props.onRemove(id);
   }
-  onPlayClick = id => {
+  onPlayClick = (id) => {
     //console.log(id);
     this.props.onPlay(id);
   };
@@ -20,7 +20,7 @@ class Queueitem extends Component {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        editMode: this.props.editMode
+        editMode: this.props.editMode,
       });
     }
   }
@@ -29,7 +29,10 @@ class Queueitem extends Component {
     //console.log("queue item");
     return (
       <div>
-        <Card className="card">
+        <Card
+          className="card"
+          onDoubleClick={this.onPlayClick.bind(this, this.props)}
+        >
           <CardBody>
             <Row>
               <Col xs="2" sm="2">
