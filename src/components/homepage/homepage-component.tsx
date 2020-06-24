@@ -49,6 +49,7 @@ type HomepageState = {
   private?: boolean;
   playlistOwner?: string;
   loadingPlaylist?: boolean;
+  loadingPlaylists?: boolean;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -78,6 +79,7 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setTitle = this.setTitle.bind(this);
     this.setPlaying = this.setPlaying.bind(this);
     this.playNext = this.playNext.bind(this);
+    this.setLoading = this.setLoading.bind(this);
     this.state = {
       items: [], //from youtube API
       queue: [],
@@ -98,6 +100,7 @@ export default class Homepage extends Component<any, HomepageState> {
       token: "",
       userName: "",
       userRole: "",
+      loadingPlaylists: false,
       loadingPlaylist: false,
     };
   }
@@ -375,9 +378,16 @@ export default class Homepage extends Component<any, HomepageState> {
     });
     return "OK";
   }
+  setLoading(status: boolean) {
+    this.setState({
+      loadingPlaylists: status,
+    });
+  }
   async getPlaylist() {
     //called when making changes to the playlists, don't remove
-    this.props.loadUser();
+
+    await this.props.loadUser();
+
     //gets ALL playlists from database
   }
   async makePlaylist(
@@ -401,6 +411,7 @@ export default class Homepage extends Component<any, HomepageState> {
       owner: this.state.userName,
       genre,
     });
+    this.setLoading(true);
     const result: any = await makePlaylist(item);
     const data = result.data;
     console.log(result);
@@ -420,7 +431,8 @@ export default class Homepage extends Component<any, HomepageState> {
       private: isPrivate,
     });
     await timeout(500);
-    this.getPlaylist();
+    await this.getPlaylist();
+    this.setLoading(false);
   }
   async UpdateCurrentPlaylist() {
     //updates current status of active playlist to database
@@ -444,7 +456,8 @@ export default class Homepage extends Component<any, HomepageState> {
       playlist: playlist,
     });
     await timeout(500);
-    this.getPlaylist();
+
+    await this.getPlaylist();
   }
   async deletePlaylist(id: String) {
     //DELETE PLAYLIST BASED ON ID
@@ -467,9 +480,12 @@ export default class Homepage extends Component<any, HomepageState> {
       updated: true,
     });
     //await deletePlaylist(id); this is for deleting whole together a playlist from db
+    this.setLoading(true);
     await deleteUserPlaylist(id, this.state.token); //deletes playlist from the user
     //delete users playlist
+    this.setLoading(false);
     await timeout(30000);
+
     this.getPlaylist();
   }
   onAdd(item: Song) {
@@ -583,7 +599,9 @@ export default class Homepage extends Component<any, HomepageState> {
           {this.state.loadingPlaylist ? (
             <Spinner size={50} color="white" />
           ) : null}
-
+          {this.state.loadingPlaylists ? (
+            <Spinner size={50} color="white" />
+          ) : null}
           <Row>
             <Col sm="8" className="homepage2">
               <Row>
@@ -593,6 +611,9 @@ export default class Homepage extends Component<any, HomepageState> {
                     playlists={playlists}
                     getPlaylist={this.getPlaylist}
                     deletePlaylist={this.deletePlaylist}
+                    makePlaylist={this.makePlaylist}
+                    playlistName={this.state.playlistName}
+                    setLoading={this.setLoading}
                   />
                 </Col>
                 <Col sm="10" className="playlist">
@@ -620,6 +641,7 @@ export default class Homepage extends Component<any, HomepageState> {
                     onAdd={this.onAdd}
                     UpdateCurrentPlaylist={this.UpdateCurrentPlaylist}
                     setPlaylist={this.setPlaylist}
+                    setLoading={this.setLoading}
                   />
                 </Col>
               </Row>

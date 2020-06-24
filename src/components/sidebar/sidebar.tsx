@@ -3,6 +3,13 @@ import { Card, CardBody, CardTitle, Button } from "reactstrap";
 import PlaylistItem from "./Playlist";
 import "./sidebar.css";
 import isEqual from "react-fast-compare";
+import CreateNew from "../playlist/createNew/createNew";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUmbrella,
+  faRetweet,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 //todo: check for cuomponentdidupdate - tuliko uusia propseja, jos tuli niin tehdään niillä jottai?
 //force update tms jos tulee uusia propseja. ei tarvii ottaa omaa stateee. Tää homma ei piirrä itteesä uudellee jos ei state vaihu?
 //lisää suunnitelmia playlist.jsx
@@ -30,8 +37,10 @@ class Sidebar extends Component<any, any> {
     await timeout(2000);
     this.props.getPlaylist();
   };
-  getPlaylists2() {
-    this.props.getPlaylist();
+  async getPlaylists2() {
+    this.props.setLoading(true);
+    await this.props.getPlaylist();
+    this.props.setLoading(false);
   }
   render() {
     console.log(this.props);
@@ -39,9 +48,16 @@ class Sidebar extends Component<any, any> {
     return (
       <div className="sidebardiv">
         <h3>Playlists</h3>
-        <button onClick={this.getPlaylists2.bind(this, this.props)}>
-          Refresh
-        </button>
+        <div
+          className="refreshbuttonarea"
+          onClick={this.getPlaylists2.bind(this, this.props)}
+        >
+          <FontAwesomeIcon size={"lg"} icon={faRetweet} />
+        </div>
+        <CreateNew
+          makePlaylist={this.props.makePlaylist}
+          playlistName={this.state.playlistName}
+        />
         <br />
         <div className="playlists-sidebar">
           {this.state.playlists.map((item: any, i: any) => (

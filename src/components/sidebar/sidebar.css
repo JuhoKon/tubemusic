@@ -19,3 +19,13 @@
   height: 80%;
   overflow: auto;
 }
+.createnewdiv {
+  position: relative;
+  left: 15%;
+}
+.refreshbuttonarea {
+  position: absolute;
+  left: 83%;
+  top: 0.7%;
+  cursor: pointer;
+}

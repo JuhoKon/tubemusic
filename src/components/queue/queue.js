@@ -125,7 +125,7 @@ class Queue extends Component {
                     onPlay={this.props.onPlay}
                     editMode={this.state.editMode}
                     width={width}
-                    distance={10}
+                    pressDelay={120}
                   />
                 )}
               </AutoSizer>

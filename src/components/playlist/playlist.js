@@ -142,6 +142,7 @@ class Playlist extends Component {
           <CreateNew
             makePlaylist={this.props.makePlaylist}
             playlistName={this.state.playlistName}
+            setLoading={this.setLoading}
           />
           {/*<LoadPlaylistModal
             name="Playlists"
@@ -158,6 +159,7 @@ class Playlist extends Component {
             Updateplaylist={this.props.Updateplaylist}
             playlistName={this.state.playlistName}
             playlistOwner={this.state.playlistOwner}
+            setLoading={this.setLoading}
           />
           <Button
             className="float-right btn-margin btn btn-secondary button"
@@ -210,7 +212,7 @@ class Playlist extends Component {
               onPlay={this.props.onPlay}
               onDeleteFromPlaylist={this.onDeleteFromPlaylist}
               width={width}
-              distance={10}
+              pressDelay={120}
             />
           )}
         </AutoSizer>

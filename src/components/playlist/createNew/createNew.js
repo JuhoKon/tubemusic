@@ -46,12 +46,12 @@ class CreateNew extends Component {
     return (
       <div>
         <Button
-          className="float-left btn-margin btn-secondary btn button"
+          className=" btn-margin btn-secondary btn button"
           onClick={this.toggle}
           href="#"
           color="secondary"
         >
-          New playlist
+          Create Playlist
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className="mb-4" toggle={this.toggle}>
