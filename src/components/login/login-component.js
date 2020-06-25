@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { authenticationService } from "../functions/authenthication";
 import { Form, FormGroup, Input, Container } from "reactstrap";
 import "./login.css";
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+var jwtDecode = require("jwt-decode");
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 //https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
 export default class Homepage extends Component {
   constructor(props) {
@@ -10,25 +11,31 @@ export default class Homepage extends Component {
     this.state = {
       active: false,
       error: "",
-      SignUpError: ""
+      SignUpError: "",
     };
     // redirect to home if already logged in
     if (authenticationService.currentUserValue) {
-      this.props.history.push("/");
+      if (
+        jwtDecode(authenticationService.currentUserValue.token).exp >
+        Date.now() / 1000
+      )
+        this.props.history.push("/");
+      {
+      }
     }
     this.login = this.login.bind(this);
   }
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
   togglePanel = () => {
     this.setState({
-      active: !this.state.active
+      active: !this.state.active,
     });
   };
   async login(username, password) {
     this.setState({
-      loading: true
+      loading: true,
     });
     /*await authenticationService.login(
       "juh3do.ko3sdntdiainen@hotmail.fi",
@@ -38,26 +45,26 @@ export default class Homepage extends Component {
     let res = await authenticationService.login(username, password);
 
     this.setState({
-      loading: false
+      loading: false,
     });
     if (!res) {
       //no res => all OK
       this.props.history.push("/");
     } else {
       this.setState({
-        error: res
+        error: res,
       });
     }
     //this.props.history.push("/");
   }
   async signUp(newUser) {
     this.setState({
-      loading: true
+      loading: true,
     });
     await timeout(1500);
     let res = await authenticationService.signup(newUser);
     this.setState({
-      loading: false
+      loading: false,
     });
     if (!res) {
       this.props.history.push("/");
@@ -65,11 +72,11 @@ export default class Homepage extends Component {
     if (res && res.data.error[0]) {
       let data = res.data.error[0];
       this.setState({
-        SignUpError: data.name || data.email || data.password || res.data.error
+        SignUpError: data.name || data.email || data.password || res.data.error,
       });
     }
   }
-  signUpSubmit = e => {
+  signUpSubmit = (e) => {
     e.preventDefault();
     const { signUpName, signUpEmail, signUpPassword } = this.state;
     const role = "User";
@@ -77,11 +84,11 @@ export default class Homepage extends Component {
       signUpName,
       signUpEmail,
       signUpPassword,
-      role
+      role,
     };
     this.signUp(newUser);
   };
-  signInSubmit = e => {
+  signInSubmit = (e) => {
     e.preventDefault();
     this.login(this.state.email, this.state.password);
   };
