@@ -122,3 +122,9 @@ span.float-right.filterSpan {
   border-width: 1px;
   border-style: groove;
 }
+.card {
+  color: #fff !important;
+  text-align: center;
+  font-family: "Itim", cursive;
+  background-color: transparent !important;
+}
