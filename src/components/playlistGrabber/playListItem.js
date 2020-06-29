@@ -10,14 +10,14 @@ class PlayListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUserInfo: this.props.currentUserInfo
+      currentUserInfo: this.props.currentUserInfo,
     };
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        currentUserInfo: this.props.currentUserInfo
+        currentUserInfo: this.props.currentUserInfo,
       });
     }
   }
@@ -28,11 +28,11 @@ class PlayListItem extends Component {
     const Array2 = [];
     let response = await authenticationService.loadUser(token);
     if (response !== null) {
-      response.playlists.forEach(element => {
+      response.playlists.forEach((element) => {
         Array2.push(element._id);
       });
       this.setState({
-        currentUserInfo: Array2
+        currentUserInfo: Array2,
       });
     }
   }
@@ -65,7 +65,7 @@ class PlayListItem extends Component {
     //console.log(this.state);
     return (
       <div>
-        <Card className="card">
+        <Card className="card2">
           <CardBody>
             <Row>
               <Col xs="2" sm="2">

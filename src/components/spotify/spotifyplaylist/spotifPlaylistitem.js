@@ -3,7 +3,7 @@ import { Card, CardBody, CardText, Row, Col } from "reactstrap";
 
 import "moment-duration-format";
 import PlaylistModal from "./Playlistmodal/PlaylistModal";
-import LoadingSpinner from "../../spinner/spinner";
+import LoadingSpinner from "../../spinner/spinner5";
 import {
   getPlaylistTracks,
   getRequestWithToken,
@@ -101,13 +101,21 @@ class PlaylistItem extends Component {
     //console.log(this.state.name);
     return (
       <div>
-        <div>{this.state.loading ? <LoadingSpinner /> : ""}</div>
+        {/*         <div>
+          {this.state.loading ? (
+            <div id="playlistSpinner">
+              <LoadingSpinner size={30} color="#007d9ef5" />
+            </div>
+          ) : (
+            ""
+          )}
+        </div>*/}
         <a
           //href="# "
           style={{ cursor: "pointer" }}
           onClick={this.clickOnPlayList.bind(this, this.state)}
         >
-          <Card className="card">
+          <Card className="card" id={this.state.loading ? "loadingCard" : null}>
             <CardBody>
               <Row>
                 <Col xs="1" sm="1"></Col>
@@ -116,7 +124,12 @@ class PlaylistItem extends Component {
                 </Col>
 
                 <Col xs="3" sm="3">
-                  <small>{this.props.totalTracks} songs</small>
+                  <small>
+                    {" "}
+                    {this.state.loading
+                      ? "Loading..."
+                      : this.props.totalTracks + " songs"}{" "}
+                  </small>
                 </Col>
               </Row>
               <Row>

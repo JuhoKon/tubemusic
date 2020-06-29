@@ -30,3 +30,45 @@ h3 {
 span {
   color: #fff;
 }
+.loadingPlace2 {
+  background-color: #424242;
+  padding: 20px;
+  padding-right: 50px;
+  border-radius: 2rem;
+  z-index: 1;
+  margin: 0;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+#playlistSpinner {
+  position: relative;
+  left: -2%;
+}
+#loadingCard {
+  animation: pulse 2s infinite;
+  background-color: #adeaff2b !important;
+}
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.85);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.fe-pulse-w-pause {
+  animation-name: pulse;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+.fe-pulse-w-pause:hover,
+.fe-pulse-w-pause:focus {
+  animation-name: unset;
+}

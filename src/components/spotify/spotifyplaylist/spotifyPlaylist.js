@@ -12,7 +12,7 @@ class SpotifyPlaylist extends Component {
       userPlaylists: [],
       sortedPlaylists: [],
       filteredData: [],
-      filter: ""
+      filter: "",
     };
   }
   componentDidUpdate(prevProps) {
@@ -22,11 +22,11 @@ class SpotifyPlaylist extends Component {
         loading: this.props.loading,
         userPlaylists: this.props.Userplaylists,
         filteredData: this.props.Userplaylists,
-        sortedPlaylists: this.props.Userplaylists
+        sortedPlaylists: this.props.Userplaylists,
       });
     }
   }
-  onSortChange = e => {
+  onSortChange = (e) => {
     let filter = e.target.value;
     const playlists = [...this.state.userPlaylists];
     //shallow copy so we won't change props when sorting..........
@@ -50,17 +50,17 @@ class SpotifyPlaylist extends Component {
     }
     console.log("Yeps...");
     this.setState({
-      sortedPlaylists: sorted
+      sortedPlaylists: sorted,
     });
   };
-  handleChange = event => {
+  handleChange = (event) => {
     const playlists = this.state.userPlaylists;
     const filter = event.target.value;
     const lowercasedFilter = filter.toLowerCase();
-    const filteredData = playlists.filter(item => {
+    const filteredData = playlists.filter((item) => {
       if (item === null || typeof item === "undefined") return playlists; //problems
       return Object.keys(item).some(
-        key =>
+        (key) =>
           typeof item[key] === "string" &&
           key !== "imageUrl" &&
           key !== "description" &&
@@ -76,7 +76,7 @@ class SpotifyPlaylist extends Component {
     const { filteredData, filter, sortedPlaylists } = this.state;
     //console.log(filteredData);
     let finalSorted = sortedPlaylists.filter(
-      item => -1 !== filteredData.indexOf(item)
+      (item) => -1 !== filteredData.indexOf(item)
     );
 
     return (
@@ -114,8 +114,8 @@ class SpotifyPlaylist extends Component {
         </div>
         <div id={finalSorted.length > 0 ? "spotifyPlaylist" : "template"}>
           {this.state.loading ? (
-            <div className="loadingPlace">
-              <LoadingSpinner />
+            <div className="loadingPlace2">
+              <LoadingSpinner color="#545454" />
             </div>
           ) : (
             <div>
@@ -127,7 +127,7 @@ class SpotifyPlaylist extends Component {
                   imageUrl,
                   trackRef,
                   totalTracks,
-                  ownerName
+                  ownerName,
                 }) => (
                   <SpotifyItem
                     description={description}

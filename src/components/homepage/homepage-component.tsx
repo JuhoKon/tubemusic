@@ -321,6 +321,7 @@ export default class Homepage extends Component<any, HomepageState> {
       //set loading to true
       loading: true,
       error: false,
+      items: [],
     });
     const result = await handleSubmit(termFromSearch);
     console.log(result.length);

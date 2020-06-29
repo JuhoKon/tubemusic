@@ -30,7 +30,7 @@ class Videolist extends Component {
       <div id="videolist33">
         {this.state.loading ? (
           <div className="loadingPlace">
-            <LoadingSpinner />
+            <LoadingSpinner color="#545454" />
           </div>
         ) : null}
         {this.state.error ? <span>Please try again.</span> : ""}

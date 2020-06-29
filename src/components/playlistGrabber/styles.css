@@ -6,7 +6,7 @@
 }
 #spinnerDiv {
   position: fixed;
-  background-color: #c65b8df5;
+  background-color: #4b4b4bf5;
   top: 40%;
   left: 50%;
   border-radius: 50px;
@@ -25,9 +25,12 @@
 }
 #spinnerDiv2 {
   position: fixed;
-  background-color: #9e4aa8;
+  background-color: #4b4b4bf5;
   top: 50%;
   left: 50%;
   border-radius: 50px;
   z-index: 10;
+}
+p.card-text {
+  cursor: pointer;
 }
