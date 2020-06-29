@@ -128,3 +128,8 @@ span.float-right.filterSpan {
   font-family: "Itim", cursive;
   background-color: transparent !important;
 }
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #ffffff !important;
+}
