@@ -145,6 +145,17 @@ export const getPlaylistTracks = async (id, token) => {
   //console.log(res.data.items);
   return res.data;
 };
+export const searchSpotifyPlaylists = async (term, token) => {
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token,
+      q: term,
+      type: "playlist",
+    },
+  };
+  let res = await axios.get("https://api.spotify.com/v1/me/playlists", config);
+  return res.data;
+};
 
 /* -------------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------------*/
