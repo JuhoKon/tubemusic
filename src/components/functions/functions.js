@@ -9,6 +9,7 @@ const API = "https://secure-retreat-97998.herokuapp.com";
 //const API = "http://localhost:8080";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async (items) => {
+  console.log(items);
   let res = await axios
     .post(
       API + "/scrape/scrape",
@@ -149,11 +150,12 @@ export const searchSpotifyPlaylists = async (term, token) => {
   const config = {
     headers: {
       Authorization: "Bearer " + token,
-      q: term,
-      type: "playlist",
     },
   };
-  let res = await axios.get("https://api.spotify.com/v1/me/playlists", config);
+  let res = await axios.get(
+    `https://api.spotify.com/v1/search?q=${term}&type=playlist&limit=30`,
+    config
+  );
   return res.data;
 };
 

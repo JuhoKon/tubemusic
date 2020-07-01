@@ -7,7 +7,7 @@ import {
   Row,
   Col,
   Progress,
-  Input
+  Input,
 } from "reactstrap";
 import isEqual from "react-fast-compare";
 import LoadedList from "./loadedList";
@@ -18,11 +18,11 @@ import {
   getContentDetails,
   makePlaylist,
   handleScrape,
-  addUserPlaylist
+  addUserPlaylist,
 } from "../../../functions/functions";
 import "./PlaylistModal.css";
 import { authenticationService } from "../../../functions/authenthication";
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 //TODO: add option to "create" own songs just by entering title and artist. These songs
 //can be added  then to the importList which will be further on webscraped
 class PlaylistModal extends Component {
@@ -45,7 +45,7 @@ class PlaylistModal extends Component {
       imported: false,
       progressValue: 0,
       notFoundArray: [],
-      filter: ""
+      filter: "",
     };
     this.importPlaylistToApp = this.importPlaylistToApp.bind(this);
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
@@ -61,7 +61,7 @@ class PlaylistModal extends Component {
     if (currentUser) {
       this.setState({
         token: currentUser.token,
-        userName: currentUser.user.name
+        userName: currentUser.user.name,
       });
     }
   }
@@ -72,23 +72,23 @@ class PlaylistModal extends Component {
     this.setState({
       loading: true,
       progressValue: 0,
-      importCount: 0
+      importCount: 0,
     });
     let tracksFromYoutube = [];
     let tracks = this.state.toBeImportedPlaylist;
     let numberOfTracks = this.state.toBeImportedPlaylist.length;
 
     let step = (1 / numberOfTracks) * 100;
-    let batchSize = 50; //MAX 500
+    let batchSize = 10; //MAX 500
     let left = 0;
     while (numberOfTracks > left) {
       let res = await handleScrape(tracks.slice(left, left + batchSize));
-      res.forEach(track => {
+      res.forEach((track) => {
         tracksFromYoutube.push(track);
       });
       this.setState({
         progressValue: step * tracksFromYoutube.length,
-        importCount: tracksFromYoutube.filter(track => track !== null).length
+        importCount: tracksFromYoutube.filter((track) => track !== null).length,
       });
       left += batchSize;
     }
@@ -96,12 +96,12 @@ class PlaylistModal extends Component {
     if (tracksFromYoutube.length > 0) {
       const name = this.state.name;
       //console.log(res);
-      const playlist = tracksFromYoutube.filter(track => track !== null);
+      const playlist = tracksFromYoutube.filter((track) => track !== null);
       const body = JSON.stringify({
         name,
         playlist: playlist,
         isPrivate: true,
-        owner: this.state.userName
+        owner: this.state.userName,
       });
       if (playlist.length > 0) {
         //console.log(tracksFromYoutube.length - playlist.length);
@@ -117,17 +117,17 @@ class PlaylistModal extends Component {
         if (respond.status === 200) {
           this.setState({
             imported: true,
-            loading: false
+            loading: false,
           });
         } else {
           this.setState({
-            imported: false
+            imported: false,
           });
           alert("Error making creating the playlist.");
         }
       } else {
         this.setState({
-          imported: false
+          imported: false,
         });
         alert("No songs were found.");
       }
@@ -135,16 +135,16 @@ class PlaylistModal extends Component {
   }
   clearList() {
     this.setState({
-      toBeImportedPlaylist: []
+      toBeImportedPlaylist: [],
     });
   }
   moveAllToImport(filteredData) {
     //const chosenListsTracks = this.state.chosenListsTracks;
-    filteredData.forEach(track => this.addToImport(track)); //need to generate uniqueIDs
+    filteredData.forEach((track) => this.addToImport(track)); //need to generate uniqueIDs
   }
   toggle() {
     this.setState({
-      toBeImportedPlaylist: []
+      toBeImportedPlaylist: [],
     });
     this.props.toggle();
   }
@@ -164,7 +164,7 @@ class PlaylistModal extends Component {
         chosenListsTracks: this.props.chosenListsTracks,
         imported: false,
         progressValue: 0,
-        importCount: 0
+        importCount: 0,
       });
     }
   }
@@ -176,7 +176,7 @@ class PlaylistModal extends Component {
     this.setState({
       playlistId: result.data._id,
       playlistName: result.data.name,
-      playlist: playlist
+      playlist: playlist,
     });
   }
   async importPlaylistToApp() {
@@ -184,7 +184,7 @@ class PlaylistModal extends Component {
     this.setState({
       loading: true,
       progressValue: 0,
-      importCount: 0
+      importCount: 0,
     });
     let numberOfTracks = this.state.toBeImportedPlaylist.length;
     let step = (1 / numberOfTracks) * 100;
@@ -199,7 +199,7 @@ class PlaylistModal extends Component {
       if (result === null) {
         this.setState({
           loading: false,
-          error: true
+          error: true,
         });
         return;
       }
@@ -215,7 +215,7 @@ class PlaylistModal extends Component {
       //console.log(trackObject);
       tracksFromYoutube.push(trackObject);
       this.setState({
-        progressValue: this.state.progressValue + step
+        progressValue: this.state.progressValue + step,
       });
     }
     //console.log(tracksFromYoutube);
@@ -225,15 +225,15 @@ class PlaylistModal extends Component {
     this.setState({
       loading: false,
       progressValue: 0,
-      importCount: 0
+      importCount: 0,
     });
     if (res.status === 200) {
       this.setState({
-        imported: true
+        imported: true,
       });
     } else {
       this.setState({
-        imported: false
+        imported: false,
       });
       alert("Error");
     }
@@ -253,7 +253,7 @@ class PlaylistModal extends Component {
       }
     }
     this.setState({
-      updated: item.videoId
+      updated: item.videoId,
     });
   }
 
@@ -266,19 +266,19 @@ class PlaylistModal extends Component {
     this.state.toBeImportedPlaylist.push(song);
     this.setState({
       //just to trigger re-rendering -> new props to children
-      updated: true
+      updated: true,
     });
   }
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ filter: event.target.value });
   };
   render() {
     const tracks = this.state.chosenListsTracks;
     const { filter } = this.state;
     const lowercasedFilter = filter.toLowerCase();
-    const filteredData = tracks.filter(item => {
+    const filteredData = tracks.filter((item) => {
       return Object.keys(item).some(
-        key =>
+        (key) =>
           typeof item[key] === "string" &&
           key !== "id" && //don't compare id
           item[key].toLowerCase().includes(lowercasedFilter)

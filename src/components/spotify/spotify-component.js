@@ -6,7 +6,7 @@ import {
   getSpotifyUsersPlaylists,
   getRequestWithToken,
 } from "../functions/functions";
-
+import DiscoveryModal from "./discover/spotifySearchModal";
 export default class Spotify extends Component {
   constructor(props) {
     super(props);
@@ -19,9 +19,11 @@ export default class Spotify extends Component {
       nextPlaylists: null,
       loading: false,
       chosenPlaylist: [], //chosen playlist
+      isOpen: false,
     };
     this.getUserId = this.getUserId.bind(this);
     this.getPlayListData = this.getPlayListData.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   async getUserId(token) {
@@ -95,7 +97,11 @@ export default class Spotify extends Component {
       userPlaylists,
     });
   }
-
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  }
   componentDidMount() {
     let url = window.location.href;
     url = url.split("_token=")[1]; //extract token from the url
@@ -128,12 +134,13 @@ export default class Spotify extends Component {
               {this.state.auth ? (
                 <span>
                   Hello, you are logged in as <br />
-                  {this.state.display_name} !
+                  {this.state.display_name} !+
                 </span>
               ) : (
                 "Please login to use the playlist importer!"
               )}
             </Col>
+            {/*https://tubemusicapp.herokuapp.com/spotify */}
             <Col sm="4" className="spotifypage2">
               {/*https://accounts.spotify.com/authorize?client_id=dc20085012814f3d8cab4b36a4144393&response_type=token&redirect_uri=http:%2F%2Flocalhost:3000%2Fspotify&show_dialog=true&scope=playlist-read-private%20playlist-read-collaborative%20user-follow-read */}
               <Button
@@ -143,6 +150,14 @@ export default class Spotify extends Component {
               >
                 {this.state.auth ? "Change account." : "Log in."}
               </Button>
+              <br />
+              <br />
+              {this.state.auth ? (
+                <Button className="discover-button" onClick={this.toggle}>
+                  {" "}
+                  Discover
+                </Button>
+              ) : null}
             </Col>
             <Col sm="4" className="spotifypage3">
               {this.state.auth ? (
@@ -155,6 +170,11 @@ export default class Spotify extends Component {
                 ""
               )}
             </Col>
+            <DiscoveryModal
+              token={this.state.token}
+              isOpen={this.state.isOpen}
+              toggle={this.toggle}
+            />
           </Row>
         </div>
       </div>

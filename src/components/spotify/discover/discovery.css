@@ -3,3 +3,16 @@
   position: relative;
   left: 40%;
 }
+#spotifyPlaylist2 {
+  position: relative;
+  margin-left: 200px;
+  margin-top: 10px;
+  background-color: transparent !important;
+  height: 700px;
+  overflow-y: auto;
+  animation-name: blurEffect;
+  animation-duration: 0.32s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}

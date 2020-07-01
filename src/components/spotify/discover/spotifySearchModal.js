@@ -12,6 +12,9 @@ import {
 import { CSSTransition } from "react-transition-group";
 import { searchSpotifyPlaylists } from "../../functions/functions";
 import isEqual from "react-fast-compare";
+import SpotifyItem from "../spotifyplaylist/spotifPlaylistitem";
+
+import LoadingSpinner from "../../spinner/spinner";
 import "./discovery.css";
 class DiscoveryModal extends Component {
   state = {
@@ -19,14 +22,18 @@ class DiscoveryModal extends Component {
     name: "",
     token: this.props.token,
     search: "",
+    playlists: [],
   };
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
   submit = async (e) => {
     e.preventDefault();
-    let res = searchSpotifyPlaylists(this.state.search, this.state.token);
+    let res = await searchSpotifyPlaylists(this.state.search, this.state.token);
     console.log(res);
+    this.setState({
+      playlists: res.playlists.items,
+    });
   };
   onChangeSearch = (e) => {
     this.setState({
@@ -75,6 +82,47 @@ class DiscoveryModal extends Component {
                   </InputGroupAddon>
                 </InputGroup>
               </form>
+            </div>
+          </Row>
+          <Row>
+            <div
+              id={
+                this.state.playlists.length > 0
+                  ? "spotifyPlaylist2"
+                  : "template"
+              }
+            >
+              {this.state.loading ? (
+                <div className="loadingPlace2">
+                  <LoadingSpinner color="#545454" />
+                </div>
+              ) : (
+                <div>
+                  {this.state.playlists.map(
+                    ({
+                      id,
+                      name,
+                      description,
+                      imageUrl,
+                      trackRef,
+                      totalTracks,
+                      ownerName,
+                    }) => (
+                      <SpotifyItem
+                        description={description}
+                        imageUrl={imageUrl}
+                        name={name}
+                        id={id}
+                        key={id}
+                        trackRef={trackRef}
+                        totalTracks={totalTracks}
+                        ownerName={ownerName}
+                        token={this.props.token}
+                      />
+                    )
+                  )}
+                </div>
+              )}
             </div>
           </Row>
 
