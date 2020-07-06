@@ -15,6 +15,7 @@ import "toasted-notes/src/styles.css"; // optional styles
 import "./homepage.css";
 import {
   handleSubmit,
+  handleSubmit_db,
   getPlaylists,
   makePlaylist,
   updatePlaylist,
@@ -50,6 +51,7 @@ type HomepageState = {
   playlistOwner?: string;
   loadingPlaylist?: boolean;
   loadingPlaylists?: boolean;
+  duration?: string;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -102,6 +104,7 @@ export default class Homepage extends Component<any, HomepageState> {
       userRole: "",
       loadingPlaylists: false,
       loadingPlaylist: false,
+      duration: "",
     };
   }
   componentDidUpdate(prevProps: any) {
@@ -324,6 +327,44 @@ export default class Homepage extends Component<any, HomepageState> {
       items: [],
     });
     const result = await handleSubmit(termFromSearch);
+    //const result = await handleSubmit_db(termFromSearch);
+    console.log(result.length);
+    if (!result) {
+      this.setState({
+        error: true,
+        loading: false,
+        items: [],
+      });
+      return;
+    }
+    //console.log(result);
+    if (result.length === 0) {
+      if (tries > 0) {
+        this.handleSubmit(termFromSearch, tries - 1);
+        return;
+      }
+      this.setState({
+        error: true,
+        loading: false,
+        items: [],
+      });
+      return;
+    }
+    this.setState({
+      items: result,
+      loading: false,
+    });
+  }
+  async handleSubmitdb(termFromSearch: String, tries = 10) {
+    //handles search-query from search bar webscraping
+    this.setState({
+      //set loading to true
+      loading: true,
+      error: false,
+      items: [],
+    });
+    //const result = await handleSubmit(termFromSearch);
+    const result = await handleSubmit_db(termFromSearch);
     console.log(result.length);
     if (!result) {
       this.setState({
@@ -557,6 +598,7 @@ export default class Homepage extends Component<any, HomepageState> {
 
     const videoId = item.videoId;
     const title = item.title;
+    const duration = item.duration;
     //console.log(item);
     const url = "https://www.youtube.com/watch?v=" + videoId;
     if (url === this.state.url) {
@@ -564,6 +606,7 @@ export default class Homepage extends Component<any, HomepageState> {
     }
     this.setState({
       url: url, //url gets passed to player as props
+      duration: duration,
       playing: true,
       updated: true,
       title: title,
@@ -664,7 +707,10 @@ export default class Homepage extends Component<any, HomepageState> {
 
             <Col sm="4" className="homepage3">
               <br />
-              <Search handleSubmit={this.handleSubmit} />
+              <Search
+                handleSubmit={this.handleSubmit}
+                handleSubmitdb={this.handleSubmitdb}
+              />
               <hr />
               <Videolist
                 playNext={this.playNext}
@@ -700,6 +746,8 @@ export default class Homepage extends Component<any, HomepageState> {
                 setUrl={this.setUrl}
                 setTitle={this.setTitle}
                 setPlaying={this.setPlaying}
+                duration={this.state.duration}
+                playlistId={this.state.playlistId}
               />
             </Col>
           </Row>

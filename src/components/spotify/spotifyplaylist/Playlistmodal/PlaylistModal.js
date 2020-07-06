@@ -83,6 +83,12 @@ class PlaylistModal extends Component {
     let left = 0;
     while (numberOfTracks > left) {
       let res = await handleScrape(tracks.slice(left, left + batchSize));
+      if (!res) {
+        while (!res) {
+          await timeout(250);
+          res = await handleScrape(tracks.slice(left, left + batchSize));
+        }
+      }
       res.forEach((track) => {
         tracksFromYoutube.push(track);
       });

@@ -5,8 +5,8 @@ import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
-const API = "https://secure-retreat-97998.herokuapp.com";
-//const API = "http://localhost:8080";
+//const API = "https://secure-retreat-97998.herokuapp.com";
+const API = "http://localhost:8080";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 export const handleScrape = async (items) => {
   console.log(items);
@@ -46,6 +46,35 @@ export const handleSubmit = async (termFromSearch) => {
   /////////
   let res = await axios
     .get(API + "/scrape/search", config)
+    //.get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
+    .catch((err) => {
+      handleError(err);
+    });
+
+  if (res) {
+    return res.data.array;
+  } else {
+    return null;
+  }
+};
+export const handleSubmit_db = async (termFromSearch) => {
+  //SETUPPING HEADERS ETC.
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      item: termFromSearch,
+    },
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  /////////
+  let res = await axios
+    .get(API + "/scrape/dbsearch", config)
     //.get("http://localhost:8080/scrape/search", config)
     .then(handleResponse)
     .catch((err) => {
@@ -198,6 +227,15 @@ export const updatePlaylist = async (body, id) => {
   await timeout(100);
   let res = await axios.put(
     API + `/playlists/update/${id}`,
+    body,
+    tokenConfig()
+  );
+  return res;
+};
+export const updatePlaylistSongTime = async (body, id) => {
+  await timeout(100);
+  let res = await axios.put(
+    API + `/playlists/updatetime/${id}`,
     body,
     tokenConfig()
   );

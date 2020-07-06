@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
+import { updatePlaylistSongTime } from "../functions/functions";
 import {
   Container,
   CustomInput,
@@ -30,7 +31,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //CHANGE BUTTONS TO LOOK BETTER
 //ADD DATABASE
 // ADD PLAYLISTS!!
-
+function pad(string) {
+  return ("0" + string).slice(-2);
+}
+function format(seconds) {
+  const date = new Date(seconds * 1000);
+  const hh = date.getUTCHours();
+  const mm = date.getUTCMinutes();
+  const ss = pad(date.getUTCSeconds());
+  if (hh) {
+    return `${hh}.${pad(mm)}.${ss}`;
+  }
+  return `${mm}.${ss}`;
+}
 export default class MediaPlayer extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +67,8 @@ export default class MediaPlayer extends Component {
       history: [], //TODO: joku raja tälle
       tooltipOpen: false,
       historyToPlayFrom: [],
+      durationFromObject: this.props.duration,
+      playlistId: this.props.playlistId,
     };
   }
   load = (url) => {
@@ -83,6 +98,7 @@ export default class MediaPlayer extends Component {
         array: this.props.array,
         title: this.props.title,
         playing: this.props.playing,
+        playlistId: this.props.playlistId,
       });
       setTitle(this.props.title); //setting document title
       if (this.props.url !== prevProps.url) {
@@ -137,6 +153,7 @@ export default class MediaPlayer extends Component {
       console.log(item);
       this.props.setTitle(item.title);
       const url = item.url;
+      const duration = item.duration;
       //console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
@@ -146,6 +163,7 @@ export default class MediaPlayer extends Component {
         url: url,
         title: item.title,
         played: 0,
+        durationFromObject: duration,
       });
       toaster.notify(<span>Now playing: {item.title}</span>, {
         duration: 1200,
@@ -159,6 +177,7 @@ export default class MediaPlayer extends Component {
       this.props.setTitle(this.state.array[0].title);
       const videoId = this.state.array[0].videoId;
       const url = "https://www.youtube.com/watch?v=" + videoId;
+      const duration = this.state.array[0].duration;
       //console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
@@ -168,6 +187,8 @@ export default class MediaPlayer extends Component {
         url: url,
         title: this.state.array[0].title,
         played: 0,
+        durationFromObject: duration,
+        videoId: videoId,
       });
       toaster.notify(<span>Now playing: {this.state.array[0].title}</span>, {
         duration: 1200,
@@ -197,7 +218,8 @@ export default class MediaPlayer extends Component {
       let itemObject = {};
       itemObject["title"] = this.state.title || "error";
       itemObject["url"] = this.state.url;
-      itemObject["duration"] = this.state.duration;
+      itemObject["duration"] = this.state.durationFromObject;
+      itemObject["videoID"] = this.state.videoId;
       this.addToHistory(itemObject);
     }
     this.handlePlayNext();
@@ -219,8 +241,16 @@ export default class MediaPlayer extends Component {
   handleStartOver = () => {
     this.seekTo0();
   };
-  handleDuration = (duration) => {
-    console.log("onDuration", duration);
+  handleDuration = async (duration) => {
+    //console.log("onDuration", duration);
+
+    if (this.state.durationFromObject !== format(duration)) {
+      const item = JSON.stringify({
+        duration: format(duration),
+        videoId: this.state.videoId,
+      });
+      await updatePlaylistSongTime(item, this.state.playlistId);
+    }
     this.setState({ duration });
   };
   handleSeekMouseDown = (e) => {
