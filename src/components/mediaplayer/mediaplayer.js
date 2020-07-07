@@ -242,14 +242,20 @@ export default class MediaPlayer extends Component {
     this.seekTo0();
   };
   handleDuration = async (duration) => {
-    //console.log("onDuration", duration);
-
+    console.log("onDuration", duration);
+    if (this.state.playlistId === "") {
+      this.setState({ duration });
+      return;
+    }
     if (this.state.durationFromObject !== format(duration)) {
       const item = JSON.stringify({
         duration: format(duration),
         videoId: this.state.videoId,
       });
-      await updatePlaylistSongTime(item, this.state.playlistId);
+      let res = await updatePlaylistSongTime(item, this.state.playlistId);
+
+      if (res.status === 200) {
+      }
     }
     this.setState({ duration });
   };

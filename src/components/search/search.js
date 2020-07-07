@@ -1,70 +1,225 @@
 import React, { Component } from "react";
 import { InputGroup, InputGroupAddon, Input, Button } from "reactstrap";
+import {
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+  CardTitle,
+  CardText,
+  Row,
+  Col,
+} from "reactstrap";
+import classnames from "classnames";
+import "./search.css";
 import ReactAutocomplete from "react-autocomplete";
+import { handleSubmit_db } from "../functions/functions";
+import { runInThisContext } from "vm";
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 class Search extends Component {
   state = {
     text: "",
     dbtext: "",
+    activeTab: "1",
+    autoCompleteItems: [{ title: "", _id: "s" }],
   };
-  onChangetext = (e) => {
+  onChangetext = async (e) => {
+    let value = e.target.value;
     this.setState({
-      text: e.target.value,
-      dbtext: e.target.value,
+      text: value,
+      dbtext: value,
+    });
+
+    await timeout(600);
+    if (value !== this.state.text) return; //we got new stuff?
+    if (value === "") return;
+    let res = await handleSubmit_db(value);
+    console.log(res);
+    this.setState({
+      autoCompleteItems: res,
     });
   };
   onSelect = (val) => {
     this.setState({
       dbtext: val,
+      text: val,
     });
   };
   submit = (e) => {
     e.preventDefault();
+
     this.props.handleSubmit(this.state.text);
   };
+  submitDb = async (e) => {
+    e.preventDefault();
+    let res = await handleSubmit_db(this.state.text);
+    this.props.handleDB(res, this.state.text);
+  };
+  toggle = (i) => {
+    this.setState({
+      activeTab: i,
+    });
+    this.props.setTab(i);
+  };
   render() {
-    let { dbtext } = this.state;
+    let { dbtext, activeTab } = this.state;
     return (
       <div>
-        <form onSubmit={this.submit}>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend"></InputGroupAddon>
-            <Input
-              type="text"
-              placeholder="Search for songs on YouTube..."
-              required
-              className="form-control"
-              value={this.state.text}
-              onChange={this.onChangetext}
-            />
-            {/*<ReactAutocomplete
-              items={[
-                { id: "foo", label: "foo" },
-                { id: "bar", label: "bar" },
-                { id: "baz", label: "baz" },
-              ]}
-              shouldItemRender={(item, value) =>
-                item.label.toLowerCase().indexOf(value.toLowerCase()) > -1
-              }
-              getItemValue={(item) => item.label}
-              renderItem={(item, highlighted) => (
-                <div
-                  key={item.id}
-                  style={{
-                    backgroundColor: highlighted ? "#eee" : "transparent",
-                  }}
-                >
-                  {item.label}
-                </div>
-              )}
-              value={this.state.value}
-              onChange={(e) => this.setState({ value: e.target.value })}
-              onSelect={(value) => this.setState({ value })}
-                />*/}
-            <InputGroupAddon addonType="append">
-              <Button color="secondary">Search</Button>
-            </InputGroupAddon>
-          </InputGroup>
-        </form>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: activeTab === "1" })}
+              onClick={() => {
+                this.toggle("1");
+              }}
+            >
+              Database
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: activeTab === "2" })}
+              onClick={() => {
+                this.toggle("2");
+              }}
+            >
+              YouTube
+            </NavLink>
+          </NavItem>
+        </Nav>
+
+        <TabContent activeTab={activeTab}>
+          <TabPane tabId="1">
+            <Row>
+              <Col sm="12">
+                <form onSubmit={this.submitDb}>
+                  <InputGroup>
+                    {/*<Input
+                      type="text"
+                      placeholder="Search for songs on YouTube..."
+                      required
+                      className="form-control"
+                      value={this.state.text}
+                      onChange={this.onChangetext}
+                    />*/}
+                    <ReactAutocomplete
+                      renderInput={function (props) {
+                        return (
+                          <input
+                            id="autocomplete"
+                            placeholder="Search for songs on our database..."
+                            {...props}
+                          />
+                        );
+                      }}
+                      items={this.state.autoCompleteItems}
+                      wrapperStyle={{
+                        width: "calc(100% - 71px)",
+                      }}
+                      getItemValue={(item) => item.title}
+                      menuStyle={{
+                        zIndex: 10000,
+                        borderRadius: "3px",
+                        boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
+                        background: "#ffffff",
+                        padding: "2px 0",
+                        fontSize: "90%",
+                        position: "fixed",
+                        overflow: "auto",
+                        maxHeight: "50%", // TODO: don't cheat, let it flow to the bottom
+                      }}
+                      renderItem={(item, highlighted) => (
+                        <div
+                          key={item._id}
+                          style={{
+                            color: "#000000",
+                            backgroundColor: highlighted
+                              ? "rgb(219, 219, 219)"
+                              : "transparent",
+                          }}
+                        >
+                          {item.title}
+                        </div>
+                      )}
+                      value={this.state.text}
+                      onChange={(e) => this.onChangetext(e)}
+                      onSelect={(value) => this.onSelect(value)}
+                    />
+                    <InputGroupAddon addonType="append">
+                      <Button color="secondary">Search</Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </form>
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+            <Row>
+              <Col sm="12">
+                <form onSubmit={this.submit}>
+                  <InputGroup>
+                    {/*<Input
+                      type="text"
+                      placeholder="Search for songs on YouTube..."
+                      required
+                      className="form-control"
+                      value={this.state.text}
+                      onChange={this.onChangetext}
+                    />*/}
+                    <ReactAutocomplete
+                      renderInput={function (props) {
+                        return (
+                          <input
+                            id="autocomplete"
+                            placeholder="Search for songs on YouTube..."
+                            {...props}
+                          />
+                        );
+                      }}
+                      items={this.state.autoCompleteItems}
+                      wrapperStyle={{
+                        width: "calc(100% - 71px)",
+                      }}
+                      getItemValue={(item) => item.title}
+                      menuStyle={{
+                        zIndex: 10000,
+                        borderRadius: "3px",
+                        boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
+                        background: "#ffffff",
+                        padding: "2px 0",
+                        fontSize: "90%",
+                        position: "fixed",
+                        overflow: "auto",
+                        maxHeight: "50%", // TODO: don't cheat, let it flow to the bottom
+                      }}
+                      renderItem={(item, highlighted) => (
+                        <div
+                          key={item._id}
+                          style={{
+                            color: "#000000",
+                            backgroundColor: highlighted
+                              ? "rgb(219, 219, 219)"
+                              : "transparent",
+                          }}
+                        >
+                          {item.title}
+                        </div>
+                      )}
+                      value={this.state.text}
+                      onChange={(e) => this.onChangetext(e)}
+                      onSelect={(value) => this.onSelect(value)}
+                    />
+                    <InputGroupAddon addonType="append">
+                      <Button color="secondary">Search</Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </form>
+              </Col>
+            </Row>
+          </TabPane>
+        </TabContent>
       </div>
     );
   }

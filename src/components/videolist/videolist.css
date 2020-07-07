@@ -25,8 +25,8 @@
 }
 #videolist33 {
   background-color: transparent !important;
-  max-height: 350px;
-  min-height: 350px;
+  max-height: 310px;
+  min-height: 310px;
   overflow-y: auto;
   overflow-x: hidden;
 

@@ -45,6 +45,7 @@
     "request-promise": "^4.2.5",
     "rxjs": "^6.5.4",
     "simplebar-react": "^2.1.0",
+    "string-similarity": "^4.0.1",
     "toasted-notes": "^3.2.0",
     "typescript": "^3.9.3"
   },

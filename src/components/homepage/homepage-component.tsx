@@ -27,6 +27,7 @@ import {
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import Spinner from "../spinner/spinner4";
+var stringSimilarity = require("string-similarity");
 
 type HomepageState = {
   items: Array<Song>;
@@ -52,6 +53,8 @@ type HomepageState = {
   loadingPlaylist?: boolean;
   loadingPlaylists?: boolean;
   duration?: string;
+  focusedTab: string;
+  dbitems: any;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -82,6 +85,8 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setPlaying = this.setPlaying.bind(this);
     this.playNext = this.playNext.bind(this);
     this.setLoading = this.setLoading.bind(this);
+    this.handleDB = this.handleDB.bind(this);
+    this.setTab = this.setTab.bind(this);
     this.state = {
       items: [], //from youtube API
       queue: [],
@@ -105,6 +110,8 @@ export default class Homepage extends Component<any, HomepageState> {
       loadingPlaylists: false,
       loadingPlaylist: false,
       duration: "",
+      focusedTab: "1",
+      dbitems: [],
     };
   }
   componentDidUpdate(prevProps: any) {
@@ -150,6 +157,21 @@ export default class Homepage extends Component<any, HomepageState> {
       }
     }
     return true;
+  }
+  sortBySimilarity = (items: any, term: string) => {
+    for (const item of items) {
+      item.similarity = stringSimilarity.compareTwoStrings(item.title, term);
+    }
+    items.sort(function (a: any, b: any) {
+      return b.similarity - a.similarity;
+    });
+    return items;
+  };
+  handleDB(items: any, term: string) {
+    let sorted = this.sortBySimilarity(items, term);
+    this.setState({
+      dbitems: sorted,
+    });
   }
   shuffleQueue() {
     //Fiter-Yates shuffle
@@ -231,6 +253,11 @@ export default class Homepage extends Component<any, HomepageState> {
     );
     //this.onPlay(itemArray[0]);
   }
+  setTab = (i: string) => {
+    this.setState({
+      focusedTab: i,
+    });
+  };
   addPlaylistToQueue(playlist: Array<Song>) {
     //adds active playlist to queue
     //let playlist = this.state.playlist;
@@ -421,6 +448,8 @@ export default class Homepage extends Component<any, HomepageState> {
     //loads a single database based on the id
     this.setState({
       loadingPlaylist: true,
+      playlist: [],
+      playlistName: "Loading...",
     });
     const result: any = await getPlayListById(id);
 
@@ -710,12 +739,18 @@ export default class Homepage extends Component<any, HomepageState> {
               <Search
                 handleSubmit={this.handleSubmit}
                 handleSubmitdb={this.handleSubmitdb}
+                handleDB={this.handleDB}
+                setTab={this.setTab}
               />
               <hr />
               <Videolist
                 playNext={this.playNext}
                 loading={this.state.loading}
-                items={this.state.items}
+                items={
+                  this.state.focusedTab === "1"
+                    ? this.state.dbitems
+                    : this.state.items
+                }
                 onAdd={this.onAdd}
                 onPlay={this.onPlay}
                 AddToPlaylist={this.AddToPlaylist}
