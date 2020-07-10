@@ -138,10 +138,21 @@ export default class MediaPlayer extends Component {
     if (this.state.url === null) {
       this.handlePlayNext();
     }
+    setTimeout(() => {
+      this.setState({
+        muted: true,
+      });
+    }, 50);
+    setTimeout(() => {
+      this.setState({
+        muted: false,
+      });
+    }, 100);
   };
   addToHistory = (item) => {
     //Adds item to history array
     if (item.duration === 0) return;
+    if (item.title === "error") return;
     this.state.history.unshift(item);
     this.state.historyToPlayFrom.unshift(item);
     //console.log(this.state.history);
@@ -243,19 +254,18 @@ export default class MediaPlayer extends Component {
   };
   handleDuration = async (duration) => {
     console.log("onDuration", duration);
-    if (this.state.playlistId === "") {
-      this.setState({ duration });
-      return;
-    }
+
     if (this.state.durationFromObject !== format(duration)) {
       const item = JSON.stringify({
         duration: format(duration),
         videoId: this.state.videoId,
       });
-      let res = await updatePlaylistSongTime(item, this.state.playlistId);
 
-      if (res.status === 200) {
+      if (this.state.playlistId !== "") {
+        await updatePlaylistSongTime(item, this.state.playlistId);
       }
+
+      //lähetä DB myös uusi duration
     }
     this.setState({ duration });
   };

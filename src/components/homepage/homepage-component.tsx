@@ -167,11 +167,23 @@ export default class Homepage extends Component<any, HomepageState> {
     });
     return items;
   };
-  handleDB(items: any, term: string) {
-    let sorted = this.sortBySimilarity(items, term);
+  async handleDB(items: any, term: string) {
+    this.setState({
+      error: false,
+      loading: true,
+    });
+    const result = await handleSubmit_db(term);
+    let sorted = this.sortBySimilarity(result, term);
     this.setState({
       dbitems: sorted,
+      loading: false,
     });
+    if (sorted.length === 0) {
+      this.setState({
+        error: true,
+        loading: false,
+      });
+    }
   }
   shuffleQueue() {
     //Fiter-Yates shuffle
@@ -392,6 +404,7 @@ export default class Homepage extends Component<any, HomepageState> {
     });
     //const result = await handleSubmit(termFromSearch);
     const result = await handleSubmit_db(termFromSearch);
+    console.log("Hello123");
     console.log(result.length);
     if (!result) {
       this.setState({
@@ -403,10 +416,6 @@ export default class Homepage extends Component<any, HomepageState> {
     }
     //console.log(result);
     if (result.length === 0) {
-      if (tries > 0) {
-        this.handleSubmit(termFromSearch, tries - 1);
-        return;
-      }
       this.setState({
         error: true,
         loading: false,
@@ -755,6 +764,11 @@ export default class Homepage extends Component<any, HomepageState> {
                 onPlay={this.onPlay}
                 AddToPlaylist={this.AddToPlaylist}
                 error={this.state.error}
+                errorText={
+                  this.state.focusedTab === "1"
+                    ? "Please try searching for that on YouTube! Cannot find it from our DB yet :(."
+                    : "Please try again"
+                }
               />
               <Queue
                 queue={queue}

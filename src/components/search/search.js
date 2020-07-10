@@ -15,7 +15,7 @@ import {
 import classnames from "classnames";
 import "./search.css";
 import ReactAutocomplete from "react-autocomplete";
-import { handleSubmit_db } from "../functions/functions";
+import { handleSubmit_db, autocomplete } from "../functions/functions";
 import { runInThisContext } from "vm";
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 class Search extends Component {
@@ -32,10 +32,11 @@ class Search extends Component {
       dbtext: value,
     });
 
-    await timeout(600);
+    await timeout(10);
     if (value !== this.state.text) return; //we got new stuff?
     if (value === "") return;
-    let res = await handleSubmit_db(value);
+    //let res = await handleSubmit_db(value);
+    let res = await autocomplete(value);
     console.log(res);
     this.setState({
       autoCompleteItems: res,
@@ -54,8 +55,8 @@ class Search extends Component {
   };
   submitDb = async (e) => {
     e.preventDefault();
-    let res = await handleSubmit_db(this.state.text);
-    this.props.handleDB(res, this.state.text);
+    //let res = await handleSubmit_db(this.state.text);
+    this.props.handleDB(null, this.state.text);
   };
   toggle = (i) => {
     this.setState({

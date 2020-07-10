@@ -11,6 +11,7 @@ class Videolist extends Component {
     this.state = {
       loading: this.props.loading,
       error: this.props.error,
+      errorText: this.props.errorText,
     };
   }
   componentDidUpdate(prevProps) {
@@ -19,6 +20,7 @@ class Videolist extends Component {
       this.setState({
         loading: this.props.loading,
         error: this.props.error,
+        errorText: this.props.errorText,
       });
     }
   }
@@ -33,7 +35,7 @@ class Videolist extends Component {
             <LoadingSpinner color="#545454" />
           </div>
         ) : null}
-        {this.state.error ? <span>Please try again.</span> : ""}
+        {this.state.error ? <span>{this.state.errorText}</span> : ""}
 
         {items.map(
           ({

@@ -6,8 +6,8 @@ import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
-const API = "https://secure-retreat-97998.herokuapp.com";
-//const API = "http://localhost:8080";
+//const API = "https://secure-retreat-97998.herokuapp.com";
+const API = "http://localhost:8080";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 axios.defaults.timeout = 25000;
 export const handleScrape = async (items) => {
@@ -85,6 +85,35 @@ export const handleSubmit_db = async (termFromSearch) => {
 
   if (res) {
     return res.data.array;
+  } else {
+    return null;
+  }
+};
+export const autocomplete = async (termFromSearch) => {
+  //SETUPPING HEADERS ETC.
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      item: termFromSearch,
+    },
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  /////////
+  let res = await axios
+    .get(API + "/scrape/autocomplete", config)
+    //.get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
+    .catch((err) => {
+      handleError(err);
+    });
+
+  if (res) {
+    return res.data.data;
   } else {
     return null;
   }
