@@ -82,7 +82,14 @@ class Queue extends Component {
     //console.log(this.state.editMode);
     return (
       <div className="queueList">
-        {this.props.queue[0] ? (
+        {this.props.isShuffle ? (
+          <p>
+            Shuffle is on! Playing random songs from the queue. There are{" "}
+            {this.props.queue.length} songs in the queue. To see and edit the
+            queue please set shuffle off.
+          </p>
+        ) : null}
+        {!this.props.isShuffle && this.props.queue[0] ? (
           <Container>
             <Button
               disabled={this.props.queue[0] ? false : true}

@@ -27,6 +27,7 @@ import {
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import Spinner from "../spinner/spinner4";
+import { runInThisContext } from "vm";
 var stringSimilarity = require("string-similarity");
 
 type HomepageState = {
@@ -55,6 +56,7 @@ type HomepageState = {
   duration?: string;
   focusedTab: string;
   dbitems: any;
+  shuffle: boolean;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -87,6 +89,7 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setLoading = this.setLoading.bind(this);
     this.handleDB = this.handleDB.bind(this);
     this.setTab = this.setTab.bind(this);
+    this.setShuffle = this.setShuffle.bind(this);
     this.state = {
       items: [], //from youtube API
       queue: [],
@@ -112,6 +115,7 @@ export default class Homepage extends Component<any, HomepageState> {
       duration: "",
       focusedTab: "1",
       dbitems: [],
+      shuffle: false,
     };
   }
   componentDidUpdate(prevProps: any) {
@@ -125,6 +129,11 @@ export default class Homepage extends Component<any, HomepageState> {
         playlists: this.props.data.playlists,
       });
     }
+  }
+  setShuffle() {
+    this.setState({
+      shuffle: !this.state.shuffle,
+    });
   }
   playNext(item: Song) {
     let a = Object.assign({}, item);
@@ -147,6 +156,7 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setState({
       queue: queue,
     });
+
     console.log(this.state.url);
   }
   isSame(array1: Array<Song>, array2: Array<Song>) {
@@ -209,6 +219,7 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setState({
       playlist: playlistitems,
     });
+
     console.log(playlistitems);
   }
   componentDidMount() {
@@ -290,6 +301,7 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setState({
       queue: queue,
     });
+
     toaster.notify(<span>{this.state.playlistName} added to the queue!</span>, {
       duration: 1200,
     });
@@ -777,6 +789,7 @@ export default class Homepage extends Component<any, HomepageState> {
                 shuffleQueue={this.shuffleQueue}
                 clearQueue={this.clearQueue}
                 setQueue={this.setQueue}
+                isShuffle={this.state.shuffle}
               />
             </Col>
           </Row>
@@ -797,6 +810,8 @@ export default class Homepage extends Component<any, HomepageState> {
                 setPlaying={this.setPlaying}
                 duration={this.state.duration}
                 playlistId={this.state.playlistId}
+                setShuffle={this.setShuffle}
+                isShuffle={this.state.shuffle}
               />
             </Col>
           </Row>

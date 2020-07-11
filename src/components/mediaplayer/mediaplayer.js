@@ -12,7 +12,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { Button } from "reactstrap";
+import { Button, Input } from "reactstrap";
 import ScrollText from "react-scroll-text";
 import HistoryModal from "../player/history/History-modal";
 import { setTitle } from "../functions/functions";
@@ -25,6 +25,7 @@ import {
   faBackward,
   faVolumeUp,
   faVolumeMute,
+  faRandom,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 //TODO: ADD VOLUME CONTROL
@@ -69,8 +70,12 @@ export default class MediaPlayer extends Component {
       historyToPlayFrom: [],
       durationFromObject: this.props.duration,
       playlistId: this.props.playlistId,
+      shuffle: this.props.isShuffle,
     };
   }
+  handleShuffle = () => {
+    this.props.setShuffle();
+  };
   load = (url) => {
     this.setState({
       url,
@@ -99,6 +104,7 @@ export default class MediaPlayer extends Component {
         title: this.props.title,
         playing: this.props.playing,
         playlistId: this.props.playlistId,
+        shuffle: this.props.isShuffle,
       });
       setTitle(this.props.title); //setting document title
       if (this.props.url !== prevProps.url) {
@@ -184,11 +190,19 @@ export default class MediaPlayer extends Component {
   };
   handlePlayNext = () => {
     console.log("onPlay");
+    let song;
     if (typeof this.state.array[0] !== "undefined") {
-      this.props.setTitle(this.state.array[0].title);
-      const videoId = this.state.array[0].videoId;
+      if (this.state.shuffle) {
+        song = this.state.array[
+          Math.floor(Math.random() * (this.state.array.length - 1))
+        ];
+      } else {
+        song = this.state.array[0];
+      }
+      this.props.setTitle(song.title);
+      const videoId = song.videoId;
       const url = "https://www.youtube.com/watch?v=" + videoId;
-      const duration = this.state.array[0].duration;
+      const duration = song.duration;
       //console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
@@ -196,15 +210,15 @@ export default class MediaPlayer extends Component {
       this.setState({
         playing: true,
         url: url,
-        title: this.state.array[0].title,
+        title: song.title,
         played: 0,
         durationFromObject: duration,
         videoId: videoId,
       });
-      toaster.notify(<span>Now playing: {this.state.array[0].title}</span>, {
+      toaster.notify(<span>Now playing: {song.title}</span>, {
         duration: 1200,
       });
-      this.props.onRemove(this.state.array[0]); //removes item from queue
+      this.props.onRemove(song); //removes item from queue
       this.props.setUrl(url);
     } else {
       this.setState({
@@ -369,7 +383,11 @@ export default class MediaPlayer extends Component {
                           className="buttonArea"
                           onClick={this.handlePlayPause}
                         >
-                          <FontAwesomeIcon size={"lg"} icon={faPause} />
+                          <FontAwesomeIcon
+                            className="Active"
+                            size={"lg"}
+                            icon={faPause}
+                          />
                         </div>
                       ) : (
                         <div
@@ -377,17 +395,36 @@ export default class MediaPlayer extends Component {
                           disabled={this.props.array[0] ? false : true}
                           onClick={this.handlePlayPause}
                         >
-                          <FontAwesomeIcon size={"lg"} icon={faPlay} />
+                          <FontAwesomeIcon
+                            className="Active"
+                            size={"lg"}
+                            icon={faPlay}
+                          />
                         </div>
                       )}
                       <div className="buttonArea2" onClick={this.handleEnded}>
-                        <FontAwesomeIcon size={"lg"} icon={faForward} />
+                        <FontAwesomeIcon
+                          className="Active"
+                          size={"lg"}
+                          icon={faForward}
+                        />
                       </div>
                       <div
                         className="buttonArea3"
                         onClick={this.handlePlayPrevious}
                       >
-                        <FontAwesomeIcon size={"lg"} icon={faBackward} />
+                        <FontAwesomeIcon
+                          className="Active"
+                          size={"lg"}
+                          icon={faBackward}
+                        />
+                      </div>
+                      <div className="buttonArea4" onClick={this.handleShuffle}>
+                        <FontAwesomeIcon
+                          className={this.state.shuffle ? "Active" : "null"}
+                          size={"lg"}
+                          icon={faRandom}
+                        />{" "}
                       </div>
                     </div>
                   </Row>
@@ -425,9 +462,17 @@ export default class MediaPlayer extends Component {
                 {/* tänne ääni iconi*/}
                 <div className="volumecontrolicon" onClick={this.setMute}>
                   {this.state.muted ? (
-                    <FontAwesomeIcon size={"lg"} icon={faVolumeMute} />
+                    <FontAwesomeIcon
+                      className="Active"
+                      size={"lg"}
+                      icon={faVolumeMute}
+                    />
                   ) : (
-                    <FontAwesomeIcon size={"lg"} icon={faVolumeUp} />
+                    <FontAwesomeIcon
+                      className="Active"
+                      size={"lg"}
+                      icon={faVolumeUp}
+                    />
                   )}
                 </div>
 

@@ -6,8 +6,8 @@ import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
-//const API = "https://secure-retreat-97998.herokuapp.com";
-const API = "http://localhost:8080";
+const API = "https://secure-retreat-97998.herokuapp.com";
+//const API = "http://localhost:8080";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 axios.defaults.timeout = 25000;
 export const handleScrape = async (items) => {
