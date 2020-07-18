@@ -263,6 +263,11 @@ export default class MediaPlayer extends Component {
       tooltipOpen: !this.state.tooltipOpen,
     });
   };
+  shuffleRandomTip = () => {
+    this.setState({
+      shuffleRandomTip: !this.state.shuffleRandomTip,
+    });
+  };
   handleStartOver = () => {
     this.seekTo0();
   };
@@ -419,7 +424,20 @@ export default class MediaPlayer extends Component {
                           icon={faBackward}
                         />
                       </div>
-                      <div className="buttonArea4" onClick={this.handleShuffle}>
+
+                      <Tooltip
+                        placement="top"
+                        isOpen={this.state.shuffleRandomTip}
+                        target="shuffleRandomTip"
+                        toggle={this.shuffleRandomTip}
+                      >
+                        Toggle Shuffle
+                      </Tooltip>
+                      <div
+                        id="shuffleRandomTip"
+                        className="buttonArea4"
+                        onClick={this.handleShuffle}
+                      >
                         <FontAwesomeIcon
                           className={this.state.shuffle ? "Active" : "null"}
                           size={"lg"}
