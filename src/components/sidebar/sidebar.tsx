@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardTitle, Button } from "reactstrap";
+import { Card, CardBody, CardTitle, Button, Tooltip } from "reactstrap";
 import PlaylistItem from "./Playlist";
 import "./sidebar.css";
 import isEqual from "react-fast-compare";
@@ -42,17 +42,32 @@ class Sidebar extends Component<any, any> {
     await this.props.getPlaylist();
     this.props.setLoading(false);
   }
+  toggletip = () => {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen,
+    });
+  };
   render() {
     console.log(this.props);
 
     return (
       <div className="sidebardiv">
         <h3>Playlists</h3>
+
+        <Tooltip
+          placement="top"
+          isOpen={this.state.tooltipOpen}
+          target="TooltipExample"
+          toggle={this.toggletip}
+        >
+          Refresh playlists
+        </Tooltip>
         <div
+          id="TooltipExample"
           className="refreshbuttonarea"
           onClick={this.getPlaylists2.bind(this, this.props)}
         >
-          <FontAwesomeIcon size={"lg"} icon={faRetweet} />
+          <FontAwesomeIcon className="Active" size={"lg"} icon={faRetweet} />
         </div>
         <CreateNew
           makePlaylist={this.props.makePlaylist}

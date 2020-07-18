@@ -31,3 +31,10 @@
   top: 0.7%;
   cursor: pointer;
 }
+.refreshbuttonarea:hover {
+  transform: scale(1.1) !important;
+  cursor: pointer;
+}
+-refreshbuttonarea:active {
+  transform: scale(0.92) !important;
+}
