@@ -48,6 +48,7 @@ class Videolist extends Component {
             uniqueId,
             duration,
             thumbnails,
+            artists,
           }) => {
             return (
               <CSSTransition key={uniqueId} timeout={500} classNames="fade">
@@ -63,6 +64,7 @@ class Videolist extends Component {
                   onPlay={this.props.onPlay}
                   AddToPlaylist={this.props.AddToPlaylist}
                   duration={duration}
+                  artistTitle={artists[0].name}
                 />
               </CSSTransition>
             );

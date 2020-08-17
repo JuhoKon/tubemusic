@@ -83,7 +83,9 @@ class Videoitem extends Component {
                 </div>
               </Col>
               <Col xs="7" sm="7">
-                <CardText>{this.props.title}</CardText>
+                <CardText>
+                  {this.props.title} - {this.props.artistTitle}
+                </CardText>
               </Col>
               <Col xs="2" sm="2">
                 <br />
