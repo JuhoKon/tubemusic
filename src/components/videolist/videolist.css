@@ -67,3 +67,40 @@
   background-color: transparent !important;
   height: auto !important;
 }
+.thumbnailbutton {
+  padding: 30px;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  position: relative;
+  top: 15%;
+  background-color: rgb(82 82 82 / 30%);
+  border-radius: 25px;
+
+  z-index: 500;
+}
+#thumbnail {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+}
+#thumbnail:hover {
+  color: aliceblue;
+}
+#thumbnail2 {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  color: white;
+  opacity: 1;
+}
+#thumbnail2:hover {
+  color: #009688;
+  opacity: 0.8;
+}
+#thumbnail2:active {
+  transform: scale(0.85) !important;
+}

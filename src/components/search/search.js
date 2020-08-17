@@ -32,7 +32,7 @@ class Search extends Component {
       dbtext: value,
     });
 
-    await timeout(10);
+    await timeout(150);
     if (value !== this.state.text) return; //we got new stuff?
     if (value === "") return;
     //let res = await handleSubmit_db(value);

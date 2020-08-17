@@ -5,6 +5,7 @@ import isEqual from "react-fast-compare";
 import LoadingSpinner from "../spinner/spinner";
 import "./videolist.css";
 import "simplebar/dist/simplebar.min.css";
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 class Videolist extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,7 @@ class Videolist extends Component {
   render() {
     const items = this.props.items;
     //console.log(this.state.error);
-
+    console.log(items);
     return (
       <div id="videolist33">
         {this.state.loading ? (
@@ -46,23 +47,26 @@ class Videolist extends Component {
             thumbnail,
             uniqueId,
             duration,
-          }) => (
-            <CSSTransition key={uniqueId} timeout={500} classNames="fade">
-              <Videoitem
-                playNext={this.props.playNext}
-                uniqueId={uniqueId}
-                title={title}
-                thumbnail={thumbnail}
-                channelTitle={channelTitle}
-                publishedAt={publishedAt}
-                videoId={videoId}
-                addFunc={this.props.onAdd}
-                onPlay={this.props.onPlay}
-                AddToPlaylist={this.props.AddToPlaylist}
-                duration={duration}
-              />
-            </CSSTransition>
-          )
+            thumbnails,
+          }) => {
+            return (
+              <CSSTransition key={uniqueId} timeout={500} classNames="fade">
+                <Videoitem
+                  playNext={this.props.playNext}
+                  uniqueId={uniqueId}
+                  title={title}
+                  thumbnail={thumbnail && thumbnail}
+                  channelTitle={channelTitle}
+                  publishedAt={publishedAt}
+                  videoId={videoId}
+                  addFunc={this.props.onAdd}
+                  onPlay={this.props.onPlay}
+                  AddToPlaylist={this.props.AddToPlaylist}
+                  duration={duration}
+                />
+              </CSSTransition>
+            );
+          }
         )}
       </div>
     );

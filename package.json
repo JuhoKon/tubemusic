@@ -29,6 +29,7 @@
     "react-fast-compare": "^2.0.4",
     "react-flip-move": "^3.0.4",
     "react-helmet": "^5.2.1",
+    "react-lazy-load-image-component": "^1.5.0",
     "react-marquee": "^1.0.0",
     "react-moment": "^0.9.7",
     "react-player": "^2.3.1",

@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./videolist.css";
 import "moment-duration-format";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Videoitem extends Component {
   onAddClick = (id) => {
@@ -33,6 +36,7 @@ class Videoitem extends Component {
       duration: id.duration,
       publishedAt: id.publishedAt,
       channelTitle: id.channelTitle,
+      thumbnail: id.thumbnail,
       date: Date.now(),
     });
   };
@@ -51,13 +55,31 @@ class Videoitem extends Component {
           <CardBody>
             <Row>
               <Col xs="2" sm="2">
-                <div className="placeforbutton">
-                  <Button
+                <div
+                  className="thumbnailbutton"
+                  onClick={this.onPlayClick.bind(this, this.props)}
+                >
+                  {this.props.thumbnail && (
+                    <LazyLoadImage
+                      height={70}
+                      src={this.props.thumbnail} // use normal <img> attributes as props
+                      width={70}
+                      style={{ position: "absolute" }}
+                      id="thumbnail"
+                    />
+                  )}
+                  <FontAwesomeIcon
+                    className="Active"
+                    size={"lg"}
+                    icon={faPlay}
+                    id="thumbnail2"
+                  />
+                  {/*     <Button
                     className="btn btn-secondary float-right btn-item"
                     onClick={this.onPlayClick.bind(this, this.props)}
                   >
                     Play
-                  </Button>
+                  </Button> */}
                 </div>
               </Col>
               <Col xs="7" sm="7">
@@ -95,10 +117,11 @@ class Videoitem extends Component {
                 </div>
               </Col>
             </Row>
+
             <Row>
-              <Col xs="4" sm="4">
-                <small className="float-left">
-                  Length&nbsp;
+              <Col xs="12" sm="12">
+                <small className="float">
+                  {/*     Length&nbsp; */}
                   {this.props.duration}
                 </small>
               </Col>

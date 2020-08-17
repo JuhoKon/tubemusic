@@ -3,6 +3,9 @@ import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./playlist.css";
 import isEqual from "react-fast-compare";
 import "moment-duration-format";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 class Playlistitem extends Component {
   state = {
     playlist: this.props.playlist,
@@ -48,13 +51,25 @@ class Playlistitem extends Component {
         <CardBody>
           <Row>
             <Col xs="2" sm="2">
-              <div className="placeforbutton">
-                <Button
-                  className="btn btn-secondary float-right btn-item"
-                  onClick={this.onPlayClick.bind(this, this.props)}
-                >
-                  Play
-                </Button>
+              <div
+                className="thumbnailbuttonplaylist "
+                onClick={this.onPlayClick.bind(this, this.props)}
+              >
+                {this.props.thumbnail && (
+                  <LazyLoadImage
+                    height={60}
+                    src={this.props.thumbnail} // use normal <img> attributes as props
+                    width={60}
+                    style={{ position: "absolute" }}
+                    id="thumbnail"
+                  />
+                )}
+                <FontAwesomeIcon
+                  className="Active"
+                  size={"lg"}
+                  icon={faPlay}
+                  id="thumbnail2"
+                />
               </div>
             </Col>
             <Col xs="6" sm="6">

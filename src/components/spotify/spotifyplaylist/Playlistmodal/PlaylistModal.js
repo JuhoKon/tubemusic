@@ -79,7 +79,7 @@ class PlaylistModal extends Component {
     let numberOfTracks = this.state.toBeImportedPlaylist.length;
 
     let step = (1 / numberOfTracks) * 100;
-    let batchSize = 4; //MAX 500
+    let batchSize = 25; //MAX 500
     let left = 0;
     while (numberOfTracks > left) {
       let res = await handleScrape(tracks.slice(left, left + batchSize));
