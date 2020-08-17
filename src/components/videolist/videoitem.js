@@ -15,6 +15,7 @@ class Videoitem extends Component {
       duration: id.duration,
       publishedAt: id.publishedAt,
       channelTitle: id.channelTitle,
+      artists: id.artists,
     });
   };
   onPlayClick = (id) => {
@@ -25,6 +26,7 @@ class Videoitem extends Component {
       duration: id.duration,
       publishedAt: id.publishedAt,
       channelTitle: id.channelTitle,
+      artists: id.artists,
     });
   };
   onAddToPlaylist = (id) => {
@@ -37,6 +39,7 @@ class Videoitem extends Component {
       publishedAt: id.publishedAt,
       channelTitle: id.channelTitle,
       thumbnail: id.thumbnail,
+      artists: id.artists,
       date: Date.now(),
     });
   };
@@ -84,7 +87,8 @@ class Videoitem extends Component {
               </Col>
               <Col xs="7" sm="7">
                 <CardText>
-                  {this.props.title} - {this.props.artistTitle}
+                  {this.props.title} -{" "}
+                  {this.props.artists && this.props.artists[0].name}
                 </CardText>
               </Col>
               <Col xs="2" sm="2">

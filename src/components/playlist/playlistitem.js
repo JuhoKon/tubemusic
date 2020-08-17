@@ -56,7 +56,7 @@ class Playlistitem extends Component {
                 onClick={this.onPlayClick.bind(this, this.props)}
               >
                 {this.props.thumbnail && (
-                  <LazyLoadImage
+                  <img
                     height={60}
                     src={this.props.thumbnail} // use normal <img> attributes as props
                     width={60}
@@ -73,7 +73,8 @@ class Playlistitem extends Component {
               </div>
             </Col>
             <Col xs="6" sm="6">
-              <CardText>{this.props.title}</CardText>
+              <CardText>{this.props.title} </CardText>{" "}
+              {this.props.artists && this.props.artists[0].name}
             </Col>
             <Col xs="2" sm="2">
               <small className="float-left">{this.props.duration}</small>

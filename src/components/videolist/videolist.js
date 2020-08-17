@@ -64,7 +64,7 @@ class Videolist extends Component {
                   onPlay={this.props.onPlay}
                   AddToPlaylist={this.props.AddToPlaylist}
                   duration={duration}
-                  artistTitle={artists[0].name}
+                  artists={artists}
                 />
               </CSSTransition>
             );

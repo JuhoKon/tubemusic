@@ -57,6 +57,7 @@ type HomepageState = {
   focusedTab: string;
   dbitems: any;
   shuffle: boolean;
+  artist?: string;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -116,6 +117,7 @@ export default class Homepage extends Component<any, HomepageState> {
       focusedTab: "1",
       dbitems: [],
       shuffle: false,
+      artist: "",
     };
   }
   componentDidUpdate(prevProps: any) {
@@ -640,7 +642,7 @@ export default class Homepage extends Component<any, HomepageState> {
       playing: true,
     });
   }
-  onPlay(item: Song) {
+  onPlay(item: any) {
     //sets given item to be played
     if (!item) return;
     console.log(item);
@@ -649,6 +651,7 @@ export default class Homepage extends Component<any, HomepageState> {
     const videoId = item.videoId;
     const title = item.title;
     const duration = item.duration;
+    const artist = item.artists && item.artists[0].name;
     //console.log(item);
     const url = "https://www.youtube.com/watch?v=" + videoId;
     if (url === this.state.url) {
@@ -660,6 +663,7 @@ export default class Homepage extends Component<any, HomepageState> {
       playing: true,
       updated: true,
       title: title,
+      artist: artist ? artist : null,
     });
     /*this.setState({
       title: title,
@@ -812,6 +816,7 @@ export default class Homepage extends Component<any, HomepageState> {
                 playlistId={this.state.playlistId}
                 setShuffle={this.setShuffle}
                 isShuffle={this.state.shuffle}
+                artist={this.state.artist}
               />
             </Col>
           </Row>

@@ -12,6 +12,7 @@ class Song implements song {
   videoId: string;
   uniqueId: number;
   duration: string;
+  artists?: any[];
   constructor(
     title: string,
     channelTitle: string,

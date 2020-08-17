@@ -19,6 +19,7 @@ const SortableItem = sortableElement(
     editMode,
     playNext,
     thumbnail,
+    artists,
   }) => (
     <Playlistitem
       key={uniqueId}
@@ -34,12 +35,14 @@ const SortableItem = sortableElement(
       editMode={editMode}
       playNext={playNext}
       thumbnail={thumbnail && thumbnail}
+      artists={artists}
     />
   )
 );
 export default class PlaylistItemsList extends Component {
   renderRow = ({ index, style }) => {
     const playlist = this.props.playlist;
+    console.log(playlist);
     const {
       title,
       publishedAt,
@@ -47,6 +50,7 @@ export default class PlaylistItemsList extends Component {
       uniqueId,
       duration,
       thumbnail,
+      artists,
     } = playlist[index];
     //const { value } = items[index];
     return (
@@ -66,6 +70,7 @@ export default class PlaylistItemsList extends Component {
           editMode={this.props.editMode}
           playNext={this.props.playNext}
           thumbnail={thumbnail && thumbnail}
+          artists={artists}
         />
       </div>
     );

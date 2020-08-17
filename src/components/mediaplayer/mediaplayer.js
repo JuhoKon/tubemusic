@@ -311,17 +311,26 @@ export default class MediaPlayer extends Component {
   /* Tooltip is not working correctly. Fix it !*/
   render() {
     const { playing, volume, duration, played } = this.state;
+    console.log(this.props);
     return (
       <div className="MediaPlayerdiv">
         <Row>
           <Col sm="3">
-            {this.state.title && this.state.title.length > 26 ? (
+            {this.state.title && this.state.title.length > 0 ? (
               <span className="marquee">
-                <span>{this.state.title}</span>
-                <span>{this.state.title}</span>
+                <span>
+                  {this.state.title} - {this.props.artist}
+                </span>
+                <span>
+                  {" "}
+                  {this.state.title} - {this.props.artist}
+                </span>
               </span>
             ) : (
-              <p className="titleplaying">{this.state.title}</p>
+              <p className="titleplaying">
+                {" "}
+                {this.state.title} - {this.props.artist}
+              </p>
             )}
 
             <Tooltip
@@ -330,7 +339,7 @@ export default class MediaPlayer extends Component {
               target="TooltipExample"
               toggle={this.toggletip}
             >
-              {this.state.title}
+              {this.state.title} - {this.props.artist}
             </Tooltip>
             <div className="testi123" id="TooltipExample">
               <ReactPlayer

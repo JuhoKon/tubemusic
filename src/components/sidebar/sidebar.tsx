@@ -57,13 +57,13 @@ class Sidebar extends Component<any, any> {
         <Tooltip
           placement="top"
           isOpen={this.state.tooltipOpen}
-          target="TooltipExample"
+          target="TooltipExample2"
           toggle={this.toggletip}
         >
           Refresh playlists
         </Tooltip>
         <div
-          id="TooltipExample"
+          id="TooltipExample2"
           className="refreshbuttonarea"
           onClick={this.getPlaylists2.bind(this, this.props)}
         >
