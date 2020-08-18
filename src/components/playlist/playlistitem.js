@@ -74,7 +74,9 @@ class Playlistitem extends Component {
             </Col>
             <Col xs="6" sm="6">
               <CardText>{this.props.title} </CardText>{" "}
-              {this.props.artists && this.props.artists[0].name}
+              {this.props.artists && (
+                <RenderArtists artists={this.props.artists} />
+              )}
             </Col>
             <Col xs="2" sm="2">
               <small className="float-left">{this.props.duration}</small>
@@ -115,5 +117,9 @@ class Playlistitem extends Component {
     );
   }
 }
+
+const RenderArtists = (props) => {
+  return props.artists.map((artist) => <>{artist.name} &nbsp;</>);
+};
 //actions we want to use as second paranthesis
 export default Playlistitem;

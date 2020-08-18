@@ -66,6 +66,7 @@ class Playlist extends Component {
     this.props.onDeleteFromPlaylist(item);
   }
   playPlaylist(playlist) {
+    console.log(playlist);
     console.log("playPlaylist");
     this.props.playPlaylist(playlist);
   }
@@ -127,7 +128,7 @@ class Playlist extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    //console.log(filteredData);
+    console.log(filteredData);
     return (
       <div>
         <div className="btn-group ">

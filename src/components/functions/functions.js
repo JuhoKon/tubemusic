@@ -6,8 +6,8 @@ import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
-const API = "https://tubemusicbackend.herokuapp.com";
-//const API = "http://localhost:8080";
+//const API = "https://tubemusicbackend.herokuapp.com";
+const API = "http://localhost:8080";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 axios.defaults.timeout = 25000;
 export const handleScrape = async (items) => {
@@ -360,4 +360,84 @@ export const tokenConfig = () => {
     }
   }
   return config;
+};
+/** */
+
+export const searchArtists = async (query) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      query: query,
+    },
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  let res = await axios
+    .get(API + "/scrape/search_artists", config)
+    //.get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
+    .catch((err) => {
+      handleError(err);
+    });
+  if (res) {
+    return res.data.array;
+  } else {
+    return null;
+  }
+};
+export const getArtistData = async (query) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      query: query,
+    },
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  let res = await axios
+    .get(API + "/scrape/get_artist_data", config)
+    //.get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
+    .catch((err) => {
+      handleError(err);
+    });
+  if (res) {
+    return res.data.array;
+  } else {
+    return null;
+  }
+};
+export const getPLaylist = async (query) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      query: query,
+    },
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  let res = await axios
+    .get(API + "/scrape/get_playlist", config)
+    //.get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
+    .catch((err) => {
+      handleError(err);
+    });
+  if (res) {
+    return res.data.array;
+  } else {
+    return null;
+  }
 };

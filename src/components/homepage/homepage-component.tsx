@@ -24,6 +24,7 @@ import {
   addUserPlaylist,
   deleteUserPlaylist,
   updateUserPlaylist,
+  searchArtists,
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import Spinner from "../spinner/spinner4";
@@ -132,12 +133,35 @@ export default class Homepage extends Component<any, HomepageState> {
       });
     }
   }
+  getArtists = async (query: any) => {
+    this.setState({
+      error: false,
+      loading: true,
+    });
+    const result = await searchArtists(query);
+    this.setState({
+      items: result,
+      loading: false,
+    });
+  };
   setShuffle() {
     this.setState({
       shuffle: !this.state.shuffle,
     });
   }
+  setArtist = (artists: any) => {
+    if (!artists || !artists[0]) {
+      this.setState({
+        artist: "",
+      });
+      return;
+    }
+    this.setState({
+      artist: artists[0].name,
+    });
+  };
   playNext(item: Song) {
+    console.log(item);
     let a = Object.assign({}, item);
     a["uniqueId"] = Math.random();
     this.state.queue.unshift(a);
@@ -240,6 +264,7 @@ export default class Homepage extends Component<any, HomepageState> {
   }
   playPlaylist(playlist: Array<Song>) {
     //replaces queue with active playlist
+    console.log(playlist);
     var itemArray = [];
     for (let i = 0; i < playlist.length; i++) {
       if (i === 0) {
@@ -249,8 +274,12 @@ export default class Homepage extends Component<any, HomepageState> {
           playlist[i].channelTitle,
           playlist[i].videoId,
           Math.random(),
-          playlist[i].duration
+          playlist[i].duration,
+          playlist[i].artists,
+          playlist[i].album
         );
+        console.log(playlist[i].artists);
+        console.log(song);
         this.onPlay(song);
       } else {
         //other elements go to queue
@@ -259,7 +288,9 @@ export default class Homepage extends Component<any, HomepageState> {
           playlist[i].channelTitle,
           playlist[i].videoId,
           Math.random(),
-          playlist[i].duration
+          playlist[i].duration,
+          playlist[i].artists,
+          playlist[i].album
         );
         itemArray.push(song);
       }
@@ -296,7 +327,9 @@ export default class Homepage extends Component<any, HomepageState> {
         playlist[i].channelTitle,
         playlist[i].videoId,
         Math.random(),
-        playlist[i].duration
+        playlist[i].duration,
+        playlist[i].artists,
+        playlist[i].album
       );
       queue.push(song);
     }
@@ -381,6 +414,7 @@ export default class Homepage extends Component<any, HomepageState> {
     });
     const result = await handleSubmit(termFromSearch);
     //const result = await handleSubmit_db(termFromSearch);
+
     console.log(result.length);
     if (!result) {
       this.setState({
@@ -651,7 +685,7 @@ export default class Homepage extends Component<any, HomepageState> {
     const videoId = item.videoId;
     const title = item.title;
     const duration = item.duration;
-    const artist = item.artists && item.artists[0].name;
+    const artist = item.artists && item.artists[0] && item.artists[0].name;
     //console.log(item);
     const url = "https://www.youtube.com/watch?v=" + videoId;
     if (url === this.state.url) {
@@ -766,6 +800,7 @@ export default class Homepage extends Component<any, HomepageState> {
                 handleSubmitdb={this.handleSubmitdb}
                 handleDB={this.handleDB}
                 setTab={this.setTab}
+                getArtists={this.getArtists}
               />
               <hr />
               <Videolist
@@ -800,6 +835,7 @@ export default class Homepage extends Component<any, HomepageState> {
           <Row>
             <Col sm="12" className="mediaplayer">
               <MediaPlayer
+                setArtist={this.setArtist}
                 ref={this.ref}
                 array={queue}
                 onRemove={this.onDelete}

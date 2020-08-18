@@ -79,6 +79,18 @@
 
   z-index: 500;
 }
+.thumbnailbutton2 {
+  padding: 30px;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  position: relative;
+  top: 15%;
+  background-color: rgb(82 82 82 / 30%);
+  border-radius: 25px;
+
+  z-index: 500;
+}
 #thumbnail {
   position: absolute;
   top: 0%;
@@ -103,4 +115,13 @@
 }
 #thumbnail2:active {
   transform: scale(0.85) !important;
+}
+.badgeWrapper {
+  font-size: 17px;
+  margin-top: 15px;
+  display: flex;
+
+  flex-flow: row wrap;
+
+  justify-content: space-between;
 }

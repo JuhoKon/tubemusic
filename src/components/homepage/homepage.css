@@ -125,7 +125,7 @@
 }
 .homepage-div .modal-content {
   animation-name: blurEffect;
-  animation-duration: 0.7s;
+  animation-duration: 0.2s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
@@ -183,7 +183,7 @@
 }
 .homepage-div2 .modal-content {
   animation-name: blurEffect;
-  animation-duration: 0.7s;
+  animation-duration: 0.2s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
@@ -198,7 +198,7 @@
 label {
   color: #fff !important;
   animation-name: blurEffect;
-  animation-duration: 0.8s;
+  animation-duration: 0.2s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
@@ -258,7 +258,7 @@ button.btn-secondary.disabled {
 }
 .modal-content {
   animation-name: blurEffect;
-  animation-duration: 0.7s;
+  animation-duration: 0.2s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;

@@ -5,6 +5,7 @@ import isEqual from "react-fast-compare";
 import LoadingSpinner from "../spinner/spinner";
 import "./videolist.css";
 import "simplebar/dist/simplebar.min.css";
+import ModalExample from "../modal/Modal";
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 class Videolist extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Videolist extends Component {
     console.log(items);
     return (
       <div id="videolist33">
+        {/*       <ModalExample /> */}
         {this.state.loading ? (
           <div className="loadingPlace">
             <LoadingSpinner color="#545454" />
@@ -49,6 +51,9 @@ class Videolist extends Component {
             duration,
             thumbnails,
             artists,
+            resultType,
+            artist,
+            browseId,
           }) => {
             return (
               <CSSTransition key={uniqueId} timeout={500} classNames="fade">
@@ -65,6 +70,10 @@ class Videolist extends Component {
                   AddToPlaylist={this.props.AddToPlaylist}
                   duration={duration}
                   artists={artists}
+                  resultType={resultType}
+                  artist={artist}
+                  browseId={browseId}
+                  thumbnails={thumbnails}
                 />
               </CSSTransition>
             );

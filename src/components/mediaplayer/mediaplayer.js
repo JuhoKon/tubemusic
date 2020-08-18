@@ -200,9 +200,12 @@ export default class MediaPlayer extends Component {
         song = this.state.array[0];
       }
       this.props.setTitle(song.title);
+      this.props.setArtist(song.artists);
       const videoId = song.videoId;
       const url = "https://www.youtube.com/watch?v=" + videoId;
       const duration = song.duration;
+      const artists = song.artists;
+      console.log(song);
       //console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
@@ -272,8 +275,6 @@ export default class MediaPlayer extends Component {
     this.seekTo0();
   };
   handleDuration = async (duration) => {
-    console.log("onDuration", duration);
-
     if (this.state.durationFromObject !== format(duration)) {
       const item = JSON.stringify({
         duration: format(duration),
@@ -293,6 +294,7 @@ export default class MediaPlayer extends Component {
   };
 
   handleSeekChange = (e) => {
+    console.log(this.props);
     this.setState({ played: parseFloat(e.target.value) });
   };
 
@@ -301,7 +303,6 @@ export default class MediaPlayer extends Component {
     this.player.seekTo(parseFloat(e.target.value));
   };
   handleProgress = (state) => {
-    console.log("onProgress", state);
     // We only want to update time slider if we are not currently seeking
     if (!this.state.seeking) {
       this.setState(state);
@@ -311,7 +312,7 @@ export default class MediaPlayer extends Component {
   /* Tooltip is not working correctly. Fix it !*/
   render() {
     const { playing, volume, duration, played } = this.state;
-    console.log(this.props);
+
     return (
       <div className="MediaPlayerdiv">
         <Row>

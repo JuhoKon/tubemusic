@@ -12,19 +12,24 @@ class Song implements song {
   videoId: string;
   uniqueId: number;
   duration: string;
-  artists?: any[];
+  artists?: any;
+  album?: any;
   constructor(
     title: string,
     channelTitle: string,
     videoId: string,
     uniqueId: number,
-    duration: string
+    duration: string,
+    artists: any,
+    album: any
   ) {
     this.title = title;
     this.channelTitle = channelTitle;
     this.videoId = videoId;
     this.uniqueId = uniqueId;
     this.duration = duration;
+    this.artists = artists;
+    this.album = album;
   }
 }
 export { Song };

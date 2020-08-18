@@ -11,6 +11,8 @@ import {
   CardText,
   Row,
   Col,
+  FormGroup,
+  Label,
 } from "reactstrap";
 import classnames from "classnames";
 import "./search.css";
@@ -24,6 +26,7 @@ class Search extends Component {
     dbtext: "",
     activeTab: "1",
     autoCompleteItems: [{ title: "", _id: "s" }],
+    checked: false,
   };
   onChangetext = async (e) => {
     let value = e.target.value;
@@ -50,9 +53,15 @@ class Search extends Component {
   };
   submit = (e) => {
     e.preventDefault();
-
+    if (this.state.checked) {
+      this.getArtists();
+      return;
+    }
     this.props.handleSubmit(this.state.text);
   };
+  getArtists() {
+    this.props.getArtists(this.state.text);
+  }
   submitDb = async (e) => {
     e.preventDefault();
     //let res = await handleSubmit_db(this.state.text);
@@ -63,6 +72,9 @@ class Search extends Component {
       activeTab: i,
     });
     this.props.setTab(i);
+  };
+  boxChange = (evt) => {
+    this.setState({ checked: evt.target.checked });
   };
   render() {
     let { dbtext, activeTab } = this.state;
@@ -212,9 +224,21 @@ class Search extends Component {
                       onChange={(e) => this.onChangetext(e)}
                       onSelect={(value) => this.onSelect(value)}
                     />
+
                     <InputGroupAddon addonType="append">
                       <Button color="secondary">Search</Button>
                     </InputGroupAddon>
+                    <FormGroup check>
+                      <Label check>
+                        <Input
+                          name="checked"
+                          onChange={this.boxChange}
+                          checked={this.state.checked}
+                          type="checkbox"
+                        />{" "}
+                        Search for artists
+                      </Label>
+                    </FormGroup>
                   </InputGroup>
                 </form>
               </Col>
