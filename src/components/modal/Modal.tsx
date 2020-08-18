@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 
 const ModalExample = (props: any) => {
-  const { buttonLabel, className } = props;
+  const { title, className, show } = props;
   const [modal, setModal] = useState(false);
   const [backdrop, setBackdrop] = useState(true);
   const [keyboard, setKeyboard] = useState(true);
@@ -33,42 +33,15 @@ const ModalExample = (props: any) => {
 
   return (
     <div>
-      <Form inline onSubmit={(e) => e.preventDefault()}>
-        <FormGroup>
-          <Label for="backdrop">Backdrop value</Label>{" "}
-          <Input
-            type="select"
-            name="backdrop"
-            id="backdrop"
-            onChange={changeBackdrop}
-          >
-            <option value="true">true</option>
-            <option value="false">false</option>
-            <option value="static">"static"</option>
-          </Input>
-        </FormGroup>
-        <FormGroup className="mx-2" check>
-          <Label check>
-            <Input
-              type="checkbox"
-              checked={keyboard}
-              onChange={changeKeyboard}
-            />{" "}
-            Keyboard
-          </Label>
-        </FormGroup>{" "}
-        <Button color="danger" onClick={toggle}>
-          {buttonLabel}
-        </Button>
-      </Form>
+      <Form inline onSubmit={(e) => e.preventDefault()}></Form>
       <Modal
-        isOpen={modal}
-        toggle={toggle}
+        isOpen={show}
+        toggle={() => props.toggleModal()}
         className={className}
         backdrop={backdrop}
         keyboard={keyboard}
       >
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalHeader toggle={() => props.toggleModal()}>{title}</ModalHeader>
         <ModalBody>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad

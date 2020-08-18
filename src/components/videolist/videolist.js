@@ -14,6 +14,7 @@ class Videolist extends Component {
       loading: this.props.loading,
       error: this.props.error,
       errorText: this.props.errorText,
+      showModal: false,
     };
   }
   componentDidUpdate(prevProps) {
@@ -26,13 +27,21 @@ class Videolist extends Component {
       });
     }
   }
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal,
+    });
+  };
   render() {
     const items = this.props.items;
     //console.log(this.state.error);
     console.log(items);
     return (
       <div id="videolist33">
-        {/*       <ModalExample /> */}
+        <ModalExample
+          show={this.state.showModal}
+          toggleModal={this.toggleModal}
+        />
         {this.state.loading ? (
           <div className="loadingPlace">
             <LoadingSpinner color="#545454" />
@@ -74,6 +83,7 @@ class Videolist extends Component {
                   artist={artist}
                   browseId={browseId}
                   thumbnails={thumbnails}
+                  toggleModal={this.toggleModal}
                 />
               </CSSTransition>
             );

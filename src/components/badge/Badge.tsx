@@ -5,7 +5,7 @@ const getRandomString = () => {
   if (randomNumber > 90) {
     return "dark";
   } else if (randomNumber > 80) {
-    return "secondary";
+    return "danger";
   } else if (randomNumber > 70) {
     return "success";
   } else if (randomNumber > 60) {
@@ -18,6 +18,8 @@ const getRandomString = () => {
     return "light";
   } else if (randomNumber > 20) {
     return "primary";
+  } else {
+    return "success";
   }
 };
 const CustomBadge = (props: any) => {
@@ -25,11 +27,12 @@ const CustomBadge = (props: any) => {
     <div>
       <Badge
         style={{
-          padding: "10px",
+          padding: "8px",
           borderRadius: "2rem",
+          margin: "5px",
         }}
         href="#"
-        color={getRandomString()}
+        color={"info"}
       >
         {props.title}
       </Badge>

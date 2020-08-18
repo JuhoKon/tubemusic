@@ -134,9 +134,11 @@ export default class Homepage extends Component<any, HomepageState> {
     }
   }
   getArtists = async (query: any) => {
+    if (!query) return;
     this.setState({
       error: false,
       loading: true,
+      items: [],
     });
     const result = await searchArtists(query);
     this.setState({
@@ -204,6 +206,7 @@ export default class Homepage extends Component<any, HomepageState> {
     return items;
   };
   async handleDB(items: any, term: string) {
+    if (!term) return;
     this.setState({
       error: false,
       loading: true,
@@ -405,6 +408,7 @@ export default class Homepage extends Component<any, HomepageState> {
     //this.Updateplaylist(this.state.playlistName, this.state.playlistId);
   }
   async handleSubmit(termFromSearch: String, tries = 10) {
+    if (!termFromSearch) return;
     //handles search-query from search bar webscraping
     this.setState({
       //set loading to true

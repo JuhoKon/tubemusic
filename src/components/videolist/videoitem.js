@@ -62,11 +62,21 @@ class Videoitem extends Component {
   componentDidUpdate() {
     console.log("Hello");
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!isEqual(this.props, nextProps)) {
+      return true;
+    }
+    if (!isEqual(this.state, nextState)) {
+      return true;
+    }
+    return false;
+  }
   async componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       if (this.props.browseId !== prevProps.browseId) {
         const res = await getArtistData(this.props.browseId);
+        if (!res) return;
         this.setState({
           albums: res.albums,
           subscribers: res.subscribers,
@@ -208,7 +218,9 @@ class Videoitem extends Component {
                     </div>
                   </Col>
                   <Col xs="7" sm="7">
-                    <CardText>{this.props.artist}</CardText>
+                    <CardText>
+                      <h5>{this.props.artist}</h5>
+                    </CardText>
                   </Col>
                   <Col xs="2" sm="2">
                     <br />
@@ -224,7 +236,10 @@ class Videoitem extends Component {
                   <Col xs="12" sm="12">
                     <div className="badgeWrapper">
                       {
-                        <RenderAlbums albums={this.state.albums} />
+                        <RenderAlbums
+                          toggleModal={this.props.toggleModal}
+                          albums={this.state.albums}
+                        />
                         /*     Length&nbsp; */
                       }
                     </div>
@@ -339,7 +354,9 @@ const RenderAlbums = (props) => {
   if (!props.albums) return null;
   if (!props.albums.results) return null;
   return props.albums.results.map((album) => (
-    <CustomBadge title={album.title} />
+    <div onClick={() => props.toggleModal()}>
+      <CustomBadge title={album.title} />
+    </div>
   ));
 };
 //actions we want to use as second paranthesis
