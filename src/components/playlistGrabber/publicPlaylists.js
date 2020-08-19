@@ -2,18 +2,17 @@ import React, { Component } from "react";
 import { getPlaylists, getPlayListById } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import PlaylistsList from "./playlistsList";
-import PlayListItem from "./playListItem";
+
 import PlayListEditor from "./playlistEditor/playlistEditor";
-import TableComponent from "../Tablecomponent/TableComponent";
-//import PlaylistsList from "../admin/PlaylistsList";
+
 import isEqual from "react-fast-compare";
 import Spinner from "../spinner/spinnerNo2";
 import { Row, Col, Input } from "reactstrap";
 import GenresOptions from "../functions/genres";
 import "./styles.css";
-import Spinner2 from "../spinner/spinner3";
+
 //https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export default class PublicPlaylists extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +25,7 @@ export default class PublicPlaylists extends Component {
       filteredData: [],
       genreFilteredData: [],
       sortedPlaylists: [],
-      data: this.props.data
+      data: this.props.data,
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
     this.getPlayListById = this.getPlayListById.bind(this);
@@ -35,7 +34,7 @@ export default class PublicPlaylists extends Component {
 
   async loadPlaylists() {
     this.setState({
-      loadingPlaylists: true
+      loadingPlaylists: true,
     });
     await timeout(300);
     const res = await getPlaylists();
@@ -44,19 +43,19 @@ export default class PublicPlaylists extends Component {
       filteredData: res.data.Playlist,
       genreFilteredData: res.data.Playlist,
       sortedPlaylists: res.data.Playlist,
-      loadingPlaylists: false
+      loadingPlaylists: false,
     });
   }
   async getPlayListById(id) {
     this.setState({
-      loading: true
+      loading: true,
     });
     //tähä vois laittaa ihan pienen delayn.
     await timeout(2500);
     const result = await getPlayListById(id);
     this.setState({
       tracks: result.data.playlist,
-      loading: false
+      loading: false,
     });
     //console.log(result);
   }
@@ -64,12 +63,12 @@ export default class PublicPlaylists extends Component {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        user: this.props.data
+        user: this.props.data,
       });
       if (this.props.data) {
         this.setState({
           Userplaylists: this.props.data.playlists,
-          data: this.props.data
+          data: this.props.data,
         });
       }
     }
@@ -79,13 +78,13 @@ export default class PublicPlaylists extends Component {
     if (currentUser && currentUser.token) {
       this.setState({
         token: currentUser.token,
-        data: this.props.data
+        data: this.props.data,
       });
       this.loadPlaylists();
     }
     this.props.loadUser();
   }
-  onSortChange = e => {
+  onSortChange = (e) => {
     let filter = e.target.value;
     const { playlists } = this.state;
     switch (filter) {
@@ -106,10 +105,10 @@ export default class PublicPlaylists extends Component {
     }
     console.log("Yeps...");
     this.setState({
-      sortedPlaylists: playlists
+      sortedPlaylists: playlists,
     });
   };
-  onChange = e => {
+  onChange = (e) => {
     //genre
     let filter = e.target.value;
     console.log(filter);
@@ -118,10 +117,10 @@ export default class PublicPlaylists extends Component {
     const { playlists } = this.state;
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
-    const filteredData = playlists.filter(item => {
+    const filteredData = playlists.filter((item) => {
       if (item === null || typeof item === "undefined") return playlists; //problems
       return Object.keys(item).some(
-        key =>
+        (key) =>
           typeof item[key] === "string" &&
           key !== "_id" && //TODO: make it so only it can be filtered only by name or owner?
           //only filter based on name
@@ -130,29 +129,27 @@ export default class PublicPlaylists extends Component {
     });
     this.setState({
       genreFilter: e.target.value,
-      genreFilteredData: filteredData
+      genreFilteredData: filteredData,
     });
   };
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ filter: event.target.value });
   };
 
   render() {
     console.log(this.state);
     const { token, filter } = this.state;
-    const { playlists, genreFilteredData, sortedPlaylists } = this.state;
+    const { genreFilteredData, sortedPlaylists } = this.state;
     const lowercasedFilter = filter.toLowerCase();
-    console.log(this.state.loadingPlaylists);
+
     let finalSorted = sortedPlaylists.filter(
-      item => -1 !== genreFilteredData.indexOf(item)
+      (item) => -1 !== genreFilteredData.indexOf(item)
     );
 
-    console.log(sortedPlaylists);
-    console.log(genreFilteredData);
-    const filteredData = finalSorted.filter(item => {
+    const filteredData = finalSorted.filter((item) => {
       if (item === null || typeof item === "undefined") return finalSorted; //problems
       return Object.keys(item).some(
-        key =>
+        (key) =>
           typeof item[key] === "string" &&
           key !== "_id" &&
           key !== "createdAt" &&

@@ -6,7 +6,7 @@ import LoadingSpinner from "../spinner/spinner";
 import "./videolist.css";
 import "simplebar/dist/simplebar.min.css";
 import ModalExample from "../modal/Modal";
-const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 class Videolist extends Component {
   constructor(props) {
     super(props);

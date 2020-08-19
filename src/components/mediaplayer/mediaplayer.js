@@ -3,17 +3,9 @@ import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
 import { updatePlaylistSongTime } from "../functions/functions";
-import {
-  Container,
-  CustomInput,
-  FormGroup,
-  Label,
-  Tooltip,
-  Row,
-  Col,
-} from "reactstrap";
-import { Button, Input } from "reactstrap";
-import ScrollText from "react-scroll-text";
+import { CustomInput, Tooltip, Row, Col } from "reactstrap";
+import { Button } from "reactstrap";
+
 import HistoryModal from "../player/history/History-modal";
 import { setTitle } from "../functions/functions";
 import Duration from "./duration";
@@ -217,6 +209,7 @@ export default class MediaPlayer extends Component {
         played: 0,
         durationFromObject: duration,
         videoId: videoId,
+        artists: artists,
       });
       toaster.notify(<span>Now playing: {song.title}</span>, {
         duration: 1200,
@@ -377,7 +370,6 @@ export default class MediaPlayer extends Component {
                   <Row>
                     <div className="durationcontrol">
                       <CustomInput
-                        type="range"
                         id="exampleCustomRange"
                         name="customRange"
                         type="range"

@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import isEqual from "react-fast-compare";
 import { List, AutoSizer } from "react-virtualized";
 import AdminPlaylistItem from "./AdminPlaylistItem";
-import { deletePlaylist } from "../functions/functions";
 
 class PlaylistsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       playlists: this.props.playlists,
-      token: this.props.token
+      token: this.props.token,
     };
   }
   componentDidUpdate(prevProps) {
@@ -17,7 +16,7 @@ class PlaylistsList extends Component {
       //if change in props
       this.setState({
         playlists: this.props.playlists,
-        token: this.props.token
+        token: this.props.token,
       });
     }
   }

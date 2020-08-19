@@ -3,7 +3,7 @@ import { Card, CardBody, CardText, Row, Col } from "reactstrap";
 
 import "moment-duration-format";
 import PlaylistModal from "./Playlistmodal/PlaylistModal";
-import LoadingSpinner from "../../spinner/spinner5";
+
 import {
   getPlaylistTracks,
   getRequestWithToken,
@@ -110,8 +110,7 @@ class PlaylistItem extends Component {
             ""
           )}
         </div>*/}
-        <a
-          //href="# "
+        <div
           style={{ cursor: "pointer" }}
           onClick={this.clickOnPlayList.bind(this, this.state)}
         >
@@ -141,7 +140,7 @@ class PlaylistItem extends Component {
               </Row>
             </CardBody>
           </Card>
-        </a>
+        </div>
         <PlaylistModal
           isOpen={this.state.modal}
           toggle={this.toggle}

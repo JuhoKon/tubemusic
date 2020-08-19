@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import { Card, CardBody, CardTitle, Button, Tooltip } from "reactstrap";
+import { Tooltip } from "reactstrap";
 import PlaylistItem from "./Playlist";
 import "./sidebar.css";
 import isEqual from "react-fast-compare";
 import CreateNew from "../playlist/createNew/createNew";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUmbrella,
-  faRetweet,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
+import { faRetweet } from "@fortawesome/free-solid-svg-icons";
 //todo: check for cuomponentdidupdate - tuliko uusia propseja, jos tuli niin tehdään niillä jottai?
 //force update tms jos tulee uusia propseja. ei tarvii ottaa omaa stateee. Tää homma ei piirrä itteesä uudellee jos ei state vaihu?
 //lisää suunnitelmia playlist.jsx

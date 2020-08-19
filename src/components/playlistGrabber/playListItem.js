@@ -3,7 +3,7 @@ import { Card, CardBody, CardText, Row, Col, Button } from "reactstrap";
 import Moment from "react-moment";
 import isEqual from "react-fast-compare";
 import "moment-duration-format";
-import { getPlayListById } from "../functions/functions";
+
 import { addUserPlaylist, deleteUserPlaylist } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 class PlayListItem extends Component {

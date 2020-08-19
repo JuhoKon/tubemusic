@@ -72,8 +72,7 @@ class App extends Component {
     });
   }
   render() {
-    const { currentUserInfo, token, isAuth } = this.state;
-    console.log(currentUserInfo);
+    const { currentUserInfo, token } = this.state;
 
     return (
       <div className="App wrapper">

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Card, CardBody, CardText, Row, Col, Button } from "reactstrap";
 import Moment from "react-moment";
 import "moment-duration-format";
-import { getPlayListById, deletePlaylist } from "../functions/functions";
+import { getPlayListById } from "../functions/functions";
 import AdminPlaylistModal from "./AdminPlaylistModal";
 
 class AdminPlaylistItem extends Component {
@@ -10,20 +10,20 @@ class AdminPlaylistItem extends Component {
     super(props);
     this.state = {
       modal: false,
-      loading: false
+      loading: false,
     };
     this.deletePlaylist = this.deletePlaylist.bind(this);
   }
   deletePlaylist() {
     console.log("Hey");
     this.setState({
-      loading: true
+      loading: true,
     });
     this.props.deletePlaylist(this.props.id);
   }
   async clickOnPlayList() {
     this.setState({
-      loading: true
+      loading: true,
     });
     const result = await getPlayListById(this.props.id);
 
@@ -32,18 +32,18 @@ class AdminPlaylistItem extends Component {
       playlistName: result.data.name,
       playlistId: result.data._id,
       loading: false,
-      private: result.data.private
+      private: result.data.private,
     });
     this.toggleList();
   }
   toggleList = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
   render() {

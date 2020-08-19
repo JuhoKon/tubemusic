@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge } from "reactstrap";
-const getRandomString = () => {
+/* const getRandomString = () => {
   const randomNumber = Math.random() * 100;
   if (randomNumber > 90) {
     return "dark";
@@ -21,7 +21,7 @@ const getRandomString = () => {
   } else {
     return "success";
   }
-};
+}; */
 const CustomBadge = (props: any) => {
   return (
     <div>

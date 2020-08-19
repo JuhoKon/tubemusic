@@ -20,8 +20,6 @@ export default class Homepage extends Component {
         Date.now() / 1000
       )
         this.props.history.push("/");
-      {
-      }
     }
     this.login = this.login.bind(this);
   }

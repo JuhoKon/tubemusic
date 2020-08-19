@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Button, Input } from "reactstrap";
-
-import LoadPlaylistModal from "./loadPlaylistModal";
 import SaveModal from "./save/saveModal";
 import CreateNew from "./createNew/createNew";
 import isEqual from "react-fast-compare";
@@ -114,7 +112,7 @@ class Playlist extends Component {
 
   render() {
     const { filter } = this.state;
-    const { playlists, playlist } = this.props;
+    const { playlist } = this.props;
 
     console.log(playlist);
     const lowercasedFilter = filter.toLowerCase();

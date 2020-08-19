@@ -4,13 +4,13 @@ import { getPlaylists, deletePlaylist } from "../functions/functions";
 import PlaylistsList from "./PlaylistsList";
 import { Row, Col } from "reactstrap";
 import "./admin.css";
-const timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 class AdminPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       playlists: [],
-      token: ""
+      token: "",
     };
     this.loadPlaylists = this.loadPlaylists.bind(this);
     this.deletePlaylist = this.deletePlaylist.bind(this);
@@ -19,7 +19,7 @@ class AdminPage extends Component {
     console.log("I shouldn't");
     let res = await getPlaylists();
     this.setState({
-      playlists: res.data.Playlist
+      playlists: res.data.Playlist,
     });
   }
   async deletePlaylist(id) {
@@ -31,7 +31,7 @@ class AdminPage extends Component {
     const currentUser = authenticationService.currentUserValue;
     if (currentUser && currentUser.token) {
       this.setState({
-        token: currentUser.token
+        token: currentUser.token,
       });
       this.loadPlaylists();
     }

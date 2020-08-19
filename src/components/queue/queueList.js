@@ -37,6 +37,7 @@ const SortableItem = sortableElement(
 export default class QueueList extends Component {
   renderRow = ({ index, style }) => {
     const queue = this.props.queue;
+    console.log(queue);
     const {
       title,
       publishedAt,

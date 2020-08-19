@@ -6,9 +6,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card,
-  CardTitle,
-  CardText,
   Row,
   Col,
   FormGroup,
@@ -17,8 +14,8 @@ import {
 import classnames from "classnames";
 import "./search.css";
 import ReactAutocomplete from "react-autocomplete";
-import { handleSubmit_db, autocomplete } from "../functions/functions";
-import { runInThisContext } from "vm";
+import { autocomplete } from "../functions/functions";
+
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 class Search extends Component {
   state = {
@@ -77,7 +74,7 @@ class Search extends Component {
     this.setState({ checked: evt.target.checked });
   };
   render() {
-    let { dbtext, activeTab } = this.state;
+    let { activeTab } = this.state;
     return (
       <div>
         <Nav tabs>

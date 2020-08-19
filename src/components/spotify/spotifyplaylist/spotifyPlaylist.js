@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SpotifyItem from "./spotifPlaylistitem";
 import isEqual from "react-fast-compare";
 import LoadingSpinner from "../../spinner/spinner";
-import { Row, Col, Input } from "reactstrap";
+import { Input } from "reactstrap";
 import "./spotifyPlaylist.css";
 class SpotifyPlaylist extends Component {
   constructor(props) {

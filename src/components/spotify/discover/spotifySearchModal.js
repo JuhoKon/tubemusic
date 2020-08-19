@@ -9,7 +9,7 @@ import {
   InputGroup,
   InputGroupAddon,
 } from "reactstrap";
-import { CSSTransition } from "react-transition-group";
+
 import { searchSpotifyPlaylists } from "../../functions/functions";
 import isEqual from "react-fast-compare";
 import SpotifyItem from "../spotifyplaylist/spotifPlaylistitem";
@@ -50,8 +50,6 @@ class DiscoveryModal extends Component {
   }
 
   render() {
-    console.log(this.state);
-    const { search } = this.state;
     return (
       <div>
         <Modal

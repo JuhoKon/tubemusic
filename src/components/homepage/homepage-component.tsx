@@ -3,11 +3,11 @@ import { Row, Col } from "reactstrap";
 import Videolist from "../videolist/videolist";
 import Search from "../search/search";
 import Queue from "../queue/queue";
-import Player from "../player/Player";
+
 import Playlist from "../playlist/playlist";
 import SideBar from "../sidebar/sidebar";
 import nameGenerator from "../functions/nameGenerator";
-import { Song, PlaylistObject } from "../classes/index";
+import { Song } from "../classes/index";
 import MediaPlayer from "../mediaplayer/mediaplayer";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
@@ -16,7 +16,6 @@ import "./homepage.css";
 import {
   handleSubmit,
   handleSubmit_db,
-  getPlaylists,
   makePlaylist,
   updatePlaylist,
   getPlayListById,
@@ -28,7 +27,7 @@ import {
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import Spinner from "../spinner/spinner4";
-import { runInThisContext } from "vm";
+
 var stringSimilarity = require("string-similarity");
 
 type HomepageState = {
@@ -718,7 +717,6 @@ export default class Homepage extends Component<any, HomepageState> {
     });
   }
   render() {
-    const songs = ["Rex Orange County - Sunflower", "...more songs "]; //easter eggs
     //console.log(this.state.error); /* ----TO CLEAN UP --- and switch to webscraping instead of youtube API (it sucks)*/
     const queue = this.state.queue;
     const url = this.state.url;

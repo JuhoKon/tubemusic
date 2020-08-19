@@ -59,9 +59,7 @@ class Videoitem extends Component {
   playNextClick = (item) => {
     this.props.playNext(item);
   };
-  componentDidUpdate() {
-    console.log("Hello");
-  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (!isEqual(this.props, nextProps)) {
       return true;

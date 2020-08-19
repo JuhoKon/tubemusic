@@ -5,31 +5,14 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Input,
-  Label,
   Form,
-  FormGroup,
 } from "reactstrap";
 
 const ModalExample = (props: any) => {
   const { title, className, show } = props;
   const [modal, setModal] = useState(false);
-  const [backdrop, setBackdrop] = useState(true);
-  const [keyboard, setKeyboard] = useState(true);
 
   const toggle = () => setModal(!modal);
-
-  const changeBackdrop = (e: any) => {
-    let value = e.target.value;
-    if (value !== "static") {
-      value = JSON.parse(value);
-    }
-    setBackdrop(value);
-  };
-
-  const changeKeyboard = (e: any) => {
-    setKeyboard(e.currentTarget.checked);
-  };
 
   return (
     <div>
@@ -38,8 +21,8 @@ const ModalExample = (props: any) => {
         isOpen={show}
         toggle={() => props.toggleModal()}
         className={className}
-        backdrop={backdrop}
-        keyboard={keyboard}
+        backdrop={true}
+        keyboard={true}
       >
         <ModalHeader toggle={() => props.toggleModal()}>{title}</ModalHeader>
         <ModalBody>
