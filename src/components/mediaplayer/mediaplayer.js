@@ -511,12 +511,12 @@ export default class MediaPlayer extends Component {
           </Col>
         </Row>
         <div>
-          <tr>
+          {/*  <tr>
             <th>remaining</th>
             <td>
               <Duration seconds={duration * (1 - played)} />
             </td>
-          </tr>
+          </tr> */}
         </div>
       </div>
     );

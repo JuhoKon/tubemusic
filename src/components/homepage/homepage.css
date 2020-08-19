@@ -262,7 +262,7 @@ button.btn-secondary.disabled {
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-  background-color: rgb(24, 23, 23) !important;
+  background-color: rgb(35 35 35) !important;
 }
 h5.modal-title {
   color: #fff !important;

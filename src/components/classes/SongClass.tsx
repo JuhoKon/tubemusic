@@ -14,6 +14,8 @@ class Song implements song {
   duration: string;
   artists?: any;
   album?: any;
+  thumbnail?: any;
+  thumbnails?: any;
   constructor(
     title: string,
     channelTitle: string,
@@ -21,7 +23,9 @@ class Song implements song {
     uniqueId: number,
     duration: string,
     artists: any,
-    album: any
+    album: any,
+    thumbnail: any,
+    thumbnails: any
   ) {
     this.title = title;
     this.channelTitle = channelTitle;
@@ -30,6 +34,8 @@ class Song implements song {
     this.duration = duration;
     this.artists = artists;
     this.album = album;
+    this.thumbnail = thumbnail;
+    this.thumbnails = thumbnails;
   }
 }
 export { Song };

@@ -29,6 +29,9 @@ class Videoitem extends Component {
       publishedAt: id.publishedAt,
       channelTitle: id.channelTitle,
       artists: id.artists,
+      thumbnail: id.thumbnail,
+      thumbnails: id.thumbnails,
+      album: id.album,
     });
   };
   onPlayClick = (id) => {
@@ -74,13 +77,16 @@ class Videoitem extends Component {
       //if change in props
       if (this.props.browseId !== prevProps.browseId) {
         const res = await getArtistData(this.props.browseId);
+
         if (!res) return;
         this.setState({
           albums: res.albums,
           subscribers: res.subscribers,
+          singles: res.singles,
           views: res.views,
           description: res.description,
           songs: res.songs,
+          thumbnails: res.thumbnails,
         });
       }
     }
@@ -88,17 +94,29 @@ class Videoitem extends Component {
   async componentDidMount() {
     if (this.props.browseId) {
       const res = await getArtistData(this.props.browseId);
+      /*   console.log(res); */
       this.setState({
         albums: res.albums,
         subscribers: res.subscribers,
+        singles: res.singles,
         views: res.views,
         description: res.description,
         songs: res.songs,
+        thumbnails: res.thumbnails,
       });
     }
   }
   render() {
-    console.log(this.props);
+    /*     console.log(this.state); */
+    const {
+      albums,
+      subscribers,
+      views,
+      description,
+      songs,
+      thumbnails,
+      singles,
+    } = this.state;
     const RenderCard = (props) => {
       switch (props.resultType) {
         case "song":
@@ -195,14 +213,25 @@ class Videoitem extends Component {
             <Card
               className="card-2"
               id="videoitem"
-              onDoubleClick={this.onPlayClick.bind(this, this.props)}
+              /*     onDoubleClick={this.onPlayClick.bind(this, this.props)} */
             >
               <CardBody>
                 <Row>
                   <Col xs="2" sm="2">
                     <div
                       className="thumbnailbutton2"
-                      onClick={this.onPlayClick.bind(this, this.props)}
+                      onClick={() =>
+                        this.props.toggleArtistModal({
+                          albums,
+                          subscribers,
+                          views,
+                          description,
+                          songs,
+                          thumbnails,
+                          singles,
+                          artist: this.props.artist,
+                        })
+                      }
                     >
                       {this.props.thumbnails && (
                         <LazyLoadImage
@@ -216,7 +245,20 @@ class Videoitem extends Component {
                     </div>
                   </Col>
                   <Col xs="7" sm="7">
-                    <CardText>
+                    <CardText
+                      onClick={() =>
+                        this.props.toggleArtistModal({
+                          albums,
+                          subscribers,
+                          views,
+                          description,
+                          songs,
+                          thumbnails,
+                          singles,
+                          artist: this.props.artist,
+                        })
+                      }
+                    >
                       <h5>{this.props.artist}</h5>
                     </CardText>
                   </Col>
@@ -235,7 +277,7 @@ class Videoitem extends Component {
                     <div className="badgeWrapper">
                       {
                         <RenderAlbums
-                          toggleModal={this.props.toggleModal}
+                          toggleAlbumModal={this.props.toggleAlbumModal}
                           albums={this.state.albums}
                         />
                         /*     Length&nbsp; */
@@ -352,7 +394,7 @@ const RenderAlbums = (props) => {
   if (!props.albums) return null;
   if (!props.albums.results) return null;
   return props.albums.results.map((album) => (
-    <div onClick={() => props.toggleModal()}>
+    <div onClick={() => props.toggleAlbumModal(album)}>
       <CustomBadge title={album.title} />
     </div>
   ));

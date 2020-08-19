@@ -54,7 +54,10 @@ class CreateNew extends Component {
           Create Playlist
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader className="mb-4" toggle={this.toggle}>
+          <ModalHeader
+            cssModule={{ "modal-title": "w-100 text-center" }}
+            toggle={this.toggle}
+          >
             Create a new playlist here :)
             <br />
             <br />

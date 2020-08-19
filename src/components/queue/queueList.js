@@ -18,6 +18,8 @@ const SortableItem = sortableElement(
     onRemove,
     onPlay,
     editMode,
+    artists,
+    album,
   }) => (
     <Queueitem
       key={uniqueId}
@@ -31,6 +33,8 @@ const SortableItem = sortableElement(
       onPlay={onPlay}
       duration={duration}
       editMode={editMode}
+      artists={artists}
+      album={album}
     />
   )
 );
@@ -46,6 +50,8 @@ export default class QueueList extends Component {
       thumbnail,
       uniqueId,
       duration,
+      artists,
+      album,
     } = queue[index];
     //const { value } = items[index];
     return (
@@ -64,6 +70,8 @@ export default class QueueList extends Component {
           onPlay={this.props.onPlay}
           duration={duration}
           editMode={this.props.editMode}
+          artists={artists}
+          album={album}
         />
       </div>
     );

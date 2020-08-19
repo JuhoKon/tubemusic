@@ -42,14 +42,14 @@ class Queueitem extends Component {
             <Row>
               <Col xs="2" sm="2">
                 <div
-                  className="thumbnailbutton"
+                  className="thumbnailbuttonplaylist"
                   onClick={this.onPlayClick.bind(this, this.props)}
                 >
                   {this.props.thumbnail && (
                     <LazyLoadImage
-                      height={70}
+                      height={60}
                       src={this.props.thumbnail} // use normal <img> attributes as props
-                      width={70}
+                      width={60}
                       style={{ position: "absolute" }}
                       id="thumbnail"
                     />
@@ -69,7 +69,10 @@ class Queueitem extends Component {
                 </div>
               </Col>
               <Col xs="7" sm="7">
-                <CardText>{this.props.title}</CardText>
+                <CardText>{this.props.title} </CardText>{" "}
+                {this.props.artists && (
+                  <RenderArtists artists={this.props.artists} />
+                )}
               </Col>
               <Col xs="1" sm="1">
                 <small className="float-left">{this.props.duration}</small>
@@ -94,5 +97,7 @@ class Queueitem extends Component {
     );
   }
 }
-
+const RenderArtists = (props) => {
+  return props.artists.map((artist) => <>{artist.name} &nbsp;</>);
+};
 export default Queueitem;

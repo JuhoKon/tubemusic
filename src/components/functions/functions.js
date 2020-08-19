@@ -263,6 +263,14 @@ export const updatePlaylist = async (body, id) => {
   );
   return res;
 };
+export const addSongToPlaylist = async (body, id) => {
+  let res = await axios.put(
+    API + `/playlists/additem/${id}`,
+    body,
+    tokenConfig()
+  );
+  return res;
+};
 export const updatePlaylistSongTime = async (body, id) => {
   await timeout(100);
   let res = await axios.put(
@@ -415,7 +423,8 @@ export const getArtistData = async (query) => {
     return null;
   }
 };
-export const getPLaylist = async (query) => {
+export const getPlaylist = async (query) => {
+  console.log(query);
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -435,6 +444,35 @@ export const getPLaylist = async (query) => {
     .catch((err) => {
       handleError(err);
     });
+  console.log(res);
+  if (res) {
+    return res.data.array;
+  } else {
+    return null;
+  }
+};
+export const getAlbum = async (query) => {
+  console.log(query);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      query: query,
+    },
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  let res = await axios
+    .get(API + "/scrape/get_album", config)
+    //.get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
+    .catch((err) => {
+      handleError(err);
+    });
+  console.log(res);
   if (res) {
     return res.data.array;
   } else {

@@ -1,0 +1,36 @@
+.artistTracks {
+  max-height: 500px;
+  overflow: auto;
+
+  padding: 5px;
+  margin-top: 10px;
+  border: #b6e1ff3d;
+  border-style: solid;
+}
+.modal-header {
+  justify-content: center !important;
+}
+h5.w-100.text-center {
+  color: white;
+}
+.albumDescription {
+  list-style: none;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+.dropdown-menu.show {
+  max-height: 300px;
+  max-width: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #232323;
+  left: 50%;
+  border: #b6e1ff3d;
+  border-style: solid;
+}
+button.dropdown-item {
+  color: white;
+}

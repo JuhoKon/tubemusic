@@ -264,7 +264,7 @@ export default class Homepage extends Component<any, HomepageState> {
   componentWillUnmount() {
     //authenticationService.currentUser.unsubscribe();
   }
-  playPlaylist(playlist: Array<Song>) {
+  playPlaylist(playlist: Array<Song>, playlistname: string) {
     //replaces queue with active playlist
     console.log(playlist);
     var itemArray = [];
@@ -278,7 +278,9 @@ export default class Homepage extends Component<any, HomepageState> {
           Math.random(),
           playlist[i].duration,
           playlist[i].artists,
-          playlist[i].album
+          playlist[i].album,
+          playlist[i].thumbnail,
+          playlist[i].thumbnails
         );
         console.log(playlist[i].artists);
         console.log(song);
@@ -292,7 +294,9 @@ export default class Homepage extends Component<any, HomepageState> {
           Math.random(),
           playlist[i].duration,
           playlist[i].artists,
-          playlist[i].album
+          playlist[i].album,
+          playlist[i].thumbnail,
+          playlist[i].thumbnails
         );
         itemArray.push(song);
       }
@@ -303,7 +307,7 @@ export default class Homepage extends Component<any, HomepageState> {
     });
     toaster.notify(
       <span className="styled-toast">
-        Now playing: {this.state.playlistName}
+        Now playing: {playlistname ? playlistname : this.state.playlistName}
       </span>,
       {
         duration: 1200,
@@ -316,7 +320,7 @@ export default class Homepage extends Component<any, HomepageState> {
       focusedTab: i,
     });
   };
-  addPlaylistToQueue(playlist: Array<Song>) {
+  addPlaylistToQueue(playlist: Array<Song>, playlistname: string) {
     //adds active playlist to queue
     //let playlist = this.state.playlist;
     let queue = this.state.queue;
@@ -331,7 +335,9 @@ export default class Homepage extends Component<any, HomepageState> {
         Math.random(),
         playlist[i].duration,
         playlist[i].artists,
-        playlist[i].album
+        playlist[i].album,
+        playlist[i].thumbnail,
+        playlist[i].thumbnails
       );
       queue.push(song);
     }
@@ -339,9 +345,15 @@ export default class Homepage extends Component<any, HomepageState> {
       queue: queue,
     });
 
-    toaster.notify(<span>{this.state.playlistName} added to the queue!</span>, {
-      duration: 1200,
-    });
+    toaster.notify(
+      <span>
+        {playlistname ? playlistname : this.state.playlistName} added to the
+        queue!
+      </span>,
+      {
+        duration: 1200,
+      }
+    );
   }
   AddToPlaylist(item: Song) {
     console.log(item);
@@ -781,8 +793,8 @@ export default class Homepage extends Component<any, HomepageState> {
                     onDeleteFromPlaylist={this.onDeleteFromPlaylist}
                     onPlay={this.onPlay}
                     addPlaylistToQueue={this.addPlaylistToQueue}
-                    onRemove={this.onDelete}
                     playPlaylist={this.playPlaylist}
+                    onRemove={this.onDelete}
                     makePlaylist={this.makePlaylist}
                     Updateplaylist={this.Updateplaylist}
                     deletePlaylist={this.deletePlaylist}
@@ -806,7 +818,9 @@ export default class Homepage extends Component<any, HomepageState> {
               />
               <hr />
               <Videolist
+                loadPlaylist={this.loadPlaylist}
                 playNext={this.playNext}
+                playlists={playlists}
                 loading={this.state.loading}
                 items={
                   this.state.focusedTab === "1"
@@ -815,6 +829,8 @@ export default class Homepage extends Component<any, HomepageState> {
                 }
                 onAdd={this.onAdd}
                 onPlay={this.onPlay}
+                addPlaylistToQueue={this.addPlaylistToQueue}
+                playPlaylist={this.playPlaylist}
                 AddToPlaylist={this.AddToPlaylist}
                 error={this.state.error}
                 errorText={

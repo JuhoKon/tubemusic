@@ -71,7 +71,8 @@
   height: 30px;
   cursor: pointer;
   position: relative;
-  top: 0%;
+  /*   top: 0%; */
+  bottom: 10%;
   background-color: rgb(82 82 82 / 30%);
   border-radius: 25px;
 
