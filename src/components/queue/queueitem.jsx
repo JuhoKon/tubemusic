@@ -1,5 +1,13 @@
-import React, { Component } from "react";
-import { Card, CardBody, Button, CardText, Row, Col } from "reactstrap";
+import React, { Component, useState, useEffect } from "react";
+import {
+  Card,
+  CardBody,
+  Button,
+  CardText,
+  Row,
+  Col,
+  Tooltip,
+} from "reactstrap";
 import isEqual from "react-fast-compare";
 import "./queue.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -71,7 +79,10 @@ class Queueitem extends Component {
               <Col xs="7" sm="7">
                 <CardText>{this.props.title} </CardText>{" "}
                 {this.props.artists && (
-                  <RenderArtists artists={this.props.artists} />
+                  <RenderArtists
+                    toggleArtistModal={this.props.toggleArtistModalItem}
+                    artists={this.props.artists}
+                  />
                 )}
               </Col>
               <Col xs="1" sm="1">
@@ -98,6 +109,19 @@ class Queueitem extends Component {
   }
 }
 const RenderArtists = (props) => {
-  return props.artists.map((artist) => <>{artist.name} &nbsp;</>);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const toggle = () => setTooltipOpen(!tooltipOpen);
+  return props.artists.map((artist) => (
+    <div
+      className="artistStuff2"
+      id={artist.id}
+      onClick={() =>
+        props.toggleArtistModal({ name: artist.name, id: artist.id })
+      }
+    >
+      {artist.name} &nbsp;
+    </div>
+  ));
 };
 export default Queueitem;

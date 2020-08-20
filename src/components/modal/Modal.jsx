@@ -16,6 +16,8 @@ import { getAlbum, addSongToPlaylist } from "../functions/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import ShowMoreText from "react-show-more-text";
+import toaster from "toasted-notes";
+import "toasted-notes/src/styles.css"; // optional styles;
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -25,7 +27,7 @@ import {
 import LoadingSpinner from "../spinner/spinner";
 
 import "./Modal.css";
-import PlaylistsList from "../playlistGrabber/playlistsList";
+
 function pad(string) {
   return ("0" + string).slice(-2);
 }
@@ -97,7 +99,7 @@ const ModalExample = (props) => {
   const playPlaylist = () => {
     props.playPlaylist(playlistVersionOfTracks, albumTitle);
   };
-  const addPlayList = async (id) => {
+  const addPlayList = async (name, id) => {
     /*     playlistVersionOfTracks.forEach((track) => {
       const item = JSON.stringify({ track });
       addSongToPlaylist(item, id);
@@ -111,6 +113,14 @@ const ModalExample = (props) => {
     );
     setLoading(false);
     props.loadPlaylist(id);
+    toaster.notify(
+      <span className="styled-toast">
+        Songs added to the playlist: {name} !
+      </span>,
+      {
+        duration: 2000,
+      }
+    );
   };
 
   const makePlaylist = async () => {
@@ -124,9 +134,17 @@ const ModalExample = (props) => {
       "Random"
     );
     setLoading(false);
+    toaster.notify(
+      <span className="styled-toast">
+        Playlist: {albumTitle + " " + albumArtists[0].name} made!
+      </span>,
+      {
+        duration: 2000,
+      }
+    );
   };
   const PlayLists = props.playlists.map((playlist) => (
-    <DropdownItem onClick={() => addPlayList(playlist._id)}>
+    <DropdownItem onClick={() => addPlayList(playlist.name, playlist._id)}>
       {playlist.name}
     </DropdownItem>
   ));
@@ -159,7 +177,7 @@ const ModalExample = (props) => {
         >
           <RenderArtists artists={albumArtists} />- &nbsp;{albumTitle}
         </ModalHeader>
-        <ModalBody>
+        <ModalBody id="modalbody123123">
           <div className="albumDescription">
             <Row>
               <Col sm="3">
@@ -336,12 +354,12 @@ const Song = (props) => {
           <Col xs="3" sm="3">
             <RenderArtists2 artists={props.artists} />
           </Col>
-          <Col xs="1" sm="1">
+          <Col xs="2" sm="2">
             <small className="float-left">
               {props.videoId ? props.duration : "Deleted by artist"}
             </small>
           </Col>
-          <Col xs="2" sm="2">
+          <Col xs="1" sm="1">
             <br />
             <br />
             <div className="placeforbutton">

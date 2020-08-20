@@ -128,7 +128,20 @@ class Videoitem extends Component {
             <Card
               className="card-2"
               id="videoitem"
-              /*     onDoubleClick={this.onPlayClick.bind(this, this.props)} */
+              onDoubleClick={() => {
+                if (!this.state.loading) {
+                  this.props.toggleArtistModal({
+                    albums,
+                    subscribers,
+                    views,
+                    description,
+                    songs,
+                    thumbnails,
+                    singles,
+                    artist: this.props.artist,
+                  });
+                }
+              }}
             >
               <CardBody>
                 <Row>

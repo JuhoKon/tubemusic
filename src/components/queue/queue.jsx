@@ -75,6 +75,9 @@ class Queue extends Component {
     this.List.recomputeRowHeights();
     this.List.forceUpdate(); //force list to update
   };
+  toggleArtistModalItem = async (artist) => {
+    this.props.toggleArtistModal(artist);
+  };
 
   render() {
     const animation = this.state.animation;
@@ -132,6 +135,7 @@ class Queue extends Component {
                     onRemove={this.props.onRemove}
                     onPlay={this.props.onPlay}
                     editMode={this.state.editMode}
+                    toggleArtistModalItem={this.toggleArtistModalItem}
                     width={width}
                     distance={10}
                   />

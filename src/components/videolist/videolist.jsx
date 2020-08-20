@@ -62,18 +62,10 @@ class Videolist extends Component {
     });
   };
 
-  toggleModalItem = () => {
-    this.props.toggleModal();
-  };
-  toggleArtistModal2Item = () => {
-    this.props.toggleModal2();
-  };
   toggleArtistModalItem = async (artist) => {
     this.props.toggleArtistModal(artist);
   };
-  toggleAlbumModalItem = (props) => {
-    this.props.toggleAlbumModal(props);
-  };
+
   render() {
     const items = this.props.items;
 

@@ -166,7 +166,7 @@ export default class Homepage extends Component<any, HomepageState> {
       }
       this.setLoading(false);
 
-      if (!res.albums) {
+      if (!res.albums || !albums) {
         albums = [0, 1];
       }
       /*   console.log(res); */
@@ -896,10 +896,7 @@ export default class Homepage extends Component<any, HomepageState> {
               />
               <hr />
               <Videolist
-                toggleModal={this.toggleModal}
-                toggleArtistModal2={this.toggleArtistModal2}
                 toggleArtistModal={this.toggleArtistModal}
-                toggleAlbumModal={this.toggleAlbumModal}
                 loadPlaylist={this.loadPlaylist}
                 makePlaylist={this.makePlaylist}
                 playNext={this.playNext}
@@ -930,6 +927,7 @@ export default class Homepage extends Component<any, HomepageState> {
                 clearQueue={this.clearQueue}
                 setQueue={this.setQueue}
                 isShuffle={this.state.shuffle}
+                toggleArtistModal={this.toggleArtistModal}
               />
             </Col>
           </Row>

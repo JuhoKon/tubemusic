@@ -20,6 +20,7 @@ const SortableItem = sortableElement(
     editMode,
     artists,
     album,
+    toggleArtistModalItem,
   }) => (
     <Queueitem
       key={uniqueId}
@@ -35,6 +36,7 @@ const SortableItem = sortableElement(
       editMode={editMode}
       artists={artists}
       album={album}
+      toggleArtistModalItem={toggleArtistModalItem}
     />
   )
 );
@@ -70,6 +72,7 @@ export default class QueueList extends Component {
           onPlay={this.props.onPlay}
           duration={duration}
           editMode={this.props.editMode}
+          toggleArtistModalItem={this.props.toggleArtistModalItem}
           artists={artists}
           album={album}
         />

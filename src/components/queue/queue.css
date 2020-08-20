@@ -56,3 +56,26 @@
 
   z-index: 500;
 }
+.thumbnailbuttonplaylist {
+  padding: 30px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  position: relative;
+  top: 0%;
+  background-color: rgb(82 82 82 / 30%);
+  border-radius: 25px;
+
+  z-index: 500;
+}
+
+.artistStuff2 {
+  position: relative;
+  top: 0;
+  display: inline-block;
+  padding: 0;
+
+  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
+}

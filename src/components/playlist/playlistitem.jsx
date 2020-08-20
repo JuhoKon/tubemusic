@@ -52,7 +52,7 @@ class Playlistitem extends Component {
           <Row>
             <Col xs="2" sm="2">
               <div
-                className="thumbnailbuttonplaylist "
+                className="thumbnailbuttonplaylist"
                 onClick={this.onPlayClick.bind(this, this.props)}
               >
                 {this.props.thumbnail && (
