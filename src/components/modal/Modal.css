@@ -34,3 +34,13 @@ h5.w-100.text-center {
 button.dropdown-item {
   color: white;
 }
+.loadingplaceformodal {
+  position: absolute;
+  left: 35%;
+  top: 20%;
+  padding: 10px;
+  padding-right: 60px;
+  background-color: #f8f9fa;
+  z-index: 10000;
+  border-radius: 20px;
+}

@@ -42,7 +42,7 @@ function format(seconds) {
 const ModalExample = (props) => {
   /*   console.log(props); */
   const [dropdownOpen, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const toggle = () => setOpen(!dropdownOpen);
   const { title, className, show } = props;
   const [albumTracks, setalbumTracks] = useState([]);
@@ -52,7 +52,9 @@ const ModalExample = (props) => {
   const [playlistVersionOfTracks, setPlaylistVersionofTracks] = useState([]);
   useEffect(() => {
     const getalbumTracks = async () => {
+      setLoading(true);
       const res = await getAlbum(props.albumBrowseId);
+      setLoading(false);
       if (!res) return;
       setalbumTracks(res.tracks);
       setArtists(res.artist);
@@ -84,7 +86,7 @@ const ModalExample = (props) => {
     if (!props.artist) {
       getalbumTracks();
     }
-  }, props.albumBrowseId);
+  }, [props.albumBrowseId]);
   const addPlaylistToQueue = () => {
     console.log(playlistVersionOfTracks);
     props.addPlaylistToQueue(playlistVersionOfTracks, albumTitle);
@@ -125,7 +127,7 @@ const ModalExample = (props) => {
         size={"xl"}
       >
         {loading ? (
-          <div className="loadingPlace">
+          <div className="loadingplaceformodal">
             <LoadingSpinner color="#545454" />
           </div>
         ) : null}
