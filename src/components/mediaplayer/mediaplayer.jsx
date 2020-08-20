@@ -65,6 +65,7 @@ export default class MediaPlayer extends Component {
       shuffle: this.props.isShuffle,
     };
   }
+
   handleShuffle = () => {
     this.props.setShuffle();
   };

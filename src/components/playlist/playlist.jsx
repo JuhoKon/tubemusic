@@ -110,11 +110,14 @@ class Playlist extends Component {
     this.List.forceUpdate();
   };
 
+  toggleArtistModal = async (artist) => {
+    this.props.toggleArtistModal(artist);
+  };
+
   render() {
     const { filter } = this.state;
     const { playlist } = this.props;
 
-    console.log(playlist);
     const lowercasedFilter = filter.toLowerCase();
     //console.log(playlist);
     const filteredData = playlist.filter((item) => {
@@ -126,7 +129,7 @@ class Playlist extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    console.log(filteredData);
+
     return (
       <div>
         <div className="btn-group ">
@@ -210,6 +213,7 @@ class Playlist extends Component {
               onAdd={this.props.onAdd}
               onPlay={this.props.onPlay}
               onDeleteFromPlaylist={this.onDeleteFromPlaylist}
+              toggleArtistModal={this.toggleArtistModal}
               width={width}
               distance={10}
             />

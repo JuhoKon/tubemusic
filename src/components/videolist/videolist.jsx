@@ -28,7 +28,6 @@ class Videolist extends Component {
     }
   }
   toggleArtistModal = (props) => {
-    console.log(props);
     this.setState({
       showArtistModal: !this.state.showArtistModal,
       artistAlbums: props.albums,
@@ -43,7 +42,6 @@ class Videolist extends Component {
     });
   };
   toggleAlbumModal = (props) => {
-    console.log(props);
     this.setState({
       showModal: !this.state.showModal,
       albumBrowseId: props.browseId,
@@ -63,10 +61,22 @@ class Videolist extends Component {
       showArtistModal: !this.state.showArtistModal,
     });
   };
+
+  toggleModalItem = () => {
+    this.props.toggleModal();
+  };
+  toggleArtistModal2Item = () => {
+    this.props.toggleModal2();
+  };
+  toggleArtistModalItem = async (artist) => {
+    this.props.toggleArtistModal(artist);
+  };
+  toggleAlbumModalItem = (props) => {
+    this.props.toggleAlbumModal(props);
+  };
   render() {
     const items = this.props.items;
-    //console.log(this.state.error);
-    console.log(items);
+
     return (
       <div id="videolist33">
         <AlbulModal
@@ -85,6 +95,7 @@ class Videolist extends Component {
           playlists={this.props.playlists}
           AddToPlaylist={this.props.AddToPlaylist}
           loadPlaylist={this.props.loadPlaylist}
+          makePlaylist={this.props.makePlaylist}
         />
         <ArtistModal
           show={this.state.showArtistModal}
@@ -106,6 +117,7 @@ class Videolist extends Component {
           playlists={this.props.playlists}
           AddToPlaylist={this.props.AddToPlaylist}
           loadPlaylist={this.props.loadPlaylist}
+          toggleAlbumModal={this.toggleAlbumModal}
         />
         {this.state.loading ? (
           <div className="loadingPlace">
@@ -150,6 +162,7 @@ class Videolist extends Component {
                   thumbnails={thumbnails}
                   toggleAlbumModal={this.toggleAlbumModal}
                   toggleArtistModal={this.toggleArtistModal}
+                  toggleArtistModalItem={this.toggleArtistModalItem}
                 />
               </CSSTransition>
             );

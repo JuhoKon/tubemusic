@@ -4,6 +4,9 @@ import Videolist from "../videolist/videolist";
 import Search from "../search/search";
 import Queue from "../queue/queue";
 
+import ArtistModal from "../modal/artistmodal/ArtistModal";
+import AlbulModal from "../modal/Modal";
+
 import Playlist from "../playlist/playlist";
 import SideBar from "../sidebar/sidebar";
 import nameGenerator from "../functions/nameGenerator";
@@ -24,6 +27,8 @@ import {
   deleteUserPlaylist,
   updateUserPlaylist,
   searchArtists,
+  getArtistData,
+  getArtistAlbumData,
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import Spinner from "../spinner/spinner4";
@@ -58,6 +63,21 @@ type HomepageState = {
   dbitems: any;
   shuffle: boolean;
   artist?: string;
+  showModal?: boolean;
+  showArtistModal?: boolean;
+  artistAlbums?: any;
+  artistSubscribers?: any;
+  artistSingles?: any;
+  artistViews?: any;
+  artistDescription?: any;
+  artistSongs?: any;
+  artistThumbnails?: any;
+  artistName?: any;
+  isArtist?: boolean;
+  albumBrowseId?: any;
+  albumThumbnails?: any;
+  albumTitle?: any;
+  albumYear?: any;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -120,6 +140,60 @@ export default class Homepage extends Component<any, HomepageState> {
       artist: "",
     };
   }
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal,
+    });
+  };
+  toggleArtistModal2 = () => {
+    this.setState({
+      showArtistModal: !this.state.showArtistModal,
+    });
+  };
+  toggleArtistModal = async (artist: any) => {
+    if (artist.id) {
+      this.setLoading(true);
+      const res = await getArtistData(artist.id);
+
+      let albums = [];
+      if (res && res.albums && res.albums.browseId) {
+        const albumData = await getArtistAlbumData(
+          res.albums.browseId,
+          res.albums.params
+        );
+
+        albums = albumData;
+      }
+      this.setLoading(false);
+
+      if (!res.albums) {
+        albums = [0, 1];
+      }
+      /*   console.log(res); */
+      this.setState({
+        artistAlbums: albums.length > 0 ? albums : res.albums.results,
+        artistSubscribers: res.subscribers,
+        artistSingles: res.singles,
+        artistViews: res.views,
+        artistDescription: res.description,
+        artistSongs: res.songs,
+        artistThumbnails: res.thumbnails,
+        showArtistModal: true,
+        artistName: res.name,
+      });
+    }
+  };
+  toggleAlbumModal = (props: any) => {
+    console.log(props);
+    this.setState({
+      showModal: !this.state.showModal,
+      albumBrowseId: props.browseId,
+      albumThumbnails: props.thumbnails,
+      albumTitle: props.title,
+      albumYear: props.year,
+      isArtist: false,
+    });
+  };
   componentDidUpdate(prevProps: any) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
@@ -802,6 +876,10 @@ export default class Homepage extends Component<any, HomepageState> {
                     UpdateCurrentPlaylist={this.UpdateCurrentPlaylist}
                     setPlaylist={this.setPlaylist}
                     setLoading={this.setLoading}
+                    toggleModal={this.toggleModal}
+                    toggleArtistModal2={this.toggleArtistModal2}
+                    toggleArtistModal={this.toggleArtistModal}
+                    toggleAlbumModal={this.toggleAlbumModal}
                   />
                 </Col>
               </Row>
@@ -818,7 +896,12 @@ export default class Homepage extends Component<any, HomepageState> {
               />
               <hr />
               <Videolist
+                toggleModal={this.toggleModal}
+                toggleArtistModal2={this.toggleArtistModal2}
+                toggleArtistModal={this.toggleArtistModal}
+                toggleAlbumModal={this.toggleAlbumModal}
                 loadPlaylist={this.loadPlaylist}
+                makePlaylist={this.makePlaylist}
                 playNext={this.playNext}
                 playlists={playlists}
                 loading={this.state.loading}
@@ -875,6 +958,46 @@ export default class Homepage extends Component<any, HomepageState> {
             </Col>
           </Row>
         </div>
+        <AlbulModal
+          show={this.state.showModal}
+          toggleModal={this.toggleModal}
+          artist={this.state.isArtist}
+          albumBrowseId={this.state.albumBrowseId}
+          albumThumbnails={this.state.albumThumbnails}
+          albumTitle={this.state.albumTitle}
+          albumYear={this.state.albumYear}
+          addFunc={this.onAdd}
+          onPlay={this.onPlay}
+          addPlaylistToQueue={this.addPlaylistToQueue}
+          playPlaylist={this.playPlaylist}
+          playNext={this.playNext}
+          playlists={this.state.playlists}
+          AddToPlaylist={this.AddToPlaylist}
+          loadPlaylist={this.loadPlaylist}
+          makePlaylist={this.makePlaylist}
+        />
+        <ArtistModal
+          show={this.state.showArtistModal}
+          toggleModal={this.toggleArtistModal2}
+          artistAlbums={this.state.artistAlbums}
+          artistSingles={this.state.artistSingles}
+          artistName={this.state.artistName}
+          artistDescription={this.state.artistDescription}
+          artistSongs={this.state.artistSongs}
+          artistSubscribers={this.state.artistSubscribers}
+          artistThumbnails={this.state.artistThumbnails}
+          artistViews={this.state.artistViews}
+          artist={this.state.isArtist}
+          addFunc={this.onAdd}
+          onPlay={this.onPlay}
+          addPlaylistToQueue={this.addPlaylistToQueue}
+          playPlaylist={this.playPlaylist}
+          playNext={this.playNext}
+          playlists={this.state.playlists}
+          AddToPlaylist={this.AddToPlaylist}
+          loadPlaylist={this.loadPlaylist}
+          toggleAlbumModal={this.toggleAlbumModal}
+        />
       </div>
     );
   }

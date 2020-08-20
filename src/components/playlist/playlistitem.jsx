@@ -40,7 +40,7 @@ class Playlistitem extends Component {
   render() {
     const fade = this.state.fade;
     //console.log("playlistitem");
-    // console.log(this.props);
+
     //console.log(this.props.editMode);
     return (
       <Card
@@ -73,13 +73,20 @@ class Playlistitem extends Component {
                 />
               </div>
             </Col>
-            <Col xs="6" sm="6">
-              <CardText>{this.props.title} </CardText>{" "}
+            <Col xs="3" sm="3">
+              <CardText>
+                <div>{this.props.title} </div>
+              </CardText>
+            </Col>
+            <Col xs="4" sm="4">
               {this.props.artists && (
-                <RenderArtists artists={this.props.artists} />
+                <RenderArtists
+                  toggleArtistModal={this.props.toggleArtistModal}
+                  artists={this.props.artists}
+                />
               )}
             </Col>
-            <Col xs="2" sm="2">
+            <Col xs="1" sm="1">
               <small className="float-left">{this.props.duration}</small>
             </Col>
             <Col xs="2" sm="2">
@@ -120,7 +127,16 @@ class Playlistitem extends Component {
 }
 
 const RenderArtists = (props) => {
-  return props.artists.map((artist) => <>{artist.name} &nbsp;</>);
+  return props.artists.map((artist) => (
+    <div
+      className="artistStuff"
+      onClick={() =>
+        props.toggleArtistModal({ name: artist.name, id: artist.id })
+      }
+    >
+      {artist.name} &nbsp;
+    </div>
+  ));
 };
 //actions we want to use as second paranthesis
 export default Playlistitem;

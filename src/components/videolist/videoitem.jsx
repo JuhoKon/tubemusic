@@ -3,9 +3,9 @@ import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
 import "./videolist.css";
 import "moment-duration-format";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getArtistData } from "../functions/functions";
+import { getArtistData, getArtistAlbumData } from "../functions/functions";
 import CustomBadge from "../badge/Badge";
 import isEqual from "react-fast-compare";
 
@@ -18,6 +18,7 @@ class Videoitem extends Component {
       views: "",
       description: "",
       songs: [],
+      loading: false,
     };
   }
   onAddClick = (id) => {
@@ -72,31 +73,34 @@ class Videoitem extends Component {
     }
     return false;
   }
-  async componentDidUpdate(prevProps) {
-    if (!isEqual(this.props, prevProps)) {
-      //if change in props
-      if (this.props.browseId !== prevProps.browseId) {
-        const res = await getArtistData(this.props.browseId);
 
-        if (!res) return;
-        this.setState({
-          albums: res.albums,
-          subscribers: res.subscribers,
-          singles: res.singles,
-          views: res.views,
-          description: res.description,
-          songs: res.songs,
-          thumbnails: res.thumbnails,
-        });
-      }
-    }
-  }
   async componentDidMount() {
     if (this.props.browseId) {
+      this.setState({
+        loading: true,
+      });
       const res = await getArtistData(this.props.browseId);
+
+      let albums = [];
+
+      if (res && res.albums && res.albums.browseId) {
+        const albumData = await getArtistAlbumData(
+          res.albums.browseId,
+          res.albums.params
+        );
+
+        albums = albumData;
+      }
+      this.setState({
+        loading: false,
+      });
+
+      if (!res.albums) {
+        albums = [0, 1];
+      }
       /*   console.log(res); */
       this.setState({
-        albums: res.albums,
+        albums: albums.length > 0 ? albums : res.albums.results,
         subscribers: res.subscribers,
         singles: res.singles,
         views: res.views,
@@ -107,7 +111,6 @@ class Videoitem extends Component {
     }
   }
   render() {
-    /*     console.log(this.state); */
     const {
       albums,
       subscribers,
@@ -117,97 +120,9 @@ class Videoitem extends Component {
       thumbnails,
       singles,
     } = this.state;
+
     const RenderCard = (props) => {
       switch (props.resultType) {
-        case "song":
-          return (
-            <Card
-              className="card-2"
-              id="videoitem"
-              onDoubleClick={this.onPlayClick.bind(this, this.props)}
-            >
-              <CardBody>
-                <Row>
-                  <Col xs="2" sm="2">
-                    <div
-                      className="thumbnailbutton"
-                      onClick={this.onPlayClick.bind(this, this.props)}
-                    >
-                      {this.props.thumbnail && (
-                        <LazyLoadImage
-                          height={70}
-                          src={this.props.thumbnail} // use normal <img> attributes as props
-                          width={70}
-                          style={{ position: "absolute" }}
-                          id="thumbnail"
-                        />
-                      )}
-                      <FontAwesomeIcon
-                        className="Active"
-                        size={"lg"}
-                        icon={faPlay}
-                        id="thumbnail2"
-                      />
-                      {/*     <Button
-                    className="btn btn-secondary float-right btn-item"
-                    onClick={this.onPlayClick.bind(this, this.props)}
-                  >
-                    Play
-                  </Button> */}
-                    </div>
-                  </Col>
-                  <Col xs="7" sm="7">
-                    <CardText>
-                      {this.props.title} -{" "}
-                      {this.props.artists[0] && (
-                        <RenderArtists artists={this.props.artists} />
-                      )}
-                    </CardText>
-                  </Col>
-                  <Col xs="2" sm="2">
-                    <br />
-                    <br />
-                    <div className="placeforbutton">
-                      <Button
-                        className="btn btn-primary btn-item"
-                        color="secondary"
-                        onClick={this.onAddToPlaylist.bind(this, this.props)}
-                      >
-                        +P
-                      </Button>
-                    </div>
-                  </Col>
-                  <Col xs="1" sm="1">
-                    <div className="placeforbutton">
-                      <Button
-                        className="btn btn-secondary  float-right btn-item"
-                        color="secondary"
-                        onClick={this.playNextClick.bind(this, this.props)}
-                      >
-                        +N
-                      </Button>
-                      <Button
-                        className="btn btn-secondary  float-right btn-item"
-                        color="secondary"
-                        onClick={this.onAddClick.bind(this, this.props)}
-                      >
-                        +Q
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col xs="12" sm="12">
-                    <small className="float">
-                      {/*     Length&nbsp; */}
-                      {this.props.duration}
-                    </small>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          );
         case "artist":
           return (
             <Card
@@ -220,18 +135,20 @@ class Videoitem extends Component {
                   <Col xs="2" sm="2">
                     <div
                       className="thumbnailbutton2"
-                      onClick={() =>
-                        this.props.toggleArtistModal({
-                          albums,
-                          subscribers,
-                          views,
-                          description,
-                          songs,
-                          thumbnails,
-                          singles,
-                          artist: this.props.artist,
-                        })
-                      }
+                      onClick={() => {
+                        if (!this.state.loading) {
+                          this.props.toggleArtistModal({
+                            albums,
+                            subscribers,
+                            views,
+                            description,
+                            songs,
+                            thumbnails,
+                            singles,
+                            artist: this.props.artist,
+                          });
+                        }
+                      }}
                     >
                       {this.props.thumbnails && (
                         <LazyLoadImage
@@ -246,20 +163,31 @@ class Videoitem extends Component {
                   </Col>
                   <Col xs="7" sm="7">
                     <CardText
-                      onClick={() =>
-                        this.props.toggleArtistModal({
-                          albums,
-                          subscribers,
-                          views,
-                          description,
-                          songs,
-                          thumbnails,
-                          singles,
-                          artist: this.props.artist,
-                        })
-                      }
+                      onClick={() => {
+                        if (!this.state.loading) {
+                          this.props.toggleArtistModal({
+                            albums,
+                            subscribers,
+                            views,
+                            description,
+                            songs,
+                            thumbnails,
+                            singles,
+                            artist: this.props.artist,
+                          });
+                        }
+                      }}
                     >
-                      <h5>{this.props.artist}</h5>
+                      <h5>
+                        {this.props.artist}&nbsp;&nbsp;
+                        {this.state.loading ? (
+                          <FontAwesomeIcon
+                            className="fa-spin"
+                            size={"md"}
+                            icon={faSpinner}
+                          />
+                        ) : null}
+                      </h5>
                     </CardText>
                   </Col>
                   <Col xs="2" sm="2">
@@ -327,9 +255,14 @@ class Videoitem extends Component {
                   </Col>
                   <Col xs="7" sm="7">
                     <CardText>
-                      {this.props.title} -{" "}
+                      {this.props.title}
+                      <br />
+                      <br />
                       {this.props.artists[0] && (
-                        <RenderArtists artists={this.props.artists} />
+                        <RenderArtists
+                          toggleArtistModal={this.props.toggleArtistModalItem}
+                          artists={this.props.artists}
+                        />
                       )}
                     </CardText>
                   </Col>
@@ -388,12 +321,21 @@ class Videoitem extends Component {
   }
 }
 const RenderArtists = (props) => {
-  return props.artists.map((artist) => <>{artist.name} &nbsp;</>);
+  return props.artists.map((artist) => (
+    <div
+      className="artistStuff"
+      onClick={() =>
+        props.toggleArtistModal({ name: artist.name, id: artist.id })
+      }
+    >
+      {artist.name} &nbsp;
+    </div>
+  ));
 };
 const RenderAlbums = (props) => {
   if (!props.albums) return null;
-  if (!props.albums.results) return null;
-  return props.albums.results.map((album) => (
+
+  return props.albums.map((album) => (
     <div onClick={() => props.toggleAlbumModal(album)}>
       <CustomBadge title={album.title} />
     </div>

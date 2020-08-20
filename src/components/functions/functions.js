@@ -479,3 +479,32 @@ export const getAlbum = async (query) => {
     return null;
   }
 };
+export const getArtistAlbumData = async (browseId, params) => {
+  console.log(browseId, params);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      browseId: browseId,
+      params: params,
+    },
+  };
+  const currentUser = authenticationService.currentUserValue;
+  if (currentUser.token) {
+    config.headers["x-auth-token"] = currentUser.token;
+  }
+  let res = await axios
+    .get(API + "/scrape/get_artist_albums", config)
+    //.get("http://localhost:8080/scrape/search", config)
+    .then(handleResponse)
+    .catch((err) => {
+      handleError(err);
+    });
+  console.log(res);
+  if (res) {
+    return res.data.array;
+  } else {
+    return null;
+  }
+};

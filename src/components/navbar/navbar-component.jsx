@@ -62,14 +62,20 @@ class NavbarComponent extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink href="/spotify">Spotify</NavLink>
+                <NavLink href="/spotify" target="_blank">
+                  Spotify
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/playlists">Playlists</NavLink>
+                <NavLink href="/playlists" target="_blank">
+                  Playlists
+                </NavLink>
               </NavItem>
               {currentUser && currentUser.user.role === "Admin" ? (
                 <NavItem>
-                  <NavLink href="/admin">Admin</NavLink>
+                  <NavLink href="/admin" target="_blank">
+                    Admin
+                  </NavLink>
                 </NavItem>
               ) : (
                 ""

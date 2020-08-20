@@ -25,6 +25,7 @@ import {
 import LoadingSpinner from "../spinner/spinner";
 
 import "./Modal.css";
+import PlaylistsList from "../playlistGrabber/playlistsList";
 function pad(string) {
   return ("0" + string).slice(-2);
 }
@@ -38,7 +39,7 @@ function format(seconds) {
   }
   return `${mm}.${ss}`;
 }
-
+const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const ModalExample = (props) => {
   /*   console.log(props); */
   const [dropdownOpen, setOpen] = useState(false);
@@ -53,6 +54,7 @@ const ModalExample = (props) => {
   useEffect(() => {
     const getalbumTracks = async () => {
       setLoading(true);
+      await timeout(1000);
       const res = await getAlbum(props.albumBrowseId);
       setLoading(false);
       if (!res) return;
@@ -63,23 +65,24 @@ const ModalExample = (props) => {
       const playlist = [];
 
       for (const track of res.tracks) {
-        console.log(track);
-        playlist.push({
-          uniqueId: track.videoId + Math.random(),
-          title: track.title,
-          videoId: track.videoId,
-          artists: res.artist,
-          artist: track.artists,
-          thumbnails: track.thumbnails,
-          duration: format(track.lengthMs / 1000),
-          album: { id: props.albumBrowseId, name: res.title },
-          thumbnail: track.thumbnails[0].url,
-          addFunc: props.addFunc,
-          onPlay: props.onPlay,
-          playNext: props.playNext,
-        });
+        if (track.videoId) {
+          playlist.push({
+            uniqueId: track.videoId + Math.random(),
+            title: track.title,
+            videoId: track.videoId,
+            artists: res.artist,
+            artist: track.artists,
+            thumbnails: track.thumbnails,
+            duration: format(track.lengthMs / 1000),
+            album: { id: props.albumBrowseId, name: res.title },
+            thumbnail: track.thumbnails[0].url,
+            addFunc: props.addFunc,
+            onPlay: props.onPlay,
+            playNext: props.playNext,
+          });
+        }
       }
-      console.log(playlist);
+
       setPlaylistVersionofTracks(playlist);
     };
 
@@ -109,13 +112,29 @@ const ModalExample = (props) => {
     setLoading(false);
     props.loadPlaylist(id);
   };
-  console.log(props.playlists);
+
+  const makePlaylist = async () => {
+    setLoading(true);
+
+    await timeout(1000);
+    await props.makePlaylist(
+      albumTitle + " " + albumArtists[0].name,
+      playlistVersionOfTracks,
+      true,
+      "Random"
+    );
+    setLoading(false);
+  };
   const PlayLists = props.playlists.map((playlist) => (
     <DropdownItem onClick={() => addPlayList(playlist._id)}>
       {playlist.name}
     </DropdownItem>
   ));
-
+  PlayLists.unshift(
+    <DropdownItem onClick={() => makePlaylist()}>
+      Create a new playlist
+    </DropdownItem>
+  );
   return (
     <div>
       <Modal
@@ -246,43 +265,48 @@ const RenderArtists = (props) => {
 };
 
 const Song = (props) => {
+  console.log(props.artists);
   /*   console.log(props); */
   return (
     <Card
-      onDoubleClick={() =>
-        props.onPlay({
-          uniqueId: Math.random(),
-          title: props.title,
-          videoId: props.videoId,
-          duration: props.duration,
-          publishedAt: props.publishedAt,
-          channelTitle: props.channelTitle,
-          artists: props.artists,
-          thumbnail: props.thumbnail,
-          thumbnails: props.thumbnails,
-          album: props.album,
-        })
-      }
+      onDoubleClick={() => {
+        if (props.videoID) {
+          props.onPlay({
+            uniqueId: Math.random(),
+            title: props.title,
+            videoId: props.videoId,
+            duration: props.duration,
+            publishedAt: props.publishedAt,
+            channelTitle: props.channelTitle,
+            artists: props.artists,
+            thumbnail: props.thumbnail,
+            thumbnails: props.thumbnails,
+            album: props.album,
+          });
+        }
+      }}
     >
       <CardBody>
         <Row>
           <Col xs="2" sm="2">
             <div
-              className="thumbnailbuttonplaylist "
-              onClick={() =>
-                props.onPlay({
-                  uniqueId: Math.random(),
-                  title: props.title,
-                  videoId: props.videoId,
-                  duration: props.duration,
-                  publishedAt: props.publishedAt,
-                  channelTitle: props.channelTitle,
-                  artists: props.artists,
-                  thumbnail: props.thumbnail,
-                  thumbnails: props.thumbnails,
-                  album: props.album,
-                })
-              }
+              className="thumbnailbuttonplaylist"
+              onClick={() => {
+                if (props.videoID) {
+                  props.onPlay({
+                    uniqueId: Math.random(),
+                    title: props.title,
+                    videoId: props.videoId,
+                    duration: props.duration,
+                    publishedAt: props.publishedAt,
+                    channelTitle: props.channelTitle,
+                    artists: props.artists,
+                    thumbnail: props.thumbnail,
+                    thumbnails: props.thumbnails,
+                    album: props.album,
+                  });
+                }
+              }}
             >
               {props.thumbnails && (
                 <img
@@ -294,19 +318,28 @@ const Song = (props) => {
                   alt="foo"
                 />
               )}
-              <FontAwesomeIcon
-                className="Active"
-                size={"lg"}
-                icon={faPlay}
-                id="thumbnail2"
-              />
+              {props.videoId ? (
+                <FontAwesomeIcon
+                  className="Active"
+                  size={"lg"}
+                  icon={faPlay}
+                  id="thumbnail2"
+                />
+              ) : null}
             </div>
           </Col>
-          <Col xs="6" sm="6">
-            <CardText>{props.title} </CardText> {props.artist}
+          <Col xs="3" sm="3">
+            <CardText>
+              <div>{props.title}</div>{" "}
+            </CardText>
+          </Col>
+          <Col xs="3" sm="3">
+            <RenderArtists2 artists={props.artists} />
           </Col>
           <Col xs="1" sm="1">
-            <small className="float-left">{props.duration}</small>
+            <small className="float-left">
+              {props.videoId ? props.duration : "Deleted by artist"}
+            </small>
           </Col>
           <Col xs="2" sm="2">
             <br />
@@ -316,6 +349,7 @@ const Song = (props) => {
                 className="btn btn-primary btn-item"
                 color="secondary"
                 onClick={() => props.AddToPlaylist(props)}
+                disabled={!props.videoId}
               >
                 +P
               </Button>
@@ -327,6 +361,7 @@ const Song = (props) => {
                 className="btn btn-secondary float-right btn-item"
                 color="info"
                 onClick={() => props.playNext(props)}
+                disabled={!props.videoId}
               >
                 +N
               </Button>
@@ -334,6 +369,7 @@ const Song = (props) => {
                 className="btn btn-secondary float-right btn-item"
                 color="info"
                 onClick={() => props.addFunc(props)}
+                disabled={!props.videoId}
               >
                 +Q
               </Button>
@@ -343,5 +379,10 @@ const Song = (props) => {
       </CardBody>
     </Card>
   );
+};
+const RenderArtists2 = (props) => {
+  return props.artists.map((artist) => (
+    <div className="artistStuff">{artist.name} &nbsp;</div>
+  ));
 };
 export default ModalExample;

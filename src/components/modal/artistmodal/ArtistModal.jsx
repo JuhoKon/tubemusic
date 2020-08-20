@@ -16,6 +16,7 @@ import { getAlbum, addSongToPlaylist } from "../../functions/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import ShowMoreText from "react-show-more-text";
+import CustomBadge from "../../badge/Badge";
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -41,6 +42,7 @@ function format(seconds) {
 
 const ModalExample = (props) => {
   /*   console.log(props); */
+  console.log(props);
   const [dropdownOpen, setOpen] = useState(false);
   const toggle = () => setOpen(!dropdownOpen);
   const PlayLists = props.playlists.map((playlist) => (
@@ -69,7 +71,7 @@ const ModalExample = (props) => {
         <ModalBody>
           <div className="albumDescription">
             <Row>
-              <Col sm="3">
+              <Col sm="6">
                 {props.artistThumbnails && (
                   <img
                     src={props.artistThumbnails[1].url} // use normal <img> attributes as props
@@ -79,6 +81,25 @@ const ModalExample = (props) => {
                     alt="foo"
                   />
                 )}
+              </Col>
+              <Col sm="6">
+                <div style={{ color: "white" }}>
+                  <p>
+                    Subscribers: {props.artistSubscribers}{" "}
+                    <Button className="float-right">All songs</Button>
+                  </p>
+                  <p>Total views: {props.artistViews}</p>
+                  <p> Albums: {}</p>
+                  <div className="badgeWrapper">
+                    {
+                      <RenderAlbums
+                        toggleAlbumModal={props.toggleAlbumModal}
+                        albums={props.artistAlbums}
+                      />
+                      /*     Length&nbsp; */
+                    }
+                  </div>
+                </div>{" "}
               </Col>
               {/*   <Col sm="3">
                 <Button
@@ -140,10 +161,6 @@ const ModalExample = (props) => {
       </Modal>
     </div>
   );
-};
-const RenderArtists = (props) => {
-  /*   console.log(props); */
-  return props.artists.map((artist) => <>{artist.name} &nbsp;</>);
 };
 
 const Song = (props) => {
@@ -245,4 +262,14 @@ const Song = (props) => {
     </Card>
   );
 };
+const RenderAlbums = (props) => {
+  if (!props.albums) return null;
+
+  return props.albums.map((album) => (
+    <div onClick={() => props.toggleAlbumModal(album)}>
+      <CustomBadge title={album.title} />
+    </div>
+  ));
+};
+
 export default ModalExample;
