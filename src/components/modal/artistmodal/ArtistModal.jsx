@@ -23,8 +23,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import LoadingSpinner from "../../spinner/spinner";
-
+import Spinner from "../../spinner/spinner4";
 import "./Modal.css";
 function pad(string) {
   return ("0" + string).slice(-2);
@@ -43,15 +42,14 @@ function format(seconds) {
 const ModalExample = (props) => {
   /*   console.log(props); */
   console.log(props);
-  const [dropdownOpen, setOpen] = useState(false);
-  const toggle = () => setOpen(!dropdownOpen);
-  const PlayLists = props.playlists.map((playlist) => (
-    <DropdownItem /* onClick={() => addPlayList(playlist._id)} */>
-      {playlist.name}
-    </DropdownItem>
-  ));
+
   return (
     <div>
+      {props.loading && props.show ? (
+        <div className="loadingplaceformodal">
+          <Spinner size={50} color="white" style={{ zIndex: 999999 }} />
+        </div>
+      ) : null}
       <Modal
         isOpen={props.show}
         toggle={() => props.toggleModal()}
@@ -86,7 +84,14 @@ const ModalExample = (props) => {
                 <div style={{ color: "white" }}>
                   <p>
                     Subscribers: {props.artistSubscribers}{" "}
-                    <Button className="float-right">All songs</Button>
+                    <Button
+                      onClick={() => {
+                        props.toggleAllSongsModal(props.artistSongs.browseId);
+                      }}
+                      className="float-right"
+                    >
+                      All songs
+                    </Button>
                   </p>
                   <p>Total views: {props.artistViews}</p>
                   <p> Albums: {}</p>
@@ -101,44 +106,6 @@ const ModalExample = (props) => {
                   </div>
                 </div>{" "}
               </Col>
-              {/*   <Col sm="3">
-                <Button
-                  style={{
-                    position: "relative",
-                    display: "inline-block",
-                    top: "50%",
-                  }}
-          
-                >
-                  Play album
-                </Button>
-              </Col>
-              <Col sm="3">
-                <ButtonDropdown
-                  isOpen={dropdownOpen}
-                  toggle={toggle}
-                  style={{
-                    position: "relative",
-                    display: "inline-block",
-                    top: "50%",
-                  }}
-                >
-                  <DropdownToggle caret>Add to playlist</DropdownToggle>
-                  <DropdownMenu>{PlayLists}</DropdownMenu>
-                </ButtonDropdown>
-              </Col>
-              <Col sm="3">
-                <Button
-                  style={{
-                    position: "relative",
-                    display: "inline-block",
-                    top: "50%",
-                  }}
-              
-                >
-                  Queue album
-                </Button>
-              </Col> */}
             </Row>
           </div>
           <hr />
@@ -163,105 +130,6 @@ const ModalExample = (props) => {
   );
 };
 
-const Song = (props) => {
-  /*   console.log(props); */
-  return (
-    <Card
-      onDoubleClick={() =>
-        props.onPlay({
-          uniqueId: Math.random(),
-          title: props.title,
-          videoId: props.videoId,
-          duration: props.duration,
-          publishedAt: props.publishedAt,
-          channelTitle: props.channelTitle,
-          artists: props.artists,
-          thumbnail: props.thumbnail,
-          thumbnails: props.thumbnails,
-          album: props.album,
-        })
-      }
-    >
-      <CardBody>
-        <Row>
-          <Col xs="2" sm="2">
-            <div
-              className="thumbnailbuttonplaylist "
-              onClick={() =>
-                props.onPlay({
-                  uniqueId: Math.random(),
-                  title: props.title,
-                  videoId: props.videoId,
-                  duration: props.duration,
-                  publishedAt: props.publishedAt,
-                  channelTitle: props.channelTitle,
-                  artists: props.artists,
-                  thumbnail: props.thumbnail,
-                  thumbnails: props.thumbnails,
-                  album: props.album,
-                })
-              }
-            >
-              {props.thumbnails && (
-                <img
-                  height={60}
-                  src={props.thumbnails[0].url} // use normal <img> attributes as props
-                  width={60}
-                  style={{ position: "absolute" }}
-                  id="thumbnail"
-                  alt="foo"
-                />
-              )}
-              <FontAwesomeIcon
-                className="Active"
-                size={"lg"}
-                icon={faPlay}
-                id="thumbnail2"
-              />
-            </div>
-          </Col>
-          <Col xs="6" sm="6">
-            <CardText>{props.title} </CardText> {props.artist}
-          </Col>
-          <Col xs="1" sm="1">
-            <small className="float-left">{props.duration}</small>
-          </Col>
-          <Col xs="2" sm="2">
-            <br />
-            <br />
-            <div className="placeforbutton">
-              <Button
-                className="btn btn-primary btn-item"
-                color="secondary"
-                onClick={() => props.AddToPlaylist(props)}
-              >
-                +P
-              </Button>
-            </div>
-          </Col>
-          <Col xs="1" sm="1">
-            <div className="placeforbutton">
-              <Button
-                className="btn btn-secondary float-right btn-item"
-                color="info"
-                onClick={() => props.playNext(props)}
-              >
-                +N
-              </Button>
-              <Button
-                className="btn btn-secondary float-right btn-item"
-                color="info"
-                onClick={() => props.addFunc(props)}
-              >
-                +Q
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </CardBody>
-    </Card>
-  );
-};
 const RenderAlbums = (props) => {
   if (!props.albums) return null;
 

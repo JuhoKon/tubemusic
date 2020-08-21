@@ -6,6 +6,7 @@ import Queue from "../queue/queue";
 
 import ArtistModal from "../modal/artistmodal/ArtistModal";
 import AlbulModal from "../modal/Modal";
+import AllSongsModal from "../modal/allsongsmodal/Modal";
 
 import Playlist from "../playlist/playlist";
 import SideBar from "../sidebar/sidebar";
@@ -29,6 +30,7 @@ import {
   searchArtists,
   getArtistData,
   getArtistAlbumData,
+  getPlaylist,
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import Spinner from "../spinner/spinner4";
@@ -79,6 +81,9 @@ type HomepageState = {
   albumTitle?: any;
   albumYear?: any;
   currentSong?: any;
+  showAllSongsModal?: boolean;
+  loadingAllSongs?: boolean;
+  allSongs?: any;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -139,6 +144,7 @@ export default class Homepage extends Component<any, HomepageState> {
       dbitems: [],
       shuffle: false,
       artist: "",
+      allSongs: [],
     };
   }
   toggleModal = () => {
@@ -186,6 +192,31 @@ export default class Homepage extends Component<any, HomepageState> {
         artistName: res.name,
       });
     }
+  };
+  toggleAllSongsModal = async (browseid: string) => {
+    this.setState({
+      showAllSongsModal: false,
+      loadingAllSongs: true,
+    });
+    await timeout(1000);
+    const res = await getPlaylist(browseid);
+    this.setState({
+      allSongs: res.tracks,
+    });
+    //
+    // Get data from that browseid and pass them to our state and ẃe pass the state to the new modal:P
+    // Not the most performant shit but w.e really. It's couple re-renders.
+    //
+
+    this.setState({
+      showAllSongsModal: true,
+      loadingAllSongs: false,
+    });
+  };
+  toggleAllSongsModal123 = () => {
+    this.setState({
+      showAllSongsModal: !this.state.showAllSongsModal,
+    });
   };
   toggleAlbumModal = (props: any) => {
     console.log(props);
@@ -990,6 +1021,7 @@ export default class Homepage extends Component<any, HomepageState> {
           toggleArtistModal={this.toggleArtistModal}
         />
         <ArtistModal
+          loading={this.state.loadingAllSongs}
           show={this.state.showArtistModal}
           toggleModal={this.toggleArtistModal2}
           artistAlbums={this.state.artistAlbums}
@@ -1010,6 +1042,18 @@ export default class Homepage extends Component<any, HomepageState> {
           AddToPlaylist={this.AddToPlaylist}
           loadPlaylist={this.loadPlaylist}
           toggleAlbumModal={this.toggleAlbumModal}
+          toggleAllSongsModal={this.toggleAllSongsModal}
+        />
+        <AllSongsModal
+          show={this.state.showAllSongsModal}
+          toggleModal={this.toggleAllSongsModal123}
+          allSongs={this.state.allSongs}
+          addFunc={this.onAdd}
+          onPlay={this.onPlay}
+          addPlaylistToQueue={this.addPlaylistToQueue}
+          playPlaylist={this.playPlaylist}
+          playNext={this.playNext}
+          artistName={this.state.artistName}
         />
       </div>
     );

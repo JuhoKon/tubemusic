@@ -124,7 +124,7 @@ class Videoitem extends Component {
       thumbnails,
       singles,
     } = this.state;
-
+    console.log(this.props);
     const RenderCard = (props) => {
       switch (props.resultType) {
         case "artist":
@@ -251,24 +251,41 @@ class Videoitem extends Component {
                         icon={faPlay}
                         id="thumbnail2"
                       />
-                      {/*     <Button
-                      className="btn btn-secondary float-right btn-item"
-                      onClick={this.onPlayClick.bind(this, this.props)}
-                    >
-                      Play
-                    </Button> */}
                     </div>
                   </Col>
                   <Col xs="7" sm="7">
                     <CardText>
                       <div className="hoverEffect"> {this.props.title}</div>
                       <br />
-
+                      {this.props.album && (
+                        <div
+                          onClick={() => {
+                            this.props.toggleAlbumModal({
+                              artist: this.props.artists[0].name,
+                              browseId: this.props.album.id,
+                              type: "Album",
+                              thumbnails: [
+                                { height: 60, url: this.props.thumbnail },
+                                { height: 60, url: this.props.thumbnail },
+                              ],
+                              title: this.props.album.name,
+                            });
+                          }}
+                          style={{ cursor: "pointer" }}
+                          className="hoverEffect d-none d-xl-block"
+                        >
+                          {this.props.album.name}
+                        </div>
+                      )}
+                    </CardText>
+                    <CardText>
                       {this.props.artists[0] && (
-                        <RenderArtists
-                          toggleArtistModal={this.props.toggleArtistModalItem}
-                          artists={this.props.artists}
-                        />
+                        <div className="artists123">
+                          <RenderArtists
+                            toggleArtistModal={this.props.toggleArtistModalItem}
+                            artists={this.props.artists}
+                          />
+                        </div>
                       )}
                     </CardText>
                   </Col>
@@ -330,7 +347,7 @@ class Videoitem extends Component {
 const RenderArtists = (props) => {
   return props.artists.map((artist) => (
     <div
-      className="artistStuff hoverEffect"
+      className="videolistArtists artistStuff hoverEffect"
       onClick={() =>
         props.toggleArtistModal({ name: artist.name, id: artist.id })
       }

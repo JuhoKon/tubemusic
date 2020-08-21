@@ -40,7 +40,7 @@ class Playlistitem extends Component {
   render() {
     const fade = this.state.fade;
     //console.log("playlistitem");
-    console.log(this.props);
+    /*     console.log(this.props); */
     //console.log(this.props.editMode);
     return (
       <Card

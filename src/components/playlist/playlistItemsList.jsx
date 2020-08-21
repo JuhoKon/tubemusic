@@ -48,7 +48,7 @@ const SortableItem = sortableElement(
 export default class PlaylistItemsList extends Component {
   renderRow = ({ index, style }) => {
     const playlist = this.props.playlist;
-    console.log(playlist);
+    /*    console.log(playlist); */
     const {
       title,
       publishedAt,

@@ -69,7 +69,7 @@ class Videolist extends Component {
 
   render() {
     const items = this.props.items;
-
+    console.log(items);
     return (
       <div id="videolist33">
         <AlbulModal
