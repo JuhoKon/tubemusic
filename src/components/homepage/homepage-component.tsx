@@ -152,6 +152,9 @@ export default class Homepage extends Component<any, HomepageState> {
   };
   toggleArtistModal = async (artist: any) => {
     if (artist.id) {
+      this.setState({
+        showArtistModal: false,
+      });
       this.setLoading(true);
       const res = await getArtistData(artist.id);
 
@@ -834,7 +837,7 @@ export default class Homepage extends Component<any, HomepageState> {
             <Spinner size={50} color="white" />
           ) : null}
           {this.state.loadingPlaylists ? (
-            <Spinner size={50} color="white" />
+            <Spinner size={50} color="white" style={{ zIndex: 999999 }} />
           ) : null}
           <Row>
             <Col sm="8" className="homepage2">
@@ -973,6 +976,7 @@ export default class Homepage extends Component<any, HomepageState> {
           AddToPlaylist={this.AddToPlaylist}
           loadPlaylist={this.loadPlaylist}
           makePlaylist={this.makePlaylist}
+          toggleArtistModal={this.toggleArtistModal}
         />
         <ArtistModal
           show={this.state.showArtistModal}

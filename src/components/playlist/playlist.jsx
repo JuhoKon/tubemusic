@@ -214,6 +214,7 @@ class Playlist extends Component {
               onPlay={this.props.onPlay}
               onDeleteFromPlaylist={this.onDeleteFromPlaylist}
               toggleArtistModal={this.toggleArtistModal}
+              toggleAlbumModal={this.props.toggleAlbumModal}
               width={width}
               distance={10}
             />

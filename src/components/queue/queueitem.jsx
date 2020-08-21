@@ -77,7 +77,7 @@ class Queueitem extends Component {
                 </div>
               </Col>
               <Col xs="7" sm="7">
-                <CardText>{this.props.title} </CardText>{" "}
+                <CardText className="hoverEffect">{this.props.title} </CardText>{" "}
                 {this.props.artists && (
                   <RenderArtists
                     toggleArtistModal={this.props.toggleArtistModalItem}
@@ -114,7 +114,7 @@ const RenderArtists = (props) => {
   const toggle = () => setTooltipOpen(!tooltipOpen);
   return props.artists.map((artist) => (
     <div
-      className="artistStuff2"
+      className="artistStuff2 hoverEffect"
       id={artist.id}
       onClick={() =>
         props.toggleArtistModal({ name: artist.name, id: artist.id })

@@ -34,9 +34,7 @@ h5.w-100.text-center {
 button.dropdown-item {
   color: white;
 }
-#modalbody123123 {
-  min-height: 766px;
-}
+
 .loadingplaceformodal {
   position: absolute;
   left: 48%;
@@ -45,7 +43,7 @@ button.dropdown-item {
   margin-left: -5rem;
   padding: 50px;
   padding-right: 60px;
-  background-color: #f8f9fa;
+
   z-index: 10000;
   border-radius: 20px;
 }

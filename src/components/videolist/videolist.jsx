@@ -63,6 +63,7 @@ class Videolist extends Component {
   };
 
   toggleArtistModalItem = async (artist) => {
+    console.log(artist);
     this.props.toggleArtistModal(artist);
   };
 
@@ -88,6 +89,7 @@ class Videolist extends Component {
           AddToPlaylist={this.props.AddToPlaylist}
           loadPlaylist={this.props.loadPlaylist}
           makePlaylist={this.props.makePlaylist}
+          toggleArtistModal={this.props.toggleArtistModal}
         />
         <ArtistModal
           show={this.state.showArtistModal}
@@ -132,6 +134,7 @@ class Videolist extends Component {
             resultType,
             artist,
             browseId,
+            album,
           }) => {
             return (
               <CSSTransition key={uniqueId} timeout={500} classNames="fade">
@@ -155,6 +158,7 @@ class Videolist extends Component {
                   toggleAlbumModal={this.toggleAlbumModal}
                   toggleArtistModal={this.toggleArtistModal}
                   toggleArtistModalItem={this.toggleArtistModalItem}
+                  album={album}
                 />
               </CSSTransition>
             );

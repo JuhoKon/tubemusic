@@ -44,6 +44,7 @@ class Videoitem extends Component {
       publishedAt: id.publishedAt,
       channelTitle: id.channelTitle,
       artists: id.artists,
+      album: id.album,
     });
   };
   onAddToPlaylist = (id) => {
@@ -58,6 +59,7 @@ class Videoitem extends Component {
       thumbnail: id.thumbnail,
       artists: id.artists,
       date: Date.now(),
+      album: id.album,
     });
   };
   playNextClick = (item) => {
@@ -83,13 +85,15 @@ class Videoitem extends Component {
 
       let albums = [];
 
-      if (res && res.albums && res.albums.browseId) {
+      if (res && res.albums && res.albums.browseId && res.albums.params) {
         const albumData = await getArtistAlbumData(
           res.albums.browseId,
           res.albums.params
-        );
+        ).catch((e) => null);
 
-        albums = albumData;
+        if (albumData !== null) {
+          albums = albumData;
+        }
       }
       this.setState({
         loading: false,
@@ -150,15 +154,9 @@ class Videoitem extends Component {
                       className="thumbnailbutton2"
                       onClick={() => {
                         if (!this.state.loading) {
-                          this.props.toggleArtistModal({
-                            albums,
-                            subscribers,
-                            views,
-                            description,
-                            songs,
-                            thumbnails,
-                            singles,
-                            artist: this.props.artist,
+                          this.props.toggleArtistModalItem({
+                            name: this.props.artist,
+                            id: this.props.browseId,
                           });
                         }
                       }}
@@ -178,25 +176,20 @@ class Videoitem extends Component {
                     <CardText
                       onClick={() => {
                         if (!this.state.loading) {
-                          this.props.toggleArtistModal({
-                            albums,
-                            subscribers,
-                            views,
-                            description,
-                            songs,
-                            thumbnails,
-                            singles,
-                            artist: this.props.artist,
+                          this.props.toggleArtistModalItem({
+                            name: this.props.artist,
+                            id: this.props.browseId,
                           });
                         }
                       }}
                     >
                       <h5>
-                        {this.props.artist}&nbsp;&nbsp;
+                        <div className="hoverEffect">
+                          {this.props.artist}&nbsp;&nbsp;{" "}
+                        </div>
                         {this.state.loading ? (
                           <FontAwesomeIcon
                             className="fa-spin"
-                            size={"md"}
                             icon={faSpinner}
                           />
                         ) : null}
@@ -268,9 +261,9 @@ class Videoitem extends Component {
                   </Col>
                   <Col xs="7" sm="7">
                     <CardText>
-                      {this.props.title}
+                      <div className="hoverEffect"> {this.props.title}</div>
                       <br />
-                      <br />
+
                       {this.props.artists[0] && (
                         <RenderArtists
                           toggleArtistModal={this.props.toggleArtistModalItem}
@@ -313,7 +306,8 @@ class Videoitem extends Component {
                 </Row>
 
                 <Row>
-                  <Col xs="12" sm="12">
+                  <Col></Col>
+                  <Col xs="6" sm="6">
                     <small className="float">
                       {/*     Length&nbsp; */}
                       {this.props.duration}
@@ -336,7 +330,7 @@ class Videoitem extends Component {
 const RenderArtists = (props) => {
   return props.artists.map((artist) => (
     <div
-      className="artistStuff"
+      className="artistStuff hoverEffect"
       onClick={() =>
         props.toggleArtistModal({ name: artist.name, id: artist.id })
       }
@@ -349,8 +343,8 @@ const RenderAlbums = (props) => {
   if (!props.albums) return null;
 
   return props.albums.map((album) => (
-    <div onClick={() => props.toggleAlbumModal(album)}>
-      <CustomBadge title={album.title} />
+    <div key={Math.random()} onClick={() => props.toggleAlbumModal(album)}>
+      <CustomBadge key={Math.random()} title={album.title} />
     </div>
   ));
 };

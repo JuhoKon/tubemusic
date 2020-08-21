@@ -266,8 +266,8 @@ const RenderAlbums = (props) => {
   if (!props.albums) return null;
 
   return props.albums.map((album) => (
-    <div onClick={() => props.toggleAlbumModal(album)}>
-      <CustomBadge title={album.title} />
+    <div key={Math.random()} onClick={() => props.toggleAlbumModal(album)}>
+      <CustomBadge key={Math.random()} title={album.title} />
     </div>
   ));
 };

@@ -24,8 +24,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import LoadingSpinner from "../spinner/spinner";
-
+import Spinner from "../spinner/spinner4";
 import "./Modal.css";
 
 function pad(string) {
@@ -45,7 +44,8 @@ const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const ModalExample = (props) => {
   /*   console.log(props); */
   const [dropdownOpen, setOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [addingPlaylist, setAddingPlaylist] = useState(false);
   const toggle = () => setOpen(!dropdownOpen);
   const { title, className, show } = props;
   const [albumTracks, setalbumTracks] = useState([]);
@@ -53,17 +53,20 @@ const ModalExample = (props) => {
   const [albumDescription, setAlbumDescription] = useState("");
   const [albumTitle, setAlbumTitle] = useState("");
   const [playlistVersionOfTracks, setPlaylistVersionofTracks] = useState([]);
+  const [thumbnails, setthumbnails] = useState([]);
   useEffect(() => {
     const getalbumTracks = async () => {
       setLoading(true);
       await timeout(1000);
       const res = await getAlbum(props.albumBrowseId);
+
       setLoading(false);
       if (!res) return;
       setalbumTracks(res.tracks);
       setArtists(res.artist);
       setAlbumDescription(res.description);
       setAlbumTitle(res.title);
+      setthumbnails(res.thumbnails);
       const playlist = [];
 
       for (const track of res.tracks) {
@@ -104,14 +107,14 @@ const ModalExample = (props) => {
       const item = JSON.stringify({ track });
       addSongToPlaylist(item, id);
     }); */
-    setLoading(true);
+    setAddingPlaylist(true);
     await Promise.all(
       playlistVersionOfTracks.map(async (track) => {
         const item = JSON.stringify({ track });
         await addSongToPlaylist(item, id);
       })
     );
-    setLoading(false);
+    setAddingPlaylist(false);
     props.loadPlaylist(id);
     toaster.notify(
       <span className="styled-toast">
@@ -124,7 +127,7 @@ const ModalExample = (props) => {
   };
 
   const makePlaylist = async () => {
-    setLoading(true);
+    setAddingPlaylist(true);
 
     await timeout(1000);
     await props.makePlaylist(
@@ -133,7 +136,7 @@ const ModalExample = (props) => {
       true,
       "Random"
     );
-    setLoading(false);
+    setAddingPlaylist(false);
     toaster.notify(
       <span className="styled-toast">
         Playlist: {albumTitle + " " + albumArtists[0].name} made!
@@ -144,136 +147,146 @@ const ModalExample = (props) => {
     );
   };
   const PlayLists = props.playlists.map((playlist) => (
-    <DropdownItem onClick={() => addPlayList(playlist.name, playlist._id)}>
+    <DropdownItem
+      key={Math.random()}
+      onClick={() => addPlayList(playlist.name, playlist._id)}
+    >
       {playlist.name}
     </DropdownItem>
   ));
   PlayLists.unshift(
-    <DropdownItem onClick={() => makePlaylist()}>
+    <DropdownItem key={Math.random()} onClick={() => makePlaylist()}>
       Create a new playlist
     </DropdownItem>
   );
   return (
     <div>
-      <Modal
-        isOpen={show}
-        toggle={() => props.toggleModal()}
-        className={className}
-        backdrop={true}
-        keyboard={true}
-        size={"xl"}
-      >
-        {loading ? (
-          <div className="loadingplaceformodal">
-            <LoadingSpinner color="#545454" />
-          </div>
-        ) : null}
-
-        <ModalHeader
-          style={{ textAlign: "center" }}
+      {addingPlaylist && show ? (
+        <div className="loadingplaceformodal">
+          <Spinner size={50} color="white" style={{ zIndex: 999999 }} />
+        </div>
+      ) : null}
+      {loading && show ? (
+        <div className="loadingplaceformodal">
+          <Spinner size={50} color="white" style={{ zIndex: 999999 }} />
+        </div>
+      ) : (
+        <Modal
+          isOpen={show}
           toggle={() => props.toggleModal()}
-          className="text-center"
-          cssModule={{ "modal-title": "w-100 text-center" }}
+          className={className}
+          backdrop={true}
+          keyboard={true}
+          size={"xl"}
         >
-          <RenderArtists artists={albumArtists} />- &nbsp;{albumTitle}
-        </ModalHeader>
-        <ModalBody id="modalbody123123">
-          <div className="albumDescription">
-            <Row>
-              <Col sm="3">
-                {props.albumThumbnails && (
-                  <img
-                    height={120}
-                    src={props.albumThumbnails[1].url} // use normal <img> attributes as props
-                    width={120}
-                    style={{ position: "relative", display: "inline-block" }}
-                    id="thumbnail"
-                    alt="foo"
-                  />
-                )}
-              </Col>
-
-              <Col sm="3">
-                <Button
-                  style={{
-                    position: "relative",
-                    display: "inline-block",
-                    top: "50%",
-                  }}
-                  onClick={() => playPlaylist()}
-                >
-                  Play album
-                </Button>
-              </Col>
-              <Col sm="3">
-                <ButtonDropdown
-                  isOpen={dropdownOpen}
-                  toggle={toggle}
-                  style={{
-                    position: "relative",
-                    display: "inline-block",
-                    top: "50%",
-                  }}
-                >
-                  <DropdownToggle caret>Add to playlist</DropdownToggle>
-                  <DropdownMenu>{PlayLists}</DropdownMenu>
-                </ButtonDropdown>
-              </Col>
-              <Col sm="3">
-                <Button
-                  style={{
-                    position: "relative",
-                    display: "inline-block",
-                    top: "50%",
-                  }}
-                  onClick={() => addPlaylistToQueue()}
-                >
-                  Queue album
-                </Button>
-              </Col>
-            </Row>
-          </div>
-          <hr />
-          <ShowMoreText
-            /* Default options */
-            lines={3}
-            more="Show more"
-            less="Show less"
-            anchorClass=""
-            expanded={false}
+          <ModalHeader
+            style={{ textAlign: "center" }}
+            toggle={() => props.toggleModal()}
+            className="text-center"
+            cssModule={{ "modal-title": "w-100 text-center" }}
           >
-            {albumDescription}
-          </ShowMoreText>
-          <div className="artistTracks">
-            {albumTracks.map(
-              ({ artists, thumbnails, videoId, title, lengthMs }) => {
-                return (
-                  <Song
-                    uniqueId={videoId + Math.random()}
-                    title={title}
-                    videoId={videoId}
-                    artists={albumArtists}
-                    artist={artists}
-                    thumbnails={thumbnails}
-                    duration={format(lengthMs / 1000)}
-                    album={{ id: props.albumBrowseId, name: albumTitle }}
-                    thumbnail={thumbnails[0].url}
-                    addFunc={props.addFunc}
-                    onPlay={props.onPlay}
-                    playNext={props.playNext}
-                    AddToPlaylist={props.AddToPlaylist}
-                  />
-                );
-              }
-            )}
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={() => props.toggleModal()}>
-            Go back
-          </Button>
-        </ModalFooter>
-      </Modal>
+            <RenderArtists artists={albumArtists} />- &nbsp;{albumTitle}
+          </ModalHeader>
+          <ModalBody id="modalbody123123">
+            <div className="albumDescription">
+              <Row>
+                <Col sm="3">
+                  {thumbnails[1] && (
+                    <img
+                      height={120}
+                      src={thumbnails[1].url} // use normal <img> attributes as props
+                      width={120}
+                      style={{ position: "relative", display: "inline-block" }}
+                      id="thumbnail"
+                      alt="foo"
+                    />
+                  )}
+                </Col>
+
+                <Col sm="3">
+                  <Button
+                    style={{
+                      position: "relative",
+                      display: "inline-block",
+                      top: "50%",
+                    }}
+                    onClick={() => playPlaylist()}
+                  >
+                    Play album
+                  </Button>
+                </Col>
+                <Col sm="3">
+                  <ButtonDropdown
+                    isOpen={dropdownOpen}
+                    toggle={toggle}
+                    style={{
+                      position: "relative",
+                      display: "inline-block",
+                      top: "50%",
+                    }}
+                  >
+                    <DropdownToggle caret>Add to playlist</DropdownToggle>
+                    <DropdownMenu>{PlayLists}</DropdownMenu>
+                  </ButtonDropdown>
+                </Col>
+                <Col sm="3">
+                  <Button
+                    style={{
+                      position: "relative",
+                      display: "inline-block",
+                      top: "50%",
+                    }}
+                    onClick={() => addPlaylistToQueue()}
+                  >
+                    Queue album
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+            <hr />
+            <ShowMoreText
+              /* Default options */
+              lines={3}
+              more="Show more"
+              less="Show less"
+              anchorClass=""
+              expanded={false}
+            >
+              {albumDescription}
+            </ShowMoreText>
+            <div className="artistTracks">
+              {albumTracks.map(
+                ({ artists, thumbnails, videoId, title, lengthMs }) => {
+                  return (
+                    <Song
+                      uniqueId={videoId + Math.random()}
+                      title={title}
+                      videoId={videoId}
+                      artists={albumArtists}
+                      artist={artists}
+                      thumbnails={thumbnails}
+                      duration={format(lengthMs / 1000)}
+                      album={{ id: props.albumBrowseId, name: albumTitle }}
+                      thumbnail={thumbnails[0].url}
+                      addFunc={props.addFunc}
+                      onPlay={props.onPlay}
+                      playNext={props.playNext}
+                      AddToPlaylist={props.AddToPlaylist}
+                      toggleModal={props.toggleModal}
+                      toggleArtistModal={props.toggleArtistModal}
+                    />
+                  );
+                }
+              )}
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={() => props.toggleModal()}>
+              Go back
+            </Button>
+          </ModalFooter>
+        </Modal>
+      )}
     </div>
   );
 };
@@ -288,7 +301,7 @@ const Song = (props) => {
   return (
     <Card
       onDoubleClick={() => {
-        if (props.videoID) {
+        if (props.videoId) {
           props.onPlay({
             uniqueId: Math.random(),
             title: props.title,
@@ -310,7 +323,7 @@ const Song = (props) => {
             <div
               className="thumbnailbuttonplaylist"
               onClick={() => {
-                if (props.videoID) {
+                if (props.videoId) {
                   props.onPlay({
                     uniqueId: Math.random(),
                     title: props.title,
@@ -348,11 +361,15 @@ const Song = (props) => {
           </Col>
           <Col xs="3" sm="3">
             <CardText>
-              <div>{props.title}</div>{" "}
+              <div className="hoverEffect">{props.title}</div>{" "}
             </CardText>
           </Col>
           <Col xs="3" sm="3">
-            <RenderArtists2 artists={props.artists} />
+            <RenderArtists2
+              toggleModal={props.toggleModal}
+              toggleArtistModal={props.toggleArtistModal}
+              artists={props.artists}
+            />
           </Col>
           <Col xs="2" sm="2">
             <small className="float-left">
@@ -400,7 +417,15 @@ const Song = (props) => {
 };
 const RenderArtists2 = (props) => {
   return props.artists.map((artist) => (
-    <div className="artistStuff">{artist.name} &nbsp;</div>
+    <div
+      onClick={() => {
+        props.toggleModal();
+        props.toggleArtistModal(artist);
+      }}
+      className="artistStuff hoverEffect"
+    >
+      {artist.name} &nbsp;
+    </div>
   ));
 };
 export default ModalExample;

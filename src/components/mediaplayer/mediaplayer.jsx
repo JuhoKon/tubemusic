@@ -199,6 +199,9 @@ export default class MediaPlayer extends Component {
       const duration = song.duration;
       const artists = song.artists;
       console.log(song);
+      this.setState({
+        currentSong: song
+      })
       //console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
@@ -311,21 +314,13 @@ export default class MediaPlayer extends Component {
       <div className="MediaPlayerdiv">
         <Row>
           <Col sm="3">
-            {this.state.title && this.state.title.length > 0 ? (
+            {this.state.title && this.state.title.length > 26 ? (
               <span className="marquee">
-                <span>
-                  {this.state.title} - {this.props.artist}
-                </span>
-                <span>
-                  {" "}
-                  {this.state.title} - {this.props.artist}
-                </span>
+                <span>{this.state.title}</span>
+                <span> {this.state.title}</span>
               </span>
             ) : (
-              <p className="titleplaying">
-                {" "}
-                {this.state.title} - {this.props.artist}
-              </p>
+              <p className="titleplaying"> {this.state.title}</p>
             )}
 
             <Tooltip
@@ -334,8 +329,15 @@ export default class MediaPlayer extends Component {
               target="TooltipExample"
               toggle={this.toggletip}
             >
-              {this.state.title} - {this.props.artist}
+              {this.state.title}
             </Tooltip>
+            <p className="albumPlaying hoverEffect">{"this.state.artist"}</p>
+            {this.props.artists && (
+              <RenderArtists
+                toggleArtistModal={this.props.toggleArtistModal}
+                artists={this.props.artists}
+              />
+            )}
             <div className="testi123" id="TooltipExample">
               <ReactPlayer
                 ref={this.ref}
@@ -523,3 +525,15 @@ export default class MediaPlayer extends Component {
     );
   }
 }
+const RenderArtists = (props) => {
+  return props.artists.map((artist) => (
+    <div
+      className="artistStuff hoverEffect"
+      onClick={() =>
+        props.toggleArtistModal({ name: artist.name, id: artist.id })
+      }
+    >
+      {artist.name} &nbsp;
+    </div>
+  ));
+};

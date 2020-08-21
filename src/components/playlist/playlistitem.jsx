@@ -40,7 +40,7 @@ class Playlistitem extends Component {
   render() {
     const fade = this.state.fade;
     //console.log("playlistitem");
-
+    console.log(this.props);
     //console.log(this.props.editMode);
     return (
       <Card
@@ -50,7 +50,7 @@ class Playlistitem extends Component {
       >
         <CardBody>
           <Row>
-            <Col xs="2" sm="2">
+            <Col xs="2" sm="2" lg="1">
               <div
                 className="thumbnailbuttonplaylist"
                 onClick={this.onPlayClick.bind(this, this.props)}
@@ -75,15 +75,53 @@ class Playlistitem extends Component {
             </Col>
             <Col xs="3" sm="3">
               <CardText>
-                <div>{this.props.title} </div>
+                <div className="hoverEffect">{this.props.title} </div>
               </CardText>
             </Col>
-            <Col xs="4" sm="4">
+            <Col xs="4" sm="4" lg="3">
               {this.props.artists && (
                 <RenderArtists
                   toggleArtistModal={this.props.toggleArtistModal}
                   artists={this.props.artists}
                 />
+              )}
+            </Col>
+            {/*{artist: "Pyhimys", browseId: "MPREb_w0MZYvAVraE", thumbnails: Array(4), title: "Olisinpa täällä", type: "Album", …}
+artist: "Pyhimys"
+browseId: "MPREb_w0MZYvAVraE"
+thumbnails: Array(4)
+0: {height: 60, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…s5yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w60-h60-l90-rj", width: 60}
+1: {height: 120, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w120-h120-l90-rj", width: 120}
+2: {height: 226, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w226-h226-l90-rj", width: 226}
+3: {height: 544, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w544-h544-l90-rj", width: 544}
+length: 4
+__proto__: Array(0)
+title: "Olisinpa täällä"
+type: "Album"
+year: "2019"
+__proto__: Object */}
+            <Col lg="2" className="d-none d-lg-block">
+              {this.props.album && (
+                <CardText>
+                  <div
+                    onClick={() => {
+                      this.props.toggleAlbumModal({
+                        artist: this.props.artists[0].name,
+                        browseId: this.props.album.id,
+                        type: "Album",
+                        thumbnails: [
+                          { height: 60, url: this.props.thumbnail },
+                          { height: 60, url: this.props.thumbnail },
+                        ],
+                        title: this.props.album.name,
+                      });
+                    }}
+                    style={{ cursor: "pointer" }}
+                    className="hoverEffect"
+                  >
+                    {this.props.album.name}
+                  </div>
+                </CardText>
               )}
             </Col>
             <Col xs="1" sm="1">
@@ -129,7 +167,7 @@ class Playlistitem extends Component {
 const RenderArtists = (props) => {
   return props.artists.map((artist) => (
     <div
-      className="artistStuff"
+      className="artistStuff hoverEffect"
       onClick={() =>
         props.toggleArtistModal({ name: artist.name, id: artist.id })
       }

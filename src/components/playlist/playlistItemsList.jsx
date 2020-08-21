@@ -21,6 +21,8 @@ const SortableItem = sortableElement(
     thumbnail,
     artists,
     toggleArtistModal,
+    album,
+    toggleAlbumModal,
   }) => (
     <Playlistitem
       key={uniqueId}
@@ -38,6 +40,8 @@ const SortableItem = sortableElement(
       thumbnail={thumbnail && thumbnail}
       artists={artists}
       toggleArtistModal={toggleArtistModal}
+      album={album}
+      toggleAlbumModal={toggleAlbumModal}
     />
   )
 );
@@ -53,6 +57,7 @@ export default class PlaylistItemsList extends Component {
       duration,
       thumbnail,
       artists,
+      album,
     } = playlist[index];
     //const { value } = items[index];
     return (
@@ -74,6 +79,8 @@ export default class PlaylistItemsList extends Component {
           thumbnail={thumbnail && thumbnail}
           artists={artists}
           toggleArtistModal={this.props.toggleArtistModal}
+          toggleAlbumModal={this.props.toggleAlbumModal}
+          album={album}
         />
       </div>
     );
