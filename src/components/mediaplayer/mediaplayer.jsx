@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
 import { updatePlaylistSongTime } from "../functions/functions";
-import { CustomInput, Tooltip, Row, Col } from "reactstrap";
+import { CustomInput, Tooltip, Row, Col, CardText } from "reactstrap";
 import { Button } from "reactstrap";
 
 import HistoryModal from "../player/history/History-modal";
@@ -63,6 +63,7 @@ export default class MediaPlayer extends Component {
       durationFromObject: this.props.duration,
       playlistId: this.props.playlistId,
       shuffle: this.props.isShuffle,
+      currentSong: this.props.currentSong,
     };
   }
 
@@ -98,23 +99,9 @@ export default class MediaPlayer extends Component {
         playing: this.props.playing,
         playlistId: this.props.playlistId,
         shuffle: this.props.isShuffle,
+        currentSong: this.props.currentSong,
       });
       setTitle(this.props.title); //setting document title
-      if (this.props.url !== prevProps.url) {
-        if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
-          let itemObject = {};
-          console.log(prevProps);
-          console.log(this.props);
-          itemObject["title"] = prevProps.title || "error";
-          itemObject["url"] = prevProps.url;
-          itemObject["duration"] = prevProps.duration;
-          //TODO millon tehty
-          if (itemObject["url"] === null) {
-            return;
-          }
-          //this.addToHistory(itemObject);
-        }
-      }
     }
   }
   clearHistory = () => {
@@ -179,6 +166,7 @@ export default class MediaPlayer extends Component {
         duration: 1200,
       });
       this.props.setUrl(url);
+      this.props.setCurrentSong(item);
     }
   };
   handlePlayNext = () => {
@@ -200,8 +188,8 @@ export default class MediaPlayer extends Component {
       const artists = song.artists;
       console.log(song);
       this.setState({
-        currentSong: song
-      })
+        currentSong: song,
+      });
       //console.log(url);
       if (url === this.state.url) {
         this.player.seekTo(0); //Seeks to 0 incase of having same url
@@ -220,6 +208,7 @@ export default class MediaPlayer extends Component {
       });
       this.props.onRemove(song); //removes item from queue
       this.props.setUrl(url);
+      this.props.setCurrentSong(song);
     } else {
       this.setState({
         playing: false,
@@ -240,11 +229,15 @@ export default class MediaPlayer extends Component {
     console.log("onEnded");
     //this.setState({ playing: false });
     if (this.state.url !== null) {
-      let itemObject = {};
+      let itemObject = Object.assign({}, this.state.currentSong);
+      if (typeof itemObject === "undefined") {
+        itemObject = {};
+      }
       itemObject["title"] = this.state.title || "error";
       itemObject["url"] = this.state.url;
       itemObject["duration"] = this.state.durationFromObject;
       itemObject["videoID"] = this.state.videoId;
+
       this.addToHistory(itemObject);
     }
     this.handlePlayNext();
@@ -309,20 +302,19 @@ export default class MediaPlayer extends Component {
   /* Tooltip is not working correctly. Fix it !*/
   render() {
     const { playing, volume, duration, played } = this.state;
-
+    console.log(this.state.currentSong);
     return (
       <div className="MediaPlayerdiv">
         <Row>
           <Col sm="3">
             {this.state.title && this.state.title.length > 26 ? (
-              <span className="marquee">
-                <span>{this.state.title}</span>
-                <span> {this.state.title}</span>
+              <span className="marquee hoverEffect">
+                <span className="hoverEffect">{this.state.title}</span>
+                <span className="hoverEffect"> {this.state.title}</span>
               </span>
             ) : (
               <p className="titleplaying"> {this.state.title}</p>
             )}
-
             <Tooltip
               placement="top"
               isOpen={this.state.tooltipOpen}
@@ -331,14 +323,43 @@ export default class MediaPlayer extends Component {
             >
               {this.state.title}
             </Tooltip>
-            <p className="albumPlaying hoverEffect">{"this.state.artist"}</p>
-            {this.props.artists && (
-              <RenderArtists
-                toggleArtistModal={this.props.toggleArtistModal}
-                artists={this.props.artists}
-              />
+            {this.state.currentSong && (
+              <div
+                className="artistPlaying hoverEffect d-none d-xl-block"
+                style={{ width: "400px", textAlign: "left" }}
+              >
+                <RenderArtists
+                  toggleArtistModal={this.props.toggleArtistModal}
+                  artists={this.state.currentSong.artists}
+                />
+              </div>
             )}
-            <div className="testi123" id="TooltipExample">
+            {this.state.currentSong && this.state.currentSong.album && (
+              <div
+                className="albumPlaying hoverEffect d-none d-xl-block"
+                style={{ width: "400px", textAlign: "left" }}
+              >
+                <p
+                  className="artistStuff hoverEffect "
+                  onClick={() => {
+                    this.props.toggleAlbumModal({
+                      artist: this.state.currentSong.artists[0].name,
+                      browseId: this.state.currentSong.album.id,
+                      type: "Album",
+                      thumbnails: [
+                        { height: 60, url: this.props.thumbnail },
+                        { height: 60, url: this.props.thumbnail },
+                      ],
+                      title: this.state.currentSong.album.name,
+                    });
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  {this.state.currentSong.album.name}
+                </p>
+              </div>
+            )}
+            <div className="testi123 " id="TooltipExample">
               <ReactPlayer
                 ref={this.ref}
                 muted={this.state.muted}
@@ -526,6 +547,7 @@ export default class MediaPlayer extends Component {
   }
 }
 const RenderArtists = (props) => {
+  if (!props.artists) return null;
   return props.artists.map((artist) => (
     <div
       className="artistStuff hoverEffect"

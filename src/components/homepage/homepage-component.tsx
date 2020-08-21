@@ -78,6 +78,7 @@ type HomepageState = {
   albumThumbnails?: any;
   albumTitle?: any;
   albumYear?: any;
+  currentSong?: any;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -791,6 +792,7 @@ export default class Homepage extends Component<any, HomepageState> {
       title: title,
       artist: artist ? artist : null,
     });
+    this.setCurrentSong(item);
     /*this.setState({
       title: title,
     });
@@ -805,6 +807,11 @@ export default class Homepage extends Component<any, HomepageState> {
       title: title,
     });
   }
+  setCurrentSong = (song: Song) => {
+    this.setState({
+      currentSong: song,
+    });
+  };
   render() {
     //console.log(this.state.error); /* ----TO CLEAN UP --- and switch to webscraping instead of youtube API (it sucks)*/
     const queue = this.state.queue;
@@ -955,6 +962,10 @@ export default class Homepage extends Component<any, HomepageState> {
                 setShuffle={this.setShuffle}
                 isShuffle={this.state.shuffle}
                 artist={this.state.artist}
+                setCurrentSong={this.setCurrentSong}
+                currentSong={this.state.currentSong}
+                toggleArtistModal={this.toggleArtistModal}
+                toggleAlbumModal={this.toggleAlbumModal}
               />
             </Col>
           </Row>

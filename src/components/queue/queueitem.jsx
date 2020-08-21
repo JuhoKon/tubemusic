@@ -50,7 +50,7 @@ class Queueitem extends Component {
             <Row>
               <Col xs="2" sm="2">
                 <div
-                  className="thumbnailbuttonplaylist"
+                  className="thumbnailbuttonplaylist d-none d-xl-block"
                   onClick={this.onPlayClick.bind(this, this.props)}
                 >
                   {this.props.thumbnail && (
@@ -85,6 +85,7 @@ class Queueitem extends Component {
                   />
                 )}
               </Col>
+
               <Col xs="1" sm="1">
                 <small className="float-left">{this.props.duration}</small>
               </Col>

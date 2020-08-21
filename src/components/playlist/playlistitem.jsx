@@ -86,20 +86,7 @@ class Playlistitem extends Component {
                 />
               )}
             </Col>
-            {/*{artist: "Pyhimys", browseId: "MPREb_w0MZYvAVraE", thumbnails: Array(4), title: "Olisinpa täällä", type: "Album", …}
-artist: "Pyhimys"
-browseId: "MPREb_w0MZYvAVraE"
-thumbnails: Array(4)
-0: {height: 60, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…s5yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w60-h60-l90-rj", width: 60}
-1: {height: 120, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w120-h120-l90-rj", width: 120}
-2: {height: 226, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w226-h226-l90-rj", width: 226}
-3: {height: 544, url: "https://lh3.googleusercontent.com/JOIBsZciSnUbSjUf…yBExpKFc5mnSW4zgmMm7B29_gnKGOmqf=w544-h544-l90-rj", width: 544}
-length: 4
-__proto__: Array(0)
-title: "Olisinpa täällä"
-type: "Album"
-year: "2019"
-__proto__: Object */}
+
             <Col lg="2" className="d-none d-lg-block">
               {this.props.album && (
                 <CardText>
