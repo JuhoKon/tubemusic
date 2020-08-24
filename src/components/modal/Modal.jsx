@@ -112,7 +112,7 @@ const ModalExample = (props) => {
   useEffect(() => {
     const getalbumTracks = async () => {
       setLoading(true);
-      await timeout(1000);
+
       const res = await getAlbum(props.albumBrowseId);
 
       setLoading(false);
@@ -142,7 +142,6 @@ const ModalExample = (props) => {
           });
         }
       }
-
       setPlaylistVersionofTracks(playlist);
     };
 

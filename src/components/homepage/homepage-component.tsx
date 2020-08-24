@@ -222,7 +222,6 @@ export default class Homepage extends Component<any, HomepageState> {
     });
   };
   toggleAlbumModal = (props: any) => {
-    console.log(props);
     this.setState({
       showModal: !this.state.showModal,
       albumBrowseId: props.browseId,
