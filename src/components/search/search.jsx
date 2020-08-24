@@ -119,7 +119,7 @@ class Search extends Component {
                         return (
                           <input
                             id="autocomplete"
-                            placeholder="Search for songs on our database..."
+                            placeholder="Search for songs from our DB by Track, Album or Artist"
                             {...props}
                           />
                         );

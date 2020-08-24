@@ -26,7 +26,7 @@ class Playlist extends Component {
       userName: this.props.userName,
     };
     this.UpdateCurrentPlaylist = this.UpdateCurrentPlaylist.bind(this);
-    this.toggle = this.toggle.bind(this);
+
     this.onDeleteFromPlaylist = this.onDeleteFromPlaylist.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.addPlaylistToQueue = this.addPlaylistToQueue.bind(this);
@@ -37,7 +37,15 @@ class Playlist extends Component {
   handleChange = (event) => {
     this.setState({ filter: event.target.value });
   };
-
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!isEqual(nextProps, this.props)) {
+      return true;
+    }
+    if (!isEqual(nextProps.playlistName, this.state.playlistName)) {
+      return true;
+    }
+    return false;
+  }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
@@ -61,6 +69,7 @@ class Playlist extends Component {
         break;
       }
     }
+    this.forceUpdate();
     this.props.onDeleteFromPlaylist(item);
   }
   playPlaylist(playlist) {
@@ -68,22 +77,16 @@ class Playlist extends Component {
     console.log("playPlaylist");
     this.props.playPlaylist(playlist);
   }
-  toggle = () => {
-    this.setState({
-      editMode: !this.state.editMode,
-    });
-
-    setTimeout(() => this.props.loadPlaylist(this.state.playlistId), 200);
-    this.List.recomputeRowHeights();
-    this.List.forceUpdate();
-  };
 
   async UpdateCurrentPlaylist() {
     this.props.setPlaylist(this.state.playlist);
     await this.props.UpdateCurrentPlaylist();
     this.toggle();
   }
-
+  UpdateCurrentPlaylist2 = async () => {
+    this.props.setPlaylist(this.state.playlist);
+    await this.props.UpdateCurrentPlaylist();
+  };
   registerListRef = (listInstance) => {
     this.List = listInstance;
   };
@@ -113,8 +116,14 @@ class Playlist extends Component {
   toggleArtistModal = async (artist) => {
     this.props.toggleArtistModal(artist);
   };
-
+  saveName = (name) => {
+    this.setState({
+      playlistName: name,
+    });
+    this.forceUpdate();
+  };
   render() {
+    console.log("I was rendered again");
     const { filter } = this.state;
     const { playlist } = this.props;
 
@@ -146,19 +155,14 @@ class Playlist extends Component {
             playlistName={this.state.playlistName}
             setLoading={this.setLoading}
           />
-          {/*<LoadPlaylistModal
-            name="Playlists"
-            deletePlaylist={this.props.deletePlaylist}
-            getPlayList={this.props.getPlayList}
-            playlists={playlists}
-            loadPlaylist={this.props.loadPlaylist}
-          />*/}
+
           <SaveModal
             userRole={this.props.userRole}
             userName={this.state.userName}
             playlistId={this.props.playlistId}
             isPrivate={this.props.isPrivate}
             Updateplaylist={this.props.Updateplaylist}
+            saveName={this.saveName}
             playlistName={this.state.playlistName}
             playlistOwner={this.state.playlistOwner}
             setLoading={this.setLoading}
@@ -184,22 +188,7 @@ class Playlist extends Component {
           placeholder="Filter songs..."
         />
         <hr />
-        <Button
-          color={this.state.editMode ? "secondary" : "secondary"}
-          className="float-right btn-remove"
-          onClick={this.toggle}
-          disabled={this.state.playlistName ? false : true}
-        >
-          {this.state.editMode ? "Revert changes" : "Edit"}
-        </Button>
-        {this.state.editMode ? (
-          <Button
-            onClick={this.UpdateCurrentPlaylist}
-            className="float-right btn-remove"
-          >
-            Save
-          </Button>
-        ) : null}
+
         <p className="float-left">Total songs: {filteredData.length}</p>
 
         <AutoSizer disableHeight>
@@ -215,8 +204,11 @@ class Playlist extends Component {
               onDeleteFromPlaylist={this.onDeleteFromPlaylist}
               toggleArtistModal={this.toggleArtistModal}
               toggleAlbumModal={this.props.toggleAlbumModal}
+              UpdateCurrentPlaylist2={this.UpdateCurrentPlaylist2}
               width={width}
               distance={10}
+              playlists={this.props.playlists}
+              addSongToPlaylist={this.props.addSongToPlaylist}
             />
           )}
         </AutoSizer>

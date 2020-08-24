@@ -52,7 +52,7 @@ class SaveModal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
 
     this.props.Updateplaylist(
@@ -60,6 +60,7 @@ class SaveModal extends Component {
       this.props.playlistId,
       this.state.checked
     );
+    this.props.saveName(this.state.playlistName);
     this.toggle();
   };
   render() {

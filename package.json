@@ -24,6 +24,7 @@
     "moment-duration-format": "^2.3.2",
     "react": "^16.12.0",
     "react-autocomplete": "^1.8.1",
+    "react-contexify": "^4.1.1",
     "react-contextmenu": "^2.14.0",
     "react-dom": "^16.12.0",
     "react-fast-compare": "^2.0.4",

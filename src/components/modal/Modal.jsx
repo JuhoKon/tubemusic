@@ -24,8 +24,62 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import {
+  Menu,
+  Item,
+  Separator,
+  Submenu,
+  MenuProvider,
+  contextMenu,
+} from "react-contexify";
+
 import Spinner from "../spinner/spinner4";
 import "./Modal.css";
+
+const MyAwesomeMenu = (props) => {
+  return (
+    <Menu id="menu_id4">
+      <Item
+        onClick={({ props }) => {
+          props.onPlay(props);
+        }}
+      >
+        Play song
+      </Item>
+      <Item onClick={({ props }) => props.onAdd(props)}>Add to Queue</Item>
+      <Item onClick={({ props }) => props.playNext(props)}>Play next</Item>
+      <Separator />
+      <Submenu label="Go to Artist" disabled={!props.artists}>
+        {props.artists &&
+          props.artists.map((artist) => (
+            <Item
+              onClick={({ props }) => {
+                props.toggleModal();
+                props.toggleArtistModal(artist);
+              }}
+            >
+              {artist.name}
+            </Item>
+          ))}
+      </Submenu>
+      <Separator />
+      <Submenu label="Add to playlist">
+        {props.playlists &&
+          props.playlists.map((playlist) => {
+            return (
+              <Item
+                onClick={({ props }) => {
+                  props.addSongToPlaylist(props, playlist._id);
+                }}
+              >
+                {playlist.name}
+              </Item>
+            );
+          })}
+      </Submenu>
+    </Menu>
+  );
+};
 
 function pad(string) {
   return ("0" + string).slice(-2);
@@ -54,6 +108,7 @@ const ModalExample = (props) => {
   const [albumTitle, setAlbumTitle] = useState("");
   const [playlistVersionOfTracks, setPlaylistVersionofTracks] = useState([]);
   const [thumbnails, setthumbnails] = useState([]);
+
   useEffect(() => {
     const getalbumTracks = async () => {
       setLoading(true);
@@ -159,6 +214,15 @@ const ModalExample = (props) => {
       Create a new playlist
     </DropdownItem>
   );
+  const handleContextMenu = (e, props) => {
+    console.log("HANDLECONTEXT");
+    e.preventDefault();
+    contextMenu.show({
+      id: "menu_id4",
+      event: e,
+      props: props,
+    });
+  };
   return (
     <div>
       {addingPlaylist && show ? (
@@ -185,7 +249,8 @@ const ModalExample = (props) => {
             className="text-center"
             cssModule={{ "modal-title": "w-100 text-center" }}
           >
-            <RenderArtists artists={albumArtists} />- &nbsp;{albumTitle}
+            <RenderArtists artists={albumArtists} />- &nbsp;{albumTitle}{" "}
+            <MyAwesomeMenu artists={albumArtists} playlists={props.playlists} />
           </ModalHeader>
           <ModalBody id="modalbody123123">
             <div className="albumDescription">
@@ -258,23 +323,48 @@ const ModalExample = (props) => {
               {albumTracks.map(
                 ({ artists, thumbnails, videoId, title, lengthMs }) => {
                   return (
-                    <Song
-                      uniqueId={videoId + Math.random()}
-                      title={title}
-                      videoId={videoId}
-                      artists={albumArtists}
-                      artist={artists}
-                      thumbnails={thumbnails}
-                      duration={format(lengthMs / 1000)}
-                      album={{ id: props.albumBrowseId, name: albumTitle }}
-                      thumbnail={thumbnails[0].url}
-                      addFunc={props.addFunc}
-                      onPlay={props.onPlay}
-                      playNext={props.playNext}
-                      AddToPlaylist={props.AddToPlaylist}
-                      toggleModal={props.toggleModal}
-                      toggleArtistModal={props.toggleArtistModal}
-                    />
+                    <div
+                      onContextMenu={(event) =>
+                        handleContextMenu(event, {
+                          onDeleteFromPlaylist: props.onDeleteFromPlaylist,
+                          onAdd: props.addFunc,
+                          onPlay: props.onPlay,
+                          playNext: props.playNext,
+                          artists: artists,
+                          toggleModal: props.toggleModal,
+                          toggleArtistModal: props.toggleArtistModal,
+                          album: { id: props.albumBrowseId, name: albumTitle },
+                          toggleAlbumModal: props.toggleAlbumModal,
+                          UpdateCurrentPlaylist2: props.UpdateCurrentPlaylist2,
+                          addSongToPlaylist: props.addSongToPlaylist,
+                          videoId,
+                          title,
+                          uniqueId: videoId + Math.random(),
+                          duration: format(lengthMs / 1000),
+                          thumbnail: thumbnails[0].url,
+                          artists: albumArtists,
+                        })
+                      }
+                      key={videoId + Math.random()}
+                    >
+                      <Song
+                        uniqueId={videoId + Math.random()}
+                        title={title}
+                        videoId={videoId}
+                        artists={albumArtists}
+                        artist={artists}
+                        thumbnails={thumbnails}
+                        duration={format(lengthMs / 1000)}
+                        album={{ id: props.albumBrowseId, name: albumTitle }}
+                        thumbnail={thumbnails[0].url}
+                        addFunc={props.addFunc}
+                        onPlay={props.onPlay}
+                        playNext={props.playNext}
+                        AddToPlaylist={props.AddToPlaylist}
+                        toggleModal={props.toggleModal}
+                        toggleArtistModal={props.toggleArtistModal}
+                      />
+                    </div>
                   );
                 }
               )}

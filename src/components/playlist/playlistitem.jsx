@@ -13,9 +13,6 @@ class Playlistitem extends Component {
     fade: false,
   };
   onAddClick = (id) => {
-    this.setState({
-      fade: true,
-    });
     this.props.addFunc(id);
   };
   onPlayClick = (id) => {
@@ -42,6 +39,7 @@ class Playlistitem extends Component {
     //console.log("playlistitem");
     /*     console.log(this.props); */
     //console.log(this.props.editMode);
+    console.log(123);
     return (
       <Card
         onAnimationEnd={() => this.setState({ fade: false })}

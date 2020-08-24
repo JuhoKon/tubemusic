@@ -138,6 +138,9 @@ class Queue extends Component {
                     toggleArtistModalItem={this.toggleArtistModalItem}
                     width={width}
                     distance={10}
+                    playlists={this.props.playlists}
+                    addSongToPlaylist={this.props.addSongToPlaylist}
+                    toggleAlbumModal={this.props.toggleAlbumModal}
                   />
                 )}
               </AutoSizer>

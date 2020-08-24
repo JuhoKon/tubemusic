@@ -4,7 +4,7 @@ import { authenticationService } from "./authenthication";
 import { handleError } from "./handleError";
 import { handleResponse } from "./handleResponse";
 import jwt from "jsonwebtoken";
-const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const key = "AIzaSyCc5tyizZ6BVh1XtAv_ItjIlS7QMKWhe0c"; //spotify
 //const API = "https://tubemusicbackend.herokuapp.com";
 const API = "http://localhost:8080";
@@ -255,7 +255,6 @@ export const makePlaylist = async (body) => {
 };
 
 export const updatePlaylist = async (body, id) => {
-  await timeout(100);
   let res = await axios.put(
     API + `/playlists/update/${id}`,
     body,
@@ -272,7 +271,6 @@ export const addSongToPlaylist = async (body, id) => {
   return res;
 };
 export const updatePlaylistSongTime = async (body, id) => {
-  await timeout(100);
   let res = await axios.put(
     API + `/playlists/updatetime/${id}`,
     body,

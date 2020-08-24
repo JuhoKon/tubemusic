@@ -56,6 +56,7 @@ const ModalExample = (props) => {
         <ModalBody id="modalbody123123">
           {/* Tänne kaikki buttonit add to playlist jne. queue jne.*/}
           <div className="artistTracks">
+            {/* Tästä listasta pitää tehdä virtualisoitu lista! */}
             {props.allSongs.map(
               ({ artists, thumbnails, videoId, title, duration }) => {
                 return (

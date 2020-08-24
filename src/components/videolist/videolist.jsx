@@ -7,13 +7,91 @@ import "./videolist.css";
 import "simplebar/dist/simplebar.min.css";
 import AlbulModal from "../modal/Modal";
 import ArtistModal from "../modal/artistmodal/ArtistModal";
+import {
+  Menu,
+  Item,
+  Separator,
+  Submenu,
+  MenuProvider,
+  contextMenu,
+} from "react-contexify";
+
+const MyAwesomeMenu = (props) => {
+  console.log(props);
+  return (
+    <Menu id="menu_id2">
+      <Item
+        onClick={({ props }) => {
+          props.onPlay(props);
+        }}
+      >
+        Play song
+      </Item>
+      <Item onClick={({ props }) => props.onAdd(props)}>Add to Queue</Item>
+      <Item onClick={({ props }) => props.playNext(props)}>Play next</Item>
+      <Separator />
+      <Submenu label="Go to Artist" disabled={!props.artists}>
+        {props.artists &&
+          props.artists.map((artist) => (
+            <Item
+              onClick={({ props }) =>
+                props.toggleArtistModal({ name: artist.name, id: artist.id })
+              }
+            >
+              {artist.name}
+            </Item>
+          ))}
+      </Submenu>
+      <Item
+        disabled={!props.album}
+        onClick={({ props }) => {
+          if (props.album) {
+            props.toggleAlbumModal({
+              artist: props.artists[0].name,
+              browseId: props.album.id,
+              type: "Album",
+              thumbnails: [
+                { height: 60, url: props.thumbnail },
+                { height: 60, url: props.thumbnail },
+              ],
+              title: props.album.name,
+            });
+          }
+        }}
+      >
+        Go to Album
+      </Item>
+
+      <Separator />
+      <Submenu label="Add to playlist">
+        {props.playlists &&
+          props.playlists.map((playlist) => {
+            return (
+              <Item
+                onClick={({ props }) =>
+                  props.addSongToPlaylist(props, playlist._id)
+                }
+              >
+                {playlist.name}
+              </Item>
+            );
+          })}
+      </Submenu>
+    </Menu>
+  );
+};
+
 class Videolist extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: this.props.loading,
+      playlists: this.props.playlists,
       error: this.props.error,
       errorText: this.props.errorText,
+      playlists: [],
+      album: [],
+      artists: [],
       showModal: false,
     };
   }
@@ -24,6 +102,7 @@ class Videolist extends Component {
         loading: this.props.loading,
         error: this.props.error,
         errorText: this.props.errorText,
+        playlists: this.props.playlists,
       });
     }
   }
@@ -66,12 +145,31 @@ class Videolist extends Component {
     console.log(artist);
     this.props.toggleArtistModal(artist);
   };
-
+  handleContextMenu(e, props) {
+    console.log("HANDLECONTEXT");
+    console.log(props.album);
+    e.preventDefault();
+    this.setState({
+      artists: props.artists,
+      album: props.album,
+    });
+    contextMenu.show({
+      id: "menu_id2",
+      event: e,
+      props: props,
+    });
+  }
   render() {
     const items = this.props.items;
     console.log(items);
+    console.log(this.props);
     return (
       <div id="videolist33">
+        <MyAwesomeMenu
+          artists={this.state.artists}
+          album={this.state.album}
+          playlists={this.props.playlists}
+        />
         <AlbulModal
           show={this.state.showModal}
           toggleModal={this.toggleModal}
@@ -138,28 +236,53 @@ class Videolist extends Component {
           }) => {
             return (
               <CSSTransition key={uniqueId} timeout={500} classNames="fade">
-                <Videoitem
-                  playNext={this.props.playNext}
-                  uniqueId={uniqueId}
-                  title={title}
-                  thumbnail={thumbnail && thumbnail}
-                  channelTitle={channelTitle}
-                  publishedAt={publishedAt}
-                  videoId={videoId}
-                  addFunc={this.props.onAdd}
-                  onPlay={this.props.onPlay}
-                  AddToPlaylist={this.props.AddToPlaylist}
-                  duration={duration}
-                  artists={artists}
-                  resultType={resultType}
-                  artist={artist}
-                  browseId={browseId}
-                  thumbnails={thumbnails}
-                  toggleAlbumModal={this.toggleAlbumModal}
-                  toggleArtistModal={this.toggleArtistModal}
-                  toggleArtistModalItem={this.toggleArtistModalItem}
-                  album={album}
-                />
+                <div
+                  onContextMenu={(event) => {
+                    if (resultType !== "song") return;
+                    this.handleContextMenu(event, {
+                      onDeleteFromPlaylist: null,
+                      playNext: this.props.playNext,
+                      onAdd: this.props.onAdd,
+                      onPlay: this.props.onPlay,
+                      playNext: this.props.playNext,
+                      toggleArtistModal: this.toggleArtistModalItem,
+                      toggleAlbumModal: this.props.toggleAlbumModal,
+                      videoId: videoId,
+                      title: title,
+                      publishedAt: publishedAt,
+                      uniqueId: videoId + Math.random(),
+                      duration: duration,
+                      thumbnail: thumbnails,
+                      artists: artists,
+                      album: album,
+                      addSongToPlaylist: this.props.addSongToPlaylist,
+                    });
+                  }}
+                  key={this.props.uniqueId}
+                >
+                  <Videoitem
+                    playNext={this.props.playNext}
+                    uniqueId={uniqueId}
+                    title={title}
+                    thumbnail={thumbnail && thumbnail}
+                    channelTitle={channelTitle}
+                    publishedAt={publishedAt}
+                    videoId={videoId}
+                    addFunc={this.props.onAdd}
+                    onPlay={this.props.onPlay}
+                    AddToPlaylist={this.props.AddToPlaylist}
+                    duration={duration}
+                    artists={artists}
+                    resultType={resultType}
+                    artist={artist}
+                    browseId={browseId}
+                    thumbnails={thumbnails}
+                    toggleAlbumModal={this.toggleAlbumModal}
+                    toggleArtistModal={this.toggleArtistModal}
+                    toggleArtistModalItem={this.toggleArtistModalItem}
+                    album={album}
+                  />
+                </div>
               </CSSTransition>
             );
           }

@@ -31,6 +31,7 @@ import {
   getArtistData,
   getArtistAlbumData,
   getPlaylist,
+  addSongToPlaylist,
 } from "../functions/functions";
 import { authenticationService } from "../functions/authenthication";
 import Spinner from "../spinner/spinner4";
@@ -84,6 +85,7 @@ type HomepageState = {
   showAllSongsModal?: boolean;
   loadingAllSongs?: boolean;
   allSongs?: any;
+  playlistIndex: number;
 };
 const timeout = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -145,6 +147,7 @@ export default class Homepage extends Component<any, HomepageState> {
       shuffle: false,
       artist: "",
       allSongs: [],
+      playlistIndex: 0,
     };
   }
   toggleModal = () => {
@@ -332,6 +335,15 @@ export default class Homepage extends Component<any, HomepageState> {
       });
     }
   }
+  addSongToPlaylist = async (track: any, id: string) => {
+    const item = JSON.stringify({ track });
+    if (this.state.playlistId === id) {
+      this.setState((prevState) => ({
+        playlist: [...prevState.playlist, track],
+      }));
+    }
+    await addSongToPlaylist(item, id);
+  };
   shuffleQueue() {
     //Fiter-Yates shuffle
     //https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
@@ -474,7 +486,10 @@ export default class Homepage extends Component<any, HomepageState> {
         "No playlist selected. Creating a new playlist.\n" +
           "Generating name..."
       );
-      this.state.playlist.push(item);
+      /*   this.state.playlist.push(item); */
+      this.setState((prevState) => ({
+        playlist: [...prevState.playlist, item],
+      }));
       this.makePlaylist(nameGenerator(), this.state.playlist, true, "Random");
       this.setState({
         updated: !this.state.updated,
@@ -506,6 +521,9 @@ export default class Homepage extends Component<any, HomepageState> {
         duration: 750,
       });
     }
+    this.setState({
+      playlistIndex: this.state.playlistIndex + 1,
+    });
   }
   onDeleteFromPlaylist(item: Song) {
     //deletes item from the active playlist from state
@@ -627,13 +645,15 @@ export default class Homepage extends Component<any, HomepageState> {
   }
   async loadPlaylist(id: String) {
     //loads a single database based on the id
+    console.log("WHAT");
     this.setState({
       loadingPlaylist: true,
       playlist: [],
       playlistName: "Loading...",
     });
     const result: any = await getPlayListById(id);
-
+    console.log("WHAT2");
+    console.log(result);
     this.setState({
       playlist: result.data.playlist,
       playlistName: result.data.name,
@@ -642,6 +662,7 @@ export default class Homepage extends Component<any, HomepageState> {
       private: result.data.private,
       playlistOwner: result.data.owner,
       loadingPlaylist: false,
+      playlistIndex: this.state.playlistIndex + 1,
     });
     return "OK";
   }
@@ -697,7 +718,6 @@ export default class Homepage extends Component<any, HomepageState> {
       playlistName: result.data.name,
       private: isPrivate,
     });
-    await timeout(500);
     await this.getPlaylist();
     this.setLoading(false);
   }
@@ -722,7 +742,6 @@ export default class Homepage extends Component<any, HomepageState> {
       playlistName: result.data.name,
       playlist: playlist,
     });
-    await timeout(500);
 
     await this.getPlaylist();
   }
@@ -751,7 +770,6 @@ export default class Homepage extends Component<any, HomepageState> {
     await deleteUserPlaylist(id, this.state.token); //deletes playlist from the user
     //delete users playlist
     this.setLoading(false);
-    await timeout(30000);
 
     this.getPlaylist();
   }
@@ -850,7 +868,7 @@ export default class Homepage extends Component<any, HomepageState> {
     const playlists = this.state.playlists;
     // console.log(this.props);
     const playlist = this.state.playlist;
-    console.log(this.state.error);
+
     /*  <Col sm="4" className="homepage1">
               <br />
               <Player
@@ -900,11 +918,10 @@ export default class Homepage extends Component<any, HomepageState> {
                     playlists={playlists}
                     playlistOwner={this.state.playlistOwner}
                     isPrivate={this.state.private}
-                    playlist={playlist}
+                    playlist={this.state.playlist}
                     playlistName={this.state.playlistName}
                     playlistId={this.state.playlistId}
                     getPlayList={this.getPlaylist}
-                    loadPlaylist={this.loadPlaylist}
                     onDeleteFromPlaylist={this.onDeleteFromPlaylist}
                     onPlay={this.onPlay}
                     addPlaylistToQueue={this.addPlaylistToQueue}
@@ -921,6 +938,8 @@ export default class Homepage extends Component<any, HomepageState> {
                     toggleArtistModal2={this.toggleArtistModal2}
                     toggleArtistModal={this.toggleArtistModal}
                     toggleAlbumModal={this.toggleAlbumModal}
+                    playlistIndex={this.state.playlistIndex}
+                    addSongToPlaylist={this.addSongToPlaylist}
                   />
                 </Col>
               </Row>
@@ -937,7 +956,9 @@ export default class Homepage extends Component<any, HomepageState> {
               />
               <hr />
               <Videolist
+                addSongToPlaylist={this.addSongToPlaylist}
                 toggleArtistModal={this.toggleArtistModal}
+                toggleAlbumModal={this.toggleAlbumModal}
                 loadPlaylist={this.loadPlaylist}
                 makePlaylist={this.makePlaylist}
                 playNext={this.playNext}
@@ -961,6 +982,7 @@ export default class Homepage extends Component<any, HomepageState> {
                 }
               />
               <Queue
+                addSongToPlaylist={this.addSongToPlaylist}
                 queue={queue}
                 onRemove={this.onDelete}
                 onPlay={this.onPlay}
@@ -969,6 +991,8 @@ export default class Homepage extends Component<any, HomepageState> {
                 setQueue={this.setQueue}
                 isShuffle={this.state.shuffle}
                 toggleArtistModal={this.toggleArtistModal}
+                toggleAlbumModal={this.toggleAlbumModal}
+                playlists={playlists}
               />
             </Col>
           </Row>
@@ -1019,6 +1043,7 @@ export default class Homepage extends Component<any, HomepageState> {
           loadPlaylist={this.loadPlaylist}
           makePlaylist={this.makePlaylist}
           toggleArtistModal={this.toggleArtistModal}
+          addSongToPlaylist={this.addSongToPlaylist}
         />
         <ArtistModal
           loading={this.state.loadingAllSongs}
@@ -1054,6 +1079,7 @@ export default class Homepage extends Component<any, HomepageState> {
           playPlaylist={this.playPlaylist}
           playNext={this.playNext}
           artistName={this.state.artistName}
+          AddToPlaylist={this.AddToPlaylist}
         />
       </div>
     );
