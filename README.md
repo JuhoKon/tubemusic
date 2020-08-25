@@ -17,6 +17,8 @@ Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friend
 ![alt_text](https://i.ibb.co/c28ND5v/kuva55.png)
 ## Importing songs from Spotify
 ![alt text](https://i.ibb.co/Wnhh1QG/kuva1.png)
+## Playlists import - view
+![alt_text](https://i.ibb.co/3N1FG8G/kuva5656.png)
 
 ### Backend setup (If you want to run your own backend)
 
