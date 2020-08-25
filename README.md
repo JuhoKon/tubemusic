@@ -12,7 +12,9 @@ Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friend
 ## Main view
 
 Here you can load your already created playlists and listen to them, create new playlists, browse artists, albums or tracks and interact with the queue. Queue and playlist are sortable (drag and drop) so you can change the order of songs to whichever you like! <br />
-All songs also have an right click option which opens up a context menu (as seen from the picture below) for handling queue, removing song from the current playlist and adding the song to some other playlist. You can also right click and select an artist or album and it'll open up a view with information and albums/tracks from the artist/album. Clicking on the artist's or album's on the song also works.  <br />
+All songs also have an right click option which opens up a context menu (as seen from the picture below) for handling queue, removing song from the current playlist and adding the song to some other playlist. You can also right click and select an artist or album and it'll open up a view with information and albums/tracks from the artist/album. Clicking on the artist's or album's on the song also works.<br />
+
+
 ![alt_text](https://i.ibb.co/ZM9B3n3/kuva333.png)
 ## Artist view
 
