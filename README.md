@@ -9,11 +9,14 @@ TubeMusic plays YouTube videos and tries to replicate the user experience of Spo
 
 Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friendly, mobile app in development).
 
-
+## Main view
 ![alt_text](https://i.ibb.co/NryxGF1/kuva2.png)
-![alt text](https://i.ibb.co/Wnhh1QG/kuva1.png)
+## Artist view
 ![alt_text](https://i.ibb.co/zZ9P7pN/kuva3.png)
+## Album view
 ![alt_text](https://i.ibb.co/c28ND5v/kuva55.png)
+## Importing songs from Spotify
+![alt text](https://i.ibb.co/Wnhh1QG/kuva1.png)
 
 ### Backend setup (If you want to run your own backend)
 
