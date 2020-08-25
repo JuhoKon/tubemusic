@@ -46,7 +46,19 @@ class Playlistitem extends Component {
         onMouseOver={() => {
           this.props.setSelected(this.props);
         }}
+        onMouseDown={() => {
+          this.props.setSelected(this.props);
+          this.setState({
+            selected: true,
+          });
+        }}
+        onMouseLeave={() => {
+          this.setState({
+            selected: false,
+          });
+        }}
         onDoubleClick={this.onPlayClick.bind(this, this.props)}
+        className={selected ? "card selected" : "card"}
       >
         <CardBody>
           <Row>

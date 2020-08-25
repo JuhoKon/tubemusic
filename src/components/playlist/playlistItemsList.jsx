@@ -82,7 +82,7 @@ const MyAwesomeMenu = (props) => {
           props.UpdateCurrentPlaylist2(); */
         }}
       >
-        Remove from this Playlist
+        Remove from this Playlist (del)
       </Item>
     </Menu>
   );
@@ -107,6 +107,7 @@ const SortableItem = sortableElement(
     album,
     toggleAlbumModal,
     setSelected,
+    selected,
   }) => (
     <Playlistitem
       key={uniqueId}
@@ -127,6 +128,7 @@ const SortableItem = sortableElement(
       album={album}
       toggleAlbumModal={toggleAlbumModal}
       setSelected={setSelected}
+      selected={selected}
     />
   )
 );
@@ -224,6 +226,7 @@ export default class PlaylistItemsList extends Component {
           UpdateCurrentPlaylist2={this.props.UpdateCurrentPlaylist2}
           setSelected={this.props.setSelected}
           album={album}
+          selected={this.props.selected}
         />
       </div>
     );

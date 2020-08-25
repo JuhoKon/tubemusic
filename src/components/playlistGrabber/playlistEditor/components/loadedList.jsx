@@ -7,7 +7,17 @@ import { List, AutoSizer } from "react-virtualized";
 class LoadedList extends Component {
   renderRow = ({ index, key, isScrolling, isVisible, style }) => {
     const tracks = this.props.tracks;
-    const { title, artistName, id, duration, date, videoId } = tracks[index];
+    const {
+      title,
+      artistName,
+      id,
+      duration,
+      date,
+      videoId,
+      artists,
+      thumbnails,
+      thumbnail,
+    } = tracks[index];
     //const { value } = items[index];
     return (
       <div key={Math.random()} style={style}>
@@ -21,6 +31,9 @@ class LoadedList extends Component {
           duration={duration}
           date={date}
           videoId={videoId}
+          artists={artists}
+          thumbnails={thumbnails}
+          thumbnail={thumbnail}
         ></PlaylistModalItem>
       </div>
     );

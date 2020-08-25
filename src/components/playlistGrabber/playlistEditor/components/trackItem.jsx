@@ -9,7 +9,7 @@ class TrackItem extends Component {
     title: this.props.title,
     imported: this.props.imported,
     date: this.props.date,
-    duration: this.props.duration
+    duration: this.props.duration,
   };
 
   /*shouldComponentUpdate(nextProps, nextState) {
@@ -30,7 +30,16 @@ class TrackItem extends Component {
           <CardBody>
             <Row>
               <Col xs="2" sm="2">
-                {this.state.duration}
+                {this.props.thumbnail && (
+                  <img
+                    height={60}
+                    src={this.props.thumbnail} // use normal <img> attributes as props
+                    width={60}
+                    style={{ position: "absolute" }}
+                    id="thumbnail44"
+                    alt="foo"
+                  />
+                )}
               </Col>
 
               <Col xs="8" sm="8">
@@ -58,12 +67,10 @@ class TrackItem extends Component {
               </Col>
             </Row>
             <Row>
-              <Col xs="12" sm="12">
-                <span className="float-right">
-                  Added at: &nbsp;
-                  <Moment format="DD-MM-YYYY HH:mm">{this.state.date}</Moment>
-                </span>
+              <Col xs="10" sm="10">
+                <span className="float-right">{this.state.duration}</span>
               </Col>
+              <Col xs="2" sm="2"></Col>
             </Row>
           </CardBody>
         </Card>

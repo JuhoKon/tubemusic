@@ -271,6 +271,7 @@ class Playlist extends Component {
               playlists={this.props.playlists}
               addSongToPlaylist={this.props.addSongToPlaylist}
               setSelected={this.setSelected}
+              selected={this.selected}
             />
           )}
         </AutoSizer>

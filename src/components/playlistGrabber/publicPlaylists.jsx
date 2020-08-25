@@ -219,8 +219,6 @@ export default class PublicPlaylists extends Component {
               />
             </Col>
             <Col xs="8" sm="8" className="spotifypage2">
-              Chosen playlist. With options to A) Make a copy to your playlists
-              B) If it's a yhteissoittolista: "subscribe"
               <div
                 className={
                   this.state.tracks.length

@@ -8,14 +8,14 @@ class ImportList extends Component {
     super(props);
     this.state = {
       toBeImportedPlaylist: this.props.toBeImportedPlaylist,
-      updated: ""
+      updated: "",
     };
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        toBeImportedPlaylist: this.props.toBeImportedPlaylist
+        toBeImportedPlaylist: this.props.toBeImportedPlaylist,
       });
     }
   }
@@ -27,7 +27,10 @@ class ImportList extends Component {
       id,
       duration,
       date,
-      videoId
+      videoId,
+      artists,
+      thumbnails,
+      thumbnail,
     } = toBeImportedPlaylist[index];
     //const { value } = items[index];
     //tänne samalla lailla noi durationit datet jne kuten loadedListissä
@@ -44,6 +47,9 @@ class ImportList extends Component {
           duration={duration}
           date={date}
           videoId={videoId}
+          artists={artists}
+          thumbnails={thumbnails}
+          thumbnail={thumbnail}
         ></PlaylistModalItem>
       </div>
     );

@@ -34,3 +34,8 @@
 p.card-text {
   cursor: pointer;
 }
+#thumbnail44 {
+  position: absolute;
+  top: -20%;
+  left: 15%;
+}
