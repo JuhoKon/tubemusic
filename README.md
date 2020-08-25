@@ -8,6 +8,7 @@ TubeMusic plays YouTube videos and tries to replicate the user experience of Spo
 # DEMO
 
 Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friendly, mobile app in development).
+https://ibb.co/dBTTySj
 
 ### Backend setup (If you want to run your own backend)
 
