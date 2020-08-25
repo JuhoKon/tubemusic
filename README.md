@@ -39,7 +39,7 @@ Requires you to Login with your spotify account. Shows all of your playlists on 
 Shows all playlists from the application with filtering options. Here you can subscribe on non-private playlists (editing this playlist will edit it for all users) or create your own playlists with the editor (you can load playlists and choose which songs are to be added to your playlist).<br />
 
 
-![alt_text](https://i.ibb.co/Mf4KPWq/kuva002.png)
+![alt_text](https://i.ibb.co/5TqBNv8/123123.png)
 
 ### Backend setup (If you want to run your own backend)
 
