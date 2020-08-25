@@ -36,50 +36,76 @@ import {
 import Spinner from "../spinner/spinner4";
 import "./Modal.css";
 
-const MyAwesomeMenu = (props) => {
-  return (
-    <Menu id="menu_id4">
-      <Item
-        onClick={({ props }) => {
-          props.onPlay(props);
-        }}
-      >
-        Play song
-      </Item>
-      <Item onClick={({ props }) => props.onAdd(props)}>Add to Queue</Item>
-      <Item onClick={({ props }) => props.playNext(props)}>Play next</Item>
-      <Separator />
-      <Submenu label="Go to Artist" disabled={!props.artists}>
-        {props.artists &&
-          props.artists.map((artist) => (
-            <Item
-              onClick={({ props }) => {
-                props.toggleModal();
-                props.toggleArtistModal(artist);
-              }}
-            >
-              {artist.name}
-            </Item>
-          ))}
-      </Submenu>
-      <Separator />
-      <Submenu label="Add to playlist">
-        {props.playlists &&
-          props.playlists.map((playlist) => {
-            return (
+class MyAwesomeMenu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.menu = React.createRef();
+  }
+  hide = () => {
+    this.menu.current.hide();
+  };
+  render() {
+    return (
+      <Menu id="menu_id4" ref={this.menu}>
+        <Item
+          onClick={({ props }) => {
+            this.hide();
+            props.onPlay(props);
+          }}
+        >
+          Play song
+        </Item>
+        <Item
+          onClick={({ props }) => {
+            this.hide();
+            props.onAdd(props);
+          }}
+        >
+          Add to Queue
+        </Item>
+        <Item
+          onClick={({ props }) => {
+            this.hide();
+            props.playNext(props);
+          }}
+        >
+          Play next
+        </Item>
+        <Separator />
+        <Submenu label="Go to Artist" disabled={!this.props.artists}>
+          {this.props.artists &&
+            this.props.artists.map((artist) => (
               <Item
                 onClick={({ props }) => {
-                  props.addSongToPlaylist(props, playlist._id);
+                  this.hide();
+                  props.toggleModal();
+                  props.toggleArtistModal(artist);
                 }}
               >
-                {playlist.name}
+                {artist.name}
               </Item>
-            );
-          })}
-      </Submenu>
-    </Menu>
-  );
-};
+            ))}
+        </Submenu>
+        <Separator />
+        <Submenu label="Add to playlist">
+          {this.props.playlists &&
+            this.props.playlists.map((playlist) => {
+              return (
+                <Item
+                  onClick={({ props }) => {
+                    this.hide();
+                    props.addSongToPlaylist(props, playlist._id);
+                  }}
+                >
+                  {playlist.name}
+                </Item>
+              );
+            })}
+        </Submenu>
+      </Menu>
+    );
+  }
+}
 
 function pad(string) {
   return ("0" + string).slice(-2);
@@ -242,6 +268,7 @@ const ModalExample = (props) => {
           keyboard={true}
           size={"xl"}
         >
+          <MyAwesomeMenu artists={albumArtists} playlists={props.playlists} />
           <ModalHeader
             style={{ textAlign: "center" }}
             toggle={() => props.toggleModal()}
@@ -249,7 +276,6 @@ const ModalExample = (props) => {
             cssModule={{ "modal-title": "w-100 text-center" }}
           >
             <RenderArtists artists={albumArtists} />- &nbsp;{albumTitle}{" "}
-            <MyAwesomeMenu artists={albumArtists} playlists={props.playlists} />
           </ModalHeader>
           <ModalBody id="modalbody123123">
             <div className="albumDescription">

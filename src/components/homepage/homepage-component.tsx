@@ -475,7 +475,7 @@ export default class Homepage extends Component<any, HomepageState> {
       }
     );
   }
-  AddToPlaylist(item: Song) {
+  async AddToPlaylist(item: Song) {
     console.log(item);
     //Adds item to active playlist and updates the state & database
     //if no item is found, generates name for new
@@ -485,11 +485,16 @@ export default class Homepage extends Component<any, HomepageState> {
         "No playlist selected. Creating a new playlist.\n" +
           "Generating name..."
       );
-      /*   this.state.playlist.push(item); */
-      this.setState((prevState) => ({
+      this.state.playlist.push(item);
+      /*     this.setState((prevState) => ({
         playlist: [...prevState.playlist, item],
-      }));
-      this.makePlaylist(nameGenerator(), this.state.playlist, true, "Random");
+      })); */
+      await this.makePlaylist(
+        nameGenerator(),
+        this.state.playlist,
+        true,
+        "Random"
+      );
       this.setState({
         updated: !this.state.updated,
       });
@@ -507,11 +512,21 @@ export default class Homepage extends Component<any, HomepageState> {
       });
     } else {
       this.state.playlist.push(item);
-      this.Updateplaylist(
-        this.state.playlistName,
-        this.state.playlistId,
-        this.state.private
-      );
+      const playlistName = this.state.playlistName;
+      const playlist = this.state.playlist;
+      const playlistId = this.state.playlistId;
+      const isPrivate = this.state.private;
+      if (this.updateTimer) {
+        clearTimeout(this.updateTimer);
+      }
+      this.updateTimer = setTimeout(() => {
+        this.UpdatePlaylistInParameters(
+          playlist,
+          playlistName,
+          playlistId,
+          isPrivate
+        );
+      }, 2000);
 
       this.setState({
         updated: !this.state.updated,
@@ -524,6 +539,7 @@ export default class Homepage extends Component<any, HomepageState> {
       playlistIndex: this.state.playlistIndex + 1,
     });
   }
+  updateTimer: any;
   onDeleteFromPlaylist(item: Song) {
     //deletes item from the active playlist from state
     if (!item) return;
@@ -537,7 +553,6 @@ export default class Homepage extends Component<any, HomepageState> {
         break;
       }
     }
-
     this.setState({
       updated: !this.state.updated,
     });
@@ -717,6 +732,7 @@ export default class Homepage extends Component<any, HomepageState> {
       playlistName: result.data.name,
       private: isPrivate,
     });
+    this.forceUpdate();
     await this.getPlaylist();
     this.setLoading(false);
   }
@@ -728,6 +744,16 @@ export default class Homepage extends Component<any, HomepageState> {
       this.state.private
     );
   }
+  UpdatePlayListStatus = async (
+    name: String,
+    id: String,
+    playlist: any,
+    isPrivate?: boolean
+  ) => {
+    const item = JSON.stringify({ name, playlist, private: isPrivate });
+    await updatePlaylist(item, id);
+    updateUserPlaylist(id, name, isPrivate, this.state.token);
+  };
   async Updateplaylist(name: String, id: String, isPrivate?: boolean) {
     //updates current state to name & id given to database
     let playlist = this.state.playlist;
@@ -743,6 +769,27 @@ export default class Homepage extends Component<any, HomepageState> {
     });
 
     await this.getPlaylist();
+  }
+  async UpdatePlaylistInParameters(
+    playlist: any,
+    name: String,
+    id: String,
+    isPrivate?: boolean
+  ) {
+    //updates current state to name & id given to database
+
+    //console.log(playlist);
+    console.log(isPrivate);
+    const item = JSON.stringify({ name, playlist, private: isPrivate });
+    const result = await updatePlaylist(item, id);
+    updateUserPlaylist(id, name, isPrivate, this.state.token);
+    //console.log(result);
+    /*     this.setState({
+      playlistName: result.data.name,
+      playlist: playlist,
+    });
+
+    await this.getPlaylist(); */
   }
   async deletePlaylist(id: String) {
     //DELETE PLAYLIST BASED ON ID
@@ -939,6 +986,7 @@ export default class Homepage extends Component<any, HomepageState> {
                     toggleAlbumModal={this.toggleAlbumModal}
                     playlistIndex={this.state.playlistIndex}
                     addSongToPlaylist={this.addSongToPlaylist}
+                    UpdatePlayListStatus={this.UpdatePlayListStatus}
                   />
                 </Col>
               </Row>

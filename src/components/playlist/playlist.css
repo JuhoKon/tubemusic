@@ -120,7 +120,7 @@
 }
 .react-contexify {
   z-index: 9090909090 !important;
-  background-clip: padding-box;
+
   box-shadow: none !important;
   background-color: rgb(40, 40, 40) !important;
   border-bottom-color: rgba(0, 0, 0, 0.15) !important;
@@ -128,7 +128,7 @@
   border-bottom-right-radius: 4px !important;
   border-bottom-style: solid !important;
   border-bottom-width: 1px !important;
-  border-image-outset: 0 !important;
+  /*   border-image-outset: 0 !important;
   border-image-repeat: stretch !important;
   border-image-slice: 100% !important;
   border-image-source: none !important;
@@ -147,14 +147,10 @@
   box-sizing: border-box !important;
   color: rgb(179, 179, 179) !important;
   display: block !important;
-  font-family: spotify-circular, spotify-circular-cyrillic,
-    spotify-circular-arabic, spotify-circular-hebrew, "Helvetica Neue",
-    Helvetica, Arial, "Hiragino Kaku Gothic Pro", Meiryo, "MS Gothic",
-    sans-serif;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 400;  */
 
-  letter-spacing: 0.21px;
+  /*  letter-spacing: 0.21px;
   line-height: 20px;
   margin-bottom: 0px;
   margin-left: 0px;
@@ -166,18 +162,16 @@
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 5px;
-  pointer-events: auto;
+
   position: fixed;
   text-transform: none;
   top: 293px;
-  vertical-align: baseline;
   width: 248.078px;
   z-index: 1003;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; */
 }
 .react-contexify__item__content {
-  z-index: 9090909090;
-  background-attachment: scroll;
+  z-index: 9090909090 !important;
   background-clip: border-box;
   background-color: rgba(0, 0, 0, 0) !important;
   background-image: none;
@@ -226,20 +220,22 @@
   padding-right: 20px;
   padding-top: 3px;
   text-transform: none;
-  user-select: none;
-
   white-space: nowrap;
   width: 246.078px;
   -webkit-font-smoothing: antialiased;
 }
 .react-contexify__item__content:hover {
-  z-index: 9090909090;
+  z-index: 9090909090 !important;
   color: #fff !important;
   background-color: #333 !important;
 }
 .react-contexify.react-contexify__submenu {
-  z-index: 9090909090;
+  z-index: 9090909090 !important;
   max-height: 400px !important;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.ReactVirtualized__Grid.ReactVirtualized__List:focus {
+  outline: 0;
 }

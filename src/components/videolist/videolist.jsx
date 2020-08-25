@@ -27,7 +27,14 @@ const MyAwesomeMenu = (props) => {
       >
         Play song
       </Item>
-      <Item onClick={({ props }) => props.onAdd(props)}>Add to Queue</Item>
+      <Item
+        onClick={({ props }) => {
+          console.log(props);
+          props.onAdd(props);
+        }}
+      >
+        Add to Queue
+      </Item>
       <Item onClick={({ props }) => props.playNext(props)}>Play next</Item>
       <Separator />
       <Submenu label="Go to Artist" disabled={!props.artists}>
@@ -252,7 +259,8 @@ class Videolist extends Component {
                       publishedAt: publishedAt,
                       uniqueId: videoId + Math.random(),
                       duration: duration,
-                      thumbnail: thumbnails,
+                      thumbnails: thumbnails,
+                      thumbnail: thumbnail && thumbnail,
                       artists: artists,
                       album: album,
                       addSongToPlaylist: this.props.addSongToPlaylist,

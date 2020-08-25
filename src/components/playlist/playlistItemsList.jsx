@@ -77,8 +77,9 @@ const MyAwesomeMenu = (props) => {
       <Separator />
       <Item
         onClick={async ({ props }) => {
-          await props.onDeleteFromPlaylist(props);
-          props.UpdateCurrentPlaylist2();
+          console.log(props);
+          /*    await props.onDeleteFromPlaylist(props);
+          props.UpdateCurrentPlaylist2(); */
         }}
       >
         Remove from this Playlist
@@ -105,10 +106,11 @@ const SortableItem = sortableElement(
     toggleArtistModal,
     album,
     toggleAlbumModal,
+    setSelected,
   }) => (
     <Playlistitem
       key={uniqueId}
-      uniqueId={videoId + Math.random()}
+      uniqueId={uniqueId}
       title={title}
       videoId={videoId}
       addFunc={onAdd}
@@ -124,6 +126,7 @@ const SortableItem = sortableElement(
       toggleArtistModal={toggleArtistModal}
       album={album}
       toggleAlbumModal={toggleAlbumModal}
+      setSelected={setSelected}
     />
   )
 );
@@ -219,6 +222,7 @@ export default class PlaylistItemsList extends Component {
           toggleArtistModal={this.props.toggleArtistModal}
           toggleAlbumModal={this.props.toggleAlbumModal}
           UpdateCurrentPlaylist2={this.props.UpdateCurrentPlaylist2}
+          setSelected={this.props.setSelected}
           album={album}
         />
       </div>

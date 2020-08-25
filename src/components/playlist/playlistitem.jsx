@@ -5,12 +5,13 @@ import isEqual from "react-fast-compare";
 import "moment-duration-format";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import KeyboardEventHandler from "react-keyboard-event-handler";
 
 class Playlistitem extends Component {
   state = {
     playlist: this.props.playlist,
     editMode: this.props.editMode,
-    fade: false,
+    selected: false,
   };
   onAddClick = (id) => {
     this.props.addFunc(id);
@@ -35,15 +36,16 @@ class Playlistitem extends Component {
   }
 
   render() {
-    const fade = this.state.fade;
+    const selected = this.state.selected;
     //console.log("playlistitem");
     /*     console.log(this.props); */
     //console.log(this.props.editMode);
     console.log(123);
     return (
       <Card
-        onAnimationEnd={() => this.setState({ fade: false })}
-        className={fade ? "card fade2" : "card"}
+        onMouseOver={() => {
+          this.props.setSelected(this.props);
+        }}
         onDoubleClick={this.onPlayClick.bind(this, this.props)}
       >
         <CardBody>

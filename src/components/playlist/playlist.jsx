@@ -31,11 +31,13 @@ class Playlist extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.addPlaylistToQueue = this.addPlaylistToQueue.bind(this);
   }
+  updateTimer;
   addPlaylistToQueue(filteredData) {
     this.props.addPlaylistToQueue(filteredData);
   }
   handleChange = (event) => {
     this.setState({ filter: event.target.value });
+    this.forceUpdate();
   };
   shouldComponentUpdate(nextProps, nextState) {
     if (!isEqual(nextProps, this.props)) {
@@ -60,11 +62,12 @@ class Playlist extends Component {
     }
   }
   onDeleteFromPlaylist(item) {
-    console.log(item);
-
+    console.log(item.uniqueId);
+    console.log(this.state.playlist);
     for (let i = 0; i < this.state.playlist.length; i++) {
       if (this.state.playlist[i].uniqueId === item.uniqueId) {
         //delete item from playlist
+        console.log("Hey");
         this.state.playlist.splice(i, 1);
         break;
       }
@@ -72,6 +75,7 @@ class Playlist extends Component {
     this.forceUpdate();
     this.props.onDeleteFromPlaylist(item);
   }
+  updateTimer2;
   playPlaylist(playlist) {
     console.log(playlist);
     console.log("playPlaylist");
@@ -85,7 +89,21 @@ class Playlist extends Component {
   }
   UpdateCurrentPlaylist2 = async () => {
     this.props.setPlaylist(this.state.playlist);
-    await this.props.UpdateCurrentPlaylist();
+    if (this.updateTimer2) {
+      clearTimeout(this.updateTimer2);
+    }
+    const playlistname = this.state.playlistName;
+    const playlistid = this.state.playlistId;
+    const playlist2 = this.state.playlist;
+    const isPrivate = this.props.isPrivate;
+    this.updateTimer2 = setTimeout(() => {
+      this.props.UpdatePlayListStatus(
+        playlistname,
+        playlistid,
+        playlist2,
+        isPrivate
+      );
+    }, 2000);
   };
   registerListRef = (listInstance) => {
     this.List = listInstance;
@@ -108,9 +126,23 @@ class Playlist extends Component {
     // forceUpdate instance methods on the `List` ref, or by passing an additional prop
     // to List that changes whenever the order changes to force it to re-render
     this.props.setPlaylist(this.state.playlist);
-    this.props.UpdateCurrentPlaylist();
     this.List.recomputeRowHeights();
     this.List.forceUpdate();
+    if (this.updateTimer) {
+      clearTimeout(this.updateTimer);
+    }
+    const playlistname = this.state.playlistName;
+    const playlistid = this.state.playlistId;
+    const playlist2 = this.state.playlist;
+    const isPrivate = this.props.isPrivate;
+    this.updateTimer = setTimeout(() => {
+      this.props.UpdatePlayListStatus(
+        playlistname,
+        playlistid,
+        playlist2,
+        isPrivate
+      );
+    }, 2000);
   };
 
   toggleArtistModal = async (artist) => {
@@ -122,6 +154,10 @@ class Playlist extends Component {
     });
     this.forceUpdate();
   };
+  setSelected = (props) => {
+    this.selected = props;
+  };
+  selected;
   render() {
     console.log("I was rendered again");
     const { filter } = this.state;
@@ -133,14 +169,39 @@ class Playlist extends Component {
       if (item === null || typeof item === "undefined") return playlist; //problems
       return Object.keys(item).some(
         (key) =>
-          typeof item[key] === "string" &&
+          (typeof item[key] === "string" &&
           key === "title" && //only filter based on name
-          item[key].toLowerCase().includes(lowercasedFilter)
+            item[key].toLowerCase().includes(lowercasedFilter)) ||
+          (typeof item[key] === "object" &&
+            key === "album" &&
+            item[key].name.toLowerCase().includes(lowercasedFilter)) ||
+          (typeof item[key] === "object" &&
+            key === "artists" &&
+            item[key][0].name.toLowerCase().includes(lowercasedFilter)) ||
+          (typeof item[key] === "object" &&
+            key === "artists" &&
+            item[key][1] &&
+            item[key][1].name.toLowerCase().includes(lowercasedFilter)) ||
+          (typeof item[key] === "object" &&
+            key === "artists" &&
+            item[key][2] &&
+            item[key][2].name.toLowerCase().includes(lowercasedFilter)) ||
+          (typeof item[key] === "object" &&
+            key === "artists" &&
+            item[key][3] &&
+            item[key][3].name.toLowerCase().includes(lowercasedFilter))
       );
     });
 
     return (
-      <div>
+      <div
+        onKeyPress={async (event) => {
+          if (event.key === "Delete") {
+            await this.onDeleteFromPlaylist(this.selected);
+            this.UpdateCurrentPlaylist2();
+          }
+        }}
+      >
         <div className="btn-group ">
           <Button
             className="float-left btn-margin btn-secondary"
@@ -209,6 +270,7 @@ class Playlist extends Component {
               distance={10}
               playlists={this.props.playlists}
               addSongToPlaylist={this.props.addSongToPlaylist}
+              setSelected={this.setSelected}
             />
           )}
         </AutoSizer>

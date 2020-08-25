@@ -8,14 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getArtistData, getArtistAlbumData } from "../functions/functions";
 import CustomBadge from "../badge/Badge";
 import isEqual from "react-fast-compare";
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  MenuProvider,
-  contextMenu,
-} from "react-contexify";
 
 class Videoitem extends Component {
   constructor(props) {

@@ -115,6 +115,7 @@ class Search extends Component {
                       onChange={this.onChangetext}
                     />*/}
                     <ReactAutocomplete
+                      autoHighlight={false}
                       renderInput={function (props) {
                         return (
                           <input
