@@ -410,18 +410,7 @@ class PlaylistModal extends Component {
               </Col>
             </Row>
             <Row id="lowerRow">
-              <Col xs="2" sm="2">
-                <div className="placeforbutton">
-                  <Button
-                    disabled={true} //Not in use
-                    //  disabled={this.state.loading}
-                    onClick={this.importPlaylistToApp}
-                  >
-                    Import playlist
-                  </Button>
-                </div>
-              </Col>
-              <Col xs="2" sm="2">
+              <Col xs="4" sm="4">
                 <div className="placeforbutton">
                   <Button
                     disabled={
@@ -455,7 +444,7 @@ class PlaylistModal extends Component {
                     }
                     onClick={this.webScrape}
                   >
-                    use webScraping
+                    Import songs
                   </Button>
                 </div>
               </Col>

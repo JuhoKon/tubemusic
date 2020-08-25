@@ -80,7 +80,7 @@ class NavbarComponent extends Component {
               ) : (
                 ""
               )}
-              <UncontrolledDropdown nav inNavbar>
+              {/*              <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Options
                 </DropdownToggle>
@@ -90,7 +90,7 @@ class NavbarComponent extends Component {
                   <DropdownItem divider />
                   <DropdownItem>Reset</DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
             </Nav>
             <NavbarText>
               Hello, {currentUser && currentUser.user.name}
