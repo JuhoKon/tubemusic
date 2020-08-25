@@ -252,12 +252,12 @@ const ModalExample = (props) => {
     <div>
       {addingPlaylist && show ? (
         <div className="loadingplaceformodal">
-          <Spinner size={50} color="white" style={{ zIndex: 999999 }} />
+          <Spinner size={50} color="#009688" style={{ zIndex: 999999 }} />
         </div>
       ) : null}
       {loading && show ? (
         <div className="loadingplaceformodal">
-          <Spinner size={50} color="white" style={{ zIndex: 999999 }} />
+          <Spinner size={50} color="#009688" style={{ zIndex: 999999 }} />
         </div>
       ) : (
         <Modal

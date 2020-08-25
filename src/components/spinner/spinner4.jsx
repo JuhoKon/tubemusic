@@ -1,5 +1,5 @@
 import React from "react";
-import RotateLoader from "react-spinners/RotateLoader";
+import RotateLoader from "react-spinners/BounceLoader";
 import "./spinner.css";
 //https://www.davidhu.io/react-spinners/
 export default class LoadingSpinner extends React.Component {
@@ -15,7 +15,7 @@ export default class LoadingSpinner extends React.Component {
       <div className="sweet-loading2" id="spinner2">
         <br />
         <RotateLoader
-          size={15}
+          size={120}
           //size={"150px"} this also works
           color={this.props.color || "#c45a8e"}
           loading={this.state.loading}

@@ -936,11 +936,67 @@ export default class Homepage extends Component<any, HomepageState> {
       <div className={this.props.darkMode ? "homepage-div" : "homepage-div2"}>
         <div id="spinnerDivHomePage">
           {this.state.loadingPlaylist ? (
-            <Spinner size={50} color="white" />
+            <Spinner size={50} color="#009688" />
           ) : null}
           {this.state.loadingPlaylists ? (
-            <Spinner size={50} color="white" style={{ zIndex: 999999 }} />
+            <Spinner size={50} color="#009688" style={{ zIndex: 999999 }} />
           ) : null}
+          <AlbulModal
+            show={this.state.showModal}
+            toggleModal={this.toggleModal}
+            artist={this.state.isArtist}
+            albumBrowseId={this.state.albumBrowseId}
+            albumThumbnails={this.state.albumThumbnails}
+            albumTitle={this.state.albumTitle}
+            albumYear={this.state.albumYear}
+            addFunc={this.onAdd}
+            onPlay={this.onPlay}
+            addPlaylistToQueue={this.addPlaylistToQueue}
+            playPlaylist={this.playPlaylist}
+            playNext={this.playNext}
+            playlists={this.state.playlists}
+            AddToPlaylist={this.AddToPlaylist}
+            loadPlaylist={this.loadPlaylist}
+            makePlaylist={this.makePlaylist}
+            toggleArtistModal={this.toggleArtistModal}
+            addSongToPlaylist={this.addSongToPlaylist}
+          />
+          <ArtistModal
+            loading={this.state.loadingAllSongs}
+            show={this.state.showArtistModal}
+            toggleModal={this.toggleArtistModal2}
+            artistAlbums={this.state.artistAlbums}
+            artistSingles={this.state.artistSingles}
+            artistName={this.state.artistName}
+            artistDescription={this.state.artistDescription}
+            artistSongs={this.state.artistSongs}
+            artistSubscribers={this.state.artistSubscribers}
+            artistThumbnails={this.state.artistThumbnails}
+            artistViews={this.state.artistViews}
+            artist={this.state.isArtist}
+            addFunc={this.onAdd}
+            onPlay={this.onPlay}
+            addPlaylistToQueue={this.addPlaylistToQueue}
+            playPlaylist={this.playPlaylist}
+            playNext={this.playNext}
+            playlists={this.state.playlists}
+            AddToPlaylist={this.AddToPlaylist}
+            loadPlaylist={this.loadPlaylist}
+            toggleAlbumModal={this.toggleAlbumModal}
+            toggleAllSongsModal={this.toggleAllSongsModal}
+          />
+          <AllSongsModal
+            show={this.state.showAllSongsModal}
+            toggleModal={this.toggleAllSongsModal123}
+            allSongs={this.state.allSongs}
+            addFunc={this.onAdd}
+            onPlay={this.onPlay}
+            addPlaylistToQueue={this.addPlaylistToQueue}
+            playPlaylist={this.playPlaylist}
+            playNext={this.playNext}
+            artistName={this.state.artistName}
+            AddToPlaylist={this.AddToPlaylist}
+          />
           <Row>
             <Col sm="8" className="homepage2">
               <Row>
@@ -1072,62 +1128,6 @@ export default class Homepage extends Component<any, HomepageState> {
             </Col>
           </Row>
         </div>
-        <AlbulModal
-          show={this.state.showModal}
-          toggleModal={this.toggleModal}
-          artist={this.state.isArtist}
-          albumBrowseId={this.state.albumBrowseId}
-          albumThumbnails={this.state.albumThumbnails}
-          albumTitle={this.state.albumTitle}
-          albumYear={this.state.albumYear}
-          addFunc={this.onAdd}
-          onPlay={this.onPlay}
-          addPlaylistToQueue={this.addPlaylistToQueue}
-          playPlaylist={this.playPlaylist}
-          playNext={this.playNext}
-          playlists={this.state.playlists}
-          AddToPlaylist={this.AddToPlaylist}
-          loadPlaylist={this.loadPlaylist}
-          makePlaylist={this.makePlaylist}
-          toggleArtistModal={this.toggleArtistModal}
-          addSongToPlaylist={this.addSongToPlaylist}
-        />
-        <ArtistModal
-          loading={this.state.loadingAllSongs}
-          show={this.state.showArtistModal}
-          toggleModal={this.toggleArtistModal2}
-          artistAlbums={this.state.artistAlbums}
-          artistSingles={this.state.artistSingles}
-          artistName={this.state.artistName}
-          artistDescription={this.state.artistDescription}
-          artistSongs={this.state.artistSongs}
-          artistSubscribers={this.state.artistSubscribers}
-          artistThumbnails={this.state.artistThumbnails}
-          artistViews={this.state.artistViews}
-          artist={this.state.isArtist}
-          addFunc={this.onAdd}
-          onPlay={this.onPlay}
-          addPlaylistToQueue={this.addPlaylistToQueue}
-          playPlaylist={this.playPlaylist}
-          playNext={this.playNext}
-          playlists={this.state.playlists}
-          AddToPlaylist={this.AddToPlaylist}
-          loadPlaylist={this.loadPlaylist}
-          toggleAlbumModal={this.toggleAlbumModal}
-          toggleAllSongsModal={this.toggleAllSongsModal}
-        />
-        <AllSongsModal
-          show={this.state.showAllSongsModal}
-          toggleModal={this.toggleAllSongsModal123}
-          allSongs={this.state.allSongs}
-          addFunc={this.onAdd}
-          onPlay={this.onPlay}
-          addPlaylistToQueue={this.addPlaylistToQueue}
-          playPlaylist={this.playPlaylist}
-          playNext={this.playNext}
-          artistName={this.state.artistName}
-          AddToPlaylist={this.AddToPlaylist}
-        />
       </div>
     );
   }
