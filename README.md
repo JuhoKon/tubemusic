@@ -19,18 +19,26 @@ All songs also have an right click option which opens up a context menu (as seen
 ## Artist view
 
 Information about the artists with all albums found in youtube-music. All songs - option to show all songs found from the artist.<br />
+
+
 ![alt_text](https://i.ibb.co/zZ9P7pN/kuva3.png)
 ## Album view
 
 Tracks from the album. Options to add whole album to a playlist (or to create a new playlist), option to add the album to the queue or playing album. Each track is right clickable also.<br />
+
+
 ![alt_text](https://i.ibb.co/c28ND5v/kuva55.png)
 ## Importing songs from Spotify
 
 Requires you to Login with your spotify account. Shows all of your playlists on the right for you to click on them, and choose which songs to improt to the application!<br />
+
+
 ![alt text](https://i.ibb.co/Wnhh1QG/kuva1.png)
 ## Playlists import - view
 
 Shows all playlists from the application with filtering options. Here you can subscribe on non-private playlists (editing this playlist will edit it for all users) or create your own playlists with the editor (you can load playlists and choose which songs are to be added to your playlist).<br />
+
+
 ![alt_text](https://i.ibb.co/Mf4KPWq/kuva002.png)
 
 ### Backend setup (If you want to run your own backend)
