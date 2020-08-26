@@ -4,7 +4,6 @@ TubeMusic is an app made for listening music from YouTube (hence the name). With
 
 TubeMusic plays YouTube videos and tries to replicate the user experience of Spotify with little twists (such as more interactible queue-system and no-ads). This is a no-profit application.
 
-
 # DEMO
 
 Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friendly, mobile app in development). Using application requires you to signup. There's no email verification, so no need for writing actual real information on the sign up form. All views are under development (I will be improving them as I have time, main focus has been on the main page for a while now)
@@ -14,30 +13,29 @@ Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friend
 Here you can load your already created playlists and listen to them, create new playlists, browse artists, albums or tracks and interact with the queue. Queue and playlist are sortable (drag and drop) so you can change the order of songs to whichever you like! <br />
 All songs also have an right click option which opens up a context menu (as seen from the picture below) for handling queue, removing song from the current playlist and adding the song to some other playlist. You can also right click and select an artist or album and it'll open up a view with information and albums/tracks from the artist/album. Clicking on the artist's or album's on the song also works.<br />
 
-
 ![alt_text](https://i.ibb.co/ZM9B3n3/kuva333.png)
+
 ## Artist view
 
 Information about the artists with all albums found in youtube-music. All songs - option to show all songs found from the artist.<br />
 
-
 ![alt_text](https://i.ibb.co/zZ9P7pN/kuva3.png)
+
 ## Album view
 
 Tracks from the album. Options to add whole album to a playlist (or to create a new playlist), option to add the album to the queue or playing album. Each track is right clickable also.<br />
 
-
 ![alt_text](https://i.ibb.co/c28ND5v/kuva55.png)
+
 ## Importing songs from Spotify
 
 Requires you to Login with your spotify account. Shows all of your playlists on the right for you to click on them, and choose which songs to improt to the application!<br />
 
-
 ![alt text](https://i.ibb.co/Wnhh1QG/kuva1.png)
+
 ## Playlists import - view
 
 Shows all playlists from the application with filtering options. Here you can subscribe on non-private playlists (editing this playlist will edit it for all users) or create your own playlists with the editor (you can load playlists and choose which songs are to be added to your playlist).<br />
-
 
 ![alt_text](https://i.ibb.co/5TqBNv8/123123.png)
 

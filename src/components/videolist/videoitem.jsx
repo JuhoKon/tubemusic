@@ -262,7 +262,10 @@ class Videoitem extends Component {
                         <div
                           onClick={() => {
                             this.props.toggleAlbumModal({
-                              artist: this.props.artists[0].name,
+                              artist:
+                                (this.props.artists[0] &&
+                                  this.props.artists[0].name) ||
+                                "Various Artists",
                               browseId: this.props.album.id,
                               type: "Album",
                               thumbnails: [

@@ -201,7 +201,6 @@ export default class Homepage extends Component<any, HomepageState> {
       showAllSongsModal: false,
       loadingAllSongs: true,
     });
-    await timeout(1000);
     const res = await getPlaylist(browseid);
     this.setState({
       allSongs: res.tracks,
@@ -322,12 +321,12 @@ export default class Homepage extends Component<any, HomepageState> {
       loading: true,
     });
     const result = await handleSubmit_db(term);
-    let sorted = this.sortBySimilarity(result, term);
+    /*  let sorted = this.sortBySimilarity(result, term); */
     this.setState({
-      dbitems: sorted,
+      dbitems: result,
       loading: false,
     });
-    if (sorted.length === 0) {
+    if (result.length === 0) {
       this.setState({
         error: true,
         loading: false,
