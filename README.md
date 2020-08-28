@@ -29,7 +29,7 @@ Tracks from the album. Options to add whole album to a playlist (or to create a 
 
 ## Importing songs from Spotify
 
-Requires you to Login with your spotify account. Shows all of your playlists on the right for you to click on them, and choose which songs to improt to the application!<br />
+Requires you to Login with your spotify account. Shows all of your playlists on the right for you to click on them, and choose which songs to import to the application!<br />
 
 ![alt text](https://i.ibb.co/Wnhh1QG/kuva1.png)
 
