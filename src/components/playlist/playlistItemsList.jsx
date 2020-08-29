@@ -77,9 +77,10 @@ const MyAwesomeMenu = (props) => {
       <Separator />
       <Item
         onClick={async ({ props }) => {
-          console.log(props);
-          /*    await props.onDeleteFromPlaylist(props);
-          props.UpdateCurrentPlaylist2(); */
+          //console.log(props);
+
+          await props.onDeleteFromPlaylist(props);
+          props.UpdateCurrentPlaylist2();
         }}
       >
         Remove from this Playlist (del)

@@ -334,10 +334,13 @@ export default class Homepage extends Component<any, HomepageState> {
     }
   }
   addSongToPlaylist = async (track: any, id: string) => {
-    const item = JSON.stringify({ track });
+    let itemCopy = Object.assign({}, track);
+    itemCopy["uniqueId"] = Date.now() + Math.random(); //ensure that all elements have unique keys
+    const item = JSON.stringify({ track: itemCopy });
+
     if (this.state.playlistId === id) {
       this.setState((prevState) => ({
-        playlist: [...prevState.playlist, track],
+        playlist: [...prevState.playlist, itemCopy],
       }));
     }
     await addSongToPlaylist(item, id);
@@ -822,7 +825,7 @@ export default class Homepage extends Component<any, HomepageState> {
     //ADDS SELECTED ITEM TO QUEUE - -> PLAYER & QUEUE
     //console.log(item);
     let itemCopy = Object.assign({}, item);
-    itemCopy["uniqueId"] = Math.random(); //ensure that all elements have unique keys
+    itemCopy["uniqueId"] = Date.now() + Math.random(); //ensure that all elements have unique keys
     this.state.queue.push(itemCopy);
     this.setState({
       //just to trigger re-render->new props to children

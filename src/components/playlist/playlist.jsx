@@ -192,11 +192,13 @@ class Playlist extends Component {
             item[key][3].name.toLowerCase().includes(lowercasedFilter))
       );
     });
-
+    console.log(filteredData);
     return (
       <div
-        onKeyPress={async (event) => {
+        onKeyDown={async (event) => {
+          console.log(event.key);
           if (event.key === "Delete") {
+            console.log("What");
             await this.onDeleteFromPlaylist(this.selected);
             this.UpdateCurrentPlaylist2();
           }
