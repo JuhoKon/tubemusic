@@ -11,6 +11,7 @@ import { PrivateRoute } from "./components/functions/PrivateRoute";
 import PublicPlaylists from "./components/playlistGrabber/publicPlaylists";
 import { history } from "./components/History";
 import Admin from "./components/admin/Admin";
+var jwtDecode = require("jwt-decode");
 
 const NoMatchPage = () => {
   return <h3>404 - Not found</h3>;
@@ -77,7 +78,9 @@ class App extends Component {
     return (
       <div className="App wrapper">
         <Router history={history}>
-          {token && <Navbar darkMode={true} logout={this.logout} />}
+          {token && jwtDecode(token).exp > Date.now() / 1000 && (
+            <Navbar darkMode={true} logout={this.logout} />
+          )}
           <Switch>
             <Route path="/login" component={Login} />
             <PrivateRoute
