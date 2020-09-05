@@ -31,6 +31,7 @@ class ImportList extends Component {
       artists,
       thumbnails,
       thumbnail,
+      album,
     } = toBeImportedPlaylist[index];
     //const { value } = items[index];
     //tänne samalla lailla noi durationit datet jne kuten loadedListissä
@@ -50,6 +51,7 @@ class ImportList extends Component {
           artists={artists}
           thumbnails={thumbnails}
           thumbnail={thumbnail}
+          album={album}
         ></PlaylistModalItem>
       </div>
     );

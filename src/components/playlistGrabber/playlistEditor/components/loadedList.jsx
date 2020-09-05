@@ -17,6 +17,7 @@ class LoadedList extends Component {
       artists,
       thumbnails,
       thumbnail,
+      album,
     } = tracks[index];
     //const { value } = items[index];
     return (
@@ -34,6 +35,7 @@ class LoadedList extends Component {
           artists={artists}
           thumbnails={thumbnails}
           thumbnail={thumbnail}
+          album={album}
         ></PlaylistModalItem>
       </div>
     );
