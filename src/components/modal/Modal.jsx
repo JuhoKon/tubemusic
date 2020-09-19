@@ -143,6 +143,7 @@ const ModalExample = (props) => {
 
       setLoading(false);
       if (!res) return;
+
       setalbumTracks(res.tracks);
       setArtists(res.artist);
       setAlbumDescription(res.description);
@@ -156,7 +157,9 @@ const ModalExample = (props) => {
             uniqueId: track.videoId + Math.random(),
             title: track.title,
             videoId: track.videoId,
-            artists: res.artist,
+            artists: res.artist.filter((artist) =>
+              track.artists.includes(artist.name)
+            ),
             artist: track.artists,
             thumbnails: track.thumbnails,
             duration: format(track.lengthMs / 1000),
@@ -175,6 +178,7 @@ const ModalExample = (props) => {
       getalbumTracks();
     }
   }, [props.albumBrowseId]);
+
   const addPlaylistToQueue = () => {
     console.log(playlistVersionOfTracks);
     props.addPlaylistToQueue(playlistVersionOfTracks, albumTitle);
@@ -376,7 +380,9 @@ const ModalExample = (props) => {
                         uniqueId={videoId + Math.random()}
                         title={title}
                         videoId={videoId}
-                        artists={albumArtists}
+                        artists={albumArtists.filter((artist) =>
+                          artists.includes(artist.name)
+                        )}
                         artist={artists}
                         thumbnails={thumbnails}
                         duration={format(lengthMs / 1000)}
@@ -532,6 +538,10 @@ const Song = (props) => {
   );
 };
 const RenderArtists2 = (props) => {
+  // props.artist is the actual artist of the track
+  // whereas artists are the album's artists
+  // so we need to hacky hacky a bit here...
+  // track only provides name of the artist, no id's :(
   const songArtists = props.artists.filter((artist) =>
     props.artist.includes(artist.name)
   );
