@@ -411,7 +411,7 @@ const RenderArtists = (props) => {
 };
 
 const Song = (props) => {
-  console.log(props.artists);
+  //console.log(props.artists);
   /*   console.log(props); */
   return (
     <Card
@@ -484,6 +484,7 @@ const Song = (props) => {
               toggleModal={props.toggleModal}
               toggleArtistModal={props.toggleArtistModal}
               artists={props.artists}
+              artist={props.artist}
             />
           </Col>
           <Col xs="2" sm="2">
@@ -531,7 +532,13 @@ const Song = (props) => {
   );
 };
 const RenderArtists2 = (props) => {
-  return props.artists.map((artist) => (
+  const songArtists = props.artists.filter((artist) =>
+    props.artist.includes(artist.name)
+  );
+  //console.log(songArtists);
+  //console.log(props.artists);
+  //console.log(props.artist);
+  return songArtists.map((artist) => (
     <div
       onClick={() => {
         props.toggleModal();
