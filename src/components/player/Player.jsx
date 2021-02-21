@@ -61,8 +61,7 @@ export default class Player extends Component {
       if (this.props.url !== prevProps.url) {
         if (typeof prevProps.url !== "undefined" && prevProps.url !== null) {
           let itemObject = {};
-          console.log(prevProps);
-          console.log(this.props);
+
           itemObject["title"] = prevProps.title || "error";
           itemObject["url"] = prevProps.url;
           itemObject["duration"] = prevProps.duration;
@@ -90,7 +89,6 @@ export default class Player extends Component {
     }
   };
   handlePlay = () => {
-    console.log("onPlay");
     this.setState({ playing: true });
     if (this.state.url === null) {
       this.handlePlayNext();
@@ -102,7 +100,6 @@ export default class Player extends Component {
     //console.log(this.state.history);
   };
   handlePlayNext = () => {
-    console.log("onPlay");
     if (typeof this.state.array[0] !== "undefined") {
       this.props.setTitle(this.state.array[0].title);
       const videoId = this.state.array[0].videoId;
@@ -135,11 +132,9 @@ export default class Player extends Component {
     this.setState({ volume: parseFloat(e.target.value) });
   };
   handlePause = () => {
-    console.log("onPause");
     this.setState({ playing: false });
   };
   handleEnded = () => {
-    console.log("onEnded");
     //this.setState({ playing: false });
     if (this.state.url !== null) {
       let itemObject = {};

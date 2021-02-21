@@ -29,7 +29,7 @@ class PlaylistModal extends Component {
       loadFilter: "",
       tracks: this.props.tracks,
       toBeImportedPlaylist: [],
-      modal: true
+      modal: true,
     };
     this.addToImport = this.addToImport.bind(this);
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
@@ -49,7 +49,7 @@ class PlaylistModal extends Component {
       }
     }
     this.setState({
-      updated: item.videoId
+      updated: item.videoId,
     });
   }
   addToImport(item) {
@@ -58,26 +58,26 @@ class PlaylistModal extends Component {
     this.state.toBeImportedPlaylist.push(song);
     this.setState({
       //just to trigger re-rendering -> new props to children
-      updated: true
+      updated: true,
     });
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        tracks: this.props.tracks
+        tracks: this.props.tracks,
       });
     }
   }
-  handleChangeImport = event => {
+  handleChangeImport = (event) => {
     this.setState({ importFilter: event.target.value });
   };
-  handleChangeLoad = event => {
+  handleChangeLoad = (event) => {
     this.setState({ loadFilter: event.target.value });
   };
   clearList = () => {
     this.setState({
-      toBeImportedPlaylist: []
+      toBeImportedPlaylist: [],
     });
   };
   async addPlayListToColl(name, isPrivate, genre, owner) {
@@ -87,7 +87,7 @@ class PlaylistModal extends Component {
       playlist,
       isPrivate,
       owner: owner,
-      genre
+      genre,
     });
     const result = await makePlaylist(item);
     if (!result) {
@@ -96,7 +96,7 @@ class PlaylistModal extends Component {
           An error making the playlist has occured. Please try again!
         </span>,
         {
-          duration: 2800
+          duration: 2800,
         }
       );
       return;
@@ -110,28 +110,28 @@ class PlaylistModal extends Component {
       this.props.token
     );
     toaster.notify(<span>Playlist created!</span>, {
-      duration: 2800
+      duration: 2800,
     });
     //this.props.token;
     //makes new playlist, based on some name chosen by user.
     //then adds the toBeImportedPlaylist to that.
   }
-  getAllSongs = LoadfilteredData => {
-    LoadfilteredData.forEach(track => this.addToImport(track));
+  getAllSongs = (LoadfilteredData) => {
+    LoadfilteredData.forEach((track) => this.addToImport(track));
   };
   render() {
     const {
       importFilter,
       loadFilter,
       toBeImportedPlaylist,
-      tracks
+      tracks,
     } = this.state;
-    console.log(tracks);
+
     ///console.log(this.state.tracks);
     const lowercasedFilterImport = importFilter.toLowerCase();
-    const importfilteredData = toBeImportedPlaylist.filter(item => {
+    const importfilteredData = toBeImportedPlaylist.filter((item) => {
       return Object.keys(item).some(
-        key =>
+        (key) =>
           typeof item[key] === "string" &&
           key !== "id" && //don't compare id
           item[key].toLowerCase().includes(lowercasedFilterImport)
@@ -139,16 +139,15 @@ class PlaylistModal extends Component {
     });
 
     const lowercasedFilterLoad = loadFilter.toLowerCase();
-    const LoadfilteredData = tracks.filter(item => {
+    const LoadfilteredData = tracks.filter((item) => {
       return Object.keys(item).some(
-        key =>
+        (key) =>
           typeof item[key] === "string" &&
           key !== "id" && //don't compare id
           item[key].toLowerCase().includes(lowercasedFilterLoad)
       );
     });
-    console.log(LoadfilteredData);
-    console.log(this.props);
+
     return (
       <div className="playlistEditor">
         <br />

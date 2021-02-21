@@ -5,7 +5,6 @@ import isEqual from "react-fast-compare";
 import "moment-duration-format";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import KeyboardEventHandler from "react-keyboard-event-handler";
 
 class Playlistitem extends Component {
   state = {
@@ -37,10 +36,6 @@ class Playlistitem extends Component {
 
   render() {
     const selected = this.state.selected;
-    //console.log("playlistitem");
-    /*     console.log(this.props); */
-    //console.log(this.props.editMode);
-    console.log(123);
     return (
       <Card
         onMouseOver={() => {
@@ -164,8 +159,9 @@ class Playlistitem extends Component {
 }
 
 const RenderArtists = (props) => {
-  return props.artists.map((artist) => (
+  return props.artists.map((artist, index) => (
     <div
+      key={index}
       className="artistStuff hoverEffect"
       onClick={() =>
         props.toggleArtistModal({ name: artist.name, id: artist.id })

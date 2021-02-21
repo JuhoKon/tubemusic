@@ -44,8 +44,6 @@ class App extends Component {
     this.forceUpdate();
   }
   componentDidMount() {
-    //console.log("I mount");
-
     authenticationService.currentUser.subscribe((x) => {
       //when change happens, this gets called
       if (x) {

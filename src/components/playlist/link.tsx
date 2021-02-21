@@ -44,12 +44,9 @@ class Link extends Component<LinkProps, LinkState> {
     }
   }
   deletePlaylist(playlist: Playlist) {
-    console.log(playlist);
     this.props.deletePlaylist(playlist._id);
   }
   render() {
-    console.log(this.props);
-
     return (
       <div>
         <Card className="card">

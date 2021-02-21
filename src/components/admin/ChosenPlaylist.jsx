@@ -8,22 +8,22 @@ class ChosenPlaylist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playlists: this.props.playlists
+      playlists: this.props.playlists,
     };
   }
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        playlists: this.props.playlists
+        playlists: this.props.playlists,
       });
     }
   }
   renderRow = ({ index, style }) => {
     const playlists = this.props.playlists;
-    //console.log(playlists);
+
     const { title, artistName, uniqueId } = playlists[index];
-    //const { value } = items[index];
+
     return (
       <div key={uniqueId} style={style}>
         <PlayListItem
@@ -38,7 +38,6 @@ class ChosenPlaylist extends Component {
 
   render() {
     const playlists = this.props.playlists;
-    console.log(playlists.length);
     return (
       <div>
         <List

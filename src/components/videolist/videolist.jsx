@@ -7,17 +7,9 @@ import "./videolist.css";
 import "simplebar/dist/simplebar.min.css";
 import AlbulModal from "../modal/Modal";
 import ArtistModal from "../modal/artistmodal/ArtistModal";
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  MenuProvider,
-  contextMenu,
-} from "react-contexify";
+import { Menu, Item, Separator, Submenu, contextMenu } from "react-contexify";
 
 const MyAwesomeMenu = (props) => {
-  console.log(props);
   return (
     <Menu id="menu_id2">
       <Item
@@ -29,7 +21,6 @@ const MyAwesomeMenu = (props) => {
       </Item>
       <Item
         onClick={({ props }) => {
-          console.log(props);
           props.onAdd(props);
         }}
       >
@@ -72,9 +63,10 @@ const MyAwesomeMenu = (props) => {
       <Separator />
       <Submenu label="Add to playlist">
         {props.playlists &&
-          props.playlists.map((playlist) => {
+          props.playlists.map((playlist, index) => {
             return (
               <Item
+                key={index}
                 onClick={({ props }) =>
                   props.addSongToPlaylist(props, playlist._id)
                 }
@@ -93,7 +85,6 @@ class Videolist extends Component {
     super(props);
     this.state = {
       loading: this.props.loading,
-      playlists: this.props.playlists,
       error: this.props.error,
       errorText: this.props.errorText,
       playlists: [],
@@ -149,12 +140,9 @@ class Videolist extends Component {
   };
 
   toggleArtistModalItem = async (artist) => {
-    console.log(artist);
     this.props.toggleArtistModal(artist);
   };
   handleContextMenu(e, props) {
-    console.log("HANDLECONTEXT");
-    console.log(props.album);
     e.preventDefault();
     this.setState({
       artists: props.artists,
@@ -168,8 +156,7 @@ class Videolist extends Component {
   }
   render() {
     const items = this.props.items;
-    console.log(items);
-    console.log(this.props);
+
     return (
       <div id="videolist33">
         <MyAwesomeMenu
@@ -251,7 +238,6 @@ class Videolist extends Component {
                       playNext: this.props.playNext,
                       onAdd: this.props.onAdd,
                       onPlay: this.props.onPlay,
-                      playNext: this.props.playNext,
                       toggleArtistModal: this.toggleArtistModalItem,
                       toggleAlbumModal: this.props.toggleAlbumModal,
                       videoId: videoId,

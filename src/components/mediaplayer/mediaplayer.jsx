@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 import isEqual from "react-fast-compare";
 import toaster from "toasted-notes";
 import { updatePlaylistSongTime } from "../functions/functions";
-import { CustomInput, Tooltip, Row, Col, CardText } from "reactstrap";
+import { CustomInput, Tooltip, Row, Col } from "reactstrap";
 import { Button } from "reactstrap";
 
 import HistoryModal from "../player/history/History-modal";
@@ -84,7 +84,6 @@ export default class MediaPlayer extends Component {
     });
   };
   setMute = () => {
-    console.log("I was clicked");
     this.setState({
       muted: !this.state.muted,
     });
@@ -119,7 +118,6 @@ export default class MediaPlayer extends Component {
     }
   };
   handlePlay = () => {
-    console.log("onPlay");
     this.setState({ playing: true });
     if (this.state.url === null) {
       this.handlePlayNext();
@@ -146,8 +144,7 @@ export default class MediaPlayer extends Component {
   handlePlayPrevious = () => {
     if (typeof this.state.historyToPlayFrom[0] !== "undefined") {
       let item = this.state.historyToPlayFrom.shift();
-      console.log("ASDASDASD");
-      console.log(item);
+
       this.props.setTitle(item.title);
       const url = item.url;
       const duration = item.duration;
@@ -170,7 +167,6 @@ export default class MediaPlayer extends Component {
     }
   };
   handlePlayNext = () => {
-    console.log("onPlay");
     let song;
     if (typeof this.state.array[0] !== "undefined") {
       if (this.state.shuffle) {
@@ -186,7 +182,7 @@ export default class MediaPlayer extends Component {
       const url = "https://www.youtube.com/watch?v=" + videoId;
       const duration = song.duration;
       const artists = song.artists;
-      console.log(song);
+
       this.setState({
         currentSong: song,
       });
@@ -222,11 +218,9 @@ export default class MediaPlayer extends Component {
     this.setState({ volume: parseFloat(e.target.value) });
   };
   handlePause = () => {
-    console.log("onPause");
     this.setState({ playing: false });
   };
   handleEnded = () => {
-    console.log("onEnded");
     //this.setState({ playing: false });
     if (this.state.url !== null) {
       let itemObject = Object.assign({}, this.state.currentSong);
@@ -284,7 +278,6 @@ export default class MediaPlayer extends Component {
   };
 
   handleSeekChange = (e) => {
-    console.log(this.props);
     this.setState({ played: parseFloat(e.target.value) });
   };
 
@@ -302,7 +295,7 @@ export default class MediaPlayer extends Component {
   /* Tooltip is not working correctly. Fix it !*/
   render() {
     const { playing, volume, duration, played } = this.state;
-    console.log(this.state.currentSong);
+
     return (
       <div className="MediaPlayerdiv">
         <Row>
@@ -548,8 +541,9 @@ export default class MediaPlayer extends Component {
 }
 const RenderArtists = (props) => {
   if (!props.artists) return null;
-  return props.artists.map((artist) => (
+  return props.artists.map((artist, index) => (
     <div
+      key={index}
       className="artistStuff hoverEffect"
       onClick={() =>
         props.toggleArtistModal({ name: artist.name, id: artist.id })

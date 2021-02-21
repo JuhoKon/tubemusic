@@ -83,7 +83,7 @@ class Queue extends Component {
     const animation = this.state.animation;
     //console.log("queue");
     //console.log(this.state.editMode);
-    console.log(this.props);
+
     return (
       <div className="queueList">
         {this.props.isShuffle ? (

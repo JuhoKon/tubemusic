@@ -62,12 +62,10 @@ class Playlist extends Component {
     }
   }
   onDeleteFromPlaylist(item) {
-    console.log(item.uniqueId);
-    console.log(this.state.playlist);
     for (let i = 0; i < this.state.playlist.length; i++) {
       if (this.state.playlist[i].uniqueId === item.uniqueId) {
         //delete item from playlist
-        console.log("Hey");
+
         this.state.playlist.splice(i, 1);
         break;
       }
@@ -77,8 +75,6 @@ class Playlist extends Component {
   }
   updateTimer2;
   playPlaylist(playlist) {
-    console.log(playlist);
-    console.log("playPlaylist");
     this.props.playPlaylist(playlist);
   }
 
@@ -159,7 +155,6 @@ class Playlist extends Component {
   };
   selected;
   render() {
-    console.log("I was rendered again");
     const { filter } = this.state;
     const { playlist } = this.props;
 
@@ -170,7 +165,7 @@ class Playlist extends Component {
       return Object.keys(item).some(
         (key) =>
           (typeof item[key] === "string" &&
-          key === "title" && //only filter based on name
+            key === "title" && //only filter based on name
             item[key].toLowerCase().includes(lowercasedFilter)) ||
           (typeof item[key] === "object" &&
             key === "album" &&
@@ -192,13 +187,11 @@ class Playlist extends Component {
             item[key][3].name.toLowerCase().includes(lowercasedFilter))
       );
     });
-    console.log(filteredData);
+
     return (
       <div
         onKeyDown={async (event) => {
-          console.log(event.key);
           if (event.key === "Delete") {
-            console.log("What");
             await this.onDeleteFromPlaylist(this.selected);
             this.UpdateCurrentPlaylist2();
           }

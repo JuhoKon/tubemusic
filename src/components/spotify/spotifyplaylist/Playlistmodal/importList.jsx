@@ -8,7 +8,7 @@ class ImportList extends Component {
     super(props);
     this.state = {
       toBeImportedPlaylist: this.props.toBeImportedPlaylist,
-      updated: ""
+      updated: "",
     };
     this.removeFromPlaylist = this.removeFromPlaylist.bind(this);
   }
@@ -16,7 +16,7 @@ class ImportList extends Component {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
       this.setState({
-        toBeImportedPlaylist: this.props.toBeImportedPlaylist
+        toBeImportedPlaylist: this.props.toBeImportedPlaylist,
       });
     }
   }
@@ -52,7 +52,7 @@ class ImportList extends Component {
       }
     }
     this.setState({
-      updated: item.videoId
+      updated: item.videoId,
     });
   }
   render() {

@@ -16,7 +16,6 @@ class AdminPage extends Component {
     this.deletePlaylist = this.deletePlaylist.bind(this);
   }
   async loadPlaylists() {
-    console.log("I shouldn't");
     let res = await getPlaylists();
     this.setState({
       playlists: res.data.Playlist,
@@ -38,9 +37,8 @@ class AdminPage extends Component {
   }
 
   render() {
-    //console.log(this.state);
     const { token, playlists } = this.state;
-    //console.log(filteredData);
+
     return (
       <div>
         <div className="container-fluid homepage-div">

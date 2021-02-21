@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Button,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
   Card,
   CardBody,
   Row,
@@ -16,25 +15,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 
 import "toasted-notes/src/styles.css"; // optional styles;
-function pad(string) {
-  return ("0" + string).slice(-2);
-}
-function format(seconds) {
-  const date = new Date(seconds * 1000);
-  const hh = date.getUTCHours();
-  const mm = date.getUTCMinutes();
-  const ss = pad(date.getUTCSeconds());
-  if (hh) {
-    return `${hh}.${pad(mm)}.${ss}`;
-  }
-  return `${mm}.${ss}`;
-}
 
 const ModalExample = (props) => {
   /*   console.log(props); */
 
-  const { title, className, show } = props;
-  console.log(props);
+  const { className, show } = props;
+
   return (
     <div>
       <Modal
@@ -89,13 +75,8 @@ const ModalExample = (props) => {
     </div>
   );
 };
-const RenderArtists = (props) => {
-  /*   console.log(props); */
-  return props.artists.map((artist) => <>{artist.name} &nbsp;</>);
-};
 
 const Song = (props) => {
-  console.log(props.artists);
   /*   console.log(props); */
   return (
     <Card
@@ -215,8 +196,9 @@ const Song = (props) => {
   );
 };
 const RenderArtists2 = (props) => {
-  return props.artists.map((artist) => (
+  return props.artists.map((artist, index) => (
     <div
+      key={index}
       onClick={() => {
         props.toggleModal();
         props.toggleArtistModal(artist);

@@ -23,7 +23,7 @@ class PlaylistsList extends Component {
   componentDidUpdate(prevProps) {
     if (!isEqual(this.props, prevProps)) {
       //if change in props
-      console.log("Change?");
+
       if (this.list) {
         this.list.forceUpdateGrid();
       }
@@ -71,7 +71,6 @@ class PlaylistsList extends Component {
     this.list = ref;
   };
   render() {
-    console.log(this.props);
     //console.log(this.state);
     const { playlists } = this.state;
     //console.log(filteredData);

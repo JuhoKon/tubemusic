@@ -40,9 +40,8 @@ class PlaylistsList extends Component {
   };
 
   render() {
-    //console.log(this.state);
     const { playlists } = this.state;
-    //console.log(filteredData);
+
     return (
       <div>
         All playlists

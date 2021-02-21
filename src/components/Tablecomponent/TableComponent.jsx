@@ -9,11 +9,10 @@ class TableComponent extends Component {
   render() {
     const list = [
       { name: "Brian Vaughn", description: "Software engineer" },
-      { name: "Brian Vasughn", description: "Software engineesr" }
+      { name: "Brian Vasughn", description: "Software engineesr" },
       // And so on...
     ];
     const playlists = this.props.playlists;
-    console.log(playlists);
     return (
       <div>
         {this.props.item}

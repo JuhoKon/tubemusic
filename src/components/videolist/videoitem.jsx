@@ -48,7 +48,6 @@ class Videoitem extends Component {
     });
   };
   onAddToPlaylist = (id) => {
-    console.log(id);
     this.props.AddToPlaylist({
       uniqueId: Math.random(),
       title: id.title,
@@ -125,7 +124,7 @@ class Videoitem extends Component {
       thumbnails,
       singles,
     } = this.state;
-    console.log(this.props);
+
     const RenderCard = (props) => {
       switch (props.resultType) {
         case "artist":
@@ -349,8 +348,9 @@ class Videoitem extends Component {
   }
 }
 const RenderArtists = (props) => {
-  return props.artists.map((artist) => (
+  return props.artists.map((artist, index) => (
     <div
+      key={index}
       className="videolistArtists artistStuff hoverEffect"
       onClick={() =>
         props.toggleArtistModal({ name: artist.name, id: artist.id })

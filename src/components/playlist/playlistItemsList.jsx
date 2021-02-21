@@ -1,15 +1,8 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { sortableElement } from "react-sortable-hoc";
 import Playlistitem from "./playlistitem";
 import { List } from "react-virtualized";
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  MenuProvider,
-  contextMenu,
-} from "react-contexify";
+import { Menu, Item, Separator, Submenu, contextMenu } from "react-contexify";
 import "react-contexify/dist/ReactContexify.min.css";
 import isEqual from "react-fast-compare";
 
@@ -62,9 +55,10 @@ const MyAwesomeMenu = (props) => {
       <Separator />
       <Submenu label="Add to playlist">
         {props.playlists &&
-          props.playlists.map((playlist) => {
+          props.playlists.map((playlist, index) => {
             return (
               <Item
+                key={index}
                 onClick={({ props }) => {
                   props.addSongToPlaylist(props, playlist._id);
                 }}
@@ -152,7 +146,6 @@ export default class PlaylistItemsList extends Component {
     }
   }
   handleContextMenu(e, props) {
-    console.log("HANDLECONTEXT");
     e.preventDefault();
     this.setState({
       artists: props.artists,
@@ -186,10 +179,7 @@ export default class PlaylistItemsList extends Component {
             playNext: this.props.playNext,
             onAdd: this.props.onAdd,
             onPlay: this.props.onPlay,
-            playNext: this.props.playNext,
-            artists: artists,
             toggleArtistModal: this.props.toggleArtistModal,
-            album: album,
             toggleAlbumModal: this.props.toggleAlbumModal,
             UpdateCurrentPlaylist2: this.props.UpdateCurrentPlaylist2,
             addSongToPlaylist: this.props.addSongToPlaylist,

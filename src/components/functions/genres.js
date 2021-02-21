@@ -8,7 +8,7 @@ export default function GenresOptions(onChange, usedOnFilter) {
     genres = ["Random", "Rock", "EDM", "Rap", "Chill", "parti"];
   }
 
-  const genreItems = genres.map(genre => (
+  const genreItems = genres.map((genre) => (
     <option key={genre} value={genre}>
       {genre}
     </option>

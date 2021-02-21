@@ -1,13 +1,5 @@
-import React, { Component, useState, useEffect } from "react";
-import {
-  Card,
-  CardBody,
-  Button,
-  CardText,
-  Row,
-  Col,
-  Tooltip,
-} from "reactstrap";
+import React, { Component } from "react";
+import { Card, CardBody, Button, CardText, Row, Col } from "reactstrap";
 import isEqual from "react-fast-compare";
 import "./queue.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -37,9 +29,6 @@ class Queueitem extends Component {
     }
   }
   render() {
-    //const fade = this.state.fade;
-    //console.log("queue item");
-    console.log(this.props);
     return (
       <div>
         <Card
@@ -110,11 +99,9 @@ class Queueitem extends Component {
   }
 }
 const RenderArtists = (props) => {
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-
-  const toggle = () => setTooltipOpen(!tooltipOpen);
-  return props.artists.map((artist) => (
+  return props.artists.map((artist, index) => (
     <div
+      key={index}
       className="artistStuff2 hoverEffect"
       id={artist.id}
       onClick={() =>

@@ -30,7 +30,7 @@ class DiscoveryModal extends Component {
   submit = async (e) => {
     e.preventDefault();
     let res = await searchSpotifyPlaylists(this.state.search, this.state.token);
-    console.log(res);
+
     this.setState({
       playlists: res.playlists.items,
     });

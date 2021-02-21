@@ -3,25 +3,24 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import ChosenPlaylist from "./ChosenPlaylist";
 class AdminPlaylistModal extends Component {
   state = {
-    modal: false
+    modal: false,
   };
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
   };
 
   render() {
     const playlists = this.props.playlists;
-    //console.log(playlists);
     return (
       <div>
         <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>

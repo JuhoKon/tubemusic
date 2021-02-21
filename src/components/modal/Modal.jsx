@@ -5,7 +5,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
   Card,
   CardBody,
   Row,
@@ -24,14 +23,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  MenuProvider,
-  contextMenu,
-} from "react-contexify";
+import { Menu, Item, Separator, Submenu, contextMenu } from "react-contexify";
 
 import Spinner from "../spinner/spinner4";
 import "./Modal.css";
@@ -74,8 +66,9 @@ class MyAwesomeMenu extends React.Component {
         <Separator />
         <Submenu label="Go to Artist" disabled={!this.props.artists}>
           {this.props.artists &&
-            this.props.artists.map((artist) => (
+            this.props.artists.map((artist, index) => (
               <Item
+                key={index}
                 onClick={({ props }) => {
                   this.hide();
                   props.toggleModal();
@@ -127,7 +120,7 @@ const ModalExample = (props) => {
   const [loading, setLoading] = useState(false);
   const [addingPlaylist, setAddingPlaylist] = useState(false);
   const toggle = () => setOpen(!dropdownOpen);
-  const { title, className, show } = props;
+  const { className, show } = props;
   const [albumTracks, setalbumTracks] = useState([]);
   const [albumArtists, setArtists] = useState([]);
   const [albumDescription, setAlbumDescription] = useState("");
@@ -180,7 +173,6 @@ const ModalExample = (props) => {
   }, [props.albumBrowseId]);
 
   const addPlaylistToQueue = () => {
-    console.log(playlistVersionOfTracks);
     props.addPlaylistToQueue(playlistVersionOfTracks, albumTitle);
   };
   const playPlaylist = () => {
@@ -244,7 +236,6 @@ const ModalExample = (props) => {
     </DropdownItem>
   );
   const handleContextMenu = (e, props) => {
-    console.log("HANDLECONTEXT");
     e.preventDefault();
     contextMenu.show({
       id: "menu_id4",
@@ -359,7 +350,6 @@ const ModalExample = (props) => {
                           onAdd: props.addFunc,
                           onPlay: props.onPlay,
                           playNext: props.playNext,
-                          artists: artists,
                           toggleModal: props.toggleModal,
                           toggleArtistModal: props.toggleArtistModal,
                           album: { id: props.albumBrowseId, name: albumTitle },
@@ -548,8 +538,9 @@ const RenderArtists2 = (props) => {
   //console.log(songArtists);
   //console.log(props.artists);
   //console.log(props.artist);
-  return songArtists.map((artist) => (
+  return songArtists.map((artist, index) => (
     <div
+      key={index}
       onClick={() => {
         props.toggleModal();
         props.toggleArtistModal(artist);

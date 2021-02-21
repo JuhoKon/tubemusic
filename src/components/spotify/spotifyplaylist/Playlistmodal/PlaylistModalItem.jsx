@@ -7,7 +7,7 @@ class PlaylistModalItem extends Component {
   state = {
     artistName: this.props.artistName,
     title: this.props.title,
-    imported: this.props.imported
+    imported: this.props.imported,
   };
 
   /*shouldComponentUpdate(nextProps, nextState) {

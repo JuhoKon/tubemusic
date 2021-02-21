@@ -7,7 +7,7 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
 } from "reactstrap";
 import GenresOptions from "../../../functions/genres";
 
@@ -16,20 +16,19 @@ class CreateNew extends Component {
     modal: false,
     name: "",
     checked: false,
-    select: "Random"
+    select: "Random",
   };
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state.select);
   };
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+
     this.props.makePlaylist(
       this.state.name,
       this.state.checked,
@@ -38,7 +37,7 @@ class CreateNew extends Component {
     ); //if true, we have a private playlist
     this.toggle();
   };
-  boxChange = evt => {
+  boxChange = (evt) => {
     this.setState({ checked: evt.target.checked });
   };
   render() {

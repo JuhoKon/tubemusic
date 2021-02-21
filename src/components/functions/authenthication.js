@@ -56,7 +56,7 @@ function signup(newUser) {
       "Content-Type": "application/json",
     },
   };
-  console.log(newUser);
+
   const body = JSON.stringify({
     name: newUser.signUpName,
     email: newUser.signUpEmail,

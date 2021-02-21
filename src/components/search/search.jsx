@@ -37,7 +37,7 @@ class Search extends Component {
     if (value === "") return;
     //let res = await handleSubmit_db(value);
     let res = await autocomplete(value);
-    console.log(res);
+
     this.setState({
       autoCompleteItems: res,
     });

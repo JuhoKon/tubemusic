@@ -1,47 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Button,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
-  Card,
-  CardBody,
   Row,
   Col,
-  CardText,
 } from "reactstrap";
-import { getAlbum, addSongToPlaylist } from "../../functions/functions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+
 import ShowMoreText from "react-show-more-text";
 import CustomBadge from "../../badge/Badge";
-import {
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+
 import Spinner from "../../spinner/spinner4";
 import "./Modal.css";
-function pad(string) {
-  return ("0" + string).slice(-2);
-}
-function format(seconds) {
-  const date = new Date(seconds * 1000);
-  const hh = date.getUTCHours();
-  const mm = date.getUTCMinutes();
-  const ss = pad(date.getUTCSeconds());
-  if (hh) {
-    return `${hh}.${pad(mm)}.${ss}`;
-  }
-  return `${mm}.${ss}`;
-}
 
 const ModalExample = (props) => {
   /*   console.log(props); */
-  console.log(props);
 
   return (
     <div>

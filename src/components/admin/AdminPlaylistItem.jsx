@@ -15,7 +15,6 @@ class AdminPlaylistItem extends Component {
     this.deletePlaylist = this.deletePlaylist.bind(this);
   }
   deletePlaylist() {
-    console.log("Hey");
     this.setState({
       loading: true,
     });
@@ -47,8 +46,6 @@ class AdminPlaylistItem extends Component {
     });
   };
   render() {
-    //console.log(this.props);
-    //console.log(this.state);
     return (
       <div>
         <Card className="card">

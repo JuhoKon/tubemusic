@@ -38,8 +38,6 @@ class PlayListItem extends Component {
   }
 
   async subscribe() {
-    console.log(this.props);
-    console.log(this.state);
     await addUserPlaylist(
       this.props.id,
       this.props.name,

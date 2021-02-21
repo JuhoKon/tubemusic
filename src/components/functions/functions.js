@@ -11,7 +11,6 @@ const API = "https://tubemusicbackend.herokuapp.com";
 //const clientId = "dc20085012814f3d8cab4b36a4144393"; youtube
 axios.defaults.timeout = 25000;
 export const handleScrape = async (items) => {
-  console.log(items);
   let res = await axios
     .post(
       API + "/scrape/scrape",
@@ -129,7 +128,7 @@ export const handleSubmit2 = async (termFromSearch) => {
       },
     })
     .catch((err) => console.log(err));
-  console.log(res.data.items);
+
   if (res) {
     return res.data.items;
   } else {
@@ -203,7 +202,7 @@ export const getPlaylistTracks = async (id, token) => {
     `https://api.spotify.com/v1/playlists/${id}/tracks`,
     config
   );
-  //console.log(res.data.items);
+
   return res.data;
 };
 export const searchSpotifyPlaylists = async (term, token) => {
@@ -229,7 +228,6 @@ export const getPlaylists = async () => {
     handleError(err);
   });
 
-  //console.log(res);
   return res;
 };
 /*export const getPlaylists = async () => {
@@ -243,8 +241,6 @@ export const setTitle = (title) => {
   document.title = title;
 };
 export const makePlaylist = async (body) => {
-  //console.log(body);
-
   let res = await axios
     .post(API + "/playlists/create", body, tokenConfig())
     .catch((err) => {
@@ -337,7 +333,6 @@ export const updateUserPlaylist = async (playlistid, name, priv, token) => {
     });
 };
 export const tokenConfig = () => {
-  //console.log("TokenCONFIG CONFIG OFIONG OFING");
   //gets called to each action needing auth
   //retrieves token
   //checks token if it's going to expire soon, if so, renew that token
@@ -355,7 +350,7 @@ export const tokenConfig = () => {
       window.location.reload(true);
     }
     const diff = Math.floor(new Date().getTime() / 1000) - decode.exp;
-    //console.log(diff);
+
     config.headers["x-auth-token"] = currentUser.token;
     if ((diff > -(60 * 65 * 1) + 30) & (diff < -10)) {
       //if token will expire in 1 hr 5mins 30 seconds && will not expire in 10seconds
@@ -422,7 +417,6 @@ export const getArtistData = async (query) => {
   }
 };
 export const getPlaylist = async (query) => {
-  console.log(query);
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -442,7 +436,7 @@ export const getPlaylist = async (query) => {
     .catch((err) => {
       handleError(err);
     });
-  console.log(res);
+
   if (res) {
     return res.data.array;
   } else {
@@ -450,7 +444,6 @@ export const getPlaylist = async (query) => {
   }
 };
 export const getAlbum = async (query) => {
-  console.log(query);
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -470,7 +463,7 @@ export const getAlbum = async (query) => {
     .catch((err) => {
       handleError(err);
     });
-  console.log(res);
+
   if (res) {
     return res.data.array;
   } else {
@@ -478,7 +471,6 @@ export const getAlbum = async (query) => {
   }
 };
 export const getArtistAlbumData = async (browseId, params) => {
-  console.log(browseId, params);
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -499,7 +491,7 @@ export const getArtistAlbumData = async (browseId, params) => {
     .catch((err) => {
       handleError(err);
     });
-  console.log(res);
+
   if (res) {
     return res.data.array;
   } else {

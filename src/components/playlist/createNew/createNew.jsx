@@ -25,11 +25,10 @@ class CreateNew extends Component {
   };
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log(this.state.select);
   };
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+
     this.props.makePlaylist(
       this.state.name,
       [],

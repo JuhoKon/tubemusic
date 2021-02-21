@@ -38,7 +38,7 @@ class PlaylistItem extends Component {
     let dataArray = [];
     let nextData = null;
     dataArray = data.items;
-    console.log(dataArray);
+
     while (data.next !== null && typeof data.next !== "undefined") {
       nextData = await getRequestWithToken(token, data.next);
       // console.log(nextData);
@@ -56,7 +56,6 @@ class PlaylistItem extends Component {
     let createdAtArray = [];
 
     dataArray = dataArray.filter((item) => item.track !== null); //filter out those which are null (for some reason)
-    dataArray.forEach((item) => console.log(item.track.name));
     dataArray.forEach((item) => nameArray.push(item.track.name));
     dataArray.forEach((item) => tempArtistArray.push(item.track.artists));
     dataArray.forEach((item) => idArray.push(item.track.id));

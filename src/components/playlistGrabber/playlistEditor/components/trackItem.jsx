@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardText, Button, Row, Col } from "reactstrap";
-import Moment from "react-moment";
 import "moment-duration-format";
 
 class TrackItem extends Component {
@@ -23,7 +22,6 @@ class TrackItem extends Component {
     this.props.removeFromPlaylist(props);
   }
   render() {
-    console.log(this.props);
     return (
       <div>
         <Card className="card">

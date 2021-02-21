@@ -5,7 +5,6 @@ const handleScrape = async (term, counter) => {
   try {
     let url = encodeURI(term);
     let response = await request("https://crossorigin.me/" + url).catch((e) => {
-      console.log(e);
       return;
     }); //mby add catch here? .catch(err => console.log(err));
     let $ = cheerio.load(response);
@@ -15,7 +14,7 @@ const handleScrape = async (term, counter) => {
       if (typeof $('[class="video-time"]')[0] !== "undefined") {
         videoTime = $('[class="video-time"]')[0].children[0].data;
       }
-      //console.log(data.href, data.title, videoTime);
+
       //add retry when connection is lost
       return {
         videoId: data.href.split("v=")[1],
@@ -28,7 +27,7 @@ const handleScrape = async (term, counter) => {
     } else {
       if (counter < 5) {
         //try again
-        console.log("Trying again..");
+
         await timeout(60);
         return handleScrape(term, counter++);
       } else {
@@ -42,7 +41,6 @@ const handleScrape = async (term, counter) => {
 const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const scrape = async function (items) {
-  //console.log(req.body.term);
   let tracks = items;
   let promises = [];
   let string = "https://www.youtube.com/results?search_query=";

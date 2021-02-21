@@ -91,7 +91,6 @@ export default class Homepage extends Component {
     this.login(this.state.email, this.state.password);
   };
   render() {
-    console.log(this.state);
     return (
       <div className={this.state.active ? "ss right-panel-active" : "ss"}>
         <h1 className="position">WELCOME TO TUBEMUSIC</h1>

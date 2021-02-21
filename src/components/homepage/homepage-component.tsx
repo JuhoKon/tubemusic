@@ -87,8 +87,6 @@ type HomepageState = {
   allSongs?: any;
   playlistIndex: number;
 };
-const timeout = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
 export default class Homepage extends Component<any, HomepageState> {
   player: any;
   constructor(props: any) {
@@ -272,7 +270,6 @@ export default class Homepage extends Component<any, HomepageState> {
     });
   };
   playNext(item: Song) {
-    console.log(item);
     let a = Object.assign({}, item);
     a["uniqueId"] = Math.random();
     this.state.queue.unshift(a);
@@ -289,12 +286,9 @@ export default class Homepage extends Component<any, HomepageState> {
     });
   }
   setQueue(queue: Array<Song>) {
-    console.log(this.state.url);
     this.setState({
       queue: queue,
     });
-
-    console.log(this.state.url);
   }
   isSame(array1: Array<Song>, array2: Array<Song>) {
     //checks for two arrays if they have same items/songs
@@ -369,12 +363,10 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setState({
       playlist: playlistitems,
     });
-
-    console.log(playlistitems);
   }
   componentDidMount() {
     const currentUser = authenticationService.currentUserValue;
-    //console.log(currentUser);
+
     if (currentUser && currentUser.token) {
       this.setState({
         token: currentUser.token,
@@ -388,7 +380,7 @@ export default class Homepage extends Component<any, HomepageState> {
   }
   playPlaylist(playlist: Array<Song>, playlistname: string) {
     //replaces queue with active playlist
-    console.log(playlist);
+
     var itemArray = [];
     for (let i = 0; i < playlist.length; i++) {
       if (i === 0) {
@@ -404,8 +396,7 @@ export default class Homepage extends Component<any, HomepageState> {
           playlist[i].thumbnail,
           playlist[i].thumbnails
         );
-        console.log(playlist[i].artists);
-        console.log(song);
+
         this.onPlay(song);
       } else {
         //other elements go to queue
@@ -422,7 +413,6 @@ export default class Homepage extends Component<any, HomepageState> {
         );
         itemArray.push(song);
       }
-      //console.log(playlist[i]);
     }
     this.setState({
       queue: itemArray,
@@ -478,7 +468,6 @@ export default class Homepage extends Component<any, HomepageState> {
     );
   }
   async AddToPlaylist(item: Song) {
-    console.log(item);
     //Adds item to active playlist and updates the state & database
     //if no item is found, generates name for new
     if (this.state.playlistId === "" && this.state.playlistName === "") {
@@ -573,7 +562,6 @@ export default class Homepage extends Component<any, HomepageState> {
     const result = await handleSubmit(termFromSearch);
     //const result = await handleSubmit_db(termFromSearch);
 
-    console.log(result.length);
     if (!result) {
       this.setState({
         error: true,
@@ -610,8 +598,7 @@ export default class Homepage extends Component<any, HomepageState> {
     });
     //const result = await handleSubmit(termFromSearch);
     const result = await handleSubmit_db(termFromSearch);
-    console.log("Hello123");
-    console.log(result.length);
+
     if (!result) {
       this.setState({
         error: true,
@@ -641,7 +628,7 @@ export default class Homepage extends Component<any, HomepageState> {
       loading: true,
     });
     const result = await handleSubmit(termFromSearch);
-    console.log(result);
+
     if (result === null) {
       this.setState({
         error: true,
@@ -661,15 +648,14 @@ export default class Homepage extends Component<any, HomepageState> {
   }
   async loadPlaylist(id: String) {
     //loads a single database based on the id
-    console.log("WHAT");
+
     this.setState({
       loadingPlaylist: true,
       playlist: [],
       playlistName: "Loading...",
     });
     const result: any = await getPlayListById(id);
-    console.log("WHAT2");
-    console.log(result);
+
     this.setState({
       playlist: result.data.playlist,
       playlistName: result.data.name,
@@ -718,7 +704,7 @@ export default class Homepage extends Component<any, HomepageState> {
     this.setLoading(true);
     const result: any = await makePlaylist(item);
     const data = result.data;
-    console.log(result);
+
     addUserPlaylist(
       data._id,
       data.name,
@@ -760,7 +746,7 @@ export default class Homepage extends Component<any, HomepageState> {
     //updates current state to name & id given to database
     let playlist = this.state.playlist;
     //console.log(playlist);
-    console.log(isPrivate);
+
     const item = JSON.stringify({ name, playlist, private: isPrivate });
     const result = await updatePlaylist(item, id);
     updateUserPlaylist(id, name, isPrivate, this.state.token);
@@ -781,9 +767,9 @@ export default class Homepage extends Component<any, HomepageState> {
     //updates current state to name & id given to database
 
     //console.log(playlist);
-    console.log(isPrivate);
+
     const item = JSON.stringify({ name, playlist, private: isPrivate });
-    const result = await updatePlaylist(item, id);
+    await updatePlaylist(item, id);
     updateUserPlaylist(id, name, isPrivate, this.state.token);
     //console.log(result);
     /*     this.setState({
@@ -869,7 +855,7 @@ export default class Homepage extends Component<any, HomepageState> {
   onPlay(item: any) {
     //sets given item to be played
     if (!item) return;
-    console.log(item);
+
     this.state.queue.unshift(item);
 
     const videoId = item.videoId;
@@ -910,30 +896,10 @@ export default class Homepage extends Component<any, HomepageState> {
     });
   };
   render() {
-    //console.log(this.state.error); /* ----TO CLEAN UP --- and switch to webscraping instead of youtube API (it sucks)*/
     const queue = this.state.queue;
     const url = this.state.url;
     const playlists = this.state.playlists;
-    // console.log(this.props);
-    const playlist = this.state.playlist;
 
-    /*  <Col sm="4" className="homepage1">
-              <br />
-              <Player
-                ref={this.ref}
-                array={queue}
-                onRemove={this.onDelete}
-                url={url}
-                playing={this.state.playing}
-                title={this.state.title}
-                onAdd={this.onAdd}
-                AddToPlaylist={this.AddToPlaylist}
-                onPlay={this.onPlay}
-                setUrl={this.setUrl}
-                setTitle={this.setTitle}
-                setPlaying={this.setPlaying}
-              />
-            </Col> */
     return (
       <div className={this.props.darkMode ? "homepage-div" : "homepage-div2"}>
         <div id="spinnerDivHomePage">

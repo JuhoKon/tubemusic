@@ -103,7 +103,7 @@ export default class PublicPlaylists extends Component {
       default:
         break;
     }
-    console.log("Yeps...");
+
     this.setState({
       sortedPlaylists: playlists,
     });
@@ -111,7 +111,7 @@ export default class PublicPlaylists extends Component {
   onChange = (e) => {
     //genre
     let filter = e.target.value;
-    console.log(filter);
+
     if (e.target.value === "All") filter = "";
     this.setState({ genreFilter: filter });
     const { playlists } = this.state;
@@ -137,7 +137,6 @@ export default class PublicPlaylists extends Component {
   };
 
   render() {
-    console.log(this.state);
     const { token, filter } = this.state;
     const { genreFilteredData, sortedPlaylists } = this.state;
     const lowercasedFilter = filter.toLowerCase();
@@ -158,7 +157,7 @@ export default class PublicPlaylists extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    console.log(filteredData);
+
     return (
       <div className="container-fluid homepage-div">
         <div id="spinnerDiv">

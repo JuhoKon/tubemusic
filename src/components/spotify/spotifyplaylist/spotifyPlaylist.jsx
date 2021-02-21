@@ -30,7 +30,7 @@ class SpotifyPlaylist extends Component {
     let filter = e.target.value;
     const playlists = [...this.state.userPlaylists];
     //shallow copy so we won't change props when sorting..........
-    console.log(playlists);
+
     let sorted;
     switch (filter) {
       case "Latest":
@@ -48,7 +48,7 @@ class SpotifyPlaylist extends Component {
       default:
         break;
     }
-    console.log("Yeps...");
+
     this.setState({
       sortedPlaylists: sorted,
     });
@@ -69,7 +69,7 @@ class SpotifyPlaylist extends Component {
           item[key].toLowerCase().includes(lowercasedFilter)
       );
     });
-    console.log(filteredData);
+
     this.setState({ filter: event.target.value, filteredData: filteredData });
   };
   render() {

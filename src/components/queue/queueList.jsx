@@ -2,19 +2,11 @@ import React, { Component } from "react";
 import { sortableElement } from "react-sortable-hoc";
 import Queueitem from "./queueitem";
 import { List } from "react-virtualized";
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  MenuProvider,
-  contextMenu,
-} from "react-contexify";
+import { Menu, Item, Separator, Submenu, contextMenu } from "react-contexify";
 import isEqual from "react-fast-compare";
 import "./queue.css";
 //example from https://github.com/clauderic/react-sortable-hoc/blob/master/examples/react-virtualized.js#L12
 const MyAwesomeMenu = (props) => {
-  console.log(props);
   return (
     <Menu id="menu_id3">
       <Item
@@ -120,7 +112,6 @@ export default class QueueList extends Component {
     };
   }
   handleContextMenu(e, props) {
-    console.log("HANDLECONTEXT");
     e.preventDefault();
     this.setState({
       artists: props.artists,
@@ -142,7 +133,7 @@ export default class QueueList extends Component {
   }
   renderRow = ({ index, style }) => {
     const queue = this.props.queue;
-    console.log(queue);
+
     const {
       title,
       publishedAt,
@@ -159,16 +150,13 @@ export default class QueueList extends Component {
       <div
         onContextMenu={(event) =>
           this.handleContextMenu(event, {
-            addSongToPlaylist: this.props.addSongToPlaylist,
             onDeleteFromPlaylist: this.props.onDeleteFromPlaylist,
             playNext: this.props.playNext,
             onAdd: this.props.onAdd,
             onPlay: this.props.onPlay,
-            playNext: this.props.playNext,
             artists: artists,
             toggleArtistModal: this.props.toggleArtistModalItem,
             toggleAlbumModal: this.props.toggleAlbumModal,
-            album: album,
             UpdateCurrentPlaylist2: this.props.UpdateCurrentPlaylist2,
             addSongToPlaylist: this.props.addSongToPlaylist,
             videoId,

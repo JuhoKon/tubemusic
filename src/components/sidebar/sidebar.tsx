@@ -44,8 +44,6 @@ class Sidebar extends Component<any, any> {
     });
   };
   render() {
-    console.log(this.props);
-
     return (
       <div className="sidebardiv">
         <h3>Playlists</h3>
