@@ -1,14 +1,6 @@
 # TubeMusic
 
-UNMAINTAINED: NEW PWA-COMPATIBLE VERSION https://github.com/JuhoKon/tubepwa
-
-TubeMusic is an app made for listening music from YouTube (hence the name). With TubeMusic you can create your own playlists and/or import your spotify playlists to the application! Be sure to checkout other users' made playlists too. Listening to ad-free music is just one sign-up away.
-
-TubeMusic plays YouTube videos and tries to replicate the user experience of Spotify with little twists (such as more interactible queue-system and no-ads). This is a no-profit application.
-
-# DEMO
-
-Demo is now available at: https://tubemusicapp.herokuapp.com/ (Not mobile friendly, mobile app in development). Using application requires you to signup. There's no email verification, so no need for writing actual real information on the sign up form. All views are under development (I will be improving them as I have time, main focus has been on the main page for a while now)
+Old hobby project
 
 ## Main view
 
